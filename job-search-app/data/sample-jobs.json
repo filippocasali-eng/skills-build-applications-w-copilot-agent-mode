@@ -1,0 +1,357 @@
+[
+  {
+    "id": "demo:1",
+    "source": "Demo",
+    "title": "Sviluppatore Frontend React",
+    "company": "Nebbia Digital",
+    "location": "Milano",
+    "remote": false,
+    "types": [
+      "Full-time"
+    ],
+    "tags": [
+      "React",
+      "TypeScript",
+      "CSS"
+    ],
+    "salary": "35.000–45.000 € RAL",
+    "url": "https://example.com/offerte/1",
+    "description": "Cerchiamo uno sviluppatore frontend con esperienza in React e TypeScript per costruire la nuova area clienti.\n\nResponsabilità:\n• Sviluppo di componenti riutilizzabili\n• Collaborazione con il team di design\n• Scrittura di test automatici\n\nRequisiti:\n• 2+ anni con React\n• Buona conoscenza di TypeScript",
+    "daysAgo": 1
+  },
+  {
+    "id": "demo:2",
+    "source": "Demo",
+    "title": "Backend Developer Node.js",
+    "company": "Lagunare Tech",
+    "location": "Venezia",
+    "remote": true,
+    "types": [
+      "Full-time"
+    ],
+    "tags": [
+      "Node.js",
+      "PostgreSQL",
+      "API"
+    ],
+    "salary": "40.000–50.000 € RAL",
+    "url": "https://example.com/offerte/2",
+    "description": "Progettazione e sviluppo di API REST e servizi Node.js. Lavoro completamente da remoto con incontri trimestrali a Venezia.\n\nRequisiti:\n• Esperienza con Node.js e PostgreSQL\n• Conoscenza di Docker",
+    "daysAgo": 2
+  },
+  {
+    "id": "demo:3",
+    "source": "Demo",
+    "title": "Data Analyst",
+    "company": "Orizzonte Retail",
+    "location": "Bologna",
+    "remote": false,
+    "types": [
+      "Full-time"
+    ],
+    "tags": [
+      "SQL",
+      "Python",
+      "Power BI"
+    ],
+    "salary": null,
+    "url": "https://example.com/offerte/3",
+    "description": "Analisi delle vendite e costruzione di dashboard per il management.\n\nRequisiti:\n• SQL avanzato\n• Python (pandas)\n• Esperienza con strumenti di BI",
+    "daysAgo": 3
+  },
+  {
+    "id": "demo:4",
+    "source": "Demo",
+    "title": "UX/UI Designer",
+    "company": "Studio Ventaglio",
+    "location": "Torino",
+    "remote": false,
+    "types": [
+      "Part-time"
+    ],
+    "tags": [
+      "Figma",
+      "UX Research"
+    ],
+    "salary": "Da definire",
+    "url": "https://example.com/offerte/4",
+    "description": "Cerchiamo un designer part-time per progetti di app mobile e web. Portfolio richiesto.",
+    "daysAgo": 4
+  },
+  {
+    "id": "demo:5",
+    "source": "Demo",
+    "title": "DevOps Engineer",
+    "company": "Cumulo Cloud",
+    "location": "Remoto (Europa)",
+    "remote": true,
+    "types": [
+      "Full-time"
+    ],
+    "tags": [
+      "Kubernetes",
+      "AWS",
+      "Terraform"
+    ],
+    "salary": "55.000–65.000 €",
+    "url": "https://example.com/offerte/5",
+    "description": "Gestione dell’infrastruttura cloud su AWS con Kubernetes e Terraform. Reperibilità a rotazione.",
+    "daysAgo": 1
+  },
+  {
+    "id": "demo:6",
+    "source": "Demo",
+    "title": "Stage Marketing Digitale",
+    "company": "Fiordaliso Brand",
+    "location": "Roma",
+    "remote": false,
+    "types": [
+      "Stage"
+    ],
+    "tags": [
+      "Marketing",
+      "Social Media",
+      "SEO"
+    ],
+    "salary": "Rimborso spese 800 €/mese",
+    "url": "https://example.com/offerte/6",
+    "description": "Stage di 6 mesi nel team marketing: gestione social, analisi campagne e SEO.",
+    "daysAgo": 5
+  },
+  {
+    "id": "demo:7",
+    "source": "Demo",
+    "title": "Python Developer",
+    "company": "Algoritmica Srl",
+    "location": "Pisa",
+    "remote": true,
+    "types": [
+      "Full-time"
+    ],
+    "tags": [
+      "Python",
+      "Django",
+      "REST"
+    ],
+    "salary": "38.000–48.000 € RAL",
+    "url": "https://example.com/offerte/7",
+    "description": "Sviluppo di applicazioni web con Django e Django REST Framework. Modalità ibrida o full remote.",
+    "daysAgo": 6
+  },
+  {
+    "id": "demo:8",
+    "source": "Demo",
+    "title": "Customer Support Specialist",
+    "company": "Pacco Rapido",
+    "location": "Napoli",
+    "remote": false,
+    "types": [
+      "Full-time",
+      "Part-time"
+    ],
+    "tags": [
+      "Assistenza clienti",
+      "Inglese"
+    ],
+    "salary": null,
+    "url": "https://example.com/offerte/8",
+    "description": "Supporto clienti via chat, email e telefono. Richiesto inglese B2.",
+    "daysAgo": 2
+  },
+  {
+    "id": "demo:9",
+    "source": "Demo",
+    "title": "Mobile Developer Flutter",
+    "company": "Gabbiano Apps",
+    "location": "Genova",
+    "remote": true,
+    "types": [
+      "Contratto"
+    ],
+    "tags": [
+      "Flutter",
+      "Dart",
+      "Mobile"
+    ],
+    "salary": "Tariffa giornaliera da concordare",
+    "url": "https://example.com/offerte/9",
+    "description": "Contratto di 12 mesi per lo sviluppo di un’app Flutter in ambito turismo.",
+    "daysAgo": 7
+  },
+  {
+    "id": "demo:10",
+    "source": "Demo",
+    "title": "Project Manager IT",
+    "company": "Quadrante Consulting",
+    "location": "Milano",
+    "remote": false,
+    "types": [
+      "Full-time"
+    ],
+    "tags": [
+      "Agile",
+      "Scrum",
+      "Jira"
+    ],
+    "salary": "50.000–60.000 € RAL",
+    "url": "https://example.com/offerte/10",
+    "description": "Coordinamento di team di sviluppo in progetti per clienti del settore bancario. Certificazione PMP o Scrum gradita.",
+    "daysAgo": 8
+  },
+  {
+    "id": "demo:11",
+    "source": "Demo",
+    "title": "Contabile Junior",
+    "company": "Bilancia Servizi",
+    "location": "Verona",
+    "remote": false,
+    "types": [
+      "Full-time"
+    ],
+    "tags": [
+      "Contabilità",
+      "Excel"
+    ],
+    "salary": "26.000–30.000 € RAL",
+    "url": "https://example.com/offerte/11",
+    "description": "Gestione prima nota, fatturazione e supporto alla chiusura di bilancio.",
+    "daysAgo": 3
+  },
+  {
+    "id": "demo:12",
+    "source": "Demo",
+    "title": "Full Stack Developer",
+    "company": "Pixel Alpino",
+    "location": "Trento",
+    "remote": true,
+    "types": [
+      "Full-time"
+    ],
+    "tags": [
+      "Vue.js",
+      "Node.js",
+      "MongoDB"
+    ],
+    "salary": "40.000–52.000 € RAL",
+    "url": "https://example.com/offerte/12",
+    "description": "Sviluppo full stack su piattaforma e-commerce con Vue.js e Node.js.",
+    "daysAgo": 9
+  },
+  {
+    "id": "demo:13",
+    "source": "Demo",
+    "title": "Data Scientist",
+    "company": "Neurone Labs",
+    "location": "Remoto (Italia)",
+    "remote": true,
+    "types": [
+      "Full-time"
+    ],
+    "tags": [
+      "Machine Learning",
+      "Python",
+      "NLP"
+    ],
+    "salary": "50.000–62.000 € RAL",
+    "url": "https://example.com/offerte/13",
+    "description": "Sviluppo di modelli di machine learning e NLP per l’analisi di documenti.",
+    "daysAgo": 4
+  },
+  {
+    "id": "demo:14",
+    "source": "Demo",
+    "title": "Copywriter Freelance",
+    "company": "Inchiostro Agency",
+    "location": "Firenze",
+    "remote": true,
+    "types": [
+      "Freelance"
+    ],
+    "tags": [
+      "Copywriting",
+      "Content"
+    ],
+    "salary": "A progetto",
+    "url": "https://example.com/offerte/14",
+    "description": "Scrittura di testi per siti web, newsletter e campagne pubblicitarie.",
+    "daysAgo": 10
+  },
+  {
+    "id": "demo:15",
+    "source": "Demo",
+    "title": "QA Tester",
+    "company": "Collaudo Software",
+    "location": "Padova",
+    "remote": false,
+    "types": [
+      "Full-time"
+    ],
+    "tags": [
+      "Testing",
+      "Selenium",
+      "Playwright"
+    ],
+    "salary": "30.000–36.000 € RAL",
+    "url": "https://example.com/offerte/15",
+    "description": "Test manuali e automatici su applicazioni web. Esperienza con Playwright o Selenium.",
+    "daysAgo": 12
+  },
+  {
+    "id": "demo:16",
+    "source": "Demo",
+    "title": "Sistemista Linux",
+    "company": "Rete Sicura",
+    "location": "Bari",
+    "remote": false,
+    "types": [
+      "Full-time"
+    ],
+    "tags": [
+      "Linux",
+      "Networking",
+      "Sicurezza"
+    ],
+    "salary": "32.000–40.000 € RAL",
+    "url": "https://example.com/offerte/16",
+    "description": "Amministrazione server Linux, gestione backup e monitoraggio della rete.",
+    "daysAgo": 14
+  },
+  {
+    "id": "demo:17",
+    "source": "Demo",
+    "title": "Cameriere/a stagionale",
+    "company": "Hotel Scogliera",
+    "location": "Rimini",
+    "remote": false,
+    "types": [
+      "Temporaneo"
+    ],
+    "tags": [
+      "Ristorazione",
+      "Turismo"
+    ],
+    "salary": "Contratto CCNL turismo",
+    "url": "https://example.com/offerte/17",
+    "description": "Stagione estiva da maggio a settembre. Vitto e alloggio inclusi.",
+    "daysAgo": 6
+  },
+  {
+    "id": "demo:18",
+    "source": "Demo",
+    "title": "Insegnante di Inglese",
+    "company": "Lingua Viva",
+    "location": "Remoto",
+    "remote": true,
+    "types": [
+      "Part-time"
+    ],
+    "tags": [
+      "Inglese",
+      "Formazione"
+    ],
+    "salary": "20 €/ora",
+    "url": "https://example.com/offerte/18",
+    "description": "Lezioni online individuali e di gruppo per adulti. Madrelingua o livello C2.",
+    "daysAgo": 11
+  }
+]

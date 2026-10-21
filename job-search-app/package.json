@@ -1,0 +1,17 @@
+{
+  "name": "job-search-app",
+  "version": "1.0.0",
+  "description": "Web app per cercare lavoro: aggrega offerte da Arbeitnow e Remotive, con preferiti e tracker delle candidature.",
+  "main": "server.js",
+  "type": "commonjs",
+  "private": true,
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "test": "node --test test/*.test.js"
+  },
+  "license": "MIT"
+}

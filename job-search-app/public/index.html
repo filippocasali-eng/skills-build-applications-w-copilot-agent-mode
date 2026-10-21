@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cerca Lavoro</title>
+  <meta name="description" content="Cerca offerte di lavoro, salva quelle interessanti e tieni traccia delle tue candidature.">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="./" aria-label="Cerca Lavoro, home">
+        <svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><path fill="currentColor" d="M10 2h4a2 2 0 0 1 2 2v2h4a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4V4a2 2 0 0 1 2-2zm4 4V4h-4v2h4zM4 8v4h16V8H4zm0 6v5h16v-5h-7v1h-2v-1H4z"/></svg>
+        <span>Cerca Lavoro</span>
+      </a>
+      <nav class="tabs" role="tablist" aria-label="Sezioni">
+        <button class="tab" role="tab" id="tab-search" aria-controls="view-search" aria-selected="true" data-view="search">Cerca</button>
+        <button class="tab" role="tab" id="tab-tracker" aria-controls="view-tracker" aria-selected="false" data-view="tracker">
+          Le mie candidature <span class="badge" id="tracker-count">0</span>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section id="view-search" role="tabpanel" aria-labelledby="tab-search">
+      <form id="search-form" class="search-bar" role="search">
+        <label class="field">
+          <span class="sr-only">Cosa cerchi</span>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M10 2a8 8 0 0 1 6.32 12.9l5.39 5.4-1.41 1.4-5.4-5.38A8 8 0 1 1 10 2zm0 2a6 6 0 1 0 0 12 6 6 0 0 0 0-12z"/></svg>
+          <input type="search" name="q" placeholder="Ruolo, competenza o azienda" autocomplete="off">
+        </label>
+        <label class="field">
+          <span class="sr-only">Dove</span>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 1 7 7c0 5.25-7 13-7 13S5 14.25 5 9a7 7 0 0 1 7-7zm0 4.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5z"/></svg>
+          <input type="search" name="location" placeholder="Città, paese o &quot;remote&quot;" autocomplete="off">
+        </label>
+        <button type="submit" class="btn btn-primary">Cerca</button>
+      </form>
+
+      <div class="layout">
+        <aside class="filters" aria-label="Filtri">
+          <details id="filters-panel" open>
+            <summary>Filtri</summary>
+            <div class="filter-group">
+              <label class="check">
+                <input type="checkbox" name="remote" form="search-form"> Solo da remoto
+              </label>
+            </div>
+            <fieldset class="filter-group">
+              <legend>Pubblicato</legend>
+              <select name="maxAgeDays" form="search-form">
+                <option value="">In qualsiasi momento</option>
+                <option value="1">Ultime 24 ore</option>
+                <option value="3">Ultimi 3 giorni</option>
+                <option value="7">Ultima settimana</option>
+                <option value="30">Ultimo mese</option>
+              </select>
+            </fieldset>
+            <fieldset class="filter-group">
+              <legend>Tipo di contratto</legend>
+              <div id="type-filters" class="check-list"></div>
+            </fieldset>
+            <fieldset class="filter-group">
+              <legend>Fonte</legend>
+              <div id="source-filters" class="check-list"></div>
+            </fieldset>
+            <button type="button" id="reset-filters" class="btn btn-link">Azzera filtri</button>
+          </details>
+        </aside>
+
+        <div class="results-col">
+          <div class="results-head">
+            <p id="results-summary" aria-live="polite">Caricamento offerte…</p>
+            <label class="sort">
+              Ordina per
+              <select name="sort" form="search-form">
+                <option value="relevance">Pertinenza</option>
+                <option value="date">Più recenti</option>
+              </select>
+            </label>
+          </div>
+          <div id="notice" class="notice" hidden></div>
+          <ul id="results" class="results"></ul>
+          <nav id="pagination" class="pagination" aria-label="Pagine dei risultati"></nav>
+        </div>
+      </div>
+    </section>
+
+    <section id="view-tracker" role="tabpanel" aria-labelledby="tab-tracker" hidden>
+      <div class="tracker-head">
+        <h1>Le mie candidature</h1>
+        <p class="muted">Le offerte salvate restano in questo browser. Sposta ogni offerta nella colonna giusta man mano che avanzi.</p>
+      </div>
+      <div id="board" class="board"></div>
+    </section>
+  </main>
+
+  <dialog id="job-dialog" aria-labelledby="dialog-title">
+    <article class="dialog-body">
+      <header class="dialog-head">
+        <div>
+          <h2 id="dialog-title"></h2>
+          <p id="dialog-company" class="company"></p>
+          <div id="dialog-meta" class="meta"></div>
+        </div>
+        <button type="button" class="icon-btn" data-close aria-label="Chiudi">
+          <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="m12 10.6 5-5 1.4 1.4-5 5 5 5-1.4 1.4-5-5-5 5L5.6 17l5-5-5-5L7 5.6z"/></svg>
+        </button>
+      </header>
+      <div class="dialog-actions">
+        <a id="dialog-apply" class="btn btn-primary" target="_blank" rel="noopener noreferrer">Candidati sul sito ↗</a>
+        <button type="button" id="dialog-save" class="btn"></button>
+        <label id="dialog-status-wrap" class="status-select" hidden>
+          Stato
+          <select id="dialog-status"></select>
+        </label>
+      </div>
+      <label id="dialog-notes-wrap" class="notes" hidden>
+        Note personali
+        <textarea id="dialog-notes" rows="3" placeholder="Es. referente, data del colloquio, stipendio proposto…"></textarea>
+      </label>
+      <div id="dialog-tags" class="tags"></div>
+      <div id="dialog-description" class="description"></div>
+    </article>
+  </dialog>
+
+  <template id="job-card">
+    <li class="card">
+      <button type="button" class="card-main">
+        <span class="card-title"></span>
+        <span class="company"></span>
+        <span class="meta"></span>
+        <span class="snippet"></span>
+      </button>
+      <button type="button" class="save-btn icon-btn" aria-pressed="false">
+        <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M6 3h12a1 1 0 0 1 1 1v17l-7-4-7 4V4a1 1 0 0 1 1-1z"/></svg>
+      </button>
+    </li>
+  </template>
+
+  <script src="app.js" type="module"></script>
+</body>
+</html>
