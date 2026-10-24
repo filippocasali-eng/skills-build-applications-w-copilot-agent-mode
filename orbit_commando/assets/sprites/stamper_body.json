@@ -1,0 +1,34 @@
+{
+ "animations": {
+  "idle": {
+   "fps": 3,
+   "frames": [
+    0,
+    0,
+    0,
+    1
+   ],
+   "loop": true
+  }
+ },
+ "frames": [
+  {
+   "h": 120,
+   "w": 150,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "h": 120,
+   "w": 150,
+   "x": 150,
+   "y": 0
+  }
+ ],
+ "image": "stamper_body.png",
+ "origin": {
+  "x": 75,
+  "y": 60
+ },
+ "version": 1
+}

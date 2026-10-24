@@ -1,0 +1,32 @@
+{
+ "animations": {
+  "idle": {
+   "fps": 3,
+   "frames": [
+    0,
+    1
+   ],
+   "loop": true
+  }
+ },
+ "frames": [
+  {
+   "h": 64,
+   "w": 56,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "h": 64,
+   "w": 56,
+   "x": 56,
+   "y": 0
+  }
+ ],
+ "image": "exit_sign.png",
+ "origin": {
+  "x": 28,
+  "y": 63
+ },
+ "version": 1
+}

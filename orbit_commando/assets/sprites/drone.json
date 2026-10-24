@@ -1,0 +1,72 @@
+{
+ "animations": {
+  "attack": {
+   "fps": 16,
+   "frames": [
+    0,
+    2
+   ],
+   "loop": true
+  },
+  "idle": {
+   "fps": 16,
+   "frames": [
+    0,
+    1,
+    2,
+    3
+   ],
+   "loop": true
+  },
+  "run": {
+   "fps": 16,
+   "frames": [
+    0,
+    1,
+    2,
+    3
+   ],
+   "loop": true
+  },
+  "tell": {
+   "fps": 20,
+   "frames": [
+    1,
+    3
+   ],
+   "loop": true
+  }
+ },
+ "frames": [
+  {
+   "h": 26,
+   "w": 34,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "h": 26,
+   "w": 34,
+   "x": 34,
+   "y": 0
+  },
+  {
+   "h": 26,
+   "w": 34,
+   "x": 68,
+   "y": 0
+  },
+  {
+   "h": 26,
+   "w": 34,
+   "x": 102,
+   "y": 0
+  }
+ ],
+ "image": "drone.png",
+ "origin": {
+  "x": 17,
+  "y": 13
+ },
+ "version": 1
+}

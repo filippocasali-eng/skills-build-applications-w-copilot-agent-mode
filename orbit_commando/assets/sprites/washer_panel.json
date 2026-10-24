@@ -1,0 +1,32 @@
+{
+ "animations": {
+  "blink": {
+   "fps": 4,
+   "frames": [
+    0,
+    1
+   ],
+   "loop": true
+  }
+ },
+ "frames": [
+  {
+   "h": 22,
+   "w": 44,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "h": 22,
+   "w": 44,
+   "x": 44,
+   "y": 0
+  }
+ ],
+ "image": "washer_panel.png",
+ "origin": {
+  "x": 22,
+  "y": 11
+ },
+ "version": 1
+}

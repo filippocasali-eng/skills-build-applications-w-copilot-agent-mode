@@ -1,0 +1,55 @@
+{
+ "animations": {
+  "attack": {
+   "fps": 24,
+   "frames": [
+    0,
+    1
+   ],
+   "loop": true
+  },
+  "idle": {
+   "fps": 20,
+   "frames": [
+    0,
+    1
+   ],
+   "loop": true
+  },
+  "run": {
+   "fps": 20,
+   "frames": [
+    0,
+    1
+   ],
+   "loop": true
+  },
+  "tell": {
+   "fps": 1,
+   "frames": [
+    0
+   ],
+   "loop": true
+  }
+ },
+ "frames": [
+  {
+   "h": 12,
+   "w": 14,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "h": 12,
+   "w": 14,
+   "x": 14,
+   "y": 0
+  }
+ ],
+ "image": "swarm.png",
+ "origin": {
+  "x": 7,
+  "y": 6
+ },
+ "version": 1
+}

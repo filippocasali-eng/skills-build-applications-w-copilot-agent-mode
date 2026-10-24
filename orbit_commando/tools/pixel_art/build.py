@@ -24,6 +24,9 @@ import font  # noqa: E402
 import palette  # noqa: E402
 from sprites import SPRITES  # noqa: E402
 import import_characters  # noqa: E402
+import numpy as np  # noqa: E402
+from art_env import backdrops, planet, textures  # noqa: E402
+from art_game import GAME_ART  # noqa: E402
 
 PALETTE_SET = {c + (255,) for c in palette.all_colors()}
 COLS = 8
@@ -68,6 +71,68 @@ def build_sprite(name, maker):
         json.dump(meta, f, indent=1, sort_keys=True)
         f.write("\n")
     return len(frames)
+
+
+PALETTE_ARR = np.array(sorted(PALETTE_SET), dtype=np.uint8)
+
+
+def _check_array(name, arr):
+    opaque = arr[arr[:, :, 3] > 0]
+    if len(opaque) == 0:
+        return
+    cols = {tuple(int(v) for v in c) for c in np.unique(opaque.reshape(-1, 4), axis=0)}
+    bad = cols - PALETTE_SET
+    if bad:
+        raise SystemExit(f"{name}: colours {sorted(bad)[:4]} are not in the master palette")
+
+
+def save_canvas_atlas(name, frames, anims, origin, out_dir="sprites", cols=None):
+    """Writes frames (Canvas objects of equal size) as an atlas + JSON."""
+    fh, fw = frames[0].a.shape[:2]
+    cols = cols or min(8, len(frames))
+    rows = (len(frames) + cols - 1) // cols
+    sheet = np.zeros((rows * fh, cols * fw, 4), dtype=np.uint8)
+    meta_frames = []
+    for i, cv in enumerate(frames):
+        assert cv.a.shape[:2] == (fh, fw), f"{name}: frame {i} size mismatch"
+        _check_array(f"{name}[{i}]", cv.a)
+        x, y = (i % cols) * fw, (i // cols) * fh
+        sheet[y:y + fh, x:x + fw] = cv.a
+        meta_frames.append({"x": x, "y": y, "w": fw, "h": fh})
+    d = os.path.join(ROOT, "assets", out_dir)
+    os.makedirs(d, exist_ok=True)
+    _save_png(Image.fromarray(sheet), os.path.join(d, f"{name}.png"))
+    meta = {"version": 1, "image": f"{name}.png",
+            "origin": {"x": origin[0], "y": origin[1]},
+            "frames": meta_frames, "animations": anims}
+    with open(os.path.join(d, f"{name}.json"), "w") as f:
+        json.dump(meta, f, indent=1, sort_keys=True)
+        f.write("\n")
+    return len(frames)
+
+
+def save_image(path, arr, check=True):
+    if check:
+        _check_array(path, arr)
+    full = os.path.join(ROOT, "assets", path)
+    os.makedirs(os.path.dirname(full), exist_ok=True)
+    _save_png(Image.fromarray(arr), full)
+
+
+def build_env():
+    from paint import Canvas  # noqa: F401
+    frames, anims, origin = textures()
+    save_canvas_atlas("textures", frames, anims, origin, out_dir="tiles", cols=3)
+    neb, station, glorbo = backdrops()
+    save_image("sprites/bg_asteroids.png", neb)
+    save_image("sprites/bg_station.png", station)
+    save_image("sprites/bg_glorbo.png", glorbo)
+    used = os.path.join(ROOT, "tools", "level_gen", "planets_used.json")
+    sizes = json.load(open(used)) if os.path.exists(used) else []
+    sizes = sorted({tuple(s) for s in sizes} | {(110, 0), (40, 0)})
+    for r, style in sizes:
+        save_image(f"planets/planet_s{style}_r{r}.png", planet(r, style))
+    return len(sizes)
 
 
 def build_font():
@@ -137,6 +202,10 @@ def main():
         print(f"sprite {name}: {build_sprite(name, maker)} frames")
     for name, (w, h, c) in import_characters.build_all(ROOT).items():
         print(f"character {name}: {w}x{h} frames, {c} colours")
+    for name, maker in GAME_ART.items():
+        frames, anims, origin = maker()
+        print(f"art {name}: {save_canvas_atlas(name, frames, anims, origin)} frames")
+    print(f"environment: textures, 3 backdrops, {build_env()} planetoids")
 
 
 if __name__ == "__main__":

@@ -1,0 +1,39 @@
+{
+ "animations": {
+  "idle": {
+   "fps": 1,
+   "frames": [
+    0
+   ],
+   "loop": true
+  },
+  "shake": {
+   "fps": 20,
+   "frames": [
+    0,
+    1
+   ],
+   "loop": true
+  }
+ },
+ "frames": [
+  {
+   "h": 180,
+   "w": 160,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "h": 180,
+   "w": 160,
+   "x": 160,
+   "y": 0
+  }
+ ],
+ "image": "washer_body.png",
+ "origin": {
+  "x": 80,
+  "y": 100
+ },
+ "version": 1
+}

@@ -1,0 +1,125 @@
+{
+ "version": 1,
+ "levels": [
+  {
+   "id": "w1_l1",
+   "name": "Cintura Tranquilla",
+   "world": 1,
+   "index": 1,
+   "boss": false,
+   "file": "levels/w1_l1.tmj"
+  },
+  {
+   "id": "w1_l2",
+   "name": "Campo di Sassi",
+   "world": 1,
+   "index": 2,
+   "boss": false,
+   "file": "levels/w1_l2.tmj"
+  },
+  {
+   "id": "w1_l3",
+   "name": "Il Mech a Molla",
+   "world": 1,
+   "index": 3,
+   "boss": false,
+   "file": "levels/w1_l3.tmj"
+  },
+  {
+   "id": "w1_l4",
+   "name": "Lato Oscuro del Sasso",
+   "world": 1,
+   "index": 4,
+   "boss": false,
+   "file": "levels/w1_l4.tmj"
+  },
+  {
+   "id": "w1_l5",
+   "name": "Timbratore Supremo",
+   "world": 1,
+   "index": 5,
+   "boss": true,
+   "file": "levels/w1_l5.tmj"
+  },
+  {
+   "id": "w2_l1",
+   "name": "Corridoio Margherita",
+   "world": 2,
+   "index": 1,
+   "boss": false,
+   "file": "levels/w2_l1.tmj"
+  },
+  {
+   "id": "w2_l2",
+   "name": "Sala Antigravità",
+   "world": 2,
+   "index": 2,
+   "boss": false,
+   "file": "levels/w2_l2.tmj"
+  },
+  {
+   "id": "w2_l3",
+   "name": "Moto-Razzo Express",
+   "world": 2,
+   "index": 3,
+   "boss": false,
+   "file": "levels/w2_l3.tmj"
+  },
+  {
+   "id": "w2_l4",
+   "name": "Anelli della Pizza",
+   "world": 2,
+   "index": 4,
+   "boss": false,
+   "file": "levels/w2_l4.tmj"
+  },
+  {
+   "id": "w2_l5",
+   "name": "La Grande Lavatrice Cosmica",
+   "world": 2,
+   "index": 5,
+   "boss": true,
+   "file": "levels/w2_l5.tmj"
+  },
+  {
+   "id": "w3_l1",
+   "name": "Arcipelago Glorbo",
+   "world": 3,
+   "index": 1,
+   "boss": false,
+   "file": "levels/w3_l1.tmj"
+  },
+  {
+   "id": "w3_l2",
+   "name": "Navetta nel Vuoto",
+   "world": 3,
+   "index": 2,
+   "boss": false,
+   "file": "levels/w3_l2.tmj"
+  },
+  {
+   "id": "w3_l3",
+   "name": "Fabbrica di Moduli",
+   "world": 3,
+   "index": 3,
+   "boss": false,
+   "file": "levels/w3_l3.tmj"
+  },
+  {
+   "id": "w3_l4",
+   "name": "Ultimo Sportello",
+   "world": 3,
+   "index": 4,
+   "boss": false,
+   "file": "levels/w3_l4.tmj"
+  },
+  {
+   "id": "w3_l5",
+   "name": "Imperatore Glorbo",
+   "world": 3,
+   "index": 5,
+   "boss": true,
+   "file": "levels/w3_l5.tmj"
+  }
+ ]
+}

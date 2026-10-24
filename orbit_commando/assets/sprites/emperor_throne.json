@@ -1,0 +1,39 @@
+{
+ "animations": {
+  "idle": {
+   "fps": 1,
+   "frames": [
+    0
+   ],
+   "loop": true
+  },
+  "walk": {
+   "fps": 4,
+   "frames": [
+    0,
+    1
+   ],
+   "loop": true
+  }
+ },
+ "frames": [
+  {
+   "h": 220,
+   "w": 200,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "h": 220,
+   "w": 200,
+   "x": 200,
+   "y": 0
+  }
+ ],
+ "image": "emperor_throne.png",
+ "origin": {
+  "x": 100,
+  "y": 120
+ },
+ "version": 1
+}

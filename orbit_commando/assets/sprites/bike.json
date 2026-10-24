@@ -1,0 +1,39 @@
+{
+ "animations": {
+  "idle": {
+   "fps": 1,
+   "frames": [
+    0
+   ],
+   "loop": true
+  },
+  "run": {
+   "fps": 16,
+   "frames": [
+    0,
+    1
+   ],
+   "loop": true
+  }
+ },
+ "frames": [
+  {
+   "h": 44,
+   "w": 80,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "h": 44,
+   "w": 80,
+   "x": 80,
+   "y": 0
+  }
+ ],
+ "image": "bike.png",
+ "origin": {
+  "x": 40,
+  "y": 43
+ },
+ "version": 1
+}

@@ -161,6 +161,7 @@ class Bosses {
       }
       return;
     }
+    _keepPlayerInArena(b);
     b.stateTicks++;
     if (b.timer > 0) b.timer--;
     b.laserOn = false;
@@ -174,6 +175,19 @@ class Bosses {
     }
     _placeParts(b);
     _contact(b);
+  }
+
+  /// Invisible arena walls while the fight is on.
+  void _keepPlayerInArena(Boss b) {
+    final body = sim.player.body;
+    final x0 = b.arena.x0 + 14, x1 = b.arena.x1 - 14;
+    if (body.x < x0) {
+      body.x = x0;
+      if (body.vx < 0) body.vx = 0;
+    } else if (body.x > x1) {
+      body.x = x1;
+      if (body.vx > 0) body.vx = 0;
+    }
   }
 
   void _go(Boss b, String state, int timer) {

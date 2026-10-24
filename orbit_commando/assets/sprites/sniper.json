@@ -1,0 +1,60 @@
+{
+ "animations": {
+  "attack": {
+   "fps": 4,
+   "frames": [
+    2
+   ],
+   "loop": true
+  },
+  "idle": {
+   "fps": 2,
+   "frames": [
+    0,
+    1
+   ],
+   "loop": true
+  },
+  "run": {
+   "fps": 2,
+   "frames": [
+    0,
+    1
+   ],
+   "loop": true
+  },
+  "tell": {
+   "fps": 4,
+   "frames": [
+    2
+   ],
+   "loop": true
+  }
+ },
+ "frames": [
+  {
+   "h": 50,
+   "w": 46,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "h": 50,
+   "w": 46,
+   "x": 46,
+   "y": 0
+  },
+  {
+   "h": 50,
+   "w": 46,
+   "x": 92,
+   "y": 0
+  }
+ ],
+ "image": "sniper.png",
+ "origin": {
+  "x": 18,
+  "y": 49
+ },
+ "version": 1
+}

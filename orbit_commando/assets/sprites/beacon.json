@@ -1,0 +1,45 @@
+{
+ "animations": {
+  "off": {
+   "fps": 1,
+   "frames": [
+    0
+   ],
+   "loop": true
+  },
+  "on": {
+   "fps": 3,
+   "frames": [
+    1,
+    2
+   ],
+   "loop": true
+  }
+ },
+ "frames": [
+  {
+   "h": 48,
+   "w": 18,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "h": 48,
+   "w": 18,
+   "x": 18,
+   "y": 0
+  },
+  {
+   "h": 48,
+   "w": 18,
+   "x": 36,
+   "y": 0
+  }
+ ],
+ "image": "beacon.png",
+ "origin": {
+  "x": 9,
+  "y": 47
+ },
+ "version": 1
+}

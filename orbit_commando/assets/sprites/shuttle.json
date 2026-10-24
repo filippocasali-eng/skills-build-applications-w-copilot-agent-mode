@@ -1,0 +1,40 @@
+{
+ "animations": {
+  "idle": {
+   "fps": 14,
+   "frames": [
+    0,
+    1
+   ],
+   "loop": true
+  },
+  "run": {
+   "fps": 14,
+   "frames": [
+    0,
+    1
+   ],
+   "loop": true
+  }
+ },
+ "frames": [
+  {
+   "h": 44,
+   "w": 84,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "h": 44,
+   "w": 84,
+   "x": 84,
+   "y": 0
+  }
+ ],
+ "image": "shuttle.png",
+ "origin": {
+  "x": 42,
+  "y": 22
+ },
+ "version": 1
+}

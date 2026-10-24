@@ -1,0 +1,65 @@
+{
+ "animations": {
+  "drawer": {
+   "fps": 1,
+   "frames": [
+    0
+   ],
+   "loop": true
+  },
+  "drawer_open": {
+   "fps": 1,
+   "frames": [
+    1
+   ],
+   "loop": true
+  },
+  "stamp": {
+   "fps": 1,
+   "frames": [
+    2
+   ],
+   "loop": true
+  },
+  "stamp_hot": {
+   "fps": 8,
+   "frames": [
+    2,
+    3
+   ],
+   "loop": true
+  }
+ },
+ "frames": [
+  {
+   "h": 48,
+   "w": 48,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "h": 48,
+   "w": 48,
+   "x": 48,
+   "y": 0
+  },
+  {
+   "h": 48,
+   "w": 48,
+   "x": 96,
+   "y": 0
+  },
+  {
+   "h": 48,
+   "w": 48,
+   "x": 144,
+   "y": 0
+  }
+ ],
+ "image": "stamper_parts.png",
+ "origin": {
+  "x": 24,
+  "y": 24
+ },
+ "version": 1
+}

@@ -1,0 +1,86 @@
+{
+ "animations": {
+  "attack": {
+   "fps": 4,
+   "frames": [
+    5
+   ],
+   "loop": true
+  },
+  "idle": {
+   "fps": 1,
+   "frames": [
+    1
+   ],
+   "loop": true
+  },
+  "jump": {
+   "fps": 1,
+   "frames": [
+    5
+   ],
+   "loop": true
+  },
+  "run": {
+   "fps": 8,
+   "frames": [
+    0,
+    1,
+    2,
+    3
+   ],
+   "loop": true
+  },
+  "tell": {
+   "fps": 4,
+   "frames": [
+    4
+   ],
+   "loop": true
+  }
+ },
+ "frames": [
+  {
+   "h": 52,
+   "w": 50,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "h": 52,
+   "w": 50,
+   "x": 50,
+   "y": 0
+  },
+  {
+   "h": 52,
+   "w": 50,
+   "x": 100,
+   "y": 0
+  },
+  {
+   "h": 52,
+   "w": 50,
+   "x": 150,
+   "y": 0
+  },
+  {
+   "h": 52,
+   "w": 50,
+   "x": 200,
+   "y": 0
+  },
+  {
+   "h": 52,
+   "w": 50,
+   "x": 250,
+   "y": 0
+  }
+ ],
+ "image": "minimech.png",
+ "origin": {
+  "x": 25,
+  "y": 51
+ },
+ "version": 1
+}

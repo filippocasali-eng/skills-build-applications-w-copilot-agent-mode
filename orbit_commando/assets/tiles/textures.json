@@ -1,0 +1,51 @@
+{
+ "animations": {
+  "asteroids": {
+   "fps": 1,
+   "frames": [
+    0
+   ],
+   "loop": true
+  },
+  "glorbo": {
+   "fps": 1,
+   "frames": [
+    2
+   ],
+   "loop": true
+  },
+  "station": {
+   "fps": 1,
+   "frames": [
+    1
+   ],
+   "loop": true
+  }
+ },
+ "frames": [
+  {
+   "h": 64,
+   "w": 64,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "h": 64,
+   "w": 64,
+   "x": 64,
+   "y": 0
+  },
+  {
+   "h": 64,
+   "w": 64,
+   "x": 128,
+   "y": 0
+  }
+ ],
+ "image": "textures.png",
+ "origin": {
+  "x": 0,
+  "y": 0
+ },
+ "version": 1
+}
