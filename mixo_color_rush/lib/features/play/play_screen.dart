@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../app/theme.dart';
+import '../../core/providers.dart';
 import '../../core/widgets/color_badge.dart';
 import '../../game/mixo_game.dart';
 import '../../game/sim/difficulty.dart';
@@ -46,6 +47,7 @@ class PlayScreen extends ConsumerStatefulWidget {
 
 class _PlayScreenState extends ConsumerState<PlayScreen> {
   late final MixoGame _game = MixoGame(
+    library: ref.read(gameDataProvider).library,
     seed: _freshSeed(),
     params: widget.params,
     onGameOver: _onGameOver,

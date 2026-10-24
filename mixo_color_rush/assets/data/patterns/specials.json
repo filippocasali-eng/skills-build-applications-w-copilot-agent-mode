@@ -1,0 +1,11 @@
+{
+  "patterns": [
+    {"id": "spec_01", "tier": 2, "req": ["drops", "mix"], "rows": ["WWW", "T.N"]},
+    {"id": "spec_02", "tier": 3, "req": ["drops", "mix", "special"], "rows": ["III", "NTN"]},
+    {"id": "spec_03", "tier": 3, "req": ["drops", "mix", "special"], "rows": ["ddd", "III", "TNN"], "gaps": [0.8, 0.8, 1]},
+    {"id": "spec_04", "tier": 3, "req": ["drops", "mix", "special"], "rows": ["RRR", "NNN"], "gaps": [1, 0.8]},
+    {"id": "spec_05", "tier": 4, "req": ["drops", "mix", "special"], "rows": ["RRR", "NNN", "NNN"], "gaps": [1, 0.7, 0.7]},
+    {"id": "spec_06", "tier": 4, "req": ["drops", "mix", "special"], "rows": ["I.W", "NTN"], "gaps": [0.8, 1]},
+    {"id": "spec_07", "tier": 5, "req": ["drops", "mix", "special"], "rows": ["ddd", "III", "NNT", "WWW", "TNN"], "gaps": [0.8, 0.8, 1, 0.8, 1]}
+  ]
+}

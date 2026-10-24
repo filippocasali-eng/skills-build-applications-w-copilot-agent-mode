@@ -224,26 +224,70 @@ class TrackComponent extends Component with HasGameReference<MixoGame> {
     final r = lw * 0.2;
     final bob = math.sin(game.time * 5 + z) * r * 0.25;
     final c = Offset(x, floor - lw * 0.42 + bob);
-    _dropFill.color = Color(cell.color.argb).withValues(alpha: alpha);
     _arch
       ..reset()
       ..moveTo(c.dx, c.dy - r * 1.9)
       ..quadraticBezierTo(c.dx + r * 1.1, c.dy - r * 0.6, c.dx + r, c.dy)
       ..arcToPoint(Offset(c.dx - r, c.dy), radius: Radius.circular(r))
       ..quadraticBezierTo(c.dx - r * 1.1, c.dy - r * 0.6, c.dx, c.dy - r * 1.9);
-    canvas
-      ..drawPath(_arch, _dropFill)
-      ..drawCircle(c.translate(-r * 0.35, -r * 0.45), r * 0.22, _shine);
-    _symbolFill.color = Color.fromRGBO(255, 255, 255, alpha);
-    _symbolStroke.strokeWidth = lw * 0.02;
-    paintSymbol(
-      canvas,
-      cell.color.symbol,
-      c.translate(0, r * 0.1),
-      r * 0.5,
-      _symbolFill,
-      _symbolStroke,
-    );
+    switch (cell.dropKind) {
+      case DropKind.color:
+        _dropFill.color = Color(cell.color.argb).withValues(alpha: alpha);
+        canvas.drawPath(_arch, _dropFill);
+        _symbolFill.color = Color.fromRGBO(255, 255, 255, alpha);
+        _symbolStroke.strokeWidth = lw * 0.02;
+        paintSymbol(
+          canvas,
+          cell.color.symbol,
+          c.translate(0, r * 0.1),
+          r * 0.5,
+          _symbolFill,
+          _symbolStroke,
+        );
+      case DropKind.white:
+        _dropFill.color = Color.fromRGBO(255, 255, 255, alpha);
+        canvas.drawPath(_arch, _dropFill);
+        _ring
+          ..strokeWidth = r * 0.18
+          ..color = Color.fromRGBO(120, 120, 160, alpha);
+        canvas.drawCircle(c.translate(0, r * 0.1), r * 0.42, _ring);
+      case DropKind.rainbow:
+        canvas.save();
+        canvas.clipPath(_arch);
+        for (var i = 0; i < 6; i++) {
+          final col = GameColor.values[(i + (game.time * 6).floor()) % 6];
+          _dropFill.color = Color(col.argb).withValues(alpha: alpha);
+          canvas.drawRect(
+            Rect.fromLTWH(
+              c.dx - r * 1.2,
+              c.dy - r * 2 + i * r * 0.55,
+              r * 2.4,
+              r * 0.56,
+            ),
+            _dropFill,
+          );
+        }
+        canvas.restore();
+      case DropKind.invert:
+        canvas.save();
+        canvas.clipPath(_arch);
+        _dropFill.color = Color.fromRGBO(20, 20, 30, alpha);
+        canvas.drawRect(
+          Rect.fromLTWH(c.dx - r * 1.2, c.dy - r * 2, r * 1.2, r * 3.2),
+          _dropFill,
+        );
+        _dropFill.color = Color.fromRGBO(255, 255, 255, alpha);
+        canvas.drawRect(
+          Rect.fromLTWH(c.dx, c.dy - r * 2, r * 1.2, r * 3.2),
+          _dropFill,
+        );
+        canvas.restore();
+        _ring
+          ..strokeWidth = r * 0.12
+          ..color = Color.fromRGBO(255, 210, 31, alpha);
+        canvas.drawPath(_arch, _ring);
+    }
+    canvas.drawCircle(c.translate(-r * 0.35, -r * 0.45), r * 0.22, _shine);
   }
 
   void _renderObstacle(

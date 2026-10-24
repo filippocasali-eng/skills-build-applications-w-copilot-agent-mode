@@ -43,6 +43,11 @@ class TrackRow {
   /// Lane Mixo was in when the row was resolved (-1 if not yet).
   int hitLane = -1;
 
+  /// Tick the row entered the reaction window, and tick of the first lane
+  /// change after that (telemetry for the AdaptiveDirector).
+  int visibleTick = -1;
+  int reactTick = -1;
+
   /// Index of the chunk/pattern that produced this row (debug + coach).
   int patternId = -1;
 
@@ -52,6 +57,8 @@ class TrackRow {
     d = 0;
     resolved = false;
     hitLane = -1;
+    visibleTick = -1;
+    reactTick = -1;
     patternId = -1;
     for (final c in cells) {
       c.clear();

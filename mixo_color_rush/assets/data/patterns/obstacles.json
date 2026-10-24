@@ -1,0 +1,14 @@
+{
+  "patterns": [
+    {"id": "obst_01", "tier": 0, "req": ["obstacles"], "rows": ["O.O"]},
+    {"id": "obst_02", "tier": 1, "req": ["obstacles"], "rows": ["O.O", "TNN"]},
+    {"id": "obst_03", "tier": 1, "req": ["obstacles"], "rows": ["OO.", ".TN"]},
+    {"id": "obst_04", "tier": 1, "req": ["obstacles"], "rows": ["TON", "N.O"]},
+    {"id": "obst_05", "tier": 2, "req": ["obstacles"], "rows": ["OTO"]},
+    {"id": "obst_06", "tier": 2, "req": ["obstacles"], "rows": ["O.O", ".O.", "O.O"], "gaps": [1, 0.8, 0.8]},
+    {"id": "obst_07", "tier": 2, "req": ["obstacles", "jump"], "rows": ["oo.", "NTN"]},
+    {"id": "obst_08", "tier": 3, "req": ["obstacles", "jump"], "rows": ["ooo", "TNN"]},
+    {"id": "obst_09", "tier": 3, "req": ["obstacles", "jump"], "rows": ["oTo", "O.O"]},
+    {"id": "obst_10", "tier": 4, "req": ["obstacles"], "rows": ["OTO", "TOO", "OOT"], "gaps": [1, 0.9, 0.9]}
+  ]
+}

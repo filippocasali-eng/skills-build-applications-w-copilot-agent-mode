@@ -1,0 +1,34 @@
+{
+  "version": 1,
+  "rating": {
+    "start": 60,
+    "min": 0,
+    "max": 1000,
+    "k": 40,
+    "flowLow": 0.70,
+    "flowHigh": 0.85,
+    "inFlowBonus": 6,
+    "longRunMs": 120000,
+    "longRunBonus": 15,
+    "masteryRate": 0.95,
+    "masteryMinMs": 60000,
+    "masteryBonus": 40,
+    "fastReactionMs": 450,
+    "fastReactionBonus": 10,
+    "earlyFailMs": 30000,
+    "earlyFailStreak": 3,
+    "earlyFailPenalty": 60
+  },
+  "stages": [
+    {"rating": 0,   "baseSpeed": 7.5, "maxSpeed": 14, "gapSeconds": 1.5,  "minGapSeconds": 1.0,  "maxTier": 0, "targetTier": 0,   "strict": true,  "drops": true, "obstacles": false, "mixing": false, "mixDepth": 1, "specials": false, "laneCount": 3},
+    {"rating": 100, "baseSpeed": 8,   "maxSpeed": 16, "gapSeconds": 1.35, "minGapSeconds": 0.95, "maxTier": 1, "targetTier": 0.6, "strict": true,  "drops": true, "obstacles": true,  "mixing": false, "mixDepth": 1, "specials": false, "laneCount": 3},
+    {"rating": 250, "baseSpeed": 9,   "maxSpeed": 18, "gapSeconds": 1.25, "minGapSeconds": 0.85, "maxTier": 2, "targetTier": 1.2, "strict": true,  "drops": true, "obstacles": true,  "mixing": true,  "mixDepth": 1, "specials": false, "laneCount": 3},
+    {"rating": 400, "baseSpeed": 10,  "maxSpeed": 20, "gapSeconds": 1.15, "minGapSeconds": 0.78, "maxTier": 3, "targetTier": 2.0, "strict": true,  "drops": true, "obstacles": true,  "mixing": true,  "mixDepth": 2, "specials": false, "laneCount": 3},
+    {"rating": 550, "baseSpeed": 11,  "maxSpeed": 22, "gapSeconds": 1.05, "minGapSeconds": 0.72, "maxTier": 4, "targetTier": 2.8, "strict": false, "drops": true, "obstacles": true,  "mixing": true,  "mixDepth": 2, "specials": true,  "laneCount": 3},
+    {"rating": 700, "baseSpeed": 12,  "maxSpeed": 24, "gapSeconds": 1.0,  "minGapSeconds": 0.66, "maxTier": 5, "targetTier": 3.5, "strict": false, "drops": true, "obstacles": true,  "mixing": true,  "mixDepth": 3, "specials": true,  "laneCount": 3},
+    {"rating": 850, "baseSpeed": 13,  "maxSpeed": 26, "gapSeconds": 1.0,  "minGapSeconds": 0.68, "maxTier": 5, "targetTier": 4.2, "strict": false, "drops": true, "obstacles": true,  "mixing": true,  "mixDepth": 3, "specials": true,  "laneCount": 5}
+  ],
+  "daily": {"baseSpeed": 10, "maxSpeed": 21, "gapSeconds": 1.15, "minGapSeconds": 0.78, "maxTier": 3, "targetTier": 2.0, "strict": true, "drops": true, "obstacles": true, "mixing": true, "mixDepth": 2, "specials": false, "laneCount": 3, "liveAdapt": false},
+  "ghost": {"baseSpeed": 9.5, "maxSpeed": 20, "gapSeconds": 1.2, "minGapSeconds": 0.8, "maxTier": 3, "targetTier": 1.6, "strict": true, "drops": true, "obstacles": true, "mixing": true, "mixDepth": 2, "specials": false, "laneCount": 3, "liveAdapt": false},
+  "unlocks": {"jumpLevel": 5, "diveLevel": 10}
+}

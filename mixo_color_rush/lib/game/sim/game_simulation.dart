@@ -1,3 +1,4 @@
+import '../ai/patterns.dart';
 import '../ai/track_generator.dart';
 import '../systems/color_system.dart';
 import '../systems/score_system.dart';
@@ -17,6 +18,7 @@ enum SimEventType {
   comboTier,
   nearMiss,
   gameOver,
+  finished,
 }
 
 enum ErrorType { wrongColor, wrongMix, obstacle }
@@ -35,22 +37,30 @@ class GameSimulation {
   GameSimulation({
     required this.seed,
     required this.params,
+    required PatternLibrary library,
     this.startColor = GameColor.red,
   }) : color = startColor,
        lane = params.laneCount ~/ 2 {
     _generator = TrackGenerator(
       seed: seed,
       params: params,
+      library: library,
       startColor: startColor,
+      liveSkill: _liveSkill,
     );
     _generator.fillUntil(viewDistance, _pool, rows);
   }
 
   /// Re-simulates [replay] to its end and returns the finished simulation.
-  factory GameSimulation.fromReplay(Replay replay, {int? untilTick}) {
+  factory GameSimulation.fromReplay(
+    Replay replay,
+    PatternLibrary library, {
+    int? untilTick,
+  }) {
     final sim = GameSimulation(
       seed: replay.seed,
       params: replay.params,
+      library: library,
       startColor: replay.startColor,
     );
     final end = untilTick ?? replay.endTick;
@@ -76,6 +86,8 @@ class GameSimulation {
   static const int rainbowTicks = 180;
   static const int nearMissTicks = 12;
   static const double diveSpeedFactor = 1.35;
+  static const double reactionWindow = 40;
+  static const int _outcomeWindow = 16;
 
   final int seed;
   final DifficultyParams params;
@@ -100,11 +112,21 @@ class GameSimulation {
   int _diveUntil = -1;
   int _rainbowUntil = -1;
   bool _over = false;
+  bool _completed = false;
+
+  final List<int> _outcomes = List.filled(_outcomeWindow, 0);
+  int _outcomeCount = 0;
+  int _reactionSumTicks = 0;
+  int _reactionSamples = 0;
+  int obstaclesJumped = 0;
+  int mixGatesOk = 0;
+  int maxMultiplier = 1;
 
   int gatesOk = 0;
   int gatesFail = 0;
   int dropsTaken = 0;
   int nearMisses = 0;
+  int failsWhileBrown = 0;
 
   /// Errors indexed by [ErrorType.index].
   final List<int> errorsByType = List.filled(ErrorType.values.length, 0);
@@ -123,6 +145,45 @@ class GameSimulation {
   int _eventCount = 0;
 
   bool get isOver => _over;
+
+  /// True when the run ended by reaching [DifficultyParams.finishDistance].
+  bool get isCompleted => _completed;
+
+  TrackGenerator get generator => _generator;
+
+  /// Average reaction time (ms) from a row becoming visible to the first
+  /// lane change, over rows passed correctly. 0 if no samples.
+  int get avgReactionMs => _reactionSamples == 0
+      ? 0
+      : _reactionSumTicks * 1000 ~/ (_reactionSamples * ticksPerSecond);
+
+  /// Share of good outcomes (gates passed vs. gates/obstacles failed).
+  double get successRate {
+    final bad = gatesFail + errorsByType[ErrorType.obstacle.index];
+    final total = gatesOk + bad;
+    return total == 0 ? 1 : gatesOk / total;
+  }
+
+  /// Live skill signal in [-1, 1] for the generator: recent success rate
+  /// relative to the 70–85 % flow zone.
+  double _liveSkill() {
+    final n = _outcomeCount < _outcomeWindow ? _outcomeCount : _outcomeWindow;
+    if (n < 6) return 0;
+    var ok = 0;
+    for (var i = 0; i < n; i++) {
+      ok += _outcomes[i];
+    }
+    final rate = ok / n;
+    if (rate > 0.85) return ((rate - 0.85) / 0.15).clamp(0.0, 1.0);
+    if (rate < 0.70) return -((0.70 - rate) / 0.3).clamp(0.0, 1.0);
+    return 0;
+  }
+
+  void _outcome(bool good) {
+    _outcomes[_outcomeCount % _outcomeWindow] = good ? 1 : 0;
+    _outcomeCount++;
+  }
+
   bool get isJumping => tick < _jumpUntil;
   bool get isDiving => tick < _diveUntil;
   bool get isRainbow => tick < _rainbowUntil;
@@ -181,6 +242,9 @@ class GameSimulation {
 
     _generator.fillUntil(distance + viewDistance, _pool, rows);
     for (final row in rows) {
+      if (row.visibleTick < 0 && row.d - distance <= reactionWindow) {
+        row.visibleTick = tick;
+      }
       if (row.d > distance) break;
       if (!row.resolved) {
         row.resolved = true;
@@ -193,6 +257,13 @@ class GameSimulation {
       _pool.release(rows.removeAt(0));
     }
     tick++;
+    if (!_over &&
+        params.finishDistance > 0 &&
+        distance >= params.finishDistance) {
+      _over = true;
+      _completed = true;
+      _emit(SimEventType.finished);
+    }
   }
 
   void _applyInputs() {
@@ -215,6 +286,10 @@ class GameSimulation {
         _laneBefore = lane;
         lane = target;
         lastLaneChangeTick = tick;
+        for (final row in rows) {
+          if (row.resolved || row.visibleTick < 0) continue;
+          if (row.reactTick < 0) row.reactTick = tick;
+        }
         _emit(SimEventType.laneChange, lane: lane);
         return true;
       case InputAction.jump:
@@ -261,7 +336,16 @@ class GameSimulation {
         if (!hurt) {
           gatesOk++;
           okByGateColor[cell.color.index]++;
+          if (cell.color.isSecondary) mixGatesOk++;
+          _outcome(true);
+          if (row.reactTick >= 0) {
+            _reactionSumTicks += row.reactTick - row.visibleTick;
+            _reactionSamples++;
+          }
           final tierUp = score.gatePassed();
+          if (score.multiplier > maxMultiplier) {
+            maxMultiplier = score.multiplier;
+          }
           _boost += 0.6;
           _emit(SimEventType.gateOk, lane: lane, color: cell.color);
           if (tierUp) {
@@ -269,6 +353,8 @@ class GameSimulation {
           }
         } else {
           gatesFail++;
+          if (color == GameColor.brown) failsWhileBrown++;
+          _outcome(false);
           failsByGateColor[cell.color.index]++;
           final mixError = !cell.color.isPrimary || !color.isPrimary;
           _damage(mixError ? ErrorType.wrongMix : ErrorType.wrongColor);
@@ -276,9 +362,11 @@ class GameSimulation {
         }
       case CellType.obstacle:
         if (hurt) {
+          _outcome(false);
           _damage(ErrorType.obstacle);
           _emit(SimEventType.obstacleHit, lane: lane);
         } else {
+          obstaclesJumped++;
           score.add(ScoreSystem.jumpPoints);
           _emit(SimEventType.jumpOver, lane: lane);
         }

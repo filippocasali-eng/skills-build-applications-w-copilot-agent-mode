@@ -5,6 +5,8 @@ import 'package:mixo_color_rush/game/sim/replay.dart';
 import 'package:mixo_color_rush/game/sim/rng.dart';
 import 'package:mixo_color_rush/game/sim/track.dart';
 
+import '../support/test_data.dart';
+
 /// Simple bot: moves towards the first safe lane of the next row.
 void botStep(GameSimulation sim) {
   for (final row in sim.rows) {
@@ -30,9 +32,10 @@ void botStep(GameSimulation sim) {
 
 void main() {
   const params = DifficultyParams();
+  final lib = loadLibrary();
 
   test('idle player eventually loses all hearts', () {
-    final sim = GameSimulation(seed: 3, params: params);
+    final sim = GameSimulation(library: lib, seed: 3, params: params);
     while (!sim.isOver && sim.tick < 60 * 600) {
       sim.step();
     }
@@ -44,7 +47,7 @@ void main() {
   test('a bot that reads the track survives much longer', () {
     var total = 0;
     for (var seed = 0; seed < 20; seed++) {
-      final sim = GameSimulation(seed: seed, params: params);
+      final sim = GameSimulation(library: lib, seed: seed, params: params);
       while (!sim.isOver && sim.tick < 60 * 120) {
         botStep(sim);
         sim.step();
@@ -56,7 +59,7 @@ void main() {
   });
 
   test('lanes are clamped', () {
-    final sim = GameSimulation(seed: 1, params: params);
+    final sim = GameSimulation(library: lib, seed: 1, params: params);
     for (var i = 0; i < 5; i++) {
       sim.input(InputAction.left);
       sim.step();
@@ -70,8 +73,8 @@ void main() {
   });
 
   test('same seed produces the same track', () {
-    final a = GameSimulation(seed: 99, params: params);
-    final b = GameSimulation(seed: 99, params: params);
+    final a = GameSimulation(library: lib, seed: 99, params: params);
+    final b = GameSimulation(library: lib, seed: 99, params: params);
     for (var i = 0; i < 60 * 30; i++) {
       a.step();
       b.step();
@@ -88,7 +91,7 @@ void main() {
 
   test('replay reproduces score exactly (also through JSON)', () {
     final rng = Rng(5);
-    final sim = GameSimulation(seed: 1234, params: params);
+    final sim = GameSimulation(library: lib, seed: 1234, params: params);
     while (!sim.isOver && sim.tick < 60 * 200) {
       if (rng.chance(0.03)) {
         sim.input(rng.chance(0.5) ? InputAction.left : InputAction.right);
@@ -96,7 +99,7 @@ void main() {
       sim.step();
     }
     final replay = Replay.fromJson(sim.toReplay().toJson());
-    final again = GameSimulation.fromReplay(replay);
+    final again = GameSimulation.fromReplay(replay, lib);
     expect(again.score.score, sim.score.score);
     expect(again.tick, sim.tick);
     expect(again.gatesOk, sim.gatesOk);
@@ -104,7 +107,7 @@ void main() {
   });
 
   test('wrong gate costs a heart and breaks combo', () {
-    final sim = GameSimulation(seed: 8, params: params);
+    final sim = GameSimulation(library: lib, seed: 8, params: params);
     var lostHeart = false;
     while (!sim.isOver && sim.tick < 60 * 60) {
       sim.step();

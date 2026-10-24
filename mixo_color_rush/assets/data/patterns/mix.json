@@ -1,0 +1,14 @@
+{
+  "patterns": [
+    {"id": "mix_01", "tier": 2, "req": ["drops", "mix"], "rows": ["ddd", "TN."]},
+    {"id": "mix_02", "tier": 2, "req": ["drops", "mix"], "rows": [".d.", "TN."], "gaps": [0.8, 1]},
+    {"id": "mix_03", "tier": 2, "req": ["drops", "mix"], "rows": ["ddd", "NTN"]},
+    {"id": "mix_04", "tier": 3, "req": ["drops", "mix"], "rows": ["WWW", "ddd", "NTN"], "gaps": [1, 0.8, 1]},
+    {"id": "mix_05", "tier": 3, "req": ["drops", "mix"], "rows": ["ddd", "NTN", "NNT"]},
+    {"id": "mix_06", "tier": 3, "req": ["drops", "mix"], "rows": ["WWW", "d.b", "TN."], "gaps": [1, 0.8, 1]},
+    {"id": "mix_07", "tier": 3, "req": ["drops", "mix"], "rows": ["ddd", "TNN", "WWW", "NTN"], "gaps": [0.8, 1, 0.8, 1]},
+    {"id": "mix_08", "tier": 4, "req": ["drops", "mix"], "rows": ["WWW", "bdb", "NTN"], "gaps": [1, 0.8, 1]},
+    {"id": "mix_09", "tier": 4, "req": ["drops", "mix"], "rows": ["WWW", "db.", "TNN"], "gaps": [1, 0.8, 1]},
+    {"id": "mix_10", "tier": 4, "req": ["drops", "mix"], "rows": ["ddd", "NNT", "WWW", "ddd", "TNN"], "gaps": [0.8, 1, 0.8, 0.8, 1]}
+  ]
+}

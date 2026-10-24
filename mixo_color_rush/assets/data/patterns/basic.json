@@ -1,0 +1,15 @@
+{
+  "patterns": [
+    {"id": "basic_01", "tier": 0, "rows": ["T.."]},
+    {"id": "basic_02", "tier": 0, "rows": [".T."]},
+    {"id": "basic_03", "tier": 0, "rows": ["NT."]},
+    {"id": "basic_04", "tier": 0, "rows": ["TN.", ".TN"]},
+    {"id": "basic_05", "tier": 0, "rows": ["T.N", "N.T"]},
+    {"id": "basic_06", "tier": 0, "rows": ["..T", "T.."], "gaps": [1, 1.2]},
+    {"id": "basic_07", "tier": 1, "rows": ["NTN"]},
+    {"id": "basic_08", "tier": 1, "rows": ["TNN", "NTN"]},
+    {"id": "basic_09", "tier": 1, "rows": ["TNN", "NTN", "NNT"]},
+    {"id": "basic_10", "tier": 2, "rows": ["NNT", "TNN"], "gaps": [1, 1.1]},
+    {"id": "basic_11", "tier": 2, "rows": ["NTN", "TNN", "NTN"], "gaps": [1, 0.9, 0.9]}
+  ]
+}

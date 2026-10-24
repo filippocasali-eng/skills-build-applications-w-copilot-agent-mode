@@ -1,0 +1,9 @@
+{
+  "patterns": [
+    {"id": "exp_01", "tier": 4, "rows": ["NTN", "TNN", "NNT"], "gaps": [0.8, 0.8, 0.8]},
+    {"id": "exp_02", "tier": 4, "req": ["drops", "obstacles"], "rows": ["OTO", "ddd", "NTN"], "gaps": [1, 0.8, 0.9]},
+    {"id": "exp_03", "tier": 5, "req": ["drops", "mix", "obstacles"], "rows": ["WWW", "dbb", "NTN", "OTO"], "gaps": [0.9, 0.8, 0.9, 0.9]},
+    {"id": "exp_04", "tier": 5, "req": ["obstacles", "jump"], "rows": ["oTo", "TNN", "ooo", "NNT"], "gaps": [0.9, 0.8, 0.8, 0.8]},
+    {"id": "exp_05", "tier": 5, "req": ["drops", "mix", "special"], "rows": ["RRR", "NNN", "WWW", "ddd", "NTN"], "gaps": [0.9, 0.7, 0.8, 0.8, 0.9]}
+  ]
+}

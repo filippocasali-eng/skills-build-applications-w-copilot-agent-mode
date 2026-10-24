@@ -35,3 +35,22 @@ Aggiunta la piattaforma `web` solo come **anteprima giocabile dal browser** (anc
 
 ## D-011 · Rendering "a codice"
 Tunnel, porte, gocce, ostacoli e Mixo sono disegnati su `Canvas` con `Paint`/`Path` preallocati (nessuna allocazione di oggetti di gioco nel loop; le file della pista vengono da un `RowPool`). Le porte vicine (z < 0.4) sono disegnate sopra Mixo per dare l'effetto di attraversamento.
+
+## D-012 · Regole di mescolamento non specificate nel prompt
+- Secondario + uno dei suoi primari = **nessun cambio** (es. Arancione + Rosso = Arancione).
+- Secondario + secondario diverso, o secondario + primario mancante = **Marrone**.
+- Marrone resta marrone con qualsiasi goccia di colore: serve la **Bianca** (che riporta al colore base, il rosso di partenza).
+- La goccia Bianca arriva insieme al mescolamento (nello stesso momento in cui il marrone diventa possibile); Arcobaleno e Inverti sono le "gocce speciali" sbloccate dopo.
+- Colori misti con simbolo: Arancione = rombo, Verde = stella, Viola = esagono, Marrone = croce.
+
+## D-013 · Generazione a chunk e validatore
+- I pattern (51, in `assets/data/patterns/*.json`) sono **astratti**: `T` = porta del colore pianificato, `N` = porta esca, `d` = goccia che cambia il colore pianificato, `b` = goccia trappola, `W/R/I` = speciali, `O/o` = ostacoli alto/basso, `.` = libero. Il colore reale viene scelto all'istanziazione; i pattern vengono anche specchiati e, a 5 corsie, traslati.
+- `ChunkValidator` esplora tutti gli stati (corsia, colore, arcobaleno) raggiungibili **senza danno**, limitando i cambi di corsia a uno ogni 0,18 s (velocità di swipe umana) e usando un margine del 10% sulla velocità. Se un'istanza è impossibile viene scartata (max 10 tentativi), poi si inserisce una fila vuota di respiro (< 5% dei casi, verificato dai test).
+- Modalità `strict` (livelli bassi): ogni colore che Mixo *potrebbe* avere deve avere un percorso senza danno, non solo quello "pianificato". Così un bambino che salta una goccia non viene punito.
+- Quando il marrone diventa possibile, il generatore antepone un "muro" di gocce bianche.
+
+## D-014 · Difficoltà adattiva
+- Rating stile Elo semplificato (0–1000), aggiornato a fine partita in base al tasso di successo rispetto alla fascia 70–85%, con bonus per partite lunghe/padronanza e malus silenzioso dopo 3 sconfitte sotto i 30 s.
+- Il rating mappa sugli **stadi** di `difficulty_config.json` (interpolazione lineare dei numeri). Gli stadi sbloccano in ordine: gocce → ostacoli → mescolamento → porte secondarie → speciali → 5 corsie ("Esperto"). Salto e tuffo dipendono dal livello giocatore (5 e 10).
+- Durante la partita il generatore legge il successo delle ultime 16 porte e sposta tier e spaziatura del chunk successivo: è deterministico rispetto agli input registrati, quindi i replay restano esatti. Sfida del Giorno e Fantasma disattivano l'adattamento live (pista uguale per tutti).
+- Nessuna età viene chiesta: si parte facili (rating 60) e si sale in fretta se si è bravi.

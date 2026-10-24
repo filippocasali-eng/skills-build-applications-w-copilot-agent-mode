@@ -4,6 +4,7 @@ import 'dart:ui';
 import 'package:flame/game.dart';
 import 'package:flutter/foundation.dart';
 
+import 'ai/patterns.dart';
 import 'components/mixo_component.dart';
 import 'components/track_component.dart';
 import 'render/projection.dart';
@@ -45,12 +46,14 @@ class HudData {
 /// Flame game: runs [GameSimulation] at a fixed 60 Hz step and renders it.
 class MixoGame extends FlameGame {
   MixoGame({
+    required this.library,
     required int seed,
     required DifficultyParams params,
     this.onGameOver,
     this.showSymbols = true,
-  }) : sim = GameSimulation(seed: seed, params: params);
+  }) : sim = GameSimulation(library: library, seed: seed, params: params);
 
+  final PatternLibrary library;
   GameSimulation sim;
   final void Function(GameSimulation sim)? onGameOver;
   bool showSymbols;
@@ -88,7 +91,7 @@ class MixoGame extends FlameGame {
 
   /// Starts a fresh run immediately (restart is < 1 frame).
   void startRun({required int seed, required DifficultyParams params}) {
-    sim = GameSimulation(seed: seed, params: params);
+    sim = GameSimulation(library: library, seed: seed, params: params);
     projection.resize(size.x, size.y, params.laneCount);
     _accumulator = 0;
     _gameOverSent = false;
