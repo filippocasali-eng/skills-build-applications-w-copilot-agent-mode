@@ -1,0 +1,92 @@
+name: MIXO Android build
+
+# Builds and tests MIXO: Color Rush, then publishes app-debug.apk and
+# app-release.aab as workflow artifacts.
+#
+# Release signing: add these repository secrets to sign with your upload
+# key (otherwise the release build is signed with a throwaway debug key and
+# must NOT be uploaded to Google Play):
+#   MIXO_KEYSTORE_BASE64  base64 of upload-keystore.jks
+#   MIXO_KEY_ALIAS, MIXO_KEY_PASSWORD, MIXO_STORE_PASSWORD
+
+on:
+  push:
+    paths:
+      - "mixo_color_rush/**"
+      - ".github/workflows/mixo-android.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: mixo-android-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    defaults:
+      run:
+        working-directory: mixo_color_rush
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.47.8"
+          channel: stable
+          cache: true
+
+      - name: Format, analyze, unit and widget tests
+        run: ./tools/ci.sh
+
+      - name: Write signing config
+        env:
+          KEYSTORE: ${{ secrets.MIXO_KEYSTORE_BASE64 }}
+          KEY_ALIAS: ${{ secrets.MIXO_KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.MIXO_KEY_PASSWORD }}
+          STORE_PASSWORD: ${{ secrets.MIXO_STORE_PASSWORD }}
+        run: |
+          if [ -n "$KEYSTORE" ]; then
+            echo "$KEYSTORE" | base64 -d > android/app/upload-keystore.jks
+            {
+              echo "storeFile=upload-keystore.jks"
+              echo "keyAlias=$KEY_ALIAS"
+              echo "keyPassword=$KEY_PASSWORD"
+              echo "storePassword=$STORE_PASSWORD"
+            } > android/key.properties
+            echo "Signing with the upload key."
+          else
+            echo "::warning::No upload key secrets: release build signed with the debug key (testing only)."
+          fi
+
+      - name: Build debug APK
+        run: flutter build apk --debug
+
+      - name: Build release App Bundle
+        run: flutter build appbundle --release
+
+      - name: Build release APK (sideload testing)
+        run: flutter build apk --release
+
+      - name: Sizes
+        run: |
+          ls -la build/app/outputs/flutter-apk/ build/app/outputs/bundle/release/
+          du -h build/app/outputs/flutter-apk/app-release.apk build/app/outputs/bundle/release/app-release.aab
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: mixo-color-rush-android
+          path: |
+            mixo_color_rush/build/app/outputs/flutter-apk/app-debug.apk
+            mixo_color_rush/build/app/outputs/flutter-apk/app-release.apk
+            mixo_color_rush/build/app/outputs/bundle/release/app-release.aab
+          if-no-files-found: error
+          retention-days: 30
