@@ -38,7 +38,8 @@ Allocazioni residue note nel loop: oggetti `Color` immutabili creati per gli alp
 |---|---|---|
 | `app-release.aab` | 51 MB | contiene tutte le architetture (arm64, armv7, x86_64): **non** è ciò che scarica l'utente |
 | `app-release.apk` universale | 54,5 MB | tutte le ABI insieme; non più prodotto dalla CI |
-| `app-arm64-v8a-release.apk` | ≈ 18–20 MB (stima) | ciò che installa un telefono moderno; Play genera split equivalenti dall'AAB |
+| `app-arm64-v8a-release.apk` | **20,2 MB** | ciò che installa un telefono moderno; Play genera split equivalenti dall'AAB |
+| `app-armeabi-v7a-release.apk` | 17,6 MB | telefoni a 32 bit |
 | `app-debug.apk` | 166 MB | debug JIT, solo per sviluppo |
 
 Il download reale da Google Play (split per ABI e densità generati dall'AAB) resta sotto l'obiettivo dei 40 MB. Verificare la cifra esatta in Play Console → *App bundle explorer* → dimensione di download per dispositivo.
