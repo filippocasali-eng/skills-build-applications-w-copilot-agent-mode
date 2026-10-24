@@ -32,6 +32,13 @@ Allocazioni residue note nel loop: oggetti `Color` immutabili creati per gli alp
 
 > Nell'ambiente di sviluppo cloud non era disponibile né un dispositivo né l'Android SDK, quindi la tabella è vuota: **i 60 FPS non sono ancora stati verificati**. La build web di anteprima gira fluida in Chromium desktop, ma non è un dato rappresentativo.
 
-## Dimensione
+## Dimensione (misurata dalla CI, build del 24/10/2026)
 
-Stima release AAB: motore Flutter (~5–7 MB per ABI) + codice Dart (~3 MB) + asset (~1,3 MB). Ampiamente sotto i 40 MB; il workflow CI stampa le dimensioni reali nello step "Sizes".
+| File | Dimensione | Note |
+|---|---|---|
+| `app-release.aab` | 51 MB | contiene tutte le architetture (arm64, armv7, x86_64): **non** è ciò che scarica l'utente |
+| `app-release.apk` universale | 54,5 MB | tutte le ABI insieme; non più prodotto dalla CI |
+| `app-arm64-v8a-release.apk` | ≈ 18–20 MB (stima) | ciò che installa un telefono moderno; Play genera split equivalenti dall'AAB |
+| `app-debug.apk` | 166 MB | debug JIT, solo per sviluppo |
+
+Il download reale da Google Play (split per ABI e densità generati dall'AAB) resta sotto l'obiettivo dei 40 MB. Verificare la cifra esatta in Play Console → *App bundle explorer* → dimensione di download per dispositivo.
