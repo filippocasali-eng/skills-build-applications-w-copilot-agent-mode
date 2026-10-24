@@ -1,0 +1,25 @@
+{
+ "animations": {
+  "idle": {
+   "fps": 1,
+   "frames": [
+    0
+   ],
+   "loop": true
+  }
+ },
+ "frames": [
+  {
+   "h": 124,
+   "w": 124,
+   "x": 0,
+   "y": 0
+  }
+ ],
+ "image": "planetoid_medium.png",
+ "origin": {
+  "x": 62,
+  "y": 62
+ },
+ "version": 1
+}

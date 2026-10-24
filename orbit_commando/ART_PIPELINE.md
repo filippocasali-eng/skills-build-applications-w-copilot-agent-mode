@@ -7,7 +7,7 @@ changes**, as long as the file names and JSON format stay the same.
 ## Regenerate
 
 ```bash
-pip install pillow
+pip install -r tools/pixel_art/requirements.txt   # pillow, numpy, scipy
 python3 tools/pixel_art/build.py
 ```
 
@@ -17,13 +17,51 @@ Output is deterministic: running it twice produces identical files.
 |---|---|
 | `palette.py` | `assets/palette.json`, `lib/engine/render/palette.g.dart` |
 | `font.py` | `assets/fonts/orbit5.png` + `.json` |
-| `sprites.py` | `assets/sprites/<name>.png` + `.json` |
+| `sprites.py` | `assets/sprites/<name>.png` + `.json` (planetoids, later FX/tiles) |
+| `import_characters.py` + `art_source/characters/*.png` | `assets/sprites/<character>.png` + `.json` |
+
+## Character pack import
+
+Source: `art_source/characters/<name>.png` (4×2 sheets, see
+`PACK_README.md`). Settings live at the top of `import_characters.py`:
+
+| Setting | Value | Meaning |
+|---|---|---|
+| `CHARACTERS[name]` | role, source facing, target height | height in game pixels, feet to top |
+| `COLORS` | 24 | per-character palette (+ outline colour) |
+| `ALPHA_SOLID` / `ALPHA_OUT` | 96 / 128 | what counts as solid before and after downscaling |
+
+Animations produced for every character: `run` (frames 0–3, 8.33 fps),
+`attack` (4–7, 7.14 fps), `idle` (frame 4) and `jump` (frame 1). The last
+two are derived placeholders.
+
+To add or replace a character: drop a 4×2 sheet with the same layout in
+`art_source/characters/`, add a line to `CHARACTERS` and to
+`lib/game/roster.dart`, then run the build.
+
+### Frames still missing for full gameplay
+
+The pack only has side-on run and fire poses. The brief's moveset still
+needs, per hero:
+- aim up, aim diagonal up and aim down (8-direction shooting);
+- crouch, crouch-fire, real jump and fall poses;
+- dash, melee (laser knife), grenade throw;
+- hurt, death (6 frames) and the vehicle-eject gag;
+- a real idle loop (2–4 frames).
+
+Enemies need hurt and comic death poses and, per §12, a visible attack
+"tell" frame (≥300 ms) before firing.
+
+Until those frames exist the game will reuse the closest pose (e.g. rotate
+the arm or gun overlay for aiming). Requesting them from the same artist or
+tool keeps the style consistent.
 
 ## Palette
 
 64 colours: 8 ramps × 8 shades (`ink`, `space`, `ember`, `gold`, `moss`,
-`aqua`, `clay`, `neon`), dark to light. The build rejects any sprite pixel not
-in the palette. Hand-made art should use `assets/palette.json` as the
+`aqua`, `clay`, `neon`), dark to light. The build rejects any *generated*
+sprite pixel not in the palette. Imported characters have their own
+palettes (see DECISIONS D13). Hand-made art should use `assets/palette.json` as the
 swatch (import it into Aseprite/Pyxel Edit).
 
 ## Sprite atlas format (`assets/sprites/<name>.json`)
@@ -31,12 +69,12 @@ swatch (import it into Aseprite/Pyxel Edit).
 ```json
 {
   "version": 1,
-  "image": "player_rex.png",
-  "origin": {"x": 14, "y": 31},
+  "image": "roxy.png",
+  "origin": {"x": 17, "y": 45},
   "frames": [{"x": 0, "y": 0, "w": 32, "h": 32}, ...],
   "animations": {
-    "idle": {"frames": [0, 1], "fps": 3, "loop": true},
-    "run":  {"frames": [2, 3, 4, 5, 6, 7, 8, 9], "fps": 14, "loop": true}
+    "run":    {"frames": [0, 1, 2, 3], "fps": 8.33, "loop": true},
+    "attack": {"frames": [4, 5, 6, 7], "fps": 7.14, "loop": true}
   }
 }
 ```
@@ -44,9 +82,9 @@ swatch (import it into Aseprite/Pyxel Edit).
 - `origin`: the anchor in frame pixels. Characters use the point between the
   feet (it touches the ground/planet surface); round objects use the centre.
 - Frames may be anywhere in the sheet; all frames of one atlas share a size.
-- Animation names are part of the contract with the code (e.g. the player
-  needs `idle`, `run`, and later `jump`, `fall`, `shoot`, `dash`, `hurt`,
-  `dead`). Tests list the required names.
+- Animation names are part of the contract with the code. Characters need
+  `run`, `attack`, `idle` and `jump` today (`requiredCharacterAnimations` in
+  `lib/game/roster.dart`, checked by tests).
 
 ### Replacing a placeholder
 
@@ -65,8 +103,12 @@ character to `{x, y, w}`. Only capitals exist; text is upper-cased.
 
 ## Current assets
 
-| Name | Size | Notes |
+| Name | Frame | Notes |
 |---|---|---|
-| `player_rex` | 32×32 ×10 | Rex "Torpedo" Calloway: idle (2), run (8). Legs are procedural capsules. |
-| `planetoid_small` | 64×64 | Dithered (4×4 Bayer) shading, craters, light from top-left. |
-| `orbit5` | 5×7 font | 81 glyphs including IT accents, `€`, `♥`. |
+| `roxy`, `nyx` | 45×46, 50×46 | heroes, 42 px tall |
+| `brutus` | 69×47 | hero, 44 px tall (wide frame: muzzle flash) |
+| `doc` | 60×45 | hero, 40 px tall |
+| `grunt`, `rocket` | 59×42, 61×47 | enemies, 40 / 44 px tall |
+| `cyclops`, `bulwark` | 63×50, 67×51 | enemies, 46 / 48 px tall |
+| `planetoid_small` / `planetoid_medium` | 64², 124² | dithered shading, craters |
+| `orbit5` | 5×7 font | 81 glyphs including IT accents, `€`, `♥` |

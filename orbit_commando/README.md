@@ -13,13 +13,13 @@ renderer and all-original generated art and audio.
 | Flutter | 3.47.x stable (Dart 3.13) |
 | Android SDK | platform for the current `targetSdk`, build-tools, NDK as requested by Flutter |
 | JDK | 17+ |
-| Python | 3.10+ with Pillow (`pip install pillow`) for the asset generators |
+| Python | 3.10+ with `pip install -r tools/pixel_art/requirements.txt` for the asset tools |
 
 ## Common commands
 
 ```bash
 flutter pub get
-python3 tools/pixel_art/build.py      # regenerate sprites, font, palette
+python3 tools/pixel_art/build.py      # regenerate sprites, characters, font, palette
 flutter analyze                       # must report no issues
 flutter test                          # unit + widget tests
 flutter run                           # on a device/emulator (landscape)
@@ -50,7 +50,8 @@ lib/
   game/        OrbitGame, scenes, player, weapons, enemies, …
   features/    Flutter screens (title, play, shop, settings, …)
   l10n/        ARB files (EN template, IT) + generated localisations
-assets/        generated sprites/fonts (+ tiles, audio, levels, shaders later)
+assets/        game-ready sprites/fonts (+ tiles, audio, levels, shaders later)
+art_source/    original art (character pack); converted by tools, not bundled
 tools/         pixel_art (Python generators), audio, level_validation
 test/          unit / widget / integration
 ```

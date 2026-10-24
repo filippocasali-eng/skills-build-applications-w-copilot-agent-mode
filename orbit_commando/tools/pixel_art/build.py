@@ -3,7 +3,7 @@
     python3 tools/pixel_art/build.py            # from the project root
 
 Outputs (all committed, all byte-reproducible):
-  assets/sprites/<name>.png + <name>.json   sprite atlases
+  assets/sprites/<name>.png + <name>.json   sprite atlases (generated + imported characters)
   assets/fonts/orbit5.png + orbit5.json      bitmap font
   assets/palette.json
   lib/engine/render/palette.g.dart
@@ -23,6 +23,7 @@ sys.path.insert(0, HERE)
 import font  # noqa: E402
 import palette  # noqa: E402
 from sprites import SPRITES  # noqa: E402
+import import_characters  # noqa: E402
 
 PALETTE_SET = {c + (255,) for c in palette.all_colors()}
 COLS = 8
@@ -134,6 +135,8 @@ def main():
     print(f"font orbit5: {n} glyphs")
     for name, maker in SPRITES.items():
         print(f"sprite {name}: {build_sprite(name, maker)} frames")
+    for name, (w, h, c) in import_characters.build_all(ROOT).items():
+        print(f"character {name}: {w}x{h} frames, {c} colours")
 
 
 if __name__ == "__main__":

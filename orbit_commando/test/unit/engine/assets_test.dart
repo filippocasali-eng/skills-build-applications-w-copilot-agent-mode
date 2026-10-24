@@ -6,6 +6,7 @@ import 'package:orbit_commando/engine/render/bitmap_font.dart';
 import 'package:orbit_commando/engine/render/palette.g.dart';
 import 'package:orbit_commando/engine/render/sprite_atlas.dart';
 import 'package:orbit_commando/game/game_resources.dart';
+import 'package:orbit_commando/game/roster.dart';
 
 Map<String, dynamic> _json(String path) =>
     jsonDecode(File(path).readAsStringSync()) as Map<String, dynamic>;
@@ -29,12 +30,22 @@ void main() {
       });
     }
 
-    test('player has the animations the game relies on', () {
-      final data = AtlasData.fromJson(_json('assets/sprites/player_rex.json'));
-      expect(data.animations.keys, containsAll(['idle', 'run']));
-      expect(data.animations['run']!.frames.length, 8);
-      expect(data.frames.first.width, 32);
-    });
+    for (final id in [
+      ...Hero.values.map((h) => h.atlas),
+      ...EnemyKind.values.map((e) => e.atlas),
+    ]) {
+      test('$id has the character animations, feet on the last row', () {
+        final data = AtlasData.fromJson(_json('assets/sprites/$id.json'));
+        expect(data.animations.keys, containsAll(requiredCharacterAnimations));
+        expect(data.animations['run']!.frames.length, 4);
+        expect(data.animations['attack']!.frames.length, 4);
+        expect(data.frames.length, 8);
+        final h = data.frames.first.height;
+        expect(data.origin.dy, h - 1);
+        // Characters are sized for the 384x216 screen.
+        expect(h, inInclusiveRange(36, 56));
+      });
+    }
 
     test('rejects animations pointing at missing frames', () {
       expect(

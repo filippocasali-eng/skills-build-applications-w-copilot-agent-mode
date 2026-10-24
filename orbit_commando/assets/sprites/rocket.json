@@ -1,0 +1,96 @@
+{
+ "animations": {
+  "attack": {
+   "fps": 7.14,
+   "frames": [
+    4,
+    5,
+    6,
+    7
+   ],
+   "loop": true
+  },
+  "idle": {
+   "fps": 1,
+   "frames": [
+    4
+   ],
+   "loop": true
+  },
+  "jump": {
+   "fps": 1,
+   "frames": [
+    1
+   ],
+   "loop": false
+  },
+  "run": {
+   "fps": 8.33,
+   "frames": [
+    0,
+    1,
+    2,
+    3
+   ],
+   "loop": true
+  }
+ },
+ "frames": [
+  {
+   "h": 47,
+   "w": 61,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "h": 47,
+   "w": 61,
+   "x": 61,
+   "y": 0
+  },
+  {
+   "h": 47,
+   "w": 61,
+   "x": 122,
+   "y": 0
+  },
+  {
+   "h": 47,
+   "w": 61,
+   "x": 183,
+   "y": 0
+  },
+  {
+   "h": 47,
+   "w": 61,
+   "x": 0,
+   "y": 47
+  },
+  {
+   "h": 47,
+   "w": 61,
+   "x": 61,
+   "y": 47
+  },
+  {
+   "h": 47,
+   "w": 61,
+   "x": 122,
+   "y": 47
+  },
+  {
+   "h": 47,
+   "w": 61,
+   "x": 183,
+   "y": 47
+  }
+ ],
+ "image": "rocket.png",
+ "origin": {
+  "x": 20,
+  "y": 46
+ },
+ "role": "enemy",
+ "source": "art_source/characters/rocket.png",
+ "version": 1
+}

@@ -59,6 +59,55 @@ track the Play requirement.
 ### D10. Localisation through `gen-l10n`; the game gets a `GameStrings` object
 Keeps Flame code free of `BuildContext` while still using ARB files.
 
+## Character pack (after M1)
+
+### D11. Characters come from the supplied pack, not from generated sprites
+The owner supplied an 8-character pack (`art_source/characters/`, concept
+resolution, AI-generated, declared original). It replaces the generated
+placeholder "Rex".
+- **Heroes (playable):** Roxy, Brutus, Nyx, Doc. They replace Rex
+  "Torpedo" Calloway and Vera "Nova" Kuznetsova from the brief. Brief §7
+  asked for 2 heroes + 1 unlockable: plan is Roxy and Brutus available from
+  the start, Nyx unlocked through the campaign, Doc as the 4th unlock
+  (e.g. Boss Rush or Arcade clear). Final unlock rules go in GAME_DESIGN.md.
+- **Enemies:** Grunt, Rocket, Cyclops, Bulwark become the Glorbo Empire's
+  hired mechanised army: the bureaucrat aliens stay as officers, bosses and
+  comic relief, and the troopers do the fighting. Brief §4.2 asks for at least
+  12 enemy types, so 8 more are still needed (generated or from a new pack).
+
+### D12. Import pipeline: concept art -> game pixels
+`tools/pixel_art/import_characters.py` (run by `build.py`):
+splits each 4×2 sheet by connected components (guns and muzzle flashes cross
+the cell borders, so a grid crop cut them), anchors frames on the feet
+baseline and hip centre, downscales every frame of a character with one
+factor (heroes 40–44 px tall, enemies 40–48 px), uses hard alpha, quantizes
+to a shared per-character palette and adds a 1 px dark outline. Enemies are
+mirrored so every atlas faces right. Source sheets live in the repo (16 MB,
+not bundled in the APK); only the ~260 KB of converted atlases ship.
+
+### D13. Palette rule relaxed: 64-colour master palette + per-sprite palettes
+Quantizing the pack to the 64-colour master palette lost skin tones and
+Doc's denim. Each character now has its own palette of up to 24 colours plus
+the outline, in the spirit of 16-bit sprite sub-palettes. Environments, UI and
+generated FX keep the master palette. The render test now allows exactly the
+master palette plus the colours found in the loaded atlases, so it still
+catches blended or anti-aliased pixels. The brief's "max 64 colours on screen"
+target no longer holds strictly and becomes a guideline.
+
+### D14. Maps follow the new art direction
+No maps existed yet (levels arrive in M5). Because the characters are gritty
+military / scrap-tech, the tilesets will mix that look with the space setting:
+riveted, rusted plating, sandbags and crates on planetoids, hazard stripes on
+stations. The planetoid now comes in a larger size (`planetoid_medium`,
+r = 60) that suits 40+ px characters. Small planetoids stay as props.
+
+### D15. Open risk: closeness to an existing franchise's look
+The pack is declared original, but its overall style (chunky military
+commandos, a ponytailed heroine with a scarf, steampunk scrap-tech) is close
+to a famous 90s arcade series that brief §1 names as off-limits. Nothing is
+traced or copied as far as we can tell, but the owner should do a visual
+review, ideally with legal input, before the store launch.
+
 ## Environment notes
 
 - The build container could not reach `dl.google.com` (Android SDK

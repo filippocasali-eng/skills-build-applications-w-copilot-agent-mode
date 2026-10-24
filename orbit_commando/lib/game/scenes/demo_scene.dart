@@ -10,9 +10,13 @@ import '../../engine/render/palette.g.dart';
 import '../../engine/render/sprite_atlas.dart';
 import '../../engine/render/virtual_screen.dart';
 import '../orbit_game.dart';
+import '../roster.dart';
 
-/// M1 pipeline showcase: starfield, a planetoid and Rex running around it.
-/// Used as the title backdrop until the attract mode (M8) replaces it.
+/// Pipeline showcase.
+///
+/// Title: Roxy chased by a Grunt around a planetoid (preview of circular
+/// gravity, M3). Sandbox: every character of the pack lined up, alternating
+/// run and attack, to check the imported sprites on a real screen.
 class DemoScene extends Component with HasGameReference<OrbitGame> {
   DemoScene({required this.showTitle});
 
@@ -20,27 +24,68 @@ class DemoScene extends Component with HasGameReference<OrbitGame> {
 
   @override
   Future<void> onLoad() async {
-    final res = game.resources;
     game.camera.backdrop.add(Starfield(seed: 1994));
+    if (showTitle) {
+      _addPlanetChase();
+    } else {
+      _addLineup();
+    }
+    game.camera.viewport.add(TitleOverlay(showTitle: showTitle));
+  }
 
-    final planetAtlas = res.atlas('planetoid_small');
-    final planetCenter = Vector2(0, 24);
+  void _addPlanetChase() {
+    final planet = game.resources.atlas('planetoid_medium');
+    final center = Vector2(0, 52);
     game.world.add(
       makeCrisp(
         SpriteComponent(
-          sprite: planetAtlas.sprite(0),
-          anchor: planetAtlas.anchor,
-          position: planetCenter,
+          sprite: planet.sprite(0),
+          anchor: planet.anchor,
+          position: center,
         ),
       ),
     );
-    game.world.add(
+    // Sprite radius minus the outline: feet rest on the surface.
+    final radius = planet.data.origin.dy - 2;
+    game.world.addAll([
       OrbitRunner(
-        planetCenter: planetCenter,
-        radius: planetAtlas.data.origin.dy - 2,
+        atlasName: EnemyKind.grunt.atlas,
+        planetCenter: center,
+        radius: radius,
+        startAngle: -0.75,
       ),
-    );
-    game.camera.viewport.add(TitleOverlay(showTitle: showTitle));
+      OrbitRunner(
+        atlasName: Hero.roxy.atlas,
+        planetCenter: center,
+        radius: radius,
+      ),
+    ]);
+  }
+
+  void _addLineup() {
+    const groundY = 80.0;
+    const spacing = 92.0;
+    for (final (i, h) in Hero.values.indexed) {
+      game.world.add(
+        LineupCharacter(
+          atlasName: h.atlas,
+          label: h.displayName,
+          position: Vector2(-138 + i * spacing, groundY - 76),
+          phase: i,
+        ),
+      );
+    }
+    for (final (i, e) in EnemyKind.values.indexed) {
+      game.world.add(
+        LineupCharacter(
+          atlasName: e.atlas,
+          label: e.displayName,
+          position: Vector2(-138 + i * spacing, groundY),
+          phase: i + 2,
+          facingLeft: true,
+        ),
+      );
+    }
   }
 }
 
@@ -93,18 +138,24 @@ class Starfield extends Component with FixedTick {
   }
 }
 
-/// Rex running around the planetoid: a preview of circular gravity (M3).
+/// A character running around a planetoid: a preview of circular gravity.
 class OrbitRunner extends SpriteAnimationComponent
     with HasGameReference<OrbitGame>, FixedTick {
-  OrbitRunner({required this.planetCenter, required this.radius});
+  OrbitRunner({
+    required this.atlasName,
+    required this.planetCenter,
+    required this.radius,
+    double startAngle = 0,
+  }) : _theta = startAngle;
 
+  final String atlasName;
   final Vector2 planetCenter;
   final double radius;
-  double _theta = 0;
+  double _theta;
 
   @override
   Future<void> onLoad() async {
-    final atlas = game.resources.atlas('player_rex');
+    final atlas = game.resources.atlas(atlasName);
     animation = atlas.animation('run');
     size = atlas.frameSize;
     anchor = atlas.anchor;
@@ -114,8 +165,8 @@ class OrbitRunner extends SpriteAnimationComponent
 
   @override
   void fixedUpdate(int tick) {
-    // ~1.1 px per tick along the surface: a brisk jog.
-    _theta += 1.1 / radius;
+    // ~1.2 px per tick along the surface: a brisk run.
+    _theta += 1.2 / radius;
     if (_theta > math.pi * 2) _theta -= math.pi * 2;
     _place();
   }
@@ -127,6 +178,66 @@ class OrbitRunner extends SpriteAnimationComponent
       planetCenter.y - math.cos(_theta) * radius,
     );
     angle = _theta;
+  }
+}
+
+/// One character of the sandbox lineup: alternates run and attack loops.
+class LineupCharacter extends SpriteAnimationGroupComponent<String>
+    with HasGameReference<OrbitGame>, FixedTick {
+  LineupCharacter({
+    required this.atlasName,
+    required this.label,
+    required super.position,
+    required this.phase,
+    this.facingLeft = false,
+  });
+
+  final String atlasName;
+  final String label;
+  final int phase;
+  final bool facingLeft;
+
+  @override
+  Future<void> onLoad() async {
+    final atlas = game.resources.atlas(atlasName);
+    animations = {
+      for (final name in atlas.data.animations.keys)
+        name: atlas.animation(name),
+    };
+    current = 'run';
+    size = atlas.frameSize;
+    anchor = atlas.anchor;
+    makeCrisp(this);
+    // Atlases face right; enemies face the heroes.
+    if (facingLeft) flipHorizontally();
+  }
+
+  @override
+  void fixedUpdate(int tick) {
+    // Switch every 2 s, staggered per character.
+    current = ((tick ~/ 120) + phase).isEven ? 'run' : 'attack';
+  }
+
+  @override
+  void render(Canvas canvas) {
+    super.render(canvas);
+    final font = game.resources.font;
+    // Label under the feet, in local (unflipped) space.
+    canvas.save();
+    if (facingLeft) {
+      canvas
+        ..translate(size.x, 0)
+        ..scale(-1, 1);
+    }
+    font.draw(
+      canvas,
+      label,
+      anchor.x * size.x,
+      size.y + 2,
+      color: Pal.ink6,
+      align: PixelTextAlign.center,
+    );
+    canvas.restore();
   }
 }
 
@@ -150,7 +261,7 @@ class TitleOverlay extends Component with HasGameReference<OrbitGame> {
         canvas,
         s.title,
         cx,
-        14,
+        12,
         color: Pal.gold6,
         shadow: Pal.ember2,
         align: PixelTextAlign.center,
@@ -160,7 +271,7 @@ class TitleOverlay extends Component with HasGameReference<OrbitGame> {
           canvas,
           s.pressStart,
           cx,
-          186,
+          28,
           color: Pal.ink7,
           shadow: Pal.space2,
           align: PixelTextAlign.center,
