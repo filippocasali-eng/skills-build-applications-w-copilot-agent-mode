@@ -54,3 +54,35 @@ Tunnel, porte, gocce, ostacoli e Mixo sono disegnati su `Canvas` con `Paint`/`Pa
 - Il rating mappa sugli **stadi** di `difficulty_config.json` (interpolazione lineare dei numeri). Gli stadi sbloccano in ordine: gocce → ostacoli → mescolamento → porte secondarie → speciali → 5 corsie ("Esperto"). Salto e tuffo dipendono dal livello giocatore (5 e 10).
 - Durante la partita il generatore legge il successo delle ultime 16 porte e sposta tier e spaziatura del chunk successivo: è deterministico rispetto agli input registrati, quindi i replay restano esatti. Sfida del Giorno e Fantasma disattivano l'adattamento live (pista uguale per tutti).
 - Nessuna età viene chiesta: si parte facili (rating 60) e si sale in fretta se si è bravi.
+
+## D-015 · Audio procedurale
+`tools/generate_audio.py` (numpy) sintetizza 11 SFX e 3 strati di musica chiptune a 120 BPM (loop di 8 s, tonalità Do pentatonica). Gli strati (base → +arpeggio → +melodia) si alternano con la velocità e il `playbackRate` sale da 0,95 a 1,2: "musica il cui tempo segue la velocità" senza dover sincronizzare tracce separate. WAV 22 kHz mono (≈1,2 MB), nessun asset di terzi.
+
+## D-016 · Accessibilità
+- Simboli dei colori attivi di default su porte, gocce, Mixo e HUD; i colori di gioco restano distinguibili per forma con qualsiasi tipo di daltonismo.
+- "Effetti più calmi": niente scossoni, niente slow-mo, meno particelle.
+- Controllo alternativo a tocco sui lati; pulsanti ≥ 56 dp; icona prima del testo in ogni tile del menu; ricette mostrate con badge colorati anziché a parole.
+
+## D-017 · Persistenza
+Un unico documento JSON (`mixo.profile`) con `schemaVersion` e catena di migrazioni; prima di ogni salvataggio la versione precedente viene copiata in `mixo.profile.bak`, usata se il documento principale è illeggibile. Nessun backup cloud (`allowBackup=false` e regole di estrazione dati): i dati non lasciano il dispositivo.
+
+## D-018 · "Obbligatori solo i primi 2" (Accademia)
+Interpretazione: la Corsa Libera è sempre disponibile (il prompt chiede onboarding → subito Corsa Libera); le prime 2 lezioni dell'Accademia sono obbligatorie **per sbloccare Sfida del Giorno e Sfida Fantasma**, che usano parametri fissi più impegnativi e presuppongono le basi.
+
+## D-019 · Onboarding giocato
+Una vera mini-partita in modalità *practice* (gli errori non tolgono cuori) di ~230 unità con pattern "porta del tuo colore" che richiedono uno swipe; fumetto di istruzioni, "Bravo!" alla prima porta, poi si passa direttamente alla Corsa Libera.
+
+## D-020 · Pubblicità (futuro)
+v1 senza annunci (`NoAds`). Se mai introdotti: solo SDK autocertificati Families, solo rewarded non personalizzati scelti dal giocatore per un premio estetico, mai interstitial durante il gioco, mai nella prima sessione, disattivabili dal genitore.
+
+## D-021 · Billing
+`in_app_purchase` (Play Billing Library) con 4 prodotti **non consumabili**. Concessione locale alla conferma (nessun server, quindi nessun dato personale); `completePurchase` sempre chiamato; ripristino con `restorePurchases`. Test: account license-tester su internal testing (metodo ufficiale per Billing v5+); opzione `--dart-define=MIXO_STATIC_TEST_SKU=true` per il prodotto statico `android.test.purchased`. Su web/emulatori senza Play Store il negozio mostra "non disponibile" e il gioco funziona normalmente.
+
+## D-022 · Permessi
+`INTERNET` (Play Billing) e `VIBRATE` (consentito dal prompt; la vibrazione usa `HapticFeedback`). La libreria billing aggiunge `com.android.vending.BILLING`. `AD_ID` rimosso esplicitamente. Nessun permesso di notifica.
+
+## D-023 · Build Android su GitHub Actions
+Poiché l'ambiente cloud di sviluppo non può scaricare l'Android SDK, `.github/workflows/mixo-android.yml` esegue CI e produce APK debug, APK release e AAB release come artifact. Con i secret dell'upload key la release è firmata per Play; senza, è firmata con una chiave di debug temporanea (solo test).
+
+## D-024 · Ottimizzazioni release
+`isMinifyEnabled` + `isShrinkResources` attivi in release; versione 1.0.0+1; `applicationId` `com.mixogames.mixocolorrush` (modificabile prima del primo upload: dopo è definitivo).
