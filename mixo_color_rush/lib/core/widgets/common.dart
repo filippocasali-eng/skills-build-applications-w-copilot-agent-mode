@@ -119,36 +119,39 @@ class MenuTile extends StatelessWidget {
             child: Stack(
               children: [
                 Center(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Icon(
-                        locked ? Icons.lock_rounded : icon,
-                        size: 38,
-                        color: Colors.white,
-                      ),
-                      const SizedBox(height: 4),
-                      Text(
-                        label,
-                        textAlign: TextAlign.center,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w900,
+                  child: FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(
+                          locked ? Icons.lock_rounded : icon,
+                          size: 38,
+                          color: Colors.white,
                         ),
-                      ),
-                      if (subtitle != null)
+                        const SizedBox(height: 4),
                         Text(
-                          subtitle!,
+                          label,
+                          textAlign: TextAlign.center,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: const TextStyle(
-                            fontSize: 13,
-                            color: Colors.white70,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w900,
                           ),
                         ),
-                    ],
+                        if (subtitle != null)
+                          Text(
+                            subtitle!,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(
+                              fontSize: 13,
+                              color: Colors.white70,
+                            ),
+                          ),
+                      ],
+                    ),
                   ),
                 ),
                 if (badge != null)
@@ -233,7 +236,8 @@ class MixoCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(24),
         border: Border.all(color: Colors.white12, width: 2),
       ),
-      child: child,
+      // Transparent Material so ListTile / InkWell children work anywhere.
+      child: Material(type: MaterialType.transparency, child: child),
     );
   }
 }

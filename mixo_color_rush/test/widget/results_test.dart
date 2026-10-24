@@ -50,6 +50,15 @@ void main() {
     expect(p.xp + (p.level - 1) * 100, greaterThan(0));
     expect(p.skill.recentRuns, hasLength(1));
 
+    // The AGAIN button is always on screen (never pushed below the fold).
+    final again = tester.getRect(find.byKey(const Key('again-button')));
+    expect(
+      again.bottom,
+      lessThanOrEqualTo(
+        tester.view.physicalSize.height / tester.view.devicePixelRatio,
+      ),
+    );
+
     final before = DateTime.now();
     await tester.tap(find.byKey(const Key('again-button')));
     await tester.pump();

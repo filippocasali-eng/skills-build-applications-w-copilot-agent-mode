@@ -36,7 +36,7 @@ class ResultsPanel extends StatelessWidget {
       color: Colors.black54,
       child: SafeArea(
         child: Center(
-          child: SingleChildScrollView(
+          child: Padding(
             padding: const EdgeInsets.all(16),
             child: Container(
               padding: const EdgeInsets.all(20),
@@ -49,95 +49,108 @@ class ResultsPanel extends StatelessWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  if (mode == GameMode.academy) ...[
-                    Text(
-                      r.completed ? l.lessonComplete : l.lessonFailed,
-                      style: const TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.w900,
-                        color: MixoColors.sun,
-                      ),
-                    ),
-                    Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        for (var i = 0; i < 3; i++)
-                          Icon(
-                            i < (outcome.lessonStars ?? 0)
-                                ? Icons.star_rounded
-                                : Icons.star_border_rounded,
-                            size: 48,
-                            color: MixoColors.sun,
+                  // Details scroll; the AGAIN / Home buttons below stay
+                  // visible however many rewards the run produced.
+                  Flexible(
+                    child: SingleChildScrollView(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          if (mode == GameMode.academy) ...[
+                            Text(
+                              r.completed ? l.lessonComplete : l.lessonFailed,
+                              style: const TextStyle(
+                                fontSize: 24,
+                                fontWeight: FontWeight.w900,
+                                color: MixoColors.sun,
+                              ),
+                            ),
+                            Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                for (var i = 0; i < 3; i++)
+                                  Icon(
+                                    i < (outcome.lessonStars ?? 0)
+                                        ? Icons.star_rounded
+                                        : Icons.star_border_rounded,
+                                    size: 48,
+                                    color: MixoColors.sun,
+                                  ),
+                              ],
+                            ),
+                          ],
+                          if (rw.isRecord) _Banner(text: l.newRecord),
+                          if (outcome.ghostBeaten) _Banner(text: l.ghostBeaten),
+                          Text(l.score, style: const TextStyle(fontSize: 18)),
+                          Text(
+                            '${r.score}',
+                            key: const Key('results-score'),
+                            style: const TextStyle(
+                              fontSize: 56,
+                              fontWeight: FontWeight.w900,
+                              height: 1.1,
+                            ),
                           ),
-                      ],
-                    ),
-                  ],
-                  if (rw.isRecord) _Banner(text: l.newRecord),
-                  if (outcome.ghostBeaten) _Banner(text: l.ghostBeaten),
-                  Text(l.score, style: const TextStyle(fontSize: 18)),
-                  Text(
-                    '${r.score}',
-                    key: const Key('results-score'),
-                    style: const TextStyle(
-                      fontSize: 56,
-                      fontWeight: FontWeight.w900,
-                      height: 1.1,
+                          if (mode == GameMode.daily &&
+                              outcome.dailyBest != null)
+                            Text(
+                              l.dailyBest(outcome.dailyBest!),
+                              style: const TextStyle(fontSize: 16),
+                            )
+                          else
+                            Text(
+                              l.best(outcome.bestScore),
+                              style: const TextStyle(fontSize: 16),
+                            ),
+                          const SizedBox(height: 8),
+                          Wrap(
+                            spacing: 14,
+                            alignment: WrapAlignment.center,
+                            children: [
+                              _Stat(
+                                icon: Icons.timer_rounded,
+                                text: l.timeLabel(r.durationMs ~/ 1000),
+                              ),
+                              _Stat(
+                                icon: Icons.door_front_door_rounded,
+                                text: '${r.gatesOk}',
+                              ),
+                              _Stat(
+                                icon: Icons.bolt_rounded,
+                                text: 'x${r.maxMultiplier}',
+                              ),
+                              _Stat(
+                                icon: Icons.star_rounded,
+                                text: '+${rw.starsGained}',
+                                color: MixoColors.sun,
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 12),
+                          _XpBar(rewards: rw),
+                          const SizedBox(height: 12),
+                          _CoachBubble(tip: rw.tip),
+                          for (final m in rw.completedMissions)
+                            _Line(
+                              icon: Icons.flag_rounded,
+                              text:
+                                  '${l.missionDone}: ${missionText(l, m)}  +${m.reward}★',
+                            ),
+                          for (final a in rw.newAchievements)
+                            _Line(
+                              icon: Icons.emoji_events_rounded,
+                              text:
+                                  '${content.achievementTitle(a)}  +${a.reward}★',
+                            ),
+                          for (final u in rw.newUnlocks)
+                            _Line(
+                              icon: Icons.lock_open_rounded,
+                              text: '${l.unlocked}: ${content.item(u)}',
+                            ),
+                        ],
+                      ),
                     ),
                   ),
-                  if (mode == GameMode.daily && outcome.dailyBest != null)
-                    Text(
-                      l.dailyBest(outcome.dailyBest!),
-                      style: const TextStyle(fontSize: 16),
-                    )
-                  else
-                    Text(
-                      l.best(outcome.bestScore),
-                      style: const TextStyle(fontSize: 16),
-                    ),
-                  const SizedBox(height: 8),
-                  Wrap(
-                    spacing: 14,
-                    alignment: WrapAlignment.center,
-                    children: [
-                      _Stat(
-                        icon: Icons.timer_rounded,
-                        text: l.timeLabel(r.durationMs ~/ 1000),
-                      ),
-                      _Stat(
-                        icon: Icons.door_front_door_rounded,
-                        text: '${r.gatesOk}',
-                      ),
-                      _Stat(
-                        icon: Icons.bolt_rounded,
-                        text: 'x${r.maxMultiplier}',
-                      ),
-                      _Stat(
-                        icon: Icons.star_rounded,
-                        text: '+${rw.starsGained}',
-                        color: MixoColors.sun,
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 12),
-                  _XpBar(rewards: rw),
-                  const SizedBox(height: 12),
-                  _CoachBubble(tip: rw.tip),
-                  for (final m in rw.completedMissions)
-                    _Line(
-                      icon: Icons.flag_rounded,
-                      text:
-                          '${l.missionDone}: ${missionText(l, m)}  +${m.reward}★',
-                    ),
-                  for (final a in rw.newAchievements)
-                    _Line(
-                      icon: Icons.emoji_events_rounded,
-                      text: '${content.achievementTitle(a)}  +${a.reward}★',
-                    ),
-                  for (final u in rw.newUnlocks)
-                    _Line(
-                      icon: Icons.lock_open_rounded,
-                      text: '${l.unlocked}: ${content.item(u)}',
-                    ),
                   const SizedBox(height: 16),
                   SizedBox(
                     width: double.infinity,
@@ -146,11 +159,14 @@ class ResultsPanel extends StatelessWidget {
                       key: const Key('again-button'),
                       onPressed: onAgain,
                       icon: const Icon(Icons.replay_rounded, size: 40),
-                      label: Text(
-                        l.again,
-                        style: const TextStyle(
-                          fontSize: 32,
-                          fontWeight: FontWeight.w900,
+                      label: FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: Text(
+                          l.again,
+                          style: const TextStyle(
+                            fontSize: 32,
+                            fontWeight: FontWeight.w900,
+                          ),
                         ),
                       ),
                     ),
@@ -287,7 +303,10 @@ class _CoachBubble extends StatelessWidget {
           if (tip.kind == CoachTipKind.mixRecipe && tip.a != null)
             Padding(
               padding: const EdgeInsets.only(top: 8),
-              child: RecipeRow(a: tip.a!, b: tip.b!, result: tip.result!),
+              child: FittedBox(
+                fit: BoxFit.scaleDown,
+                child: RecipeRow(a: tip.a!, b: tip.b!, result: tip.result!),
+              ),
             ),
         ],
       ),
