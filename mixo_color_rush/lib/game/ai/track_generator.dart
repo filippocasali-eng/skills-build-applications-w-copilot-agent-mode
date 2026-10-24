@@ -24,6 +24,10 @@ class TrackGenerator {
        _plan = startColor,
        _mask = 1 << startColor.index,
        _validator = ChunkValidator(params, baseColor: startColor) {
+    _focus = [
+      for (final f in params.focus.split(','))
+        if (f.trim().isNotEmpty) f.trim(),
+    ];
     _eligible = [
       for (var i = 0; i < library.patterns.length; i++)
         if (_allowed(library.patterns[i])) i,
@@ -45,6 +49,7 @@ class TrackGenerator {
   final ChunkValidator _validator;
   final ChunkCheck _check = ChunkCheck();
   late final List<int> _eligible;
+  late final List<String> _focus;
   final List<TrackRow> _scratch = List.generate(8, (_) => TrackRow());
 
   double _nextD = firstRowDistance;
@@ -149,7 +154,10 @@ class TrackGenerator {
   double _weight(int i, double targetTier) {
     final p = library.patterns[i];
     if (targetTier == 0 && p.tier > 0) return 0;
-    final w = 1 / (1 + (p.tier - targetTier).abs() * 1.5);
+    var w = 1 / (1 + (p.tier - targetTier).abs() * 1.5);
+    if (_focus.isNotEmpty) {
+      w *= _focus.any(p.id.startsWith) ? 8 : 0.15;
+    }
     return i == _lastPattern ? w * 0.2 : w;
   }
 

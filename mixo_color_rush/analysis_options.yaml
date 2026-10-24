@@ -30,7 +30,6 @@ linter:
     - prefer_final_fields
     - prefer_final_locals
     - prefer_single_quotes
-    - sort_constructors_first
     - test_types_in_equals
     - throw_in_finally
     - unawaited_futures

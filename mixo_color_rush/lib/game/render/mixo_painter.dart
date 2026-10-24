@@ -1,7 +1,9 @@
 import 'dart:math' as math;
 import 'dart:ui';
 
+import '../../core/models/cosmetics.dart';
 import '../systems/color_system.dart';
+import 'accessory_painter.dart';
 import 'symbol_painter.dart';
 
 enum MixoExpression { happy, surprised, dizzy }
@@ -42,6 +44,7 @@ void paintMixo(
   double lookX = 0,
   MixoExpression expression = MixoExpression.happy,
   double wobble = 0,
+  Accessory accessory = Accessory.none,
 }) {
   final sx = 1 + squish * 0.28 + math.sin(wobble) * 0.03;
   final sy = 1 - squish * 0.22 - math.sin(wobble) * 0.03;
@@ -49,6 +52,7 @@ void paintMixo(
   final h = r * 1.85 * sy;
   final rect = Rect.fromCenter(center: c, width: w, height: h);
 
+  paintAccessory(canvas, accessory, c, w, h, behind: true);
   p.body.color = color;
   p.outline.strokeWidth = r * 0.08;
   final rr = RRect.fromRectAndCorners(
@@ -110,6 +114,8 @@ void paintMixo(
         ..quadraticBezierTo(c.dx + r * 0.1, my + r * 0.16, c.dx + r * 0.2, my);
       canvas.drawPath(_mouth, p.mouth);
   }
+
+  paintAccessory(canvas, accessory, c, w, h, behind: false);
 
   if (symbol != null) {
     p.symbolStroke.strokeWidth = r * 0.04;

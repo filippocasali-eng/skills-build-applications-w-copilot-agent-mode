@@ -43,27 +43,33 @@ class TrackComponent extends Component with HasGameReference<MixoGame> {
   final Path _floorPath = Path();
   Size _cached = Size.zero;
 
+  Object? _cachedPalette;
+
   void _cacheShaders() {
     final p = game.projection;
+    final pal = game.look.palette;
     _sky.shader = Gradient.linear(
       Offset.zero,
       Offset(0, p.height),
-      const [Color(0xFF120A33), Color(0xFF3B1C7A), Color(0xFF6A2BB0)],
+      [Color(pal.skyTop), Color(pal.skyMid), Color(pal.skyBottom)],
       const [0, 0.35, 1],
     );
     _floor.shader = Gradient.linear(
       Offset(0, p.horizonY),
       Offset(0, p.height),
-      const [Color(0xFF1A0F40), Color(0xFF2E1A66)],
+      [Color(pal.floorFar), Color(pal.floorNear)],
     );
     _cached = Size(p.width, p.height);
+    _cachedPalette = pal;
   }
 
   @override
   void render(Canvas canvas) {
     final p = game.projection;
     final sim = game.sim;
-    if (_cached.width != p.width || _cached.height != p.height) {
+    if (_cached.width != p.width ||
+        _cached.height != p.height ||
+        !identical(_cachedPalette, game.look.palette)) {
       _cacheShaders();
     }
     if (!near) _renderTunnel(canvas, sim);
@@ -96,7 +102,7 @@ class TrackComponent extends Component with HasGameReference<MixoGame> {
     canvas.drawPath(_floorPath, _floor);
 
     // Rings scrolling towards the player.
-    final hue = (sim.distance * 0.4) % 360;
+    final pal = game.look.palette;
     final first = (sim.distance / ringSpacing).floor() * ringSpacing;
     for (
       var d = first + GameSimulation.viewDistance;
@@ -114,7 +120,7 @@ class TrackComponent extends Component with HasGameReference<MixoGame> {
         ..strokeWidth = math.max(1, 5 * s)
         ..color = HSVColor.fromAHSV(
           a * 0.8,
-          (hue + d * 3) % 360,
+          (pal.ringHue + math.sin(d * 0.05) * pal.ringSpread / 2 + 360) % 360,
           0.7,
           1,
         ).toColor();

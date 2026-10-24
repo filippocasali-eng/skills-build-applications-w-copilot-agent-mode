@@ -1,8 +1,7 @@
 import 'package:flutter/widgets.dart';
 
+import '../../core/models/profile.dart';
 import '../../game/sim/replay.dart';
-
-enum ControlMode { swipe, tapSides }
 
 /// Full-screen, low-latency gesture layer. A swipe fires as soon as the
 /// finger has moved past the threshold (no need to lift it).

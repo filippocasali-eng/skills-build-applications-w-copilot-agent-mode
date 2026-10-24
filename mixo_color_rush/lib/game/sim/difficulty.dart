@@ -23,6 +23,8 @@ class DifficultyParams {
     this.jumpEnabled = false,
     this.diveEnabled = false,
     this.finishDistance = 0,
+    this.practice = false,
+    this.focus = '',
   });
 
   factory DifficultyParams.fromJson(Map<String, Object?> j) {
@@ -49,6 +51,8 @@ class DifficultyParams {
       jumpEnabled: b('jumpEnabled', def.jumpEnabled),
       diveEnabled: b('diveEnabled', def.diveEnabled),
       finishDistance: d('finishDistance', def.finishDistance),
+      practice: b('practice', def.practice),
+      focus: j['focus'] as String? ?? def.focus,
     );
   }
 
@@ -90,6 +94,12 @@ class DifficultyParams {
   /// > 0: the run is completed when Mixo reaches this distance (Academy).
   final double finishDistance;
 
+  /// Practice: mistakes never cost hearts (onboarding).
+  final bool practice;
+
+  /// Comma-separated pattern id prefixes to favour (Academy lessons).
+  final String focus;
+
   DifficultyParams copyWith({
     int? laneCount,
     double? baseSpeed,
@@ -108,6 +118,8 @@ class DifficultyParams {
     bool? jumpEnabled,
     bool? diveEnabled,
     double? finishDistance,
+    bool? practice,
+    String? focus,
   }) => DifficultyParams(
     laneCount: laneCount ?? this.laneCount,
     baseSpeed: baseSpeed ?? this.baseSpeed,
@@ -127,6 +139,8 @@ class DifficultyParams {
     jumpEnabled: jumpEnabled ?? this.jumpEnabled,
     diveEnabled: diveEnabled ?? this.diveEnabled,
     finishDistance: finishDistance ?? this.finishDistance,
+    practice: practice ?? this.practice,
+    focus: focus ?? this.focus,
   );
 
   Map<String, Object?> toJson() => {
@@ -148,6 +162,8 @@ class DifficultyParams {
     'jumpEnabled': jumpEnabled,
     'diveEnabled': diveEnabled,
     'finishDistance': finishDistance,
+    'practice': practice,
+    'focus': focus,
   };
 
   /// Ramp progress 0..1 at track distance [d].

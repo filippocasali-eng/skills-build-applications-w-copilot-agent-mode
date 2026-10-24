@@ -395,7 +395,7 @@ class GameSimulation {
     errorsByType[type.index]++;
     score.breakCombo();
     _boost = 0;
-    if (isInvulnerable) return;
+    if (isInvulnerable || params.practice) return;
     hearts--;
     _invulnerableUntil = tick + invulnerableTicks;
     if (hearts <= 0) {

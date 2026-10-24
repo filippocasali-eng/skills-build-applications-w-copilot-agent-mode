@@ -1,6 +1,9 @@
 /// Pseudo-3D projection: lanes converge to a vanishing point.
 class Projection {
-  static const double focal = 7;
+  static const double baseFocal = 7;
+
+  /// Lower focal = stronger perspective ("wider FOV" at high speed).
+  double focal = baseFocal;
 
   double width = 1;
   double height = 1;

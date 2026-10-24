@@ -6,19 +6,322 @@
   "home": "Home",
   "score": "Score",
   "best": "Best: {score}",
-  "@best": {"placeholders": {"score": {"type": "int"}}},
+  "@best": {
+    "placeholders": {
+      "score": {
+        "type": "int"
+      }
+    }
+  },
   "newRecord": "NEW RECORD!",
   "paused": "Paused",
   "resume": "Resume",
   "pause": "Pause",
+  "cancel": "Cancel",
+  "loading": "Loading…",
   "swipeHint": "Swipe to change lane",
   "matchHint": "Go through gates of YOUR colour!",
+  "onboardingHint": "This is Mixo! Reach the gate of his colour.",
+  "onboardingDone": "You're ready. Let's run!",
+  "bravo": "Great!",
   "hearts": "Hearts: {count}",
-  "@hearts": {"placeholders": {"count": {"type": "int"}}},
+  "@hearts": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "comboLabel": "Combo x{multiplier}",
-  "@comboLabel": {"placeholders": {"multiplier": {"type": "int"}}},
+  "@comboLabel": {
+    "placeholders": {
+      "multiplier": {
+        "type": "int"
+      }
+    }
+  },
+  "combo": "COMBO",
+  "nearMiss": "CLOSE CALL!",
   "timeLabel": "{seconds} s",
-  "@timeLabel": {"placeholders": {"seconds": {"type": "int"}}},
-  "gatesLabel": "Gates: {count}",
-  "@gatesLabel": {"placeholders": {"count": {"type": "int"}}}
+  "@timeLabel": {
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
+  "levelShort": "Lv. {level}",
+  "@levelShort": {
+    "placeholders": {
+      "level": {
+        "type": "int"
+      }
+    }
+  },
+  "levelUp": "LEVEL {level}!",
+  "@levelUp": {
+    "placeholders": {
+      "level": {
+        "type": "int"
+      }
+    }
+  },
+  "newMechanic": "NEW!",
+  "mechDrops": "Drops change your colour!",
+  "mechObstacles": "Dodge the blocks!",
+  "mechMixing": "Colours MIX! Red + Blue = Purple",
+  "mechSecondary": "Mixed-colour gates!",
+  "mechSpecials": "Special drops: White, Rainbow, Invert",
+  "mechFiveLanes": "EXPERT: 5 lanes!",
+  "mechJump": "Tap to JUMP over low blocks",
+  "mechDive": "Swipe down to DIVE (bonus!)",
+  "tipMix": "Remember this mix:",
+  "tipBrown": "Brown? Look for a white drop to clean Mixo!",
+  "tipSymbol": "Look at Mixo's symbol and find the same gate.",
+  "tipDodge": "Change lane early to dodge the blocks.",
+  "tipJump": "Tap to jump over the low blocks.",
+  "tipLookAhead": "Look far ahead: the gates come fast!",
+  "tipCombo": "No mistakes for a while = combo x5!",
+  "tipGreat": "Amazing run! Can you go even faster?",
+  "missionDone": "Mission complete",
+  "unlocked": "Unlocked",
+  "lessonComplete": "LESSON COMPLETE!",
+  "lessonFailed": "Almost! Try again",
+  "ghostBeaten": "YOU BEAT THE GHOST!",
+  "ghostAhead": "Ghost +{points}",
+  "@ghostAhead": {
+    "placeholders": {
+      "points": {
+        "type": "int"
+      }
+    }
+  },
+  "ghostBehind": "You +{points}",
+  "@ghostBehind": {
+    "placeholders": {
+      "points": {
+        "type": "int"
+      }
+    }
+  },
+  "breakTitle": "Great session! Take a break?",
+  "breakBody": "You have been playing for 30 minutes. Stretch, drink some water, look out of the window!",
+  "takeBreak": "Take a break",
+  "keepPlaying": "Keep playing",
+  "limitTitle": "That's all for today!",
+  "limitBody": "Mixo is tired too. See you tomorrow!",
+  "daily": "Daily",
+  "dailyInfo": "The same track for everyone, all day long. Play it as many times as you like. Skipping a day is fine!",
+  "dailyBest": "Today's best: {score}",
+  "@dailyBest": {
+    "placeholders": {
+      "score": {
+        "type": "int"
+      }
+    }
+  },
+  "dailyPlays": "Runs today: {count}",
+  "@dailyPlays": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "academy": "Academy",
+  "mandatory": "to unlock modes",
+  "lockedAcademyFirst": "Complete the first 2 Academy lessons first!",
+  "ghost": "Ghost",
+  "ghostInfo": "Race against your best run on the same track. Beat your ghost!",
+  "ghostBest": "Ghost to beat: {score}",
+  "@ghostBest": {
+    "placeholders": {
+      "score": {
+        "type": "int"
+      }
+    }
+  },
+  "ghostNone": "No ghost yet: your first run becomes the ghost!",
+  "collection": "Collection",
+  "skins": "Mixo",
+  "trails": "Trails",
+  "themes": "Worlds",
+  "equip": "Use",
+  "equipped": "In use",
+  "inShop": "Shop",
+  "reachLevel": "Reach level {level} to unlock it!",
+  "@reachLevel": {
+    "placeholders": {
+      "level": {
+        "type": "int"
+      }
+    }
+  },
+  "findInShop": "Available in the shop (ask a grown-up).",
+  "buyWithStars": "Unlock for {price} stars?",
+  "@buyWithStars": {
+    "placeholders": {
+      "price": {
+        "type": "int"
+      }
+    }
+  },
+  "unlock": "Unlock",
+  "notEnoughStars": "Not enough stars",
+  "missions": "Missions",
+  "missionsInfo": "Complete a mission and a new one appears. No rush, no timers!",
+  "trophies": "Trophies",
+  "stats": "Stats",
+  "mColorGates": "Pass {count} {color} gates",
+  "@mColorGates": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "color": {
+        "type": "String"
+      }
+    }
+  },
+  "mCombo": "Reach a combo of {count}",
+  "@mCombo": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "mSurvive": "Run for {count} seconds",
+  "@mSurvive": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "mScore": "Score {count} points in one run",
+  "@mScore": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "mDrops": "Collect {count} drops",
+  "@mDrops": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "mNearMiss": "Make {count} close calls",
+  "@mNearMiss": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "mRuns": "Play {count} runs",
+  "@mRuns": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "mMixGates": "Pass {count} mixed-colour gates",
+  "@mMixGates": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "mJumps": "Jump over {count} blocks",
+  "@mJumps": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "colorRed": "red",
+  "colorYellow": "yellow",
+  "colorBlue": "blue",
+  "colorOrange": "orange",
+  "colorGreen": "green",
+  "colorPurple": "purple",
+  "colorBrown": "brown",
+  "statBest": "Best score",
+  "statCombo": "Best combo",
+  "statLongest": "Longest run",
+  "statRuns": "Runs played",
+  "statTime": "Total time",
+  "statGates": "Gates passed",
+  "statDrops": "Drops collected",
+  "statNearMiss": "Close calls",
+  "statMix": "Mixed gates",
+  "statDaily": "Daily challenges",
+  "statColors": "Gates by colour",
+  "shop": "Shop",
+  "shopInfo": "Only looks for Mixo: they never make the game easier. Real prices, no surprises.",
+  "packContains": "This pack contains:",
+  "buyFor": "Buy for {price}",
+  "@buyFor": {
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "owned": "Owned",
+  "priceUnavailable": "Price unavailable",
+  "storeUnavailable": "The store is not available right now. The game works fine without it!",
+  "purchasesDisabled": "Purchases are turned off in the parent area.",
+  "restorePurchases": "Restore purchases",
+  "purchasePending": "Purchase pending…",
+  "purchaseDone": "Thank you! Your items are in the Collection.",
+  "purchasesRestored": "Purchases restored.",
+  "purchaseError": "Something went wrong. No money was taken.",
+  "purchaseCancelled": "Purchase cancelled.",
+  "settings": "Settings",
+  "sound": "Sound effects",
+  "music": "Music",
+  "vibration": "Vibration",
+  "symbolsAlways": "Colour symbols always on",
+  "reduceEffects": "Calmer effects (no shake)",
+  "controls": "Controls",
+  "controlSwipe": "Swipe",
+  "controlTap": "Tap sides",
+  "language": "Language",
+  "languageSystem": "Device",
+  "parentArea": "Parent area",
+  "privacy": "Privacy policy",
+  "credits": "Credits",
+  "pickName": "Pick your name",
+  "gateTitle": "Ask a grown-up",
+  "gateHold": "Grown-ups: hold the button for 3 seconds.",
+  "gateWrong": "Not quite. Try this one.",
+  "dailyLimit": "Daily play limit",
+  "playedToday": "Played today: {minutes} min",
+  "@playedToday": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "noLimit": "No limit",
+  "extend15": "+15 minutes today",
+  "purchasesEnabled": "Allow purchases",
+  "purchasesInfo": "Every purchase also asks for the parental check.",
+  "parentPrivacyTitle": "No personal data collected",
+  "parentPrivacyBody": "No account, no chat, no ads, no tracking. Progress stays on this device only. The internet is used only by Google Play for optional purchases.",
+  "resetProgress": "Reset all progress",
+  "resetConfirm": "This deletes levels, stars and collection on this device. Purchases can be restored from the shop.",
+  "reset": "Reset",
+  "privacyText": "MIXO: Color Rush — Privacy policy (summary)\n\n• We do not collect personal data. There are no accounts, no email, no real names, no location and no advertising ID.\n• Your nickname is generated from a list: nobody can type personal information.\n• There is no chat and no communication between players.\n• There are no ads and no analytics or tracking tools.\n• Game progress (levels, stars, settings) is saved only on this device. Uninstalling the app deletes it.\n• Optional purchases are handled entirely by Google Play under Google's privacy policy. We receive no payment details.\n• Purchases require a parental check and can be disabled in the parent area.\n\nQuestions: see the contact e-mail on the Google Play page of the app.",
+  "creditsText": "MIXO: Color Rush\n\nGame design, code, graphics, music and sound effects created for this project: every image is drawn by code and every sound is synthesised by a script included in the source.\n\nBuilt with Flutter and the Flame engine (open source, BSD/MIT licences).\n\nThank you for playing!"
 }
