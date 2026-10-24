@@ -1,0 +1,19 @@
+{
+  "@@locale": "it",
+  "appTitle": "MIXO: Color Rush",
+  "play": "GIOCA",
+  "again": "ANCORA!",
+  "home": "Home",
+  "score": "Punteggio",
+  "best": "Record: {score}",
+  "newRecord": "NUOVO RECORD!",
+  "paused": "Pausa",
+  "resume": "Riprendi",
+  "pause": "Pausa",
+  "swipeHint": "Scorri per cambiare corsia",
+  "matchHint": "Passa dalle porte del TUO colore!",
+  "hearts": "Cuori: {count}",
+  "comboLabel": "Combo x{multiplier}",
+  "timeLabel": "{seconds} s",
+  "gatesLabel": "Porte: {count}"
+}

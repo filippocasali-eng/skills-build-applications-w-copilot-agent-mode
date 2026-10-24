@@ -1,19 +1,26 @@
 import 'package:flutter/material.dart';
 
+import '../features/home/home_screen.dart';
+import '../l10n/generated/app_localizations.dart';
+import 'theme.dart';
+
 /// Root widget of MIXO: Color Rush.
 class MixoApp extends StatelessWidget {
-  const MixoApp({super.key});
+  const MixoApp({super.key, this.locale});
+
+  /// Forces a locale (tests); null follows the device.
+  final Locale? locale;
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'MIXO: Color Rush',
+      onGenerateTitle: (context) => AppLocalizations.of(context).appTitle,
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        colorSchemeSeed: const Color(0xFF7C4DFF),
-        useMaterial3: true,
-      ),
-      home: const Scaffold(body: Center(child: Text('MIXO: Color Rush'))),
+      theme: buildMixoTheme(),
+      locale: locale,
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+      home: const HomeScreen(),
     );
   }
 }
