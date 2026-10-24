@@ -24,7 +24,16 @@ class DemoScene extends Component with HasGameReference<OrbitGame> {
 
   @override
   Future<void> onLoad() async {
-    game.camera.backdrop.add(Starfield(seed: 1994));
+    final res = game.resources;
+    await game.camera.backdrop.addAll([
+      ParallaxImage(res.atlas('nebula'), speed: 0.03),
+      DriftingSprite(
+        res.atlas('ringed_planet'),
+        start: Vector2(500, 70),
+        speed: 0.01,
+      ),
+      Starfield(seed: 1994),
+    ]);
     if (showTitle) {
       _addPlanetChase();
     } else {
@@ -34,8 +43,8 @@ class DemoScene extends Component with HasGameReference<OrbitGame> {
   }
 
   void _addPlanetChase() {
-    final planet = game.resources.atlas('planetoid_medium');
-    final center = Vector2(0, 52);
+    final planet = game.resources.atlas('planetoid_large');
+    final center = Vector2(0, 160);
     game.world.add(
       makeCrisp(
         SpriteComponent(
@@ -63,14 +72,14 @@ class DemoScene extends Component with HasGameReference<OrbitGame> {
   }
 
   void _addLineup() {
-    const groundY = 80.0;
-    const spacing = 92.0;
+    const groundY = 130.0;
+    const spacing = 150.0;
     for (final (i, h) in Hero.values.indexed) {
       game.world.add(
         LineupCharacter(
           atlasName: h.atlas,
           label: h.displayName,
-          position: Vector2(-138 + i * spacing, groundY - 76),
+          position: Vector2(-225 + i * spacing, groundY - 130),
           phase: i,
         ),
       );
@@ -80,12 +89,75 @@ class DemoScene extends Component with HasGameReference<OrbitGame> {
         LineupCharacter(
           atlasName: e.atlas,
           label: e.displayName,
-          position: Vector2(-138 + i * spacing, groundY),
+          position: Vector2(-225 + i * spacing, groundY),
           phase: i + 2,
           facingLeft: true,
         ),
       );
     }
+  }
+}
+
+/// A full-screen image scrolling left and wrapping (far parallax layer).
+class ParallaxImage extends Component with FixedTick {
+  ParallaxImage(this.atlas, {required this.speed});
+
+  final SpriteAtlas atlas;
+
+  /// Pixels per tick.
+  final double speed;
+  double _offset = 0;
+  final Paint _paint = Paint()..filterQuality = FilterQuality.none;
+
+  @override
+  void fixedUpdate(int tick) {
+    final w = atlas.data.frames.first.width;
+    _offset = (_offset + speed) % w;
+  }
+
+  @override
+  void render(Canvas canvas) {
+    final src = atlas.data.frames.first;
+    final x = -_offset.floorToDouble();
+    for (final dx in [x, x + src.width]) {
+      canvas.drawImageRect(
+        atlas.image,
+        src,
+        Rect.fromLTWH(dx, 0, src.width, src.height),
+        _paint,
+      );
+    }
+  }
+}
+
+/// A distant body creeping across the sky; wraps around the screen.
+class DriftingSprite extends PositionComponent with FixedTick {
+  DriftingSprite(this.atlas, {required Vector2 start, required this.speed})
+    : super(position: start, anchor: Anchor.center);
+
+  final SpriteAtlas atlas;
+  final double speed;
+  late final Sprite _sprite = atlas.sprite(0);
+
+  @override
+  Future<void> onLoad() async => size = atlas.frameSize;
+
+  @override
+  void fixedUpdate(int tick) {
+    position.x -= speed;
+    if (position.x < -size.x) position.x += VirtualScreen.width + size.x * 2;
+  }
+
+  @override
+  void render(Canvas canvas) {
+    // Snap to whole pixels while the position creeps sub-pixel.
+    canvas.save();
+    canvas.translate(
+      position.x.floorToDouble() - position.x,
+      position.y.floorToDouble() - position.y,
+    );
+    _sprite.render(canvas, size: size);
+    canvas.restore();
   }
 }
 
@@ -101,7 +173,7 @@ class Starfield extends Component with FixedTick {
     }
   }
 
-  static const _count = 120;
+  static const _count = 260;
   static const _speeds = [0.05, 0.12, 0.3];
   static final _paints = [
     Paint()..color = Pal.space4,
@@ -127,7 +199,6 @@ class Starfield extends Component with FixedTick {
 
   @override
   void render(Canvas canvas) {
-    canvas.drawColor(Pal.space0, BlendMode.src);
     for (var i = 0; i < _count; i++) {
       final twinkle = _layer[i] == 2 && ((_tick + _phase[i] * 7) % 90) < 6;
       canvas.drawRect(
@@ -223,16 +294,18 @@ class LineupCharacter extends SpriteAnimationGroupComponent<String>
     super.render(canvas);
     final font = game.resources.font;
     // Label under the feet, in local (unflipped) space.
+    // flipHorizontally() mirrors around the anchor, so undo it there.
+    final ax = anchor.x * size.x;
     canvas.save();
     if (facingLeft) {
       canvas
-        ..translate(size.x, 0)
+        ..translate(ax * 2, 0)
         ..scale(-1, 1);
     }
     font.draw(
       canvas,
       label,
-      anchor.x * size.x,
+      ax,
       size.y + 2,
       color: Pal.ink6,
       align: PixelTextAlign.center,
@@ -261,17 +334,18 @@ class TitleOverlay extends Component with HasGameReference<OrbitGame> {
         canvas,
         s.title,
         cx,
-        12,
+        16,
         color: Pal.gold6,
         shadow: Pal.ember2,
         align: PixelTextAlign.center,
+        scale: 2,
       );
       if ((_time * 2).floor().isEven) {
         font.draw(
           canvas,
           s.pressStart,
           cx,
-          28,
+          44,
           color: Pal.ink7,
           shadow: Pal.space2,
           align: PixelTextAlign.center,

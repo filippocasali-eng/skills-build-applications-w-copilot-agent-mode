@@ -10,16 +10,16 @@
  },
  "frames": [
   {
-   "h": 64,
-   "w": 64,
+   "h": 84,
+   "w": 84,
    "x": 0,
    "y": 0
   }
  ],
  "image": "planetoid_small.png",
  "origin": {
-  "x": 32,
-  "y": 32
+  "x": 42,
+  "y": 42
  },
  "version": 1
 }

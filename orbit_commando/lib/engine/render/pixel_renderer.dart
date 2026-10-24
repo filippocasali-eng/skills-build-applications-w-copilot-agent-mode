@@ -22,10 +22,10 @@ class NearestUpscaler implements PostProcessor {
   }
 }
 
-/// Renders the whole component tree into a 384x216 offscreen picture, then
+/// Renders the whole component tree into a 640x360 offscreen picture, then
 /// hands it to a [PostProcessor] to be scaled onto the real canvas.
 ///
-/// Combine with a camera that uses `FixedSizeViewport(384, 216)` so the world
+/// Combine with a camera that uses `FixedSizeViewport(640, 360)` so the world
 /// is laid out in virtual pixels.
 mixin PixelPerfectRender on FlameGame {
   PostProcessor postProcessor = NearestUpscaler();

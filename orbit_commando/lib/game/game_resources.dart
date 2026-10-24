@@ -10,7 +10,9 @@ class GameResources {
 
   static final atlasNames = [
     'planetoid_small',
-    'planetoid_medium',
+    'planetoid_large',
+    'nebula',
+    'ringed_planet',
     for (final h in Hero.values) h.atlas,
     for (final e in EnemyKind.values) e.atlas,
   ];

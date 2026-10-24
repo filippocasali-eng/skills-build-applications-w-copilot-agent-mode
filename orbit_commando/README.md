@@ -1,7 +1,7 @@
 # ORBIT COMMANDO '94
 
 A retro 16-bit run & gun with planetary gravity, for Android. Flutter + Flame,
-with a custom deterministic 60 Hz simulation, a 384×216 pixel-perfect
+with a custom deterministic 60 Hz simulation, a 640×360 pixel-perfect
 renderer and all-original generated art and audio.
 
 > Status: **M1 – Setup** done. See the milestone list in `DECISIONS.md`.

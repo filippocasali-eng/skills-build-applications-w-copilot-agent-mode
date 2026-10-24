@@ -1,0 +1,25 @@
+{
+ "animations": {
+  "idle": {
+   "fps": 1,
+   "frames": [
+    0
+   ],
+   "loop": true
+  }
+ },
+ "frames": [
+  {
+   "h": 78,
+   "w": 130,
+   "x": 0,
+   "y": 0
+  }
+ ],
+ "image": "ringed_planet.png",
+ "origin": {
+  "x": 65,
+  "y": 39
+ },
+ "version": 1
+}

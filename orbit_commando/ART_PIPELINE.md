@@ -28,7 +28,7 @@ Source: `art_source/characters/<name>.png` (4×2 sheets, see
 | Setting | Value | Meaning |
 |---|---|---|
 | `CHARACTERS[name]` | role, source facing, target height | height in game pixels, feet to top |
-| `COLORS` | 24 | per-character palette (+ outline colour) |
+| `COLORS` | 32 | per-character palette (+ outline colour) |
 | `ALPHA_SOLID` / `ALPHA_OUT` | 96 / 128 | what counts as solid before and after downscaling |
 
 Animations produced for every character: `run` (frames 0–3, 8.33 fps),
@@ -70,7 +70,7 @@ swatch (import it into Aseprite/Pyxel Edit).
 {
   "version": 1,
   "image": "roxy.png",
-  "origin": {"x": 17, "y": 45},
+  "origin": {"x": 26, "y": 72},
   "frames": [{"x": 0, "y": 0, "w": 32, "h": 32}, ...],
   "animations": {
     "run":    {"frames": [0, 1, 2, 3], "fps": 8.33, "loop": true},
@@ -103,12 +103,16 @@ character to `{x, y, w}`. Only capitals exist; text is upper-cased.
 
 ## Current assets
 
+Internal resolution is 640×360 (DECISIONS D16).
+
 | Name | Frame | Notes |
 |---|---|---|
-| `roxy`, `nyx` | 45×46, 50×46 | heroes, 42 px tall |
-| `brutus` | 69×47 | hero, 44 px tall (wide frame: muzzle flash) |
-| `doc` | 60×45 | hero, 40 px tall |
-| `grunt`, `rocket` | 59×42, 61×47 | enemies, 40 / 44 px tall |
-| `cyclops`, `bulwark` | 63×50, 67×51 | enemies, 46 / 48 px tall |
-| `planetoid_small` / `planetoid_medium` | 64², 124² | dithered shading, craters |
-| `orbit5` | 5×7 font | 81 glyphs including IT accents, `€`, `♥` |
+| `roxy`, `nyx` | 70×73, 79×73 | heroes, 68 px tall |
+| `brutus` | 111×75 | hero, 72 px tall (wide frame: muzzle flash) |
+| `doc` | 94×71 | hero, 64 px tall |
+| `grunt`, `rocket` | 92×66, 94×74 | enemies, 64 / 70 px tall |
+| `cyclops`, `bulwark` | 102×80, 107×81 | enemies, 76 / 78 px tall |
+| `planetoid_small` / `planetoid_large` | 84², 224² | terrain noise, craters, rim light |
+| `nebula` | 640×360 | tileable horizontally, parallax backdrop |
+| `ringed_planet` | 130×78 | distant gas giant |
+| `orbit5` | 5×7 font | 81 glyphs including IT accents, `€`, `♥`; titles drawn at 2× |

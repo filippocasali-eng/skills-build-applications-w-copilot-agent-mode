@@ -23,7 +23,7 @@ void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
   testWithGame<OrbitGame>(
-    'loads assets and renders pixel-perfect 5x frames on a 20:9 screen',
+    'loads assets and renders pixel-perfect 3x frames on a 20:9 screen',
     () => OrbitGame(strings: _strings),
     (game) async {
       game.onGameResize(Vector2(2400, 1080));
@@ -32,7 +32,7 @@ void main() {
         game.update(1 / 60);
       }
       expect(game.clock.tick, inInclusiveRange(29, 30));
-      expect(game.layout.scale, 5);
+      expect(game.layout.scale, 3);
       expect(game.layout.dest.left, 240);
 
       final rec = ui.PictureRecorder();
@@ -52,14 +52,14 @@ void main() {
       expect(px(10, 540), _rgba(Pal.ink0));
       expect(px(2390, 540), _rgba(Pal.ink0));
 
-      // Every virtual pixel must be a uniform 5x5 block (nearest-neighbour).
+      // Every virtual pixel must be a uniform 3x3 block (nearest-neighbour).
       final seen = <int>{};
-      for (var vy = 0; vy < 216; vy += 3) {
-        for (var vx = 0; vx < 384; vx += 5) {
-          final x0 = 240 + vx * 5, y0 = vy * 5;
+      for (var vy = 0; vy < 360; vy += 3) {
+        for (var vx = 0; vx < 640; vx += 5) {
+          final x0 = 240 + vx * 3, y0 = vy * 3;
           final c = px(x0, y0);
           seen.add(c);
-          for (var d = 1; d < 5; d++) {
+          for (var d = 1; d < 3; d++) {
             expect(px(x0 + d, y0 + d), c, reason: 'block $vx,$vy not uniform');
           }
         }

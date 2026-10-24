@@ -92,10 +92,11 @@ class BitmapFont {
     return BitmapFont(data, image);
   }
 
-  int measure(String text) => data.measure(text);
+  int measure(String text, {int scale = 1}) => data.measure(text) * scale;
 
   /// Draws [text] with its top-left (or top-centre/right) at [x],[y].
-  /// Coordinates are snapped to whole pixels.
+  /// Coordinates are snapped to whole pixels; [scale] enlarges glyphs by an
+  /// integer factor so big text stays pixel-perfect.
   void draw(
     Canvas canvas,
     String text,
@@ -104,15 +105,24 @@ class BitmapFont {
     required Color color,
     PixelTextAlign align = PixelTextAlign.left,
     Color? shadow,
+    int scale = 1,
   }) {
     if (shadow != null) {
-      draw(canvas, text, x + 1, y + 1, color: shadow, align: align);
+      draw(
+        canvas,
+        text,
+        x + scale,
+        y + scale,
+        color: shadow,
+        align: align,
+        scale: scale,
+      );
     }
     if (_tint != color) {
       _tint = color;
       _paint.colorFilter = ColorFilter.mode(color, BlendMode.srcIn);
     }
-    final w = measure(text);
+    final w = measure(text, scale: scale);
     var cx = switch (align) {
       PixelTextAlign.left => x,
       PixelTextAlign.center => x - w / 2,
@@ -125,10 +135,10 @@ class BitmapFont {
       canvas.drawImageRect(
         image,
         Rect.fromLTWH(g.x.toDouble(), g.y.toDouble(), g.width.toDouble(), h),
-        Rect.fromLTWH(cx, cy, g.width.toDouble(), h),
+        Rect.fromLTWH(cx, cy, g.width * scale.toDouble(), h * scale),
         _paint,
       );
-      cx += g.width + data.spacing;
+      cx += (g.width + data.spacing) * scale;
     }
   }
 }

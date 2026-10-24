@@ -80,14 +80,14 @@ placeholder "Rex".
 splits each 4×2 sheet by connected components (guns and muzzle flashes cross
 the cell borders, so a grid crop cut them), anchors frames on the feet
 baseline and hip centre, downscales every frame of a character with one
-factor (heroes 40–44 px tall, enemies 40–48 px), uses hard alpha, quantizes
+factor (heights updated in D16), uses hard alpha, quantizes
 to a shared per-character palette and adds a 1 px dark outline. Enemies are
 mirrored so every atlas faces right. Source sheets live in the repo (16 MB,
 not bundled in the APK); only the ~260 KB of converted atlases ship.
 
 ### D13. Palette rule relaxed: 64-colour master palette + per-sprite palettes
 Quantizing the pack to the 64-colour master palette lost skin tones and
-Doc's denim. Each character now has its own palette of up to 24 colours plus
+Doc's denim. Each character now has its own palette (32 colours since D16) plus
 the outline, in the spirit of 16-bit sprite sub-palettes. Environments, UI and
 generated FX keep the master palette. The render test now allows exactly the
 master palette plus the colours found in the loaded atlases, so it still
@@ -98,8 +98,7 @@ target no longer holds strictly and becomes a guideline.
 No maps existed yet (levels arrive in M5). Because the characters are gritty
 military / scrap-tech, the tilesets will mix that look with the space setting:
 riveted, rusted plating, sandbags and crates on planetoids, hazard stripes on
-stations. The planetoid now comes in a larger size (`planetoid_medium`,
-r = 60) that suits 40+ px characters. Small planetoids stay as props.
+stations. Planetoids now come in larger sizes (see D17) to suit the characters. Small planetoids stay as props.
 
 ### D15. Open risk: closeness to an existing franchise's look
 The pack is declared original, but its overall style (chunky military
@@ -107,6 +106,28 @@ commandos, a ponytailed heroine with a scarf, steampunk scrap-tech) is close
 to a famous 90s arcade series that brief §1 names as off-limits. Nothing is
 traced or copied as far as we can tell, but the owner should do a visual
 review, ideally with legal input, before the store launch.
+
+## Detail pass
+
+### D16. Internal resolution raised from 384×216 to 640×360
+The owner asked for a more detailed, "more pixel" look. At 384×216 the
+characters were about 42 px tall and lost most of the pack's detail. 640×360
+keeps the 16:9 frame and scales by whole numbers on common screens:
+2× at 720p, 3× at 1080p (also on 20:9 phones, with side bars), 4× at 1440p.
+Characters are now 64–78 px tall (about 19% of the screen height, close to
+the classic arcade proportion), with 32 colours each plus the outline. Cost:
+the offscreen frame is 2.8× larger (0.9 MB per frame); the performance
+check moves to the M11 profiling pass. The bitmap font stays 5×7 and draws
+titles at integer 2× (`scale:` on `BitmapFont.draw`).
+
+### D17. Richer generated backdrops
+New generators (`sprites.py`, numpy): a horizontally tileable dithered nebula
+(kept dark so it never competes with sprites), a distant ringed gas giant,
+and planetoids with fbm terrain, two materials (rock and basalt), crater
+bowls with lit rims, and an aqua rim light on the shadow side. All use the
+master palette and 4×4 Bayer dithering. The title scene layers nebula
+(slow parallax), the drifting gas giant, a 3-layer starfield and a
+r = 110 planetoid.
 
 ## Environment notes
 

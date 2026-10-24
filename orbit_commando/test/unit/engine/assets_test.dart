@@ -42,8 +42,8 @@ void main() {
         expect(data.frames.length, 8);
         final h = data.frames.first.height;
         expect(data.origin.dy, h - 1);
-        // Characters are sized for the 384x216 screen.
-        expect(h, inInclusiveRange(36, 56));
+        // Characters are sized for the 640x360 screen (~19% of its height).
+        expect(h, inInclusiveRange(60, 90));
       });
     }
 

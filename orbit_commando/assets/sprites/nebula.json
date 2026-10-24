@@ -1,0 +1,25 @@
+{
+ "animations": {
+  "idle": {
+   "fps": 1,
+   "frames": [
+    0
+   ],
+   "loop": true
+  }
+ },
+ "frames": [
+  {
+   "h": 360,
+   "w": 640,
+   "x": 0,
+   "y": 0
+  }
+ ],
+ "image": "nebula.png",
+ "origin": {
+  "x": 0,
+  "y": 0
+ },
+ "version": 1
+}

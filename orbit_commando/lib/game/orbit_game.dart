@@ -12,7 +12,7 @@ import 'scenes/demo_scene.dart';
 
 enum StartScene { title, sandbox }
 
-/// Root Flame game. Renders at 384x216 via [PixelPerfectRender] and runs the
+/// Root Flame game. Renders at 640x360 via [PixelPerfectRender] and runs the
 /// simulation at a fixed 60 Hz via [FixedStepClock].
 class OrbitGame extends FlameGame with PixelPerfectRender implements TickHost {
   OrbitGame({required this.strings, this.startScene = StartScene.title})

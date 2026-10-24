@@ -24,19 +24,19 @@ from scipy import ndimage
 
 ALPHA_SOLID = 96  # source alpha considered part of the drawing
 ALPHA_OUT = 128  # alpha threshold after downscaling
-COLORS = 24  # per-sprite palette size (+ transparent)
+COLORS = 32  # per-sprite palette size (+ outline)
 OUTLINE = (14, 11, 20, 255)
 
 # name: (role, source facing, target body height in game pixels)
 CHARACTERS = {
-    "roxy": ("hero", "right", 42),
-    "brutus": ("hero", "right", 44),
-    "nyx": ("hero", "right", 42),
-    "doc": ("hero", "right", 40),
-    "grunt": ("enemy", "left", 40),
-    "rocket": ("enemy", "left", 44),
-    "cyclops": ("enemy", "left", 46),
-    "bulwark": ("enemy", "left", 48),
+    "roxy": ("hero", "right", 68),
+    "brutus": ("hero", "right", 72),
+    "nyx": ("hero", "right", 68),
+    "doc": ("hero", "right", 64),
+    "grunt": ("enemy", "left", 64),
+    "rocket": ("enemy", "left", 70),
+    "cyclops": ("enemy", "left", 76),
+    "bulwark": ("enemy", "left", 78),
 }
 
 ANIMS = {

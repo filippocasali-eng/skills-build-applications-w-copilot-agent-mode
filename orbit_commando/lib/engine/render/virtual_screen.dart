@@ -4,10 +4,10 @@ import 'dart:ui';
 /// Internal resolution of the game. Everything in the world and the HUD is
 /// drawn at this size and then upscaled with nearest-neighbour filtering.
 abstract final class VirtualScreen {
-  static const int width = 384;
-  static const int height = 216;
-  static const Size size = Size(384, 216);
-  static const Rect rect = Rect.fromLTWH(0, 0, 384, 216);
+  static const int width = 640;
+  static const int height = 360;
+  static const Size size = Size(640, 360);
+  static const Rect rect = Rect.fromLTWH(0, 0, 640, 360);
 }
 
 enum ScaleMode {
@@ -18,7 +18,7 @@ enum ScaleMode {
   fit,
 }
 
-/// Where the 384x216 frame lands on the physical screen.
+/// Where the 640x360 frame lands on the physical screen.
 class LetterboxLayout {
   const LetterboxLayout._(this.screen, this.scale, this.dest);
 

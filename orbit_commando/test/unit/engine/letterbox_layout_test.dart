@@ -5,24 +5,29 @@ import 'package:orbit_commando/engine/render/virtual_screen.dart';
 
 void main() {
   group('LetterboxLayout', () {
-    test('1920x1080 is an exact 5x scale with no bars', () {
+    test('1920x1080 is an exact 3x scale with no bars', () {
       final l = LetterboxLayout.compute(const Size(1920, 1080));
-      expect(l.scale, 5);
+      expect(l.scale, 3);
       expect(l.dest, const Rect.fromLTWH(0, 0, 1920, 1080));
     });
 
-    test('20:9 phone (2400x1080) uses integer 5x with side bars', () {
+    test('1280x720 is an exact 2x, 2560x1440 an exact 4x', () {
+      expect(LetterboxLayout.compute(const Size(1280, 720)).scale, 2);
+      expect(LetterboxLayout.compute(const Size(2560, 1440)).scale, 4);
+    });
+
+    test('20:9 phone (2400x1080) uses integer 3x with side bars', () {
       final l = LetterboxLayout.compute(const Size(2400, 1080));
-      expect(l.scale, 5);
+      expect(l.scale, 3);
       expect(l.dest.width, 1920);
       expect(l.dest.left, 240);
       expect(l.dest.top, 0);
     });
 
     test('odd size picks the largest integer that fits and centres', () {
-      final l = LetterboxLayout.compute(const Size(1000, 600));
+      final l = LetterboxLayout.compute(const Size(1400, 800));
       expect(l.scale, 2);
-      expect(l.dest, const Rect.fromLTWH(116, 84, 768, 432));
+      expect(l.dest, const Rect.fromLTWH(60, 40, 1280, 720));
     });
 
     test('fit mode fills the limiting axis', () {
@@ -33,8 +38,8 @@ void main() {
       expect(l.dest.width, closeTo(1000, 1e-9));
     });
 
-    test('screens smaller than 384x216 fall back to fractional scale', () {
-      final l = LetterboxLayout.compute(const Size(192, 108));
+    test('screens smaller than 640x360 fall back to fractional scale', () {
+      final l = LetterboxLayout.compute(const Size(320, 180));
       expect(l.scale, 0.5);
     });
 
