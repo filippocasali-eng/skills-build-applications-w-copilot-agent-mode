@@ -1,0 +1,9 @@
+{
+  "@@locale": "it",
+  "appTitle": "Orbit Commando '94",
+  "pressStart": "Premi start",
+  "insertCoin": "Inserisci gettone",
+  "creditsLabel": "Crediti {count}",
+  "sandboxLabel": "Sandbox M1",
+  "back": "Indietro"
+}

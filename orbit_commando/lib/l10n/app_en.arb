@@ -1,0 +1,13 @@
+{
+  "@@locale": "en",
+  "appTitle": "Orbit Commando '94",
+  "@appTitle": {"description": "Game name, also shown on the title screen."},
+  "pressStart": "Press start",
+  "@pressStart": {"description": "Blinking prompt on the title screen."},
+  "insertCoin": "Insert coin",
+  "creditsLabel": "Credits {count}",
+  "@creditsLabel": {"placeholders": {"count": {"type": "int"}}},
+  "sandboxLabel": "M1 sandbox",
+  "@sandboxLabel": {"description": "Debug label on the pipeline test scene."},
+  "back": "Back"
+}
