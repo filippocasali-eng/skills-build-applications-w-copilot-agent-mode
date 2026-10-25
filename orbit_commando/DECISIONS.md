@@ -180,6 +180,27 @@ Flutter screens use a global pixel scale `kPx = 1.25`. Widget tests run at
 a 20:9 phone size (2400×1080 at 2.625 dpr, i.e. 914×411 dp), so overflow
 shows up in CI, not on a player's phone.
 
+## Global release
+
+### D25. Challenge codes instead of accounts for the viral loop
+A code holds level, remix, seed, hero and target in 50 bits (10 base-32
+characters plus a checksum). The deterministic sim makes the run the same
+on any phone. Codes need no backend, no sign-in and no deep-link
+infrastructure, and they survive any chat app.
+- **Revisit:** when online leaderboards ship (verified replays) and deep
+  links are wanted.
+
+### D26. Remix modes never unlock campaign content
+Weekly, daily and challenge runs pay out tokens and XP but don't record
+campaign clears. A shared code for a World 3 level is a free taste of
+paid content, not a bypass.
+
+### D27. Translations live in `tools/l10n/tr_<lang>.py`
+EN/IT stay in `strings.py`. Each extra language is one dict, and the
+generator refuses missing keys or mismatched placeholders. The pixel font
+gained the glyphs these languages need. A test renders every main screen
+in every language.
+
 ## Environment notes
 
 - The build container cannot reach `dl.google.com` (Android SDK
