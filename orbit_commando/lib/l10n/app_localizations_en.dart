@@ -749,4 +749,49 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get paste => 'Paste';
+
+  @override
+  String get lvlW1L1 => 'Quiet Belt';
+
+  @override
+  String get lvlW1L2 => 'Rock Field';
+
+  @override
+  String get lvlW1L3 => 'The Spring Mech';
+
+  @override
+  String get lvlW1L4 => 'Dark Side of the Rock';
+
+  @override
+  String get lvlW1L5 => 'Supreme Stamper';
+
+  @override
+  String get lvlW2L1 => 'Margherita Corridor';
+
+  @override
+  String get lvlW2L2 => 'Antigravity Hall';
+
+  @override
+  String get lvlW2L3 => 'Rocket-Bike Express';
+
+  @override
+  String get lvlW2L4 => 'Pizza Rings';
+
+  @override
+  String get lvlW2L5 => 'The Great Cosmic Washer';
+
+  @override
+  String get lvlW3L1 => 'Glorbo Archipelago';
+
+  @override
+  String get lvlW3L2 => 'Shuttle in the Void';
+
+  @override
+  String get lvlW3L3 => 'Form Factory';
+
+  @override
+  String get lvlW3L4 => 'Last Counter';
+
+  @override
+  String get lvlW3L5 => 'Emperor Glorbo';
 }

@@ -228,5 +228,20 @@
   "challengeTarget": "Batti {score}",
   "challengeBeaten": "Sfida vinta! Rilanciala.",
   "challengeLost": "Non stavolta. Ci riprovi?",
-  "paste": "Incolla"
+  "paste": "Incolla",
+  "lvlW1L1": "Cintura Tranquilla",
+  "lvlW1L2": "Campo di Sassi",
+  "lvlW1L3": "Il Mech a Molla",
+  "lvlW1L4": "Lato Oscuro del Sasso",
+  "lvlW1L5": "Timbratore Supremo",
+  "lvlW2L1": "Corridoio Margherita",
+  "lvlW2L2": "Sala Antigravità",
+  "lvlW2L3": "Moto-Razzo Express",
+  "lvlW2L4": "Anelli della Pizza",
+  "lvlW2L5": "La Grande Lavatrice Cosmica",
+  "lvlW3L1": "Arcipelago Glorbo",
+  "lvlW3L2": "Navetta nel Vuoto",
+  "lvlW3L3": "Fabbrica di Moduli",
+  "lvlW3L4": "Ultimo Sportello",
+  "lvlW3L5": "Imperatore Glorbo"
 }

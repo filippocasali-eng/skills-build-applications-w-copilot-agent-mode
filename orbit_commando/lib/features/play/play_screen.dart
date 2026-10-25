@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../app/level_names.dart';
 import '../../app/ui/pixel.dart';
 import '../../core/ads/ad_provider.dart';
 import '../../core/analytics/analytics.dart';
@@ -104,6 +105,7 @@ class _PlayScreenState extends ConsumerState<PlayScreen> {
       ),
       credits: _credits,
       target: run.challenge?.target,
+      title: levelName(AppLocalizations.of(context), level.id, level.name),
       controls: _controls(settings),
       cheats: progress.cheats,
       crt: progress.cheats.contains('brokenTube')

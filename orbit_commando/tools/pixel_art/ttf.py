@@ -49,6 +49,8 @@ def build(out_path):
         low = ch.lower()
         if low != ch and len(low) == 1:
             cmap[ord(low)] = gname
+        if ch == "I":
+            cmap[ord("ı")] = gname  # Turkish dotless i
     fb = FontBuilder(unitsPerEm=1000, isTTF=True)
     order = list(glyphs.keys())
     fb.setupGlyphOrder(order)

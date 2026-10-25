@@ -28,20 +28,29 @@ class PixelText extends StatelessWidget {
   final TextAlign align;
   final int? maxLines;
 
+  /// [dpr]: when given, a font pixel is snapped to a whole number of device
+  /// pixels, so every glyph row has the same height (crisp pixel text).
   static TextStyle style({
     double scale = 1,
     Color color = Pal.ink7,
     Color? shadow = Pal.ink0,
-  }) => TextStyle(
-    fontFamily: 'Orbit5',
-    fontSize: 10 * kPx * scale,
-    height: 1.15,
-    color: color,
-    letterSpacing: 0,
-    shadows: shadow == null
-        ? null
-        : [Shadow(color: shadow, offset: Offset(kPx * scale, kPx * scale))],
-  );
+    double? dpr,
+  }) {
+    var px = kPx * scale;
+    if (dpr != null && dpr > 0) {
+      px = (px * dpr).roundToDouble().clamp(1.0, double.infinity) / dpr;
+    }
+    return TextStyle(
+      fontFamily: 'Orbit5',
+      fontSize: 10 * px,
+      height: 1.15,
+      color: color,
+      letterSpacing: 0,
+      shadows: shadow == null
+          ? null
+          : [Shadow(color: shadow, offset: Offset(px, px))],
+    );
+  }
 
   @override
   Widget build(BuildContext context) => Text(
@@ -49,7 +58,12 @@ class PixelText extends StatelessWidget {
     textAlign: align,
     maxLines: maxLines,
     overflow: maxLines == null ? null : TextOverflow.ellipsis,
-    style: style(scale: scale, color: color, shadow: shadow),
+    style: style(
+      scale: scale,
+      color: color,
+      shadow: shadow,
+      dpr: MediaQuery.maybeDevicePixelRatioOf(context),
+    ),
   );
 }
 

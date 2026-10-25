@@ -758,4 +758,49 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get paste => 'Incolla';
+
+  @override
+  String get lvlW1L1 => 'Cintura Tranquilla';
+
+  @override
+  String get lvlW1L2 => 'Campo di Sassi';
+
+  @override
+  String get lvlW1L3 => 'Il Mech a Molla';
+
+  @override
+  String get lvlW1L4 => 'Lato Oscuro del Sasso';
+
+  @override
+  String get lvlW1L5 => 'Timbratore Supremo';
+
+  @override
+  String get lvlW2L1 => 'Corridoio Margherita';
+
+  @override
+  String get lvlW2L2 => 'Sala Antigravità';
+
+  @override
+  String get lvlW2L3 => 'Moto-Razzo Express';
+
+  @override
+  String get lvlW2L4 => 'Anelli della Pizza';
+
+  @override
+  String get lvlW2L5 => 'La Grande Lavatrice Cosmica';
+
+  @override
+  String get lvlW3L1 => 'Arcipelago Glorbo';
+
+  @override
+  String get lvlW3L2 => 'Navetta nel Vuoto';
+
+  @override
+  String get lvlW3L3 => 'Fabbrica di Moduli';
+
+  @override
+  String get lvlW3L4 => 'Ultimo Sportello';
+
+  @override
+  String get lvlW3L5 => 'Imperatore Glorbo';
 }

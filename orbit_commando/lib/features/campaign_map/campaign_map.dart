@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../app/level_names.dart';
 import '../../app/ui/pixel.dart';
 import '../../app/ui/route.dart';
 import '../../core/campaign.dart';
@@ -221,8 +222,8 @@ class _LevelTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final l = AppLocalizations.of(context);
     final title = entry.boss
-        ? '${l.bossStage}: ${entry.name}'
-        : '${entry.world}-${entry.index}  ${entry.name}';
+        ? '${l.bossStage}: ${levelName(l, entry.id, entry.name)}'
+        : '${entry.world}-${entry.index}  ${levelName(l, entry.id, entry.name)}';
     final tapes = entry.boss
         ? ''
         : '  ${'*' * record.cassetteCount}${'.' * (3 - record.cassetteCount)}';

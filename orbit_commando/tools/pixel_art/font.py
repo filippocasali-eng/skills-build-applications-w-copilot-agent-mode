@@ -84,6 +84,14 @@ glyph("&", ".XX..", "X..X.", "X.X..", ".X...", "X.X.X", "X..X.", ".XX.X")
 glyph("€", "..XXX", ".X...", "XXXX.", ".X...", "XXXX.", ".X...", "..XXX")
 glyph("♥", ".....", ".X.X.", "XXXXX", "XXXXX", ".XXX.", "..X..", ".....")
 glyph("•", "...", "...", ".X.", "XXX", ".X.", "...", "...")
+# Extra letters and punctuation for FR / DE / ES / PT / TR.
+glyph("Œ", ".XXXXX", "X..X..", "X..X..", "X..XXX", "X..X..", "X..X..", ".XXXXX")
+glyph("ß", ".XX..", "X..X.", "X..X.", "X.X..", "X..X.", "X..X.", "X.XX.")
+glyph("¿", "..X..", ".....", "..X..", ".X...", "X....", "X...X", ".XXX.")
+glyph("¡", "X", ".", "X", "X", "X", "X", "X")
+glyph("«", ".....", ".....", "..X.X", ".X.X.", "X.X..", ".X.X.", "..X.X")
+glyph("»", ".....", ".....", "X.X..", ".X.X.", "..X.X", ".X.X.", "X.X..")
+glyph('"', "X.X", "X.X", "...", "...", "...", "...", "...")
 
 # Accented capitals (IT first; ready for ES/DE/FR/PT).
 ACCENTS = {
@@ -92,7 +100,12 @@ ACCENTS = {
     "umlaut": [".....", ".X.X."],
     "tilde": [".XX.X", "X..X."],
     "circ": ["..X..", ".X.X."],
+    "breve": [".X.X.", "..X.."],
+    "dot": [".....", "..X.."],
 }
+
+# Marks drawn in the descender row, under the glyph (cedilla).
+BELOW = {"cedilla": "..X.."}
 ACCENTED = {
     "À": ("A", "grave"), "Á": ("A", "acute"), "Â": ("A", "circ"), "Ä": ("A", "umlaut"), "Ã": ("A", "tilde"),
     "È": ("E", "grave"), "É": ("E", "acute"), "Ê": ("E", "circ"),
@@ -100,6 +113,10 @@ ACCENTED = {
     "Ò": ("O", "grave"), "Ó": ("O", "acute"), "Ô": ("O", "circ"), "Ö": ("O", "umlaut"), "Õ": ("O", "tilde"),
     "Ù": ("U", "grave"), "Ú": ("U", "acute"), "Ü": ("U", "umlaut"),
     "Ñ": ("N", "tilde"),
+    "Ë": ("E", "umlaut"), "Ï": ("I", "umlaut"), "Î": ("I", "circ"),
+    "Û": ("U", "circ"), "Ÿ": ("Y", "umlaut"),
+    "Ğ": ("G", "breve"), "İ": ("I", "dot"),
+    "Ç": ("C", "cedilla"), "Ş": ("S", "cedilla"),
 }
 
 
@@ -109,6 +126,10 @@ def cell(ch):
         base, acc = ACCENTED[ch]
         body = G[base]
         w = len(body[0])
+        if acc in BELOW:
+            mark = BELOW[acc]
+            under = mark[:w].center(w, ".") if len(mark) > w else mark.center(w, ".")
+            return ["." * w] * BODY_TOP + body + [under]
         accent = [r[:w].center(w, ".") if len(r) > w else r.center(w, ".") for r in ACCENTS[acc]]
         if w == 3:  # narrow I
             accent = [r[1:4] for r in ACCENTS[acc]]

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../app/level_names.dart';
 import '../../app/ui/pixel.dart';
 import '../../app/ui/route.dart';
 import '../../core/ads/ad_provider.dart';
@@ -245,7 +246,7 @@ class _ResultsScreenState extends ConsumerState<ResultsScreen> {
                               shadow: Pal.ember2,
                             ),
                             PixelText(
-                              widget.level.name,
+                              levelName(l, widget.level.id, widget.level.name),
                               scale: 1,
                               color: Pal.ink5,
                             ),
@@ -404,7 +405,11 @@ class _ResultsScreenState extends ConsumerState<ResultsScreen> {
                                 child: RepaintBoundary(
                                   key: _cardKey,
                                   child: ShareCard(
-                                    levelName: widget.level.name,
+                                    levelName: levelName(
+                                      l,
+                                      widget.level.id,
+                                      widget.level.name,
+                                    ),
                                     score: r.total,
                                     rank: r.rank,
                                     maxCombo: r.maxCombo,

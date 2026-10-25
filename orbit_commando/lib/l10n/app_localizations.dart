@@ -5,8 +5,14 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/intl.dart' as intl;
 
+import 'app_localizations_de.dart';
 import 'app_localizations_en.dart';
+import 'app_localizations_es.dart';
+import 'app_localizations_fr.dart';
+import 'app_localizations_id.dart';
 import 'app_localizations_it.dart';
+import 'app_localizations_pt.dart';
+import 'app_localizations_tr.dart';
 
 // ignore_for_file: type=lint
 
@@ -94,8 +100,14 @@ abstract class AppLocalizations {
 
   /// A list of this localizations delegate's supported locales.
   static const List<Locale> supportedLocales = <Locale>[
+    Locale('de'),
     Locale('en'),
+    Locale('es'),
+    Locale('fr'),
+    Locale('id'),
     Locale('it'),
+    Locale('pt'),
+    Locale('tr'),
   ];
 
   /// No description provided for @appTitle.
@@ -1471,6 +1483,96 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Paste'**
   String get paste;
+
+  /// No description provided for @lvlW1L1.
+  ///
+  /// In en, this message translates to:
+  /// **'Quiet Belt'**
+  String get lvlW1L1;
+
+  /// No description provided for @lvlW1L2.
+  ///
+  /// In en, this message translates to:
+  /// **'Rock Field'**
+  String get lvlW1L2;
+
+  /// No description provided for @lvlW1L3.
+  ///
+  /// In en, this message translates to:
+  /// **'The Spring Mech'**
+  String get lvlW1L3;
+
+  /// No description provided for @lvlW1L4.
+  ///
+  /// In en, this message translates to:
+  /// **'Dark Side of the Rock'**
+  String get lvlW1L4;
+
+  /// No description provided for @lvlW1L5.
+  ///
+  /// In en, this message translates to:
+  /// **'Supreme Stamper'**
+  String get lvlW1L5;
+
+  /// No description provided for @lvlW2L1.
+  ///
+  /// In en, this message translates to:
+  /// **'Margherita Corridor'**
+  String get lvlW2L1;
+
+  /// No description provided for @lvlW2L2.
+  ///
+  /// In en, this message translates to:
+  /// **'Antigravity Hall'**
+  String get lvlW2L2;
+
+  /// No description provided for @lvlW2L3.
+  ///
+  /// In en, this message translates to:
+  /// **'Rocket-Bike Express'**
+  String get lvlW2L3;
+
+  /// No description provided for @lvlW2L4.
+  ///
+  /// In en, this message translates to:
+  /// **'Pizza Rings'**
+  String get lvlW2L4;
+
+  /// No description provided for @lvlW2L5.
+  ///
+  /// In en, this message translates to:
+  /// **'The Great Cosmic Washer'**
+  String get lvlW2L5;
+
+  /// No description provided for @lvlW3L1.
+  ///
+  /// In en, this message translates to:
+  /// **'Glorbo Archipelago'**
+  String get lvlW3L1;
+
+  /// No description provided for @lvlW3L2.
+  ///
+  /// In en, this message translates to:
+  /// **'Shuttle in the Void'**
+  String get lvlW3L2;
+
+  /// No description provided for @lvlW3L3.
+  ///
+  /// In en, this message translates to:
+  /// **'Form Factory'**
+  String get lvlW3L3;
+
+  /// No description provided for @lvlW3L4.
+  ///
+  /// In en, this message translates to:
+  /// **'Last Counter'**
+  String get lvlW3L4;
+
+  /// No description provided for @lvlW3L5.
+  ///
+  /// In en, this message translates to:
+  /// **'Emperor Glorbo'**
+  String get lvlW3L5;
 }
 
 class _AppLocalizationsDelegate
@@ -1483,8 +1585,16 @@ class _AppLocalizationsDelegate
   }
 
   @override
-  bool isSupported(Locale locale) =>
-      <String>['en', 'it'].contains(locale.languageCode);
+  bool isSupported(Locale locale) => <String>[
+    'de',
+    'en',
+    'es',
+    'fr',
+    'id',
+    'it',
+    'pt',
+    'tr',
+  ].contains(locale.languageCode);
 
   @override
   bool shouldReload(_AppLocalizationsDelegate old) => false;
@@ -1493,10 +1603,22 @@ class _AppLocalizationsDelegate
 AppLocalizations lookupAppLocalizations(Locale locale) {
   // Lookup logic when only language code is specified.
   switch (locale.languageCode) {
+    case 'de':
+      return AppLocalizationsDe();
     case 'en':
       return AppLocalizationsEn();
+    case 'es':
+      return AppLocalizationsEs();
+    case 'fr':
+      return AppLocalizationsFr();
+    case 'id':
+      return AppLocalizationsId();
     case 'it':
       return AppLocalizationsIt();
+    case 'pt':
+      return AppLocalizationsPt();
+    case 'tr':
+      return AppLocalizationsTr();
   }
 
   throw FlutterError(

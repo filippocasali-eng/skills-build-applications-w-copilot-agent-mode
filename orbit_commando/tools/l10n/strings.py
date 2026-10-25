@@ -1,4 +1,4 @@
-"""Single source of truth for UI strings (EN + IT).
+"""Single source of truth for UI strings (EN + IT here, other languages in tr_*.py).
 
     python3 tools/l10n/strings.py     # writes lib/l10n/app_en.arb + app_it.arb
 
@@ -253,6 +253,22 @@ S = {
     "challengeBeaten": ("Challenge beaten! Send it back.", "Sfida vinta! Rilanciala."),
     "challengeLost": ("Not this time. One more try?", "Non stavolta. Ci riprovi?"),
     "paste": ("Paste", "Incolla"),
+    # --- level names (key = lvl + level id in camelCase) ---
+    "lvlW1L1": ("Quiet Belt", "Cintura Tranquilla"),
+    "lvlW1L2": ("Rock Field", "Campo di Sassi"),
+    "lvlW1L3": ("The Spring Mech", "Il Mech a Molla"),
+    "lvlW1L4": ("Dark Side of the Rock", "Lato Oscuro del Sasso"),
+    "lvlW1L5": ("Supreme Stamper", "Timbratore Supremo"),
+    "lvlW2L1": ("Margherita Corridor", "Corridoio Margherita"),
+    "lvlW2L2": ("Antigravity Hall", "Sala Antigravità"),
+    "lvlW2L3": ("Rocket-Bike Express", "Moto-Razzo Express"),
+    "lvlW2L4": ("Pizza Rings", "Anelli della Pizza"),
+    "lvlW2L5": ("The Great Cosmic Washer", "La Grande Lavatrice Cosmica"),
+    "lvlW3L1": ("Glorbo Archipelago", "Arcipelago Glorbo"),
+    "lvlW3L2": ("Shuttle in the Void", "Navetta nel Vuoto"),
+    "lvlW3L3": ("Form Factory", "Fabbrica di Moduli"),
+    "lvlW3L4": ("Last Counter", "Ultimo Sportello"),
+    "lvlW3L5": ("Emperor Glorbo", "Imperatore Glorbo"),
 }
 
 PLACEHOLDERS = {
@@ -262,21 +278,43 @@ PLACEHOLDERS = {
 }
 
 
+# Extra languages: tools/l10n/tr_<code>.py, each a dict T of key -> text.
+EXTRA = ["es", "pt", "fr", "de", "tr", "id"]
+
+
+def _table(lang):
+    import importlib
+    import sys
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+    return importlib.import_module(f"tr_{lang}").T
+
+
 def main():
     root = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "lib", "l10n")
     import re
-    for lang, idx in (("en", 0), ("it", 1)):
+    langs = {"en": {k: v[0] for k, v in S.items()}, "it": {k: v[1] for k, v in S.items()}}
+    for lang in EXTRA:
+        t = _table(lang)
+        missing = set(S) - set(t)
+        extra = set(t) - set(S)
+        assert not missing and not extra, (lang, sorted(missing), sorted(extra))
+        for k, v in t.items():
+            want = sorted(re.findall(r"\{(\w+)\}", S[k][0]))
+            got = sorted(re.findall(r"\{(\w+)\}", v))
+            assert want == got, (lang, k, want, got)
+        langs[lang] = t
+    for lang, table in langs.items():
         out = {"@@locale": lang}
-        for k, v in S.items():
-            out[k] = v[idx]
+        for k in S:
+            out[k] = table[k]
             if lang == "en":
-                ph = re.findall(r"\{(\w+)\}", v[0])
+                ph = re.findall(r"\{(\w+)\}", S[k][0])
                 if ph:
                     out["@" + k] = {"placeholders": {p: {"type": PLACEHOLDERS[p]} for p in ph}}
         with open(os.path.join(root, f"app_{lang}.arb"), "w", encoding="utf-8") as f:
             json.dump(out, f, indent=2, ensure_ascii=False)
             f.write("\n")
-    print(f"{len(S)} strings")
+    print(f"{len(S)} strings x {len(langs)} languages")
 
 
 if __name__ == "__main__":

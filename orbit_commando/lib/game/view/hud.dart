@@ -254,7 +254,7 @@ class Hud extends Component with HasGameReference<PlayGame> {
     if (sim.tick < 150 && !g.isAttract) {
       font.draw(
         canvas,
-        sim.level.name,
+        g.config.title ?? sim.level.name,
         cx,
         140,
         color: Pal.ink7,

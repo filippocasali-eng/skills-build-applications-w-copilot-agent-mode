@@ -26,6 +26,7 @@ class PlayConfig {
     this.cheats = const {},
     this.crt,
     this.target,
+    this.title,
   });
 
   final LevelData level;
@@ -54,4 +55,7 @@ class PlayConfig {
 
   /// Score to beat (friend's challenge), shown in the HUD.
   final int? target;
+
+  /// Localised level name for the intro banner (defaults to the file's).
+  final String? title;
 }

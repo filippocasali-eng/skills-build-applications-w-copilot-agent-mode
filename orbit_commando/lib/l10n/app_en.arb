@@ -394,5 +394,20 @@
   },
   "challengeBeaten": "Challenge beaten! Send it back.",
   "challengeLost": "Not this time. One more try?",
-  "paste": "Paste"
+  "paste": "Paste",
+  "lvlW1L1": "Quiet Belt",
+  "lvlW1L2": "Rock Field",
+  "lvlW1L3": "The Spring Mech",
+  "lvlW1L4": "Dark Side of the Rock",
+  "lvlW1L5": "Supreme Stamper",
+  "lvlW2L1": "Margherita Corridor",
+  "lvlW2L2": "Antigravity Hall",
+  "lvlW2L3": "Rocket-Bike Express",
+  "lvlW2L4": "Pizza Rings",
+  "lvlW2L5": "The Great Cosmic Washer",
+  "lvlW3L1": "Glorbo Archipelago",
+  "lvlW3L2": "Shuttle in the Void",
+  "lvlW3L3": "Form Factory",
+  "lvlW3L4": "Last Counter",
+  "lvlW3L5": "Emperor Glorbo"
 }
