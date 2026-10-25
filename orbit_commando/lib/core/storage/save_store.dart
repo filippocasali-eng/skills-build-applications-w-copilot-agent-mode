@@ -21,10 +21,19 @@ class SaveStore {
   static Future<SaveStore> open() async {
     final box = await Hive.openBox<String>(_boxName);
     final raw = box.get(_key);
-    final decoded = raw == null
-        ? <String, dynamic>{}
-        : jsonDecode(raw) as Map<String, dynamic>;
-    final store = SaveStore._(box, migrate(decoded));
+    var decoded = <String, dynamic>{};
+    Map<String, dynamic> data;
+    try {
+      if (raw != null) decoded = jsonDecode(raw) as Map<String, dynamic>;
+      data = migrate(decoded);
+    } catch (_) {
+      // Unreadable save: keep a copy for support and start a fresh one
+      // rather than refusing to boot.
+      await box.put('${_key}_corrupt', raw ?? '');
+      decoded = <String, dynamic>{};
+      data = migrate(decoded);
+    }
+    final store = SaveStore._(box, data);
     if (decoded[schemaVersionKey] != currentSchemaVersion) await store.flush();
     return store;
   }

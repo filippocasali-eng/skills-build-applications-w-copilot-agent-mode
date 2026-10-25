@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
@@ -22,6 +23,16 @@ import 'core/storage/save_store.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  try {
+    await _start();
+  } catch (e, st) {
+    // Never leave the player on a dead splash: show what went wrong.
+    debugPrint('Startup failed: $e\n$st');
+    runApp(_StartupError('$e'));
+  }
+}
+
+Future<void> _start() async {
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.landscapeLeft,
     DeviceOrientation.landscapeRight,
@@ -66,9 +77,41 @@ Future<void> main() async {
   );
 
   if (useAds) {
-    final profile = Profile.fromJson(save.section('profile'));
-    if (await consent.gather()) {
-      await ads.init(minor: !profile.isAdult(DateTime.now()));
-    }
+    // After the first frame, and never fatal: ads are optional.
+    unawaited(
+      Future<void>.delayed(const Duration(seconds: 2), () async {
+        try {
+          final profile = Profile.fromJson(save.section('profile'));
+          if (await consent.gather()) {
+            await ads.init(minor: !profile.isAdult(DateTime.now()));
+          }
+        } catch (e) {
+          debugPrint('Ads unavailable: $e');
+        }
+      }),
+    );
   }
+}
+
+class _StartupError extends StatelessWidget {
+  const _StartupError(this.message);
+
+  final String message;
+
+  @override
+  Widget build(BuildContext context) => MaterialApp(
+    debugShowCheckedModeBanner: false,
+    home: Scaffold(
+      backgroundColor: const Color(0xFF0B0B1E),
+      body: Padding(
+        padding: const EdgeInsets.all(24),
+        child: Center(
+          child: Text(
+            "ORBIT COMMANDO '94 non è riuscito ad avviarsi.\n\n$message",
+            style: const TextStyle(color: Color(0xFFFFE36B), fontSize: 16),
+          ),
+        ),
+      ),
+    ),
+  );
 }
