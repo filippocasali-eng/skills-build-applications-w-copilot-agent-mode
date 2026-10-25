@@ -97,23 +97,25 @@ class Bosses {
           BossPart('drawerR', 60, 22, 18, armor: 0.2),
         ]);
       case BossKind.washer:
-        b.maxHp = 320;
+        b.maxHp = 240;
         b.by = b.arena.y1 - 90;
+        // The control panel sticks out above the body so diagonal shots
+        // reach it; the body only takes chip damage.
         b.parts.addAll([
-          BossPart('body', 0, 0, 70, armor: 0.15),
-          BossPart('panel', 0, -70, 22, armor: 1),
+          BossPart('body', 0, 20, 58, armor: 0.25),
+          BossPart('panel', 0, -72, 30, armor: 1),
           BossPart('drum', 0, 10, 40, armor: 0),
         ]);
       case BossKind.emperor:
-        b.maxHp = 180 + 160 + 140; // 4 drawers, core, saucer: one HP bar
+        b.maxHp = 120 + 120 + 100; // 4 drawers, core, saucer: one HP bar
         b.bx = b.arena.x1 - 150;
         b.by = b.arena.y1 - 110;
         b.parts.addAll([
-          BossPart('body', 0, 0, 80, armor: 0),
+          BossPart('body', 20, 10, 70, armor: 0),
           for (var i = 0; i < 4; i++)
-            BossPart('drawer$i', -62, -60 + i * 38.0, 18, armor: 1)..hp = 45,
-          BossPart('core', 0, -10, 26, armor: 0)..hp = 160,
-          BossPart('saucer', 0, -90, 28, armor: 0)..hp = 140,
+            BossPart('drawer$i', -62, -60 + i * 38.0, 18, armor: 1)..hp = 30,
+          BossPart('core', 0, -10, 26, armor: 0)..hp = 120,
+          BossPart('saucer', 0, -90, 28, armor: 0)..hp = 100,
         ]);
     }
     b.hp = b.maxHp;

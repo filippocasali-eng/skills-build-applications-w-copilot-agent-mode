@@ -25,6 +25,7 @@ class Loadout {
     this.shieldTicks = 0,
     this.extraGrenades = 0,
     this.dashUnlocked = false,
+    this.forcedWeapon,
   });
 
   final double damageMult;
@@ -39,6 +40,9 @@ class Loadout {
 
   /// Unlocks the dash before level 3 (e.g. replays, Boss Rush).
   final bool dashUnlocked;
+
+  /// Weekly-challenge modifier: start with (and keep) this weapon.
+  final WeaponKind? forcedWeapon;
 }
 
 /// End-of-level summary.

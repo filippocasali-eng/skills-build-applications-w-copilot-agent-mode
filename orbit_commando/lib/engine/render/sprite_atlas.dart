@@ -87,14 +87,34 @@ class SpriteAtlas {
     String name, {
     required Images images,
     required AssetsCache assets,
+    String dir = 'sprites',
   }) async {
     final json = jsonDecode(
-      await assets.readFile('sprites/$name.json'),
+      await assets.readFile('$dir/$name.json'),
     ) as Map<String, dynamic>;
     final data = AtlasData.fromJson(json);
-    final image = await images.load('sprites/${data.image}');
+    final image = await images.load('$dir/${data.image}');
     return SpriteAtlas(data, image);
   }
+
+  late final List<Sprite> _sprites = [
+    for (var i = 0; i < data.frames.length; i++) sprite(i),
+  ];
+
+  /// Cached sprite for a frame index.
+  Sprite frame(int i) => _sprites[i];
+
+  /// Frame index of [anim] at [time] seconds (falls back to the first
+  /// animation when missing).
+  int frameAt(String anim, double time) {
+    final a = data.animations[anim] ?? data.animations.values.first;
+    final n = a.frames.length;
+    var i = (time * a.fps).floor();
+    i = a.loop ? i % n : (i < n ? i : n - 1);
+    return a.frames[i < 0 ? 0 : i];
+  }
+
+  bool has(String anim) => data.animations.containsKey(anim);
 
   Vector2 get frameSize =>
       Vector2(data.frames.first.width, data.frames.first.height);

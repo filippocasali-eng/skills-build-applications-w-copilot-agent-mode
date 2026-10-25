@@ -1,0 +1,44 @@
+import 'controls_config.dart';
+import 'levels/level_data.dart';
+import 'roster.dart';
+import 'sim/balance.dart';
+import 'sim/game_sim.dart';
+
+enum GameMode { campaign, arcade, bossRush, weekly, attract }
+
+/// Everything needed to start one level.
+class PlayConfig {
+  const PlayConfig({
+    required this.level,
+    required this.levelNumber,
+    this.mode = GameMode.campaign,
+    this.difficulty = Difficulty.normal,
+    this.hero = Hero.roxy,
+    this.loadout = const Loadout(),
+    this.balance = const Balance(),
+    this.seed = 1994,
+    this.autoAim = false,
+    this.rotatingCamera = true,
+    this.controls = const ControlsConfig(),
+    this.credits = 3,
+    this.showTouchControls = true,
+  });
+
+  final LevelData level;
+
+  /// 1..15 in campaign order.
+  final int levelNumber;
+  final GameMode mode;
+  final Difficulty difficulty;
+  final Hero hero;
+  final Loadout loadout;
+  final Balance balance;
+  final int seed;
+  final bool autoAim;
+  final bool rotatingCamera;
+  final ControlsConfig controls;
+
+  /// Credits available for CONTINUE (UI only; the sim doesn't count them).
+  final int credits;
+  final bool showTouchControls;
+}

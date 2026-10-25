@@ -29,6 +29,9 @@ class Vehicle {
   final VehicleKind kind;
   final Body body;
   final int maxHp;
+
+  /// Where the level placed it (vehicles come back after a death).
+  double spawnX = 0, spawnY = 0;
   int hp = 1;
   bool occupied = false;
   bool destroyed = false;
@@ -53,7 +56,9 @@ class Vehicles {
         (k) => k.name == e.str('kind', 'mech'),
         orElse: () => VehicleKind.mech,
       );
-      final v = Vehicle(kind, e.x, e.y);
+      final v = Vehicle(kind, e.x, e.y)
+        ..spawnX = e.x
+        ..spawnY = e.y;
       v.body.updateFrame(sim.gravity);
       list.add(v);
     }
@@ -67,6 +72,27 @@ class Vehicles {
       if (v.occupied) return v;
     }
     return null;
+  }
+
+  /// Called when the player respawns: lost vehicles return, at their
+  /// spawn point or at the checkpoint if that is further along.
+  void onPlayerRespawn() {
+    final p = sim.player;
+    for (final v in list) {
+      if (!v.destroyed) continue;
+      final atCheckpoint = p.checkpointX > v.spawnX;
+      v
+        ..destroyed = false
+        ..occupied = false
+        ..hp = v.maxHp
+        ..flash = 0;
+      v.body
+        ..x = atCheckpoint ? p.checkpointX + 50 : v.spawnX
+        ..y = atCheckpoint ? p.checkpointY - 4 : v.spawnY
+        ..vx = 0
+        ..vy = 0;
+      v.body.updateFrame(sim.gravity);
+    }
   }
 
   void update(InputFrame input) {
@@ -96,6 +122,18 @@ class Vehicles {
         continue;
       }
       _drive(v, input);
+      // Fell out of the level: the vehicle is lost with its pilot.
+      final lv = sim.level;
+      if (v.body.y > lv.height + 200 ||
+          v.body.x < -600 ||
+          v.body.x > lv.width + 600) {
+        v
+          ..destroyed = true
+          ..occupied = false;
+        p.inVehicle = false;
+        p.die(force: true);
+        continue;
+      }
       // The pilot rides along: keeps camera, pickups and checkpoints working.
       p.body
         ..x = v.body.x

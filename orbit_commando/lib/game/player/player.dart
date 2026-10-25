@@ -111,16 +111,23 @@ class Player {
       grenades = sim.balance.startGrenades + sim.loadout.extraGrenades;
     }
     hp = maxHp;
+    final forced = sim.loadout.forcedWeapon;
+    if (forced != null) {
+      weapon = forced;
+      ammo = 1 << 30;
+    }
     state = PlayerState.idle;
     invuln = initial ? 0 : sim.balance.invulnTicks;
     shieldTicks = sim.loadout.shieldTicks;
   }
 
   void respawn() {
-    spawnAt(checkpointX, checkpointY);
     weapon = WeaponKind.blaster;
     ammo = 0;
+    spawnAt(checkpointX, checkpointY);
     grenades = math.max(grenades, sim.balance.startGrenades);
+    inVehicle = false;
+    sim.vehicles.onPlayerRespawn();
     sim.events.add(SimEventType.playerRespawn, cx, cy);
   }
 
@@ -298,6 +305,7 @@ class Player {
   }
 
   void giveWeapon(WeaponKind w) {
+    if (sim.loadout.forcedWeapon != null) return;
     final spec = sim.balance.weapons[w]!;
     if (weapon == w) {
       ammo += spec.ammo;

@@ -10,7 +10,7 @@ between pieces never create seams (ghost collisions).
 
 Movement limits the layouts must respect (balance.json defaults):
   jump apex ~88 px, jump length ~110 px running, step-ups <= 70 px,
-  gaps <= 90 px, planetoid surfaces <= 140 px apart.
+  gaps <= 80 px on foot (vehicle sections may be wider), planetoid surfaces <= 140 px apart.
 
 Planetoid gravity reaches `influence` = radius + 80 px by default: a jump
 (88 px) can always escape it. A planetoid hovering `radius + 130` px above
@@ -77,7 +77,7 @@ class Level:
         return self
 
     def gap(self, length):
-        """A pit (falling in is deadly). Keep <= 90 px."""
+        """A pit (falling in is deadly). Keep <= 80 px on foot."""
         self._flush()
         self.x += length
         return self

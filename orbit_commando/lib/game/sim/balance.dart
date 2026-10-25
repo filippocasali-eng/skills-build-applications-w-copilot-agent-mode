@@ -51,6 +51,21 @@ class WeaponSpec {
         pierce: j['pierce'] as bool? ?? d.pierce,
       );
 
+  Map<String, Object> toJson() => {
+    'cooldown': cooldown,
+    'speed': speed,
+    'damage': damage,
+    'ammo': ammo,
+    'pellets': pellets,
+    'spread': spread,
+    'life': life,
+    'gravity': gravity,
+    'bounces': bounces,
+    'blastRadius': blastRadius,
+    'homing': homing,
+    'pierce': pierce,
+  };
+
   /// Ticks between shots.
   final int cooldown;
   final double speed;
@@ -99,6 +114,18 @@ class EnemySpec {
     radius: (j['radius'] as num?)?.toDouble() ?? d.radius,
     height: (j['height'] as num?)?.toDouble() ?? d.height,
   );
+
+  Map<String, Object> toJson() => {
+    'hp': hp,
+    'speed': speed,
+    'score': score,
+    'tell': tell,
+    'cooldown': cooldown,
+    'range': range,
+    'bulletSpeed': bulletSpeed,
+    'radius': radius,
+    'height': height,
+  };
 
   final double hp;
   final double speed;
@@ -227,6 +254,51 @@ class Balance {
       },
     );
   }
+
+  Map<String, Object> toJson() => {
+    'gravity': gravity,
+    'maxFall': maxFall,
+    'runSpeed': runSpeed,
+    'runAccel': runAccel,
+    'airAccel': airAccel,
+    'friction': friction,
+    'jumpSpeed': jumpSpeed,
+    'jumpCut': jumpCut,
+    'coyoteTicks': coyoteTicks,
+    'jumpBufferTicks': jumpBufferTicks,
+    'jetpackAccel': jetpackAccel,
+    'jetpackMax': jetpackMax,
+    'jetpackDrag': jetpackDrag,
+    'dashSpeed': dashSpeed,
+    'dashTicks': dashTicks,
+    'dashCooldown': dashCooldown,
+    'dashUnlockLevel': dashUnlockLevel,
+    'respawnTicks': respawnTicks,
+    'invulnTicks': invulnTicks,
+    'hurtInvulnTicks': hurtInvulnTicks,
+    'startLives': startLives,
+    'easyHp': easyHp,
+    'easyEnemySpeed': easyEnemySpeed,
+    'startGrenades': startGrenades,
+    'grenadeSpeed': grenadeSpeed,
+    'grenadeDamage': grenadeDamage,
+    'grenadeRadius': grenadeRadius,
+    'grenadeFuse': grenadeFuse,
+    'meleeRange': meleeRange,
+    'meleeDamage': meleeDamage,
+    'comboWindow': comboWindow,
+    'comboMax': comboMax,
+    'hostageScore': hostageScore,
+    'cassetteScore': cassetteScore,
+    'noDeathBonus': noDeathBonus,
+    'timeBonusPerSecond': timeBonusPerSecond,
+    'activationRange': activationRange,
+    'assistDeaths': assistDeaths,
+    'assistShieldTicks': assistShieldTicks,
+    'ranked_allow_paid_upgrades': rankedAllowPaidUpgrades,
+    'weapons': {for (final e in weapons.entries) e.key.name: e.value.toJson()},
+    'enemies': {for (final e in enemies.entries) e.key: e.value.toJson()},
+  };
 
   final double gravity, maxFall;
   final double runSpeed, runAccel, airAccel, friction;

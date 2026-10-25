@@ -67,6 +67,10 @@ flutter:
   assets:
     - assets/sprites/
     - assets/fonts/
+    - assets/tiles/
+    - assets/planets/
+    - assets/levels/
+    - assets/data/
 
 
   # To add assets to your application, add an assets section, like this:
