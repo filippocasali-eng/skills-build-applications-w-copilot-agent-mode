@@ -126,4 +126,5 @@ jobs:
       - name: Fail on crash
         run: |
           cat smoke-result.txt
+          for f in smoke-crash-*.txt; do echo "== $f"; cat "$f"; done
           grep -q '^OK' smoke-result.txt

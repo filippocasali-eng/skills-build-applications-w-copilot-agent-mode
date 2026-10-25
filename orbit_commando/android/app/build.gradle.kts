@@ -52,6 +52,12 @@ android {
         release {
             signingConfig = signingConfigs.findByName("release")
                 ?: signingConfigs.getByName("debug")
+            // R8 strips Java classes that plugins reach only through JNI
+            // (package:jni, used by path_provider): the minified release
+            // crashed at launch while the debug build ran. The Dart code is
+            // AOT-compiled either way, so the cost is a little APK size.
+            isMinifyEnabled = false
+            isShrinkResources = false
         }
     }
 }
