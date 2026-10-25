@@ -64,7 +64,11 @@ class _ResultsScreenState extends ConsumerState<ResultsScreen> {
     _timer = Timer.periodic(const Duration(milliseconds: 30), (t) {
       if (!mounted) return;
       int step(int shown, int target) {
-        final d = ((target - shown) / 6).ceil().clamp(1, 1 << 30);
+        // Ease out, but never slower than ~25 ticks per line.
+        final d = ((target - shown) / 4).ceil().clamp(
+          (target / 25).ceil().clamp(1, 1 << 30),
+          1 << 30,
+        );
         return shown + d > target ? target : shown + d;
       }
 

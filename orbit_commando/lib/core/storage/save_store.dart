@@ -30,8 +30,11 @@ class SaveStore {
   }
 
   /// A store that lives only in memory (tests, widget previews).
-  factory SaveStore.memory([Map<String, dynamic>? data]) =>
-      SaveStore._(null, migrate(data ?? <String, dynamic>{}));
+  factory SaveStore.memory([Map<String, dynamic>? data]) => SaveStore._(
+    null,
+    // JSON round-trip: same shape (and map types) as a save read from disk.
+    migrate(jsonDecode(jsonEncode(data ?? {})) as Map<String, dynamic>),
+  );
 
   int get schemaVersion => _data[schemaVersionKey] as int;
 

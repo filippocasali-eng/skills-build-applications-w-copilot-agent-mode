@@ -6,7 +6,7 @@ import 'package:flutter/services.dart';
 import '../../engine/render/palette.g.dart';
 
 /// Size of one font pixel in logical pixels for UI text.
-const double kPx = 2;
+const double kPx = 1.25;
 
 /// Text in the original ORBIT-5 pixel font. [scale] multiplies the 5x7
 /// glyphs (1 = 10 logical px line height at kPx=2... tuned for menus).
@@ -299,21 +299,40 @@ class PixelChoice<T> extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Padding(
     padding: const EdgeInsets.symmetric(vertical: 3 * kPx),
-    child: Row(
-      children: [
-        Expanded(child: PixelText(label, scale: 0.8, color: Pal.ink6)),
-        PixelButton(label: '<', scale: 0.8, onPressed: () => _step(-1)),
-        SizedBox(
-          width: 150 * kPx,
-          child: PixelText(
-            options[value] ?? '',
-            scale: 0.8,
-            color: Pal.gold6,
-            align: TextAlign.center,
-          ),
-        ),
-        PixelButton(label: '>', scale: 0.8, onPressed: () => _step(1)),
-      ],
+    child: LayoutBuilder(
+      builder: (context, box) {
+        final valueWidth = (box.maxWidth - 90).clamp(60.0, 150 * kPx);
+        final selector = Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            PixelButton(label: '<', scale: 0.8, onPressed: () => _step(-1)),
+            SizedBox(
+              width: valueWidth,
+              child: PixelText(
+                options[value] ?? '',
+                scale: 0.8,
+                color: Pal.gold6,
+                align: TextAlign.center,
+                maxLines: 1,
+              ),
+            ),
+            PixelButton(label: '>', scale: 0.8, onPressed: () => _step(1)),
+          ],
+        );
+        final label = PixelText(this.label, scale: 0.8, color: Pal.ink6);
+        if (box.maxWidth < 420) {
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [label, selector],
+          );
+        }
+        return Row(
+          children: [
+            Expanded(child: label),
+            selector,
+          ],
+        );
+      },
     ),
   );
 }

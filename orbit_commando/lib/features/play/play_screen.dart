@@ -15,9 +15,11 @@ import '../../core/multiplayer/multiplayer.dart';
 import '../../core/progress/progress.dart';
 import '../../core/settings/settings.dart';
 import '../../engine/render/palette.g.dart';
+import '../../engine/render/pixel_renderer.dart';
 import '../../engine/replay/replay.dart';
 import '../../app/ui/route.dart';
 import '../../game/controls_config.dart';
+import '../../game/input/input_source.dart';
 import '../../game/levels/level_data.dart';
 import '../../game/play_config.dart';
 import '../../game/play_game.dart';
@@ -32,9 +34,13 @@ import 'play_view.dart';
 /// Plays the current level of a [RunSpec] and handles pause, continue,
 /// the dynamic assistant and the hand-off to the results screen.
 class PlayScreen extends ConsumerStatefulWidget {
-  const PlayScreen({super.key, required this.run});
+  const PlayScreen({super.key, required this.run, this.input});
 
   final RunSpec run;
+
+  /// Scripted input instead of the player (integration tests).
+  @visibleForTesting
+  final InputSource? input;
 
   @override
   ConsumerState<PlayScreen> createState() => _PlayScreenState();
@@ -98,6 +104,14 @@ class _PlayScreenState extends ConsumerState<PlayScreen> {
       ),
       credits: _credits,
       controls: _controls(settings),
+      cheats: progress.cheats,
+      crt: progress.cheats.contains('brokenTube')
+          ? CrtParams.broken
+          : switch (settings.crt) {
+              CrtPreset.off => null,
+              CrtPreset.arcade => CrtParams.arcade,
+              CrtPreset.tv => CrtParams.tv,
+            },
     );
     final audio = ref.read(audioProvider);
     audio.music(_trackFor(level));
@@ -110,6 +124,7 @@ class _PlayScreenState extends ConsumerState<PlayScreen> {
       _level = level;
       _game = PlayGame(
         config: config,
+        input: widget.input,
         recordGhost: run.mode == GameMode.weekly,
         ghost: ghost?.ghost,
         callbacks: PlayCallbacks(

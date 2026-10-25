@@ -1,3 +1,4 @@
+import '../engine/render/pixel_renderer.dart';
 import 'controls_config.dart';
 import 'levels/level_data.dart';
 import 'roster.dart';
@@ -23,6 +24,7 @@ class PlayConfig {
     this.credits = 3,
     this.showTouchControls = true,
     this.cheats = const {},
+    this.crt,
   });
 
   final LevelData level;
@@ -45,4 +47,7 @@ class PlayConfig {
 
   /// Active secret codes: 'bigHeads', 'giantPixels', 'brokenTube'.
   final Set<String> cheats;
+
+  /// CRT post-process parameters (null = sharp pixels).
+  final CrtParams? crt;
 }

@@ -12,8 +12,8 @@ final Map<int, Migration> migrations = {
   // 0 -> 1: initial layout.
   0: (d) => {
     ...d,
-    'settings': <String, dynamic>{},
-    'progress': <String, dynamic>{},
+    'settings': d['settings'] ?? <String, dynamic>{},
+    'progress': d['progress'] ?? <String, dynamic>{},
   },
 };
 

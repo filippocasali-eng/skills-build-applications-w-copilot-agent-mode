@@ -75,6 +75,10 @@ flutter:
     - assets/planets/
     - assets/levels/
     - assets/data/
+    - assets/audio/
+
+  shaders:
+    - assets/shaders/crt.frag
 
   fonts:
     - family: Orbit5

@@ -119,6 +119,28 @@ class WorldRenderer extends Component with HasGameReference<PlayGame> {
 
   double get _t => game.time;
 
+  late final bool _bigHeads = game.config.cheats.contains('bigHeads');
+
+  void _drawChar(
+    Canvas canvas,
+    SpriteAtlas atlas,
+    int frame,
+    double x,
+    double y, {
+    double angle = 0,
+    bool flipX = false,
+    Paint? paint,
+  }) => (_bigHeads ? drawFrameBigHead : drawFrame)(
+    canvas,
+    atlas,
+    frame,
+    x,
+    y,
+    angle: angle,
+    flipX: flipX,
+    paint: paint,
+  );
+
   @override
   void render(Canvas canvas) {
     final sim = game.sim;
@@ -429,7 +451,7 @@ class WorldRenderer extends Component with HasGameReference<PlayGame> {
     final paint = e.flash > 0 || !e.alive ? _flash : _p;
     final x = e.flying ? e.x : e.feetX;
     final y = e.flying ? e.cy : e.feetY;
-    drawFrame(
+    _drawChar(
       canvas,
       atlas,
       atlas.frameAt(anim, time),
@@ -532,7 +554,7 @@ class WorldRenderer extends Component with HasGameReference<PlayGame> {
       canvas.translate(-p.body.x, -p.body.y);
     }
     final paint = p.hurtTimer > 0 ? _flash : _p;
-    drawFrame(
+    _drawChar(
       canvas,
       hero,
       hero.frameAt(anim, game.time),

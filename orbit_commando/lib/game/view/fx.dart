@@ -250,3 +250,41 @@ void drawFrame(
 final Paint _crisp = Paint()
   ..filterQuality = FilterQuality.none
   ..isAntiAlias = false;
+
+/// Secret code "big heads": the top part of the sprite is drawn 1.7x
+/// around the neck line.
+void drawFrameBigHead(
+  Canvas canvas,
+  SpriteAtlas atlas,
+  int frame,
+  double x,
+  double y, {
+  double angle = 0,
+  bool flipX = false,
+  double scale = 1,
+  Paint? paint,
+}) {
+  final o = atlas.data.origin;
+  final r = atlas.data.frames[frame];
+  final split = (r.height * 0.4).roundToDouble();
+  final p = paint ?? _crisp;
+  canvas.save();
+  canvas.translate(x.roundToDouble(), y.roundToDouble());
+  if (angle != 0) canvas.rotate(angle);
+  if (flipX) canvas.scale(-1, 1);
+  canvas.drawImageRect(
+    atlas.image,
+    Rect.fromLTWH(r.left, r.top + split, r.width, r.height - split),
+    Rect.fromLTWH(-o.dx, -o.dy + split, r.width, r.height - split),
+    p,
+  );
+  canvas.translate(0, -o.dy + split);
+  canvas.scale(1.7);
+  canvas.drawImageRect(
+    atlas.image,
+    Rect.fromLTWH(r.left, r.top, r.width, split),
+    Rect.fromLTWH(-o.dx, -split, r.width, split),
+    p,
+  );
+  canvas.restore();
+}

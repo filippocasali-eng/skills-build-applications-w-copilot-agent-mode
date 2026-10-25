@@ -152,6 +152,18 @@ class PlayGame extends FlameGame with PixelPerfectRender, KeyboardEvents {
       autoAim: config.autoAim,
     );
     fx = Fx(res);
+    chunkyPixels = config.cheats.contains('giantPixels');
+    final crt = config.crt;
+    if (crt != null) {
+      try {
+        final program = await FragmentProgram.fromAsset(
+          'assets/shaders/crt.frag',
+        );
+        postProcessor = CrtPostProcessor(program, crt);
+      } catch (_) {
+        // No shader support (tests, old GPUs): keep sharp pixels.
+      }
+    }
     final p = sim.player.body;
     _camX = p.cx;
     _camY = p.cy;
