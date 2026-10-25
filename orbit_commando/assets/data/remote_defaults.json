@@ -1,0 +1,35 @@
+{
+  "version": 1,
+  "gem_prices": {
+    "capsule": 60,
+    "capsule_x10": 540,
+    "continue": 20,
+    "skin": 250,
+    "upgrade_level": 1
+  },
+  "gem_euro_cents_per_100": 91,
+  "lootbox_paid_blocked_countries": ["BE"],
+  "daily_shop_pool": [
+    {"id": "tokens_500", "kind": "tokens", "amount": 500, "gems": 40},
+    {"id": "tokens_1500", "kind": "tokens", "amount": 1500, "gems": 100},
+    {"id": "credits_5", "kind": "credits", "amount": 5, "gems": 30},
+    {"id": "capsule_1", "kind": "capsule", "amount": 1, "gems": 50},
+    {"id": "capsule_3", "kind": "capsule", "amount": 3, "gems": 150},
+    {"id": "frag_damage_5", "kind": "fragment", "upgrade": "damage", "amount": 5, "gems": 60},
+    {"id": "frag_fireRate_5", "kind": "fragment", "upgrade": "fireRate", "amount": 5, "gems": 60},
+    {"id": "skin_suit_red", "kind": "skin", "gems": 200},
+    {"id": "skin_suit_teal", "kind": "skin", "gems": 200},
+    {"id": "free_tokens_100", "kind": "tokens", "amount": 100, "gems": 0}
+  ],
+  "flash_offers": [
+    {"id": "boss_help", "trigger": "boss_fail_3", "hours": 4, "kind": "gems_bundle", "sku": "gems_550", "bonus": {"credits": 5, "capsules": 1}},
+    {"id": "world_clear", "trigger": "world_clear", "hours": 6, "kind": "gems_bundle", "sku": "gems_1200", "bonus": {"capsules": 3}},
+    {"id": "comeback", "trigger": "level_fail_5", "hours": 2, "kind": "gems", "gems": 30, "bonus": {"credits": 3, "shield": 1}}
+  ],
+  "events": [
+    {"id": "glorbo_tax_week", "every_weeks": 1, "goal": {"stat": "kills", "amount": 300}, "reward": {"skin": "skin_tax_visor"}, "exclusive_months": 6}
+  ],
+  "season": {"id": "s1", "start": "2026-10-01", "days": 30, "tiers": 30, "xp_per_tier": 400, "sku": "season_pass_s1"},
+  "push_max_per_day": 1,
+  "starter_pack_days": 3
+}

@@ -24,6 +24,7 @@ import font  # noqa: E402
 import palette  # noqa: E402
 from sprites import SPRITES  # noqa: E402
 import import_characters  # noqa: E402
+import ttf  # noqa: E402
 import numpy as np  # noqa: E402
 from art_env import backdrops, planet, textures  # noqa: E402
 from art_game import GAME_ART  # noqa: E402
@@ -198,6 +199,7 @@ def main():
     build_palette()
     n = build_font()
     print(f"font orbit5: {n} glyphs")
+    ttf.build(os.path.join(ROOT, "assets", "fonts", "Orbit5.ttf"))
     for name, maker in SPRITES.items():
         print(f"sprite {name}: {build_sprite(name, maker)} frames")
     for name, (w, h, c) in import_characters.build_all(ROOT).items():

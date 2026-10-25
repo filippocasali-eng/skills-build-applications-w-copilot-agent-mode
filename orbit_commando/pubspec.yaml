@@ -39,6 +39,10 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   intl: any
+  in_app_purchase: ^3.3.1
+  google_mobile_ads: ^9.2.0
+  http: ^1.6.0
+  path_provider: ^2.1.6
 
 dev_dependencies:
   flutter_test:
@@ -71,6 +75,11 @@ flutter:
     - assets/planets/
     - assets/levels/
     - assets/data/
+
+  fonts:
+    - family: Orbit5
+      fonts:
+        - asset: assets/fonts/Orbit5.ttf
 
 
   # To add assets to your application, add an assets section, like this:

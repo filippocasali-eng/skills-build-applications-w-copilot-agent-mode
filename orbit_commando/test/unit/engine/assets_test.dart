@@ -31,7 +31,7 @@ void main() {
     }
 
     for (final id in [
-      ...Hero.values.map((h) => h.atlas),
+      ...Commando.values.map((h) => h.atlas),
       ...EnemyKind.values.map((e) => e.atlas),
     ]) {
       test('$id has the character animations, feet on the last row', () {

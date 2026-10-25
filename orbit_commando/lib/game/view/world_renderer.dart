@@ -143,6 +143,7 @@ class WorldRenderer extends Component with HasGameReference<PlayGame> {
     }
     final b = sim.bosses.boss;
     if (b != null) _drawBoss(canvas, b);
+    _drawGhost(canvas);
     _drawPlayer(canvas, sim.player);
     _drawBullets(canvas);
     game.fx.render(canvas, game.res.font);
@@ -473,6 +474,32 @@ class WorldRenderer extends Component with HasGameReference<PlayGame> {
           : e.spec.range * (1 - e.timer / e.spec.tell);
       canvas.drawCircle(Offset(e.x, e.cy), r, _line);
     }
+  }
+
+  final Paint _ghostPaint = Paint()
+    ..filterQuality = FilterQuality.none
+    ..colorFilter = const ColorFilter.mode(
+      Color(0x8871E2D2),
+      BlendMode.srcATop,
+    );
+
+  /// The weekly-challenge ghost: your best run, replayed as a cyan shadow.
+  void _drawGhost(Canvas canvas) {
+    final g = game.ghost;
+    if (g == null || g.isEmpty) return;
+    final i = (game.sim.tick ~/ 4) * 3;
+    if (i + 2 >= g.length) return;
+    if ((game.sim.tick ~/ 2).isEven) return; // flicker, 90s style
+    final hero = game.res.atlas(game.heroAtlas);
+    drawFrame(
+      canvas,
+      hero,
+      hero.frameAt('run', _t),
+      g[i],
+      g[i + 1],
+      angle: g[i + 2],
+      paint: _ghostPaint,
+    );
   }
 
   void _drawPlayer(Canvas canvas, Player p) {
@@ -868,7 +895,7 @@ class _Edge {
   final double ax, ay, bx, by, nx, ny;
 }
 
-/// Hero atlas helper, exported for HUD icons.
+/// Commando atlas helper, exported for HUD icons.
 SpriteAtlas heroAtlasOf(PlayGame g) => g.res.atlas(g.heroAtlas);
 
 /// Weapon colour used by HUD and pickups.

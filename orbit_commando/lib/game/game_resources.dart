@@ -18,7 +18,7 @@ class GameResources {
     'planetoid_large',
     'nebula',
     'ringed_planet',
-    for (final h in Hero.values) h.atlas,
+    for (final h in Commando.values) h.atlas,
     for (final e in EnemyKind.values) e.atlas,
     // generated enemies
     'clerk', 'drone', 'turret', 'roller', 'sniper', 'minimech', 'jelly',

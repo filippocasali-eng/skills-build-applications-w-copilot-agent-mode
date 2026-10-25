@@ -1,13 +1,367 @@
 {
   "@@locale": "en",
   "appTitle": "Orbit Commando '94",
-  "@appTitle": {"description": "Game name, also shown on the title screen."},
   "pressStart": "Press start",
-  "@pressStart": {"description": "Blinking prompt on the title screen."},
   "insertCoin": "Insert coin",
   "creditsLabel": "Credits {count}",
-  "@creditsLabel": {"placeholders": {"count": {"type": "int"}}},
-  "sandboxLabel": "M1 sandbox",
-  "@sandboxLabel": {"description": "Debug label on the pipeline test scene."},
-  "back": "Back"
+  "@creditsLabel": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "sandboxLabel": "Sandbox",
+  "studioPresents": "Pixel Orbit Studio presents",
+  "copyright": "(c) 1994 Pixel Orbit Studio",
+  "back": "Back",
+  "ok": "OK",
+  "cancel": "Cancel",
+  "yes": "Yes",
+  "no": "No",
+  "next": "Next",
+  "play": "Play",
+  "locked": "Locked",
+  "loading": "Loading...",
+  "comingSoon": "Available online in v2",
+  "menuCampaign": "Campaign",
+  "menuArcade": "Arcade mode",
+  "menuBossRush": "Boss rush",
+  "menuWeekly": "Weekly challenge",
+  "menuWorkshop": "Workshop",
+  "menuGallery": "Gallery",
+  "menuJukebox": "Juke-box",
+  "menuShop": "Shop",
+  "menuTrophies": "Trophies",
+  "menuScores": "High scores",
+  "menuSettings": "Settings",
+  "menuChat": "Squadron chat",
+  "unlockArcade": "Clear World 1 to unlock",
+  "unlockBossRush": "Beat the campaign to unlock",
+  "pilotRank": "Pilot rank {rank}",
+  "@pilotRank": {
+    "placeholders": {
+      "rank": {
+        "type": "int"
+      }
+    }
+  },
+  "tokens": "Tokens {count}",
+  "@tokens": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "worldN": "World {n}",
+  "@worldN": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "world1Name": "Quiet Asteroid Belt",
+  "world2Name": "Pizza-Station Orbital",
+  "world3Name": "Planet Glorbo Prime",
+  "levelN": "Level {n}",
+  "@levelN": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "bossStage": "Boss",
+  "bestScore": "Best {score}",
+  "@bestScore": {
+    "placeholders": {
+      "score": {
+        "type": "int"
+      }
+    }
+  },
+  "difficulty": "Difficulty",
+  "diffEasy": "Easy",
+  "diffNormal": "Normal",
+  "diffArcade": "Arcade",
+  "diffEasyHelp": "3 hit points, auto-aim, slower enemies",
+  "diffNormalHelp": "One hit, one life",
+  "diffArcadeHelp": "Like Normal, limited credits, no upgrades",
+  "chooseHero": "Choose your commando",
+  "heroLocked": "Locked",
+  "heroRoxy": "Fast and fearless. Never misses a jump.",
+  "heroBrutus": "Big guns, bigger heart.",
+  "heroNyx": "Unlock: beat World 2.",
+  "heroDoc": "Unlock: beat the campaign.",
+  "heroNyxBio": "Twin pistols, zero patience.",
+  "heroDocBio": "Built his own cannon. From a toaster.",
+  "paused": "Pause",
+  "resume": "Resume",
+  "restart": "Restart",
+  "quitToMap": "Quit to map",
+  "quitToTitle": "Quit to title",
+  "continueQuestion": "Continue?",
+  "continueCost": "1 credit",
+  "gameOver": "Game over",
+  "noCredits": "No credits left",
+  "watchAdCredit": "Watch a video: +1 credit",
+  "assistTitle": "Need a hand?",
+  "assistBody": "Take a 10 second shield? No penalty.",
+  "assistYes": "Shield on",
+  "assistNo": "I got this",
+  "stageClear": "Stage clear!",
+  "score": "Score",
+  "timeBonus": "Time bonus",
+  "noDeathBonus": "No death bonus",
+  "total": "Total",
+  "rank": "Rank",
+  "time": "Time",
+  "hostages": "Hostages",
+  "cassettes": "Cassettes",
+  "kills": "Kills",
+  "medalNoDeath": "No death",
+  "medalHostages": "All hostages",
+  "medalSpeedrun": "Speedrun",
+  "newRecord": "New record!",
+  "earnedTokens": "+{count} tokens",
+  "@earnedTokens": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "earnedCredit": "+1 credit",
+  "unlockedArcade": "Arcade mode unlocked!",
+  "unlockedBossRush": "Boss rush unlocked!",
+  "unlockedHero": "New commando: {name}!",
+  "@unlockedHero": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "trophyUnlocked": "Trophy: {name}",
+  "@trophyUnlocked": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "enterInitials": "Enter your initials",
+  "doubleTokensAd": "Watch a video: double tokens",
+  "campaignComplete": "The Glorbo Empire is filed away. Thank you, commando!",
+  "setAudio": "Audio",
+  "setMusic": "Music",
+  "setSfx": "Effects",
+  "setVideo": "Video",
+  "setCrt": "CRT filter",
+  "crtOff": "Off",
+  "crtArcade": "Arcade cabinet",
+  "crtTv": "Living room TV",
+  "setGame": "Game",
+  "setCamera": "Camera",
+  "cameraRotating": "Rotating",
+  "cameraFixed": "Fixed (less motion)",
+  "setAutoAim": "Auto-aim",
+  "setVibration": "Vibration",
+  "setLanguage": "Language",
+  "langSystem": "System",
+  "setControls": "Controls layout",
+  "controlsHelp": "Drag buttons to move them. Pinch or use +/- to resize.",
+  "opacity": "Opacity",
+  "resetDefaults": "Reset",
+  "setPrivacy": "Privacy",
+  "setAnalytics": "Share anonymous stats",
+  "setChat": "Chat",
+  "setNotifications": "Offer notifications",
+  "setConsent": "Ad consent",
+  "setSpendLimit": "Monthly spending limit",
+  "noLimit": "No limit",
+  "purchaseHistory": "Purchase history",
+  "restorePurchases": "Restore purchases",
+  "privacyPolicy": "Privacy policy",
+  "deleteData": "Delete my data",
+  "on": "On",
+  "off": "Off",
+  "upDamage": "Weapon damage",
+  "upHp": "Extra hit points",
+  "upShield": "Spawn shield",
+  "upFireRate": "Fire rate",
+  "upGrenades": "Starting grenades",
+  "upLevel": "Lv {level}/{max}",
+  "@upLevel": {
+    "placeholders": {
+      "level": {
+        "type": "int"
+      },
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "buyTokens": "{count} tokens",
+  "@buyTokens": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "buyGems": "{count} gems",
+  "@buyGems": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "maxed": "Max",
+  "notEnough": "Not enough",
+  "arcadeNoUpgrades": "Upgrades are off in Arcade difficulty.",
+  "galleryLocked": "Find more cassettes to unlock",
+  "cassettesFound": "Cassettes {count}/{total}",
+  "@cassettesFound": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "nowPlaying": "Now playing",
+  "trophiesCount": "{count}/{total} trophies",
+  "@trophiesCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "tip1": "Manual p.12: grenades bounce. So do your excuses.",
+  "tip2": "Manual p.4: blow into the cartridge if the planet won't load.",
+  "tip3": "Manual p.9: on a planetoid, down is wherever your feet are.",
+  "tip4": "Manual p.21: the Glorbo fear only two things: you and paperwork errors.",
+  "tip5": "Manual p.7: enemies shout before shooting. Listen.",
+  "tip6": "Manual p.30: hostages tip well. In grenades.",
+  "tip7": "Manual p.16: walking upside down voids no warranty.",
+  "tip8": "Manual p.2: do not feed the washing machine. Seriously.",
+  "cheatBigHeads": "Big heads!",
+  "cheatGiantPixels": "Giant pixels!",
+  "cheatBrokenTube": "Broken tube mode!",
+  "shopCartridge": "Full Cartridge",
+  "shopCartridgeDesc": "Worlds 2-3, Boss Rush, infinite campaign credits, no ads. Like buying the cartridge: once.",
+  "owned": "Owned",
+  "gems": "Quasar gems",
+  "gemsApprox": "about {price}",
+  "@gemsApprox": {
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "capsules": "Cosmic capsules",
+  "capsuleOpen": "Open capsule",
+  "capsuleFree": "Free daily capsule",
+  "capsuleOdds": "Odds",
+  "capsuleOddsTitle": "Exact drop odds",
+  "pityCounter": "Legendary guaranteed in {count} opens",
+  "@pityCounter": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "rarityCommon": "Common",
+  "rarityRare": "Rare",
+  "rarityEpic": "Epic",
+  "rarityLegendary": "Legendary",
+  "paidCapsulesBlocked": "Paid capsules are not available in your country. Free capsules still work.",
+  "paidCapsulesMinor": "Paid capsules are disabled for players under 18.",
+  "dailyShop": "Shop of the day",
+  "refreshesIn": "Refreshes in {time}",
+  "@refreshesIn": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "flashOffer": "Flash offer",
+  "endsIn": "Ends in {time}",
+  "@endsIn": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "seasonPass": "Season pass",
+  "seasonEndsIn": "Season ends in {time}",
+  "@seasonEndsIn": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "freeTrack": "Free",
+  "premiumTrack": "Premium",
+  "dailyLogin": "Daily login",
+  "dayN": "Day {n}",
+  "@dayN": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "claim": "Claim",
+  "claimed": "Claimed",
+  "buy": "Buy",
+  "storeUnavailable": "Store not available on this device.",
+  "spendLimitReached": "Monthly spending limit reached.",
+  "purchasePending": "Purchase pending...",
+  "purchaseDone": "Thank you!",
+  "starterPack": "Starter pack",
+  "weeklyEvent": "Weekly event",
+  "noPurchases": "No purchases yet.",
+  "ageGateTitle": "When were you born?",
+  "ageGateBody": "We ask once, to set the right features for your age.",
+  "year": "Year",
+  "month": "Month",
+  "confirm": "Confirm",
+  "onlineUnder16": "Online features are available from age 16.",
+  "chatEmotesOnly": "Quick messages only (under 18).",
+  "chatSignIn": "Sign in with Google to chat",
+  "chatGlobal": "Global",
+  "chatSquadron": "Squadron",
+  "chatFriends": "Friends",
+  "chatSend": "Send",
+  "chatReport": "Report",
+  "chatBlock": "Block",
+  "chatSlowDown": "Slow down: 1 message every 3 seconds.",
+  "chatFiltered": "Message blocked by the filter.",
+  "chatMuted": "You are muted for a while.",
+  "chatDisabled": "Chat is turned off in Settings.",
+  "chatOffline": "Chat needs a connection.",
+  "reported": "Reported. Thanks!",
+  "emoteNiceShot": "Nice shot!",
+  "emoteHelpBoss": "Help with the boss?",
+  "emoteGG": "GG",
+  "emoteHi": "Hi!",
+  "emoteThanks": "Thanks!",
+  "emoteOneMore": "One more!",
+  "squadGoal": "Weekly squadron goal"
 }

@@ -1,12 +1,12 @@
 /// The playable characters and enemy troopers from the character pack
 /// (art_source/characters). Atlas names match `assets/sprites/<id>.json`.
-enum Hero {
+enum Commando {
   roxy('Roxy'),
   brutus('Brutus'),
   nyx('Nyx'),
   doc('Doc');
 
-  const Hero(this.displayName);
+  const Commando(this.displayName);
 
   final String displayName;
   String get atlas => name;

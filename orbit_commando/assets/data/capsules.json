@@ -1,0 +1,56 @@
+{
+  "version": 1,
+  "pity": 50,
+  "rarities": [
+    {
+      "id": "common",
+      "weight": 7000,
+      "items": [
+        {"id": "tokens_50", "kind": "tokens", "amount": 50},
+        {"id": "tokens_100", "kind": "tokens", "amount": 100},
+        {"id": "credit_1", "kind": "credits", "amount": 1},
+        {"id": "frag_damage_2", "kind": "fragment", "upgrade": "damage", "amount": 2},
+        {"id": "frag_fireRate_2", "kind": "fragment", "upgrade": "fireRate", "amount": 2},
+        {"id": "frag_shield_2", "kind": "fragment", "upgrade": "shield", "amount": 2},
+        {"id": "frag_grenades_2", "kind": "fragment", "upgrade": "grenades", "amount": 2},
+        {"id": "sticker_planet", "kind": "collectible"},
+        {"id": "sticker_stamp", "kind": "collectible"}
+      ]
+    },
+    {
+      "id": "rare",
+      "weight": 2200,
+      "items": [
+        {"id": "tokens_300", "kind": "tokens", "amount": 300},
+        {"id": "credit_3", "kind": "credits", "amount": 3},
+        {"id": "frag_damage_5", "kind": "fragment", "upgrade": "damage", "amount": 5},
+        {"id": "frag_hp_3", "kind": "fragment", "upgrade": "hp", "amount": 3},
+        {"id": "skin_suit_red", "kind": "skin"},
+        {"id": "skin_suit_teal", "kind": "skin"},
+        {"id": "sticker_washer", "kind": "collectible"}
+      ]
+    },
+    {
+      "id": "epic",
+      "weight": 650,
+      "items": [
+        {"id": "gems_20", "kind": "gems", "amount": 20},
+        {"id": "frag_hp_6", "kind": "fragment", "upgrade": "hp", "amount": 6},
+        {"id": "skin_tracksuit", "kind": "skin"},
+        {"id": "skin_fannypack", "kind": "skin"},
+        {"id": "crt_green", "kind": "crt"},
+        {"id": "weapon_tuned_spread", "kind": "weapon", "weapon": "spread"}
+      ]
+    },
+    {
+      "id": "legendary",
+      "weight": 150,
+      "items": [
+        {"id": "gems_100", "kind": "gems", "amount": 100},
+        {"id": "skin_walkman", "kind": "skin"},
+        {"id": "weapon_golden_laser", "kind": "weapon", "weapon": "laser"},
+        {"id": "weapon_golden_homing", "kind": "weapon", "weapon": "homing"}
+      ]
+    }
+  ]
+}

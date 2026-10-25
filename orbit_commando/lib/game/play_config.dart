@@ -13,7 +13,7 @@ class PlayConfig {
     required this.levelNumber,
     this.mode = GameMode.campaign,
     this.difficulty = Difficulty.normal,
-    this.hero = Hero.roxy,
+    this.hero = Commando.roxy,
     this.loadout = const Loadout(),
     this.balance = const Balance(),
     this.seed = 1994,
@@ -22,6 +22,7 @@ class PlayConfig {
     this.controls = const ControlsConfig(),
     this.credits = 3,
     this.showTouchControls = true,
+    this.cheats = const {},
   });
 
   final LevelData level;
@@ -30,7 +31,7 @@ class PlayConfig {
   final int levelNumber;
   final GameMode mode;
   final Difficulty difficulty;
-  final Hero hero;
+  final Commando hero;
   final Loadout loadout;
   final Balance balance;
   final int seed;
@@ -41,4 +42,7 @@ class PlayConfig {
   /// Credits available for CONTINUE (UI only; the sim doesn't count them).
   final int credits;
   final bool showTouchControls;
+
+  /// Active secret codes: 'bigHeads', 'giantPixels', 'brokenTube'.
+  final Set<String> cheats;
 }

@@ -12,7 +12,8 @@ class SaveStore {
   static const _boxName = 'orbit_save';
   static const _key = 'save';
 
-  final Box<String> _box;
+  /// Null for in-memory stores (tests, previews).
+  final Box<String>? _box;
   final Map<String, dynamic> _data;
 
   /// Opens the box (call `Hive.initFlutter()` or `Hive.init(path)` first)
@@ -28,11 +29,19 @@ class SaveStore {
     return store;
   }
 
+  /// A store that lives only in memory (tests, widget previews).
+  factory SaveStore.memory([Map<String, dynamic>? data]) =>
+      SaveStore._(null, migrate(data ?? <String, dynamic>{}));
+
   int get schemaVersion => _data[schemaVersionKey] as int;
 
   Map<String, dynamic> section(String name) =>
       _data.putIfAbsent(name, () => <String, dynamic>{})
           as Map<String, dynamic>;
 
-  Future<void> flush() => _box.put(_key, jsonEncode(_data));
+  Future<void> flush() async => _box?.put(_key, jsonEncode(_data));
+
+  /// Snapshot of the whole save (debug, cloud backup in v2).
+  Map<String, dynamic> toJson() =>
+      jsonDecode(jsonEncode(_data)) as Map<String, dynamic>;
 }
