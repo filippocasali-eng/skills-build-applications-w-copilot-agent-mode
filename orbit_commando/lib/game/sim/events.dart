@@ -30,6 +30,9 @@ enum SimEventType {
   gameOver,
   oneUp,
   tell,
+
+  /// Combo milestone; a = tier 1..4 (see [hypeTierFor]).
+  hype,
 }
 
 class SimEvent {

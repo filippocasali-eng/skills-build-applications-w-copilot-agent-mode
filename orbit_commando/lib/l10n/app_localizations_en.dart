@@ -702,4 +702,51 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get squadGoal => 'Weekly squadron goal';
+
+  @override
+  String get maxCombo => 'Max combo';
+
+  @override
+  String get shareChallenge => 'Challenge friends';
+
+  @override
+  String get shareCardBeat => 'Can you beat me?';
+
+  @override
+  String shareText(int score, String code) {
+    return 'I scored $score in Orbit Commando \'94! Same level, same seed: beat me with code $code';
+  }
+
+  @override
+  String get menuDaily => 'Orbit of the day';
+
+  @override
+  String get menuChallenges => 'Challenges';
+
+  @override
+  String get dailyDesc =>
+      'Same level and remix for every player in the world today.';
+
+  @override
+  String get challengeCodeTitle => 'Friend\'s challenge code';
+
+  @override
+  String get challengeCodeHint => 'Paste or type the code, e.g. OC-7K2M9-QX4TB';
+
+  @override
+  String get challengeInvalid => 'Invalid code. Check it and try again.';
+
+  @override
+  String challengeTarget(int score) {
+    return 'Beat $score';
+  }
+
+  @override
+  String get challengeBeaten => 'Challenge beaten! Send it back.';
+
+  @override
+  String get challengeLost => 'Not this time. One more try?';
+
+  @override
+  String get paste => 'Paste';
 }

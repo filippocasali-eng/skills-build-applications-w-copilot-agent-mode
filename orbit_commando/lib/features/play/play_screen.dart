@@ -81,7 +81,7 @@ class _PlayScreenState extends ConsumerState<PlayScreen> {
     if (run.weekly != null) balance = Weekly.balanceFor(run.weekly!, balance);
     _infiniteCredits = run.mode == GameMode.campaign && wallet.fullCartridge;
     Replay? ghost;
-    if (run.mode == GameMode.weekly) {
+    if (run.ghostMode) {
       ghost = await ref.read(multiplayerProvider).bestGhost(run.scoreTable!);
     }
     final config = PlayConfig(
@@ -103,6 +103,7 @@ class _PlayScreenState extends ConsumerState<PlayScreen> {
         forcedWeapon: run.weekly == null ? null : Weekly.weaponFor(run.weekly!),
       ),
       credits: _credits,
+      target: run.challenge?.target,
       controls: _controls(settings),
       cheats: progress.cheats,
       crt: progress.cheats.contains('brokenTube')
@@ -125,7 +126,7 @@ class _PlayScreenState extends ConsumerState<PlayScreen> {
       _game = PlayGame(
         config: config,
         input: widget.input,
-        recordGhost: run.mode == GameMode.weekly,
+        recordGhost: run.ghostMode,
         ghost: ghost?.ghost,
         callbacks: PlayCallbacks(
           onEvent: _onEvent,
@@ -271,8 +272,12 @@ class _PlayScreenState extends ConsumerState<PlayScreen> {
           parTime: level.parTime,
           kills: result.kills,
           earnsCredit: run.mode == GameMode.campaign,
+          campaignProgress:
+              run.mode == GameMode.campaign ||
+              run.mode == GameMode.arcade ||
+              run.mode == GameMode.bossRush,
         );
-    if (run.mode == GameMode.weekly && _game != null) {
+    if (run.ghostMode && _game != null) {
       await ref
           .read(multiplayerProvider)
           .submit(

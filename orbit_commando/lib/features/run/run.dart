@@ -1,4 +1,5 @@
 import '../../core/campaign.dart';
+import '../../core/social/challenge.dart';
 import '../../game/play_config.dart';
 import '../../game/roster.dart';
 import '../../game/sim/balance.dart';
@@ -61,7 +62,33 @@ class RunSpec {
     this.weekly,
     this.week = 0,
     this.arcadeCredits = 3,
+    this.day = 0,
+    this.challenge,
   });
+
+  /// Orbit of the Day for [now].
+  factory RunSpec.daily(Campaign c, Commando hero, DateTime now) {
+    final day = Daily.dayIndex(now);
+    final pool = c.entries.where((e) => !e.boss).toList();
+    return RunSpec(
+      mode: GameMode.daily,
+      levels: [pool[Daily.levelSlot(day) % pool.length]],
+      difficulty: Difficulty.normal,
+      hero: hero,
+      weekly: WeeklyModifier.values[Daily.modifier(day) - 1],
+      day: day,
+    );
+  }
+
+  /// Replays a friend's run from a challenge code.
+  factory RunSpec.fromChallenge(Campaign c, Challenge ch) => RunSpec(
+    mode: GameMode.challenge,
+    levels: [c.entries[ch.levelIndex]],
+    difficulty: Difficulty.normal,
+    hero: Commando.values[ch.hero],
+    weekly: ch.modifier == 0 ? null : WeeklyModifier.values[ch.modifier - 1],
+    challenge: ch,
+  );
 
   final GameMode mode;
   final List<CampaignEntry> levels;
@@ -69,6 +96,10 @@ class RunSpec {
   final Commando hero;
   final WeeklyModifier? weekly;
   final int week;
+  final int day;
+
+  /// Set when this run answers a friend's challenge code.
+  final Challenge? challenge;
 
   /// Credits for the whole run in Arcade Mode (like at the bar).
   int arcadeCredits;
@@ -86,8 +117,27 @@ class RunSpec {
     GameMode.arcade => 'arcade',
     GameMode.bossRush => 'bossrush',
     GameMode.weekly => 'weekly$week',
+    GameMode.daily => 'daily$day',
     _ => null,
   };
 
-  int get seed => mode == GameMode.weekly ? 7000 + week : 1994 + index;
+  /// Modes that race a ghost of the best run.
+  bool get ghostMode => mode == GameMode.weekly || mode == GameMode.daily;
+
+  int get seed => switch (mode) {
+    GameMode.weekly => 7000 + week,
+    GameMode.daily => Daily.seed(day),
+    GameMode.challenge => challenge!.seed,
+    _ => 1994 + index,
+  };
+
+  /// The code a player shares after this run, to dare friends to beat
+  /// [score] on exactly the same level, remix and seed.
+  Challenge challengeFor(Campaign c, int score) => Challenge(
+    levelIndex: c.entries.indexWhere((e) => e.id == current.id),
+    modifier: weekly == null ? 0 : weekly!.index + 1,
+    seed: seed & 0xFFFF,
+    hero: hero.index,
+    target: score,
+  );
 }

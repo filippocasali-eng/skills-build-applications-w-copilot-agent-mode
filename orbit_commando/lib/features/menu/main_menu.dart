@@ -13,6 +13,7 @@ import '../../game/roster.dart';
 import '../../game/sim/balance.dart';
 import '../../l10n/app_localizations.dart';
 import '../campaign_map/campaign_map.dart';
+import '../challenge/challenge_screen.dart';
 import '../chat/chat_screen.dart';
 import '../gallery/gallery_screen.dart';
 import '../jukebox/jukebox_screen.dart';
@@ -105,6 +106,15 @@ class MainMenu extends ConsumerWidget {
                     scale: 1.6,
                     width: double.infinity,
                     onPressed: () => _go(context, const CampaignMap()),
+                  ),
+                  const SizedBox(height: 6),
+                  PixelButton(
+                    label: l.menuChallenges,
+                    scale: 1.3,
+                    color: Pal.neon6,
+                    width: double.infinity,
+                    subtitle: l.menuDaily,
+                    onPressed: () => _go(context, const ChallengeScreen()),
                   ),
                   const SizedBox(height: 6),
                   PixelButton(

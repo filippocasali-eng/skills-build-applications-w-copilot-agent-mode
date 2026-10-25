@@ -57,6 +57,57 @@ class Hud extends Component with HasGameReference<PlayGame> {
       );
     }
 
+    // --- friend's challenge: the score to beat, green once beaten ---
+    final target = g.config.target;
+    if (target != null) {
+      final beaten = sim.score > target;
+      font.draw(
+        canvas,
+        beaten ? 'BEATEN!' : 'BEAT $target',
+        VirtualScreen.width / 2,
+        8,
+        color: beaten ? Pal.moss6 : Pal.neon6,
+        shadow: Pal.ink0,
+        scale: 2,
+        align: PixelTextAlign.center,
+      );
+    }
+
+    // --- hype callout: pops in big, settles, blinks out ---
+    final hype = g.hypeText;
+    if (hype != null) {
+      final t = g.hypeAge;
+      final scale = t < 0.08 ? 5 : (g.hypeTier >= 4 ? 4 : 3);
+      final colors = [Pal.gold7, Pal.ember6, Pal.neon6, Pal.aqua7];
+      final c = g.hypeTier >= 4
+          ? colors[(t * 16).floor() % colors.length]
+          : colors[g.hypeTier - 1];
+      if (t < 1.0 || (t * 12).floor().isEven) {
+        font.draw(
+          canvas,
+          hype,
+          VirtualScreen.width / 2,
+          96 - (t < 0.08 ? 6 : 0),
+          color: c,
+          shadow: Pal.ink0,
+          scale: scale,
+          align: PixelTextAlign.center,
+        );
+        if (sim.combo >= 3) {
+          font.draw(
+            canvas,
+            'x${sim.combo}',
+            VirtualScreen.width / 2,
+            96 + 10.0 * scale + 4,
+            color: Pal.ink7,
+            shadow: Pal.ink0,
+            scale: 2,
+            align: PixelTextAlign.center,
+          );
+        }
+      }
+    }
+
     // --- lives / hp ---
     final icons = res.atlas('icons');
     final hero = heroAtlasOf(g);

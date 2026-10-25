@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/misc.dart' show Override;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:orbit_commando/app/app.dart';
 import 'package:orbit_commando/core/monetization/billing.dart';
@@ -18,6 +19,7 @@ Future<ProviderContainer> pumpApp(
   Widget home, {
   Map<String, dynamic>? save,
   String locale = 'it',
+  List<Override> overrides = const [],
 }) async {
   await loadFonts();
   // A load left pending by the previous test's fake clock would stay cached
@@ -31,6 +33,7 @@ Future<ProviderContainer> pumpApp(
     overrides: [
       saveStoreProvider.overrideWithValue(SaveStore.memory(save)),
       billingProvider.overrideWithValue(TestBillingService()),
+      ...overrides,
     ],
   );
   await tester.pumpWidget(

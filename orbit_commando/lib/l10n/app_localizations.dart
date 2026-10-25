@@ -1387,6 +1387,90 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Weekly squadron goal'**
   String get squadGoal;
+
+  /// No description provided for @maxCombo.
+  ///
+  /// In en, this message translates to:
+  /// **'Max combo'**
+  String get maxCombo;
+
+  /// No description provided for @shareChallenge.
+  ///
+  /// In en, this message translates to:
+  /// **'Challenge friends'**
+  String get shareChallenge;
+
+  /// No description provided for @shareCardBeat.
+  ///
+  /// In en, this message translates to:
+  /// **'Can you beat me?'**
+  String get shareCardBeat;
+
+  /// No description provided for @shareText.
+  ///
+  /// In en, this message translates to:
+  /// **'I scored {score} in Orbit Commando \'94! Same level, same seed: beat me with code {code}'**
+  String shareText(int score, String code);
+
+  /// No description provided for @menuDaily.
+  ///
+  /// In en, this message translates to:
+  /// **'Orbit of the day'**
+  String get menuDaily;
+
+  /// No description provided for @menuChallenges.
+  ///
+  /// In en, this message translates to:
+  /// **'Challenges'**
+  String get menuChallenges;
+
+  /// No description provided for @dailyDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Same level and remix for every player in the world today.'**
+  String get dailyDesc;
+
+  /// No description provided for @challengeCodeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Friend\'s challenge code'**
+  String get challengeCodeTitle;
+
+  /// No description provided for @challengeCodeHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Paste or type the code, e.g. OC-7K2M9-QX4TB'**
+  String get challengeCodeHint;
+
+  /// No description provided for @challengeInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid code. Check it and try again.'**
+  String get challengeInvalid;
+
+  /// No description provided for @challengeTarget.
+  ///
+  /// In en, this message translates to:
+  /// **'Beat {score}'**
+  String challengeTarget(int score);
+
+  /// No description provided for @challengeBeaten.
+  ///
+  /// In en, this message translates to:
+  /// **'Challenge beaten! Send it back.'**
+  String get challengeBeaten;
+
+  /// No description provided for @challengeLost.
+  ///
+  /// In en, this message translates to:
+  /// **'Not this time. One more try?'**
+  String get challengeLost;
+
+  /// No description provided for @paste.
+  ///
+  /// In en, this message translates to:
+  /// **'Paste'**
+  String get paste;
 }
 
 class _AppLocalizationsDelegate

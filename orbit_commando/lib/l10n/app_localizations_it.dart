@@ -710,4 +710,52 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get squadGoal => 'Obiettivo settimanale della squadriglia';
+
+  @override
+  String get maxCombo => 'Combo max';
+
+  @override
+  String get shareChallenge => 'Sfida gli amici';
+
+  @override
+  String get shareCardBeat => 'Riesci a battermi?';
+
+  @override
+  String shareText(int score, String code) {
+    return 'Ho fatto $score punti in Orbit Commando \'94! Stesso livello, stesso seed: battimi con il codice $code';
+  }
+
+  @override
+  String get menuDaily => 'Orbita del giorno';
+
+  @override
+  String get menuChallenges => 'Sfide';
+
+  @override
+  String get dailyDesc =>
+      'Oggi stesso livello e stesso remix per tutti i giocatori del mondo.';
+
+  @override
+  String get challengeCodeTitle => 'Codice sfida di un amico';
+
+  @override
+  String get challengeCodeHint =>
+      'Incolla o scrivi il codice, es. OC-7K2M9-QX4TB';
+
+  @override
+  String get challengeInvalid => 'Codice non valido. Controllalo e riprova.';
+
+  @override
+  String challengeTarget(int score) {
+    return 'Batti $score';
+  }
+
+  @override
+  String get challengeBeaten => 'Sfida vinta! Rilanciala.';
+
+  @override
+  String get challengeLost => 'Non stavolta. Ci riprovi?';
+
+  @override
+  String get paste => 'Incolla';
 }

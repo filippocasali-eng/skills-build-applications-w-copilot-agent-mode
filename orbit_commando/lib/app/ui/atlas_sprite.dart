@@ -12,6 +12,10 @@ import '../../engine/render/sprite_atlas.dart';
 class AtlasCache {
   static final Map<String, Future<(AtlasData, ui.Image)>> _cache = {};
 
+  /// Tests: a load left pending by a previous test must not be reused.
+  @visibleForTesting
+  static void clear() => _cache.clear();
+
   static Future<(AtlasData, ui.Image)> load(String name) => _cache.putIfAbsent(
     name,
     () async {

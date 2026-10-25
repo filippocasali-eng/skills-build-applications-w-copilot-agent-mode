@@ -182,8 +182,10 @@ void main() {
       }
       expect(sim.combo, 5);
       expect(sim.score, 100 + 200 + 300 + 400);
-      run(sim, sim.balance.comboWindow + 1);
+      // Hype freeze-frames pause the window too, so allow for them.
+      run(sim, sim.balance.comboWindow + 20);
       expect(sim.combo, 1);
+      expect(sim.maxCombo, 5);
     });
   });
 

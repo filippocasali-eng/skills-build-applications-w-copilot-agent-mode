@@ -59,16 +59,28 @@ class LevelResult {
     required this.cassettes,
     required this.seconds,
     required this.kills,
+    this.maxCombo = 1,
   });
 
   final int score, timeBonus, noDeathBonus, total;
   final String rank;
   final int deaths, hostagesFreed, hostagesTotal, cassettes, seconds, kills;
+  final int maxCombo;
 
   bool get medalNoDeath => deaths == 0;
   bool get medalAllHostages => hostagesFreed == hostagesTotal;
   bool medalSpeedrun(int parTime) => seconds <= parTime;
 }
+
+/// Hype tier reached exactly at [combo]: 1 GROOVY, 2 RADICAL, 3 TUBULAR,
+/// 4 ORBITAL. 0 when [combo] is not a milestone.
+int hypeTierFor(int combo) => switch (combo) {
+  4 => 1,
+  6 => 2,
+  8 => 3,
+  10 => 4,
+  _ => 0,
+};
 
 /// The whole deterministic game state for one level.
 ///
@@ -133,6 +145,9 @@ class GameSim {
   int score = 0;
   int combo = 1;
   int comboTimer = 0;
+
+  /// Best combo of the level (results screen, share card).
+  int maxCombo = 1;
   int kills = 0;
   int deaths = 0;
   int _completeDelay = -1;
@@ -190,7 +205,14 @@ class GameSim {
     if (combos) {
       if (combo < balance.comboMax) {
         combo++;
+        if (combo > maxCombo) maxCombo = combo;
         if (combo >= 3) events.add(SimEventType.combo, x, y, a: combo);
+        final tier = hypeTierFor(combo);
+        if (tier > 0) {
+          events.add(SimEventType.hype, x, y, a: tier);
+          // A beat of freeze-frame sells the moment.
+          impact(stop: 2 + tier * 2);
+        }
       }
       comboTimer = balance.comboWindow;
     }
@@ -271,6 +293,7 @@ class GameSim {
       cassettes: items.cassettesFound,
       seconds: seconds,
       kills: kills,
+      maxCombo: maxCombo,
     );
     state = SimState.complete;
   }

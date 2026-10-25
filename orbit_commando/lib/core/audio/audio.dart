@@ -215,7 +215,8 @@ class FlameAudioService implements AudioService {
       SimEventType.bossPhase => Sfx.bossWarn,
       SimEventType.bossDefeated => Sfx.bigExplosion,
       SimEventType.tell => Sfx.tell,
-      SimEventType.combo => e.a >= 5 ? Sfx.yeah : null,
+      SimEventType.combo => null,
+      SimEventType.hype => e.a >= 4 ? Sfx.oneUp : Sfx.yeah,
       _ => null,
     };
     if (s != null) sfx(s);

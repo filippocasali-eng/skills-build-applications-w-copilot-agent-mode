@@ -238,11 +238,27 @@ S = {
     "emoteThanks": ("Thanks!", "Grazie!"),
     "emoteOneMore": ("One more!", "Ancora una!"),
     "squadGoal": ("Weekly squadron goal", "Obiettivo settimanale della squadriglia"),
+    # --- hype / share / challenges ---
+    "maxCombo": ("Max combo", "Combo max"),
+    "shareChallenge": ("Challenge friends", "Sfida gli amici"),
+    "shareCardBeat": ("Can you beat me?", "Riesci a battermi?"),
+    "shareText": ("I scored {score} in Orbit Commando '94! Same level, same seed: beat me with code {code}", "Ho fatto {score} punti in Orbit Commando '94! Stesso livello, stesso seed: battimi con il codice {code}"),
+    "menuDaily": ("Orbit of the day", "Orbita del giorno"),
+    "menuChallenges": ("Challenges", "Sfide"),
+    "dailyDesc": ("Same level and remix for every player in the world today.", "Oggi stesso livello e stesso remix per tutti i giocatori del mondo."),
+    "challengeCodeTitle": ("Friend's challenge code", "Codice sfida di un amico"),
+    "challengeCodeHint": ("Paste or type the code, e.g. OC-7K2M9-QX4TB", "Incolla o scrivi il codice, es. OC-7K2M9-QX4TB"),
+    "challengeInvalid": ("Invalid code. Check it and try again.", "Codice non valido. Controllalo e riprova."),
+    "challengeTarget": ("Beat {score}", "Batti {score}"),
+    "challengeBeaten": ("Challenge beaten! Send it back.", "Sfida vinta! Rilanciala."),
+    "challengeLost": ("Not this time. One more try?", "Non stavolta. Ci riprovi?"),
+    "paste": ("Paste", "Incolla"),
 }
 
 PLACEHOLDERS = {
     "count": "int", "rank": "int", "n": "int", "score": "int", "level": "int",
     "max": "int", "total": "int", "name": "String", "price": "String", "time": "String",
+    "code": "String",
 }
 
 

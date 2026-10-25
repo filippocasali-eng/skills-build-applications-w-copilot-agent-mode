@@ -214,5 +214,19 @@
   "emoteHi": "Ciao!",
   "emoteThanks": "Grazie!",
   "emoteOneMore": "Ancora una!",
-  "squadGoal": "Obiettivo settimanale della squadriglia"
+  "squadGoal": "Obiettivo settimanale della squadriglia",
+  "maxCombo": "Combo max",
+  "shareChallenge": "Sfida gli amici",
+  "shareCardBeat": "Riesci a battermi?",
+  "shareText": "Ho fatto {score} punti in Orbit Commando '94! Stesso livello, stesso seed: battimi con il codice {code}",
+  "menuDaily": "Orbita del giorno",
+  "menuChallenges": "Sfide",
+  "dailyDesc": "Oggi stesso livello e stesso remix per tutti i giocatori del mondo.",
+  "challengeCodeTitle": "Codice sfida di un amico",
+  "challengeCodeHint": "Incolla o scrivi il codice, es. OC-7K2M9-QX4TB",
+  "challengeInvalid": "Codice non valido. Controllalo e riprova.",
+  "challengeTarget": "Batti {score}",
+  "challengeBeaten": "Sfida vinta! Rilanciala.",
+  "challengeLost": "Non stavolta. Ci riprovi?",
+  "paste": "Incolla"
 }

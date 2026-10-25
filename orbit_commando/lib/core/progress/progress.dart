@@ -304,6 +304,7 @@ class ProgressController extends Notifier<Progress> {
     required int parTime,
     required int kills,
     bool earnsCredit = true,
+    bool campaignProgress = true,
   }) async {
     final p = state;
     final old = p.record(levelId);
@@ -331,7 +332,9 @@ class ProgressController extends Notifier<Progress> {
     inc('playSeconds', result.seconds);
     if (result.rank == 'S') inc('sRanks', 1);
 
-    final levels = {...p.levels, levelId: rec};
+    // Remixes (weekly, daily, friends' challenges) pay out tokens and XP but
+    // never count as campaign clears: they can't unlock levels.
+    final levels = campaignProgress ? {...p.levels, levelId: rec} : p.levels;
     var next = p.copyWith(
       levels: levels,
       tokens: p.tokens + tokens,

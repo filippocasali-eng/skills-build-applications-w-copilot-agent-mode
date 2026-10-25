@@ -6,10 +6,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../app/ui/pixel.dart';
 import '../../app/ui/route.dart';
 import '../../core/ads/ad_provider.dart';
+import '../../core/analytics/analytics.dart';
 import '../../core/audio/audio.dart';
+import '../../core/campaign.dart';
 import '../../core/monetization/wallet.dart';
 import '../../core/progress/progress.dart';
 import '../../core/settings/settings.dart';
+import '../../core/social/share.dart';
 import '../../engine/render/palette.g.dart';
 import '../../game/levels/level_data.dart';
 import '../../game/play_config.dart';
@@ -17,6 +20,7 @@ import '../../game/sim/game_sim.dart';
 import '../../l10n/app_localizations.dart';
 import '../play/play_screen.dart';
 import '../run/run.dart';
+import '../share/share_card.dart';
 
 /// End-of-level tally: points count up "tic-tic-tic", then the rank is
 /// stamped, then medals and rewards.
@@ -42,6 +46,9 @@ class _ResultsScreenState extends ConsumerState<ResultsScreen> {
   int _shownScore = 0, _shownTime = 0, _shownNoDeath = 0, _shownTotal = 0;
   bool _stamped = false;
   bool _doubled = false;
+  final GlobalKey _cardKey = GlobalKey();
+  String _code = '';
+  bool _sharing = false;
   Timer? _timer;
 
   LevelResult get r => widget.result;
@@ -50,6 +57,30 @@ class _ResultsScreenState extends ConsumerState<ResultsScreen> {
   void initState() {
     super.initState();
     _tally();
+    _makeCode();
+  }
+
+  Future<void> _makeCode() async {
+    final c = await ref.read(campaignProvider.future);
+    if (!mounted) return;
+    setState(() => _code = widget.run.challengeFor(c, r.total).encode());
+  }
+
+  Future<void> _share() async {
+    if (_sharing || _code.isEmpty) return;
+    setState(() => _sharing = true);
+    final l = AppLocalizations.of(context);
+    final png = await ShareCard.capture(_cardKey);
+    if (png != null) {
+      ref.read(analyticsProvider).log('share_score', {
+        'level': widget.level.id,
+        'mode': widget.run.mode.name,
+      });
+      await ref
+          .read(shareServiceProvider)
+          .sharePng(png, '${l.shareText(r.total, _code)}\n$kStoreUrl');
+    }
+    if (mounted) setState(() => _sharing = false);
   }
 
   @override
@@ -233,10 +264,23 @@ class _ResultsScreenState extends ConsumerState<ResultsScreen> {
                             PixelText(
                               '${l.time} ${r.seconds ~/ 60}:${(r.seconds % 60).toString().padLeft(2, '0')}   '
                               '${l.hostages} ${r.hostagesFreed}/${r.hostagesTotal}   '
-                              '${l.kills} ${r.kills}',
+                              '${l.kills} ${r.kills}   '
+                              '${l.maxCombo} x${r.maxCombo}',
                               scale: 0.8,
                               color: Pal.ink6,
                             ),
+                            if (_stamped && widget.run.challenge != null) ...[
+                              const SizedBox(height: 8),
+                              PixelText(
+                                r.total > widget.run.challenge!.target
+                                    ? l.challengeBeaten
+                                    : l.challengeLost,
+                                scale: 1.1,
+                                color: r.total > widget.run.challenge!.target
+                                    ? Pal.moss6
+                                    : Pal.ember6,
+                              ),
+                            ],
                             if (_stamped) ...[
                               const SizedBox(height: 10),
                               Wrap(
@@ -295,6 +339,13 @@ class _ResultsScreenState extends ConsumerState<ResultsScreen> {
                                     onPressed: _next,
                                   ),
                                   const SizedBox(width: 10),
+                                  PixelButton(
+                                    label: l.shareChallenge,
+                                    color: Pal.neon6,
+                                    enabled: _code.isNotEmpty && !_sharing,
+                                    onPressed: _share,
+                                  ),
+                                  const SizedBox(width: 10),
                                   if (!_doubled &&
                                       !wallet.fullCartridge &&
                                       ref.read(adProvider).available)
@@ -345,6 +396,26 @@ class _ResultsScreenState extends ConsumerState<ResultsScreen> {
                               ),
                             ),
                           ),
+                          const SizedBox(height: 14),
+                          if (_stamped && _code.isNotEmpty)
+                            GestureDetector(
+                              onTap: _share,
+                              child: FittedBox(
+                                child: RepaintBoundary(
+                                  key: _cardKey,
+                                  child: ShareCard(
+                                    levelName: widget.level.name,
+                                    score: r.total,
+                                    rank: r.rank,
+                                    maxCombo: r.maxCombo,
+                                    code: _code,
+                                    hero: widget.run.hero.atlas,
+                                    tagline: l.shareCardBeat,
+                                    comboLabel: l.maxCombo,
+                                  ),
+                                ),
+                              ),
+                            ),
                         ],
                       ),
                     ),

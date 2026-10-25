@@ -363,5 +363,36 @@
   "emoteHi": "Hi!",
   "emoteThanks": "Thanks!",
   "emoteOneMore": "One more!",
-  "squadGoal": "Weekly squadron goal"
+  "squadGoal": "Weekly squadron goal",
+  "maxCombo": "Max combo",
+  "shareChallenge": "Challenge friends",
+  "shareCardBeat": "Can you beat me?",
+  "shareText": "I scored {score} in Orbit Commando '94! Same level, same seed: beat me with code {code}",
+  "@shareText": {
+    "placeholders": {
+      "score": {
+        "type": "int"
+      },
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "menuDaily": "Orbit of the day",
+  "menuChallenges": "Challenges",
+  "dailyDesc": "Same level and remix for every player in the world today.",
+  "challengeCodeTitle": "Friend's challenge code",
+  "challengeCodeHint": "Paste or type the code, e.g. OC-7K2M9-QX4TB",
+  "challengeInvalid": "Invalid code. Check it and try again.",
+  "challengeTarget": "Beat {score}",
+  "@challengeTarget": {
+    "placeholders": {
+      "score": {
+        "type": "int"
+      }
+    }
+  },
+  "challengeBeaten": "Challenge beaten! Send it back.",
+  "challengeLost": "Not this time. One more try?",
+  "paste": "Paste"
 }

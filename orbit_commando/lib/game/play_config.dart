@@ -5,7 +5,7 @@ import 'roster.dart';
 import 'sim/balance.dart';
 import 'sim/game_sim.dart';
 
-enum GameMode { campaign, arcade, bossRush, weekly, attract }
+enum GameMode { campaign, arcade, bossRush, weekly, attract, daily, challenge }
 
 /// Everything needed to start one level.
 class PlayConfig {
@@ -25,6 +25,7 @@ class PlayConfig {
     this.showTouchControls = true,
     this.cheats = const {},
     this.crt,
+    this.target,
   });
 
   final LevelData level;
@@ -50,4 +51,7 @@ class PlayConfig {
 
   /// CRT post-process parameters (null = sharp pixels).
   final CrtParams? crt;
+
+  /// Score to beat (friend's challenge), shown in the HUD.
+  final int? target;
 }

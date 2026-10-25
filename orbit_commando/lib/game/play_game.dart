@@ -93,6 +93,12 @@ class PlayGame extends FlameGame with PixelPerfectRender, KeyboardEvents {
 
   /// Seconds of (scaled) game time, for animations.
   double time = 0;
+
+  /// Current hype callout (GROOVY!, RADICAL!...) and its age in seconds.
+  String? hypeText;
+  int hypeTier = 0;
+  double hypeAge = 0;
+  static const hypeWords = ['', 'GROOVY!', 'RADICAL!', 'TUBULAR!', 'ORBITAL!!'];
   bool userPaused = false;
   bool _reportedEnd = false;
   bool _assistOffered = false;
@@ -225,6 +231,7 @@ class PlayGame extends FlameGame with PixelPerfectRender, KeyboardEvents {
     // Boss finale slow motion.
     final scale = sim.slowMo > 0 ? 0.35 : 1.0;
     time += dt * scale;
+    if (hypeText != null && (hypeAge += dt) > 1.3) hypeText = null;
     final steps = clock.advance(dt * scale);
     for (var i = 0; i < steps; i++) {
       final input = _scripted?.next(sim) ?? _liveInput();
@@ -352,6 +359,12 @@ class PlayGame extends FlameGame with PixelPerfectRender, KeyboardEvents {
           }
         case SimEventType.combo:
           fx.text('x${e.a}', e.x, e.y - 50, Pal.ember6);
+        case SimEventType.hype:
+          hypeText = hypeWords[e.a];
+          hypeTier = e.a;
+          hypeAge = 0;
+          fx.shake = math.max(fx.shake, 2.0 + e.a * 2);
+          if (e.a >= 4) fx.flash = 0.12;
         case SimEventType.hostageFreed:
           fx.text('THANKS!', e.x, e.y - 40, Pal.aqua7, life: 1.2);
         case SimEventType.cassette:
