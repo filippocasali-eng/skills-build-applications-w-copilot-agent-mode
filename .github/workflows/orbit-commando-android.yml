@@ -64,6 +64,7 @@ jobs:
           cp build/app/outputs/flutter-apk/app-debug.apk dist/orbit-commando-94-debug.apk
           cp build/app/outputs/flutter-apk/app-release.apk dist/orbit-commando-94.apk
           cp build/app/outputs/bundle/release/app-release.aab dist/orbit-commando-94.aab
+          cp tool/smoke.sh dist/smoke.sh
           ls -la dist
 
       - uses: actions/upload-artifact@v4
@@ -85,4 +86,44 @@ jobs:
             - `orbit-commando-94.apk`: install on Android 7.0+ (allow "unknown sources"). The shop runs in TEST STORE mode: purchases are fake and free.
             - `orbit-commando-94-debug.apk`: debug build with logs (test store too).
             - `orbit-commando-94.aab`: bundle for Play Console with real Play Billing (signed with the debug key; re-sign before upload).
-          files: orbit_commando/dist/*
+          files: |
+            orbit_commando/dist/*.apk
+            orbit_commando/dist/*.aab
+
+  smoke:
+    name: Launch the APK on an emulator
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: orbit-commando-94-android
+          path: dist
+
+      - name: Enable KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+
+      - name: Install, launch and collect logcat
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 34
+          arch: x86_64
+          target: google_apis
+          disable-animations: true
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          script: bash dist/smoke.sh || true
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: smoke-logcat
+          path: smoke-*
+
+      - name: Fail on crash
+        run: |
+          cat smoke-result.txt
+          grep -q '^OK' smoke-result.txt
