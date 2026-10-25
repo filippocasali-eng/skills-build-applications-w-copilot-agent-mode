@@ -180,6 +180,15 @@ class AutoPilot implements InputSource {
       if (sim.tick % 55 == 0) _jumpHold = 14;
     }
     // While shooting at a target, face it even if walking away.
-    return InputFrame(dx: dx, dy: dy, jump: jump, fire: fire, grenade: grenade);
+    final dash = _dashNow && !p.inVehicle;
+    _dashNow = false;
+    return InputFrame(
+      dx: dx,
+      dy: dy,
+      jump: jump,
+      fire: fire,
+      grenade: grenade,
+      dash: dash,
+    );
   }
 }
