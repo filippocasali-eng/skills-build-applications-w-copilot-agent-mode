@@ -70,6 +70,7 @@ class _PlayScreenState extends ConsumerState<PlayScreen> {
   }
 
   Future<void> _start() async {
+    final l = AppLocalizations.of(context);
     final level = await Campaign.loadLevel(
       DefaultAssetBundle.of(context),
       run.current,
@@ -105,7 +106,7 @@ class _PlayScreenState extends ConsumerState<PlayScreen> {
       ),
       credits: _credits,
       target: run.challenge?.target,
-      title: levelName(AppLocalizations.of(context), level.id, level.name),
+      title: levelName(l, level.id, level.name),
       controls: _controls(settings),
       cheats: progress.cheats,
       crt: progress.cheats.contains('brokenTube')
