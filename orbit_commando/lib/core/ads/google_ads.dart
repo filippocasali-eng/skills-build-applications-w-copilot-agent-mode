@@ -8,6 +8,13 @@ import 'ad_provider.dart';
 /// Google Mobile Ads (rewarded + interstitial). Unit ids default to
 /// Google's public TEST units; real ids are injected at build time with
 /// --dart-define=ADMOB_REWARDED=... / ADMOB_INTERSTITIAL=...
+/// [age] 0 means "not answered yet".
+AgeRestrictedTreatment treatmentFor(int age) => age >= 18
+    ? AgeRestrictedTreatment.unspecified
+    : (age > 0 && age < 13)
+    ? AgeRestrictedTreatment.child
+    : AgeRestrictedTreatment.teen;
+
 class GoogleAdsProvider implements AdProvider {
   static const _rewardedId = String.fromEnvironment(
     'ADMOB_REWARDED',
@@ -22,17 +29,18 @@ class GoogleAdsProvider implements AdProvider {
   RewardedAd? _rewarded;
   InterstitialAd? _interstitial;
 
-  /// [minor]: the player is under 18 or has not answered the age gate yet.
-  /// Ads then get Google's teen treatment (no personalised ads). The content rating is capped at T for everyone.
-  Future<void> init({required bool minor}) async {
+  /// Age signal for Google's ad treatment:
+  /// - under 13: child treatment (COPPA, no personalised ads);
+  /// - 13-17, or age not answered yet: teen treatment;
+  /// - 18+: unspecified (personalisation only with UMP consent).
+  /// The content rating is capped at T for everyone.
+  Future<void> init({required int age}) async {
     try {
       await MobileAds.instance.initialize();
       await MobileAds.instance.updateRequestConfiguration(
         RequestConfiguration(
           maxAdContentRating: MaxAdContentRating.t,
-          ageRestrictedTreatment: minor
-              ? AgeRestrictedTreatment.teen
-              : AgeRestrictedTreatment.unspecified,
+          ageRestrictedTreatment: treatmentFor(age),
         ),
       );
       _ready = true;

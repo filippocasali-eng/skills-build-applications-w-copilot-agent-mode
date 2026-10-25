@@ -127,7 +127,7 @@ class _ShopScreenState extends ConsumerState<ShopScreen> {
   }
 
   String _gemsLabel(AppLocalizations l, RemoteConfig rc, int gems) =>
-      '${l.buyGems(gems)} (${l.gemsApprox(Catalog.euro(rc.gemsToCents(gems)))})';
+      '${l.buyGems(gems)} (${l.gemsApprox(Catalog.money(rc.gemsToCents(gems)))})';
 
   Widget _content(
     AppLocalizations l,
@@ -374,12 +374,12 @@ class _ShopScreenState extends ConsumerState<ShopScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             PixelText(
-              '${l.total}: ${Catalog.euro(w.spentThisMonth(now))} / ${now.month}-${now.year}',
+              '${l.total}: ${Catalog.money(w.spentThisMonth(now))} / ${now.month}-${now.year}',
               color: Pal.gold6,
             ),
             for (final h in w.history.reversed)
               PixelText(
-                '${h.time.toLocal().toString().substring(0, 16)}  ${Catalog.byId(h.sku).title(lang)}  ${Catalog.euro(h.priceCents)}  ${h.status}',
+                '${h.time.toLocal().toString().substring(0, 16)}  ${Catalog.byId(h.sku).title(lang)}  ${Catalog.money(h.priceCents)}  ${h.status}',
                 scale: 0.7,
               ),
           ],
@@ -589,7 +589,7 @@ class _CapsulesTabState extends ConsumerState<_CapsulesTab>
                   else
                     PixelButton(
                       label:
-                          '${l.capsuleOpen}: ${l.buyGems(price)} (${l.gemsApprox(Catalog.euro(widget.rc.gemsToCents(price)))})',
+                          '${l.capsuleOpen}: ${l.buyGems(price)} (${l.gemsApprox(Catalog.money(widget.rc.gemsToCents(price)))})',
                       enabled: block == CapsuleBlock.none,
                       onPressed: () => _open(true),
                     ),

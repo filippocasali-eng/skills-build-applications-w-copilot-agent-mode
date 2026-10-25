@@ -49,7 +49,7 @@ void main() {
     final c = await pumpApp(tester, const ShopScreen(), save: adultSave());
     await screenshot(tester, 'shop');
     expect(find.text('TEST STORE'), findsOneWidget);
-    await tester.tap(find.textContaining('€4,99'));
+    await tester.tap(find.textContaining(r'$4.99'));
     await tester.pump(const Duration(milliseconds: 400));
     await settle(tester);
     expect(c.read(walletProvider).fullCartridge, isTrue);

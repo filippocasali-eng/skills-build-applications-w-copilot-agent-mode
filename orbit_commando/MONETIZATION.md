@@ -13,19 +13,19 @@ All prices, odds and offers are data:
 
 ## 1. Products (Google Play SKUs)
 
-| SKU | Type | Price | Contents |
+| SKU | Type | Price (US base) | Contents |
 |---|---|---|---|
-| `full_cartridge` | non-consumable | €4.99 | Worlds 2–3, Boss Rush, infinite campaign continues, no ads |
-| `gems_100` | consumable | €0.99 | 100 Quasar Gems |
-| `gems_550` | consumable | €4.99 | 550 gems |
-| `gems_1200` | consumable | €9.99 | 1200 gems |
-| `gems_2600` | consumable | €19.99 | 2600 gems |
-| `gems_7000` | consumable | €49.99 | 7000 gems |
-| `season_pass_s1` | non-consumable | €9.99 | premium track of the 30-day season (cosmetics, soft currency) |
-| `pack_retro_suits` | non-consumable | €2.99 | 4 skins (contents listed before purchase) |
-| `pack_crt_deluxe` | non-consumable | €1.99 | green and amber CRT filters |
-| `pack_mixtape_vol1` | non-consumable | €1.99 | 2 bonus music tracks |
-| `starter_pack` | non-consumable | €1.99 | 300 gems, 3 capsules, Walkman skin; offered for 3 days after first launch |
+| `full_cartridge` | non-consumable | $4.99 | Worlds 2–3, Boss Rush, infinite campaign continues, no ads |
+| `gems_100` | consumable | $0.99 | 100 Quasar Gems |
+| `gems_550` | consumable | $4.99 | 550 gems |
+| `gems_1200` | consumable | $9.99 | 1200 gems |
+| `gems_2600` | consumable | $19.99 | 2600 gems |
+| `gems_7000` | consumable | $49.99 | 7000 gems |
+| `season_pass_s1` | non-consumable | $9.99 | premium track of the 30-day season (cosmetics, soft currency) |
+| `pack_retro_suits` | non-consumable | $2.99 | 4 skins (contents listed before purchase) |
+| `pack_crt_deluxe` | non-consumable | $1.99 | green and amber CRT filters |
+| `pack_mixtape_vol1` | non-consumable | $1.99 | 2 bonus music tracks |
+| `starter_pack` | non-consumable | $1.99 | 300 gems, 3 capsules, Walkman skin; offered for 3 days after first launch |
 
 Create these exact ids in Play Console → Monetize → Products. The prices
 shown in-game are those returned by Play (localised); the catalog prices are
@@ -37,7 +37,7 @@ only a fallback.
   items in the daily shop.
 - **Quasar Gems (hard):** bought, or earned in small amounts from the
   season, login days and capsules. Every gem price shows its euro
-  equivalent next to it ("≈ €0.55"), computed from the best-value pack
+  equivalent next to it ("≈ $0.55"; euros on eurozone devices), computed from the best-value pack
   (`gem_euro_cents_per_100`).
 
 ## 3. Cosmic Capsules (loot boxes)
@@ -89,13 +89,13 @@ There are no fake timers, no "only 2 left" claims and no confirm-shaming.
 
 | Protection | Where |
 |---|---|
-| Monthly spending limit (off, €5, €10, €20, €50, €100) | Settings; checked before every purchase (`SpendGuard`) |
+| Monthly spending limit (off, $5, $10, $20, $50, $100) | Settings; checked before every purchase (`SpendGuard`) |
 | Purchase history with date, item, price and status | Shop → History |
 | Restore purchases | Shop → History |
 | Paid capsules disabled under 18 | `StoreController.paidCapsuleBlock` |
 | Chat restricted by age (see `PRIVACY.md`) | `ChatScreen` |
 | Ads: no ads after a death, at most 1 interstitial every 3 cleared levels, rewarded ads only on opt-in | `InterstitialPolicy`, results screen |
-| Ads for minors: teen treatment (no personalisation), content rating capped at T for everyone | `GoogleAdsProvider.init` |
+| Ads by age (US/COPPA): under 13 child treatment, 13–17 or unknown teen treatment (no personalisation), content rating capped at T for everyone | `GoogleAdsProvider.init`, `treatmentFor` |
 | Full Cartridge removes all ads | `main.dart` |
 | Paid upgrades disabled in Arcade difficulty and ranked modes | `Workshop.loadoutFor`, `ranked_allow_paid_upgrades` |
 

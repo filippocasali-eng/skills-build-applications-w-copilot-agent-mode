@@ -130,8 +130,41 @@ class Catalog {
     starterPack: ['gems_300', 'capsule_x3', 'skin_walkman_lite'],
   };
 
-  static String euro(int cents) {
-    final e = cents ~/ 100, c = (cents % 100).toString().padLeft(2, '0');
-    return '€$e,$c';
+  /// Display currency for fallback prices and gem equivalents. Play shows
+  /// its own localised prices; this covers everything else. USD by default
+  /// (the launch market), EUR on devices set to a eurozone country.
+  static bool useEuro = false;
+
+  static const _eurozone = {
+    'AT',
+    'BE',
+    'CY',
+    'DE',
+    'EE',
+    'ES',
+    'FI',
+    'FR',
+    'GR',
+    'HR',
+    'IE',
+    'IT',
+    'LT',
+    'LU',
+    'LV',
+    'MT',
+    'NL',
+    'PT',
+    'SI',
+    'SK',
+  };
+
+  /// Picks the currency from the device's country code.
+  static void setCountry(String? country) =>
+      useEuro = _eurozone.contains(country?.toUpperCase());
+
+  /// "$4.99" or "€4,99".
+  static String money(int cents) {
+    final u = cents ~/ 100, c = (cents % 100).toString().padLeft(2, '0');
+    return useEuro ? '€$u,$c' : '\$$u.$c';
   }
 }

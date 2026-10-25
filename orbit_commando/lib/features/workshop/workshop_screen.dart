@@ -113,7 +113,7 @@ class WorkshopScreen extends ConsumerWidget {
                       const SizedBox(width: 6),
                       PixelButton(
                         label:
-                            '${l.buyGems(u.gemCosts[p.upgrades[u.id] ?? 0])}${rc == null ? '' : ' (${Catalog.euro(rc.gemsToCents(u.gemCosts[p.upgrades[u.id] ?? 0]))})'}',
+                            '${l.buyGems(u.gemCosts[p.upgrades[u.id] ?? 0])}${rc == null ? '' : ' (${Catalog.money(rc.gemsToCents(u.gemCosts[p.upgrades[u.id] ?? 0]))})'}',
                         color: Pal.neon6,
                         enabled: w.gems >= u.gemCosts[p.upgrades[u.id] ?? 0],
                         onPressed: () async {

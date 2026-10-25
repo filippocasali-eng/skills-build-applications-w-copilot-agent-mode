@@ -92,7 +92,7 @@ class StoreController extends Notifier<StoreState> {
 
   String priceOf(String sku) {
     final p = _billing.products[sku];
-    return p?.price ?? Catalog.euro(Catalog.byId(sku).cents);
+    return p?.price ?? Catalog.money(Catalog.byId(sku).cents);
   }
 
   /// Starts a real-money purchase (spending limit first).

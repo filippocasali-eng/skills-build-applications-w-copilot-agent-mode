@@ -195,11 +195,15 @@ Weekly, daily and challenge runs pay out tokens and XP but don't record
 campaign clears. A shared code for a World 3 level is a free taste of
 paid content, not a bypass.
 
-### D27. Translations live in `tools/l10n/tr_<lang>.py`
-EN/IT stay in `strings.py`. Each extra language is one dict, and the
-generator refuses missing keys or mismatched placeholders. The pixel font
-gained the glyphs these languages need. A test renders every main screen
-in every language.
+### D27. Launch market: US, languages EN + IT
+The owner chose the US as the target market, with English and Italian
+only.
+- **Prices:** display in USD (EUR on eurozone devices).
+- **Ads:** follow US age rules (COPPA): under 13 gets child treatment;
+  13–17 or unknown gets teen treatment.
+- **More languages:** each one goes in `tools/l10n/tr_<lang>.py`. The
+  generator checks keys and placeholders. The pixel font already has the
+  glyphs for ES/PT/FR/DE/TR.
 
 ## Environment notes
 

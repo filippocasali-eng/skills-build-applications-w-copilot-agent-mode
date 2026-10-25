@@ -1,4 +1,4 @@
-"""Single source of truth for UI strings (EN + IT here, other languages in tr_*.py).
+"""Single source of truth for UI strings (EN + IT; more languages can go in tr_*.py).
 
     python3 tools/l10n/strings.py     # writes lib/l10n/app_en.arb + app_it.arb
 
@@ -279,7 +279,7 @@ PLACEHOLDERS = {
 
 
 # Extra languages: tools/l10n/tr_<code>.py, each a dict T of key -> text.
-EXTRA = ["es", "pt", "fr", "de", "tr", "id"]
+EXTRA = []  # e.g. ["es"]; launch languages are EN (US market) and IT
 
 
 def _table(lang):

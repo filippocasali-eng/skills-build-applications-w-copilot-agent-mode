@@ -15,6 +15,7 @@ import 'core/ads/consent.dart';
 import 'core/ads/google_ads.dart';
 import 'core/analytics/analytics.dart';
 import 'core/audio/audio.dart';
+import 'core/monetization/catalog.dart';
 import 'core/monetization/wallet.dart';
 import 'core/profile/profile.dart';
 import 'core/providers.dart';
@@ -39,6 +40,9 @@ Future<void> _start() async {
   ]);
   await SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
 
+  Catalog.setCountry(
+    WidgetsBinding.instance.platformDispatcher.locale.countryCode,
+  );
   await Hive.initFlutter();
   final save = await SaveStore.open();
   final settings = Settings.fromJson(save.section('settings'));
@@ -83,7 +87,7 @@ Future<void> _start() async {
         try {
           final profile = Profile.fromJson(save.section('profile'));
           if (await consent.gather()) {
-            await ads.init(minor: !profile.isAdult(DateTime.now()));
+            await ads.init(age: profile.ageAt(DateTime.now()));
           }
         } catch (e) {
           debugPrint('Ads unavailable: $e');

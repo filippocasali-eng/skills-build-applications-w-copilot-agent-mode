@@ -202,7 +202,7 @@ class TestBillingService implements BillingService {
       s.id: StoreProduct(
         s.id,
         s.titleEn,
-        '${Catalog.euro(s.cents)} TEST',
+        '${Catalog.money(s.cents)} TEST',
         s.cents,
       ),
   };

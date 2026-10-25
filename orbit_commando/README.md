@@ -15,7 +15,7 @@ renderer and all-original generated art and audio.
 >   spending limit, AdMob with UMP.
 > - **Social:** moderated chat with an age gate.
 > - **Viral:** share card, challenge codes, Orbit of the Day, hype callouts.
-> - **Languages:** EN, IT, ES, PT-BR, FR, DE, TR, ID.
+> - **Market:** US first; English and Italian; prices in USD (EUR in the eurozone).
 
 ## Download
 
@@ -103,8 +103,8 @@ test/          unit (engine, physics, sim, meta, monetization), widget,
 | `PERFORMANCE.md` | Budgets, measurements, profiling |
 | `STORE_LAUNCH_KIT.md` | Signing, Play Console steps, listing texts, checklist |
 | `ROADMAP.md` | 15 ideas for v1.1–v2 |
-| `GROWTH_PLAN.md` | Global launch: viral loop, blockers, ASO, creators, KPIs |
-| `fastlane/metadata/android/` | Store listings in 8 languages (`tools/store/listings.py`) |
+| `GROWTH_PLAN.md` | US launch: viral loop, blockers, ASO, creators, KPIs |
+| `fastlane/metadata/android/` | Store listings en-US and it-IT (`tools/store/listings.py`) |
 | `DECISIONS.md` | Technical decisions and their reasons |
 | `ART_PIPELINE.md` | How sprites and fonts are produced and replaced |
 | `backend/README.md` | Deploying the optional backend |

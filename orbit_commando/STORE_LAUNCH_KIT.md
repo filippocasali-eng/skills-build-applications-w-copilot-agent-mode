@@ -71,7 +71,7 @@
 | Language | Mild (in-game text); user chat → "Users interact" |
 | Gambling-like | Loot boxes with paid currency: **yes**; simulated gambling: no |
 | In-app purchases | Yes, including random items |
-| Expected rating | PEGI 12–16 / ESRB T. The brief targets 16+, so set the target audience to 16+ in "Target audience and content". |
+| Expected rating | ESRB T (US, launch market); PEGI 12–16 in Italy. The brief targets 16+, so set the target audience to 16+ in "Target audience and content". |
 
 Not designed for children: do not opt into the Families programme.
 
