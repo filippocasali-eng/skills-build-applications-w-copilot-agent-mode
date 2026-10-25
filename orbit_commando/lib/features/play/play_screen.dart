@@ -70,12 +70,12 @@ class _PlayScreenState extends ConsumerState<PlayScreen> {
   }
 
   Future<void> _start() async {
-    final l = AppLocalizations.of(context);
     final level = await Campaign.loadLevel(
       DefaultAssetBundle.of(context),
       run.current,
     );
     if (!mounted) return;
+    final l = AppLocalizations.of(context);
     final settings = ref.read(settingsProvider);
     final progress = ref.read(progressProvider);
     final wallet = ref.read(walletProvider);
