@@ -17,6 +17,9 @@ for apk in orbit-commando-94.apk orbit-commando-94-debug.apk; do
     echo "DIED $apk" >> smoke-result.txt
     result=FAIL
   fi
-  grep -E "FATAL EXCEPTION|AndroidRuntime|E/flutter|F libc|Fatal signal|E DEBUG|Abort message" "smoke-logcat-$apk.txt" | head -60 >> "smoke-crash-$apk.txt"
+  # Every line of the app's process(es), plus system lines about it.
+  pids=$(grep -oE "Start proc [0-9]+:$PKG" "smoke-logcat-$apk.txt" | grep -oE "[0-9]+" | tr '\n' '|')
+  grep -E "(^\S+ \S+\s+(${pids%|}${pids:+|}NOPID)\s)|$PKG|libc|DEBUG|tombstone|Fatal|FATAL|flutter" "smoke-logcat-$apk.txt" \
+    | grep -vE "monkey|RuntimeInit|boot image|lock profiling" | head -150 >> "smoke-crash-$apk.txt"
 done
 sed -i "1i $result" smoke-result.txt
