@@ -47,10 +47,13 @@ jobs:
         run: flutter test
 
       - name: Build debug APK
-        run: flutter build apk --debug
+        run: flutter build apk --debug --dart-define=TEST_STORE=true
 
-      - name: Build release APK
-        run: flutter build apk --release
+      # Sideloaded APK: Play Billing only works for apps installed from the
+      # Play Store, so this build uses the labelled TEST STORE (fake
+      # purchases) to keep every shop flow playable.
+      - name: Build release APK (test store)
+        run: flutter build apk --release --dart-define=TEST_STORE=true
 
       - name: Build release AAB
         run: flutter build appbundle --release
@@ -79,7 +82,7 @@ jobs:
           body: |
             Automatic build from `${{ github.ref_name }}` at ${{ github.sha }}.
 
-            - `orbit-commando-94.apk`: install on Android 7.0+ (allow "unknown sources").
-            - `orbit-commando-94-debug.apk`: debug build with logs.
-            - `orbit-commando-94.aab`: bundle for Play Console (signed with the debug key; re-sign before upload).
+            - `orbit-commando-94.apk`: install on Android 7.0+ (allow "unknown sources"). The shop runs in TEST STORE mode: purchases are fake and free.
+            - `orbit-commando-94-debug.apk`: debug build with logs (test store too).
+            - `orbit-commando-94.aab`: bundle for Play Console with real Play Billing (signed with the debug key; re-sign before upload).
           files: orbit_commando/dist/*

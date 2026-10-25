@@ -138,7 +138,16 @@ class StoreController extends Notifier<StoreState> {
           ),
         );
       case PurchaseState.purchased || PurchaseState.restored:
-        final valid = await ref.read(validatorProvider).validate(o);
+        // Play can deliver the same purchase twice (app restart before
+        // completion): never grant a token again.
+        final seen =
+            o.token.isNotEmpty &&
+            ref.read(walletProvider).history.any((h) => h.token == o.token);
+        final valid = !seen && await ref.read(validatorProvider).validate(o);
+        if (seen) {
+          state = state.copyWith(clearPending: true, message: 'done');
+          return;
+        }
         if (!valid) {
           state = state.copyWith(clearPending: true, message: 'error');
           return;
@@ -147,6 +156,7 @@ class StoreController extends Notifier<StoreState> {
           o.sku,
           restored: o.state == PurchaseState.restored,
           cents: o.priceCents,
+          token: o.token,
         );
         ref.read(analyticsProvider).log('purchase', {
           'sku': o.sku,
@@ -164,6 +174,7 @@ class StoreController extends Notifier<StoreState> {
     String sku, {
     required bool restored,
     required int cents,
+    String token = '',
   }) async {
     final s = Catalog.byId(sku);
     if (restored && s.kind == SkuKind.consumable) return;
@@ -172,7 +183,12 @@ class StoreController extends Notifier<StoreState> {
         // A pending entry for this SKU becomes the completed one.
         ...w.history.where((h) => !(h.sku == sku && h.status == 'pending')),
         if (!restored)
-          PurchaseRecord(sku: sku, priceCents: cents, time: DateTime.now()),
+          PurchaseRecord(
+            sku: sku,
+            priceCents: cents,
+            time: DateTime.now(),
+            token: token,
+          ),
       ];
       var next = w.copyWith(history: history);
       if (sku == Catalog.fullCartridge) {

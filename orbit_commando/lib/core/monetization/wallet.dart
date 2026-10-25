@@ -9,6 +9,7 @@ class PurchaseRecord {
     required this.priceCents,
     required this.time,
     this.status = 'ok',
+    this.token = '',
   });
 
   factory PurchaseRecord.fromJson(Map<String, dynamic> j) => PurchaseRecord(
@@ -16,6 +17,7 @@ class PurchaseRecord {
     priceCents: j['cents'] as int? ?? 0,
     time: DateTime.parse(j['t'] as String),
     status: j['status'] as String? ?? 'ok',
+    token: j['tk'] as String? ?? '',
   );
 
   final String sku;
@@ -25,11 +27,15 @@ class PurchaseRecord {
   /// ok | pending | refunded
   final String status;
 
+  /// Store purchase token: a token is granted at most once.
+  final String token;
+
   Map<String, Object> toJson() => {
     'sku': sku,
     'cents': priceCents,
     't': time.toUtc().toIso8601String(),
     'status': status,
+    if (token.isNotEmpty) 'tk': token,
   };
 }
 

@@ -15,6 +15,7 @@ import 'core/ads/google_ads.dart';
 import 'core/analytics/analytics.dart';
 import 'core/audio/audio.dart';
 import 'core/monetization/wallet.dart';
+import 'core/profile/profile.dart';
 import 'core/providers.dart';
 import 'core/settings/settings.dart';
 import 'core/storage/save_store.dart';
@@ -65,6 +66,9 @@ Future<void> main() async {
   );
 
   if (useAds) {
-    if (await consent.gather()) await ads.init();
+    final profile = Profile.fromJson(save.section('profile'));
+    if (await consent.gather()) {
+      await ads.init(minor: !profile.isAdult(DateTime.now()));
+    }
   }
 }

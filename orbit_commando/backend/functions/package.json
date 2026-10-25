@@ -1,0 +1,15 @@
+{
+  "name": "orbit-commando-backend",
+  "private": true,
+  "main": "src/index.js",
+  "engines": { "node": "20" },
+  "scripts": {
+    "test": "node --test src/moderation.test.js",
+    "deploy": "firebase deploy --only functions,firestore"
+  },
+  "dependencies": {
+    "firebase-admin": "^12.1.0",
+    "firebase-functions": "^5.0.1",
+    "googleapis": "^140.0.0"
+  }
+}

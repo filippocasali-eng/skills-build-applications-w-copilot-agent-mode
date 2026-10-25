@@ -129,8 +129,61 @@ master palette and 4×4 Bayer dithering. The title scene layers nebula
 (slow parallax), the drifting gas giant, a 3-layer starfield and a
 r = 110 planetoid.
 
+## Game and release (M2–M11)
+
+### D18. Pure-Dart simulation, Flame only for presentation
+`GameSim` holds the whole game state and knows nothing about Flame. Flame
+draws it (`WorldRenderer`, `Fx`, `Hud`) and feeds inputs.
+- **Pros:** headless tests (the bot plays all 15 levels in seconds),
+  replays, ghosts and a future rollback netcode.
+- **Revisit if:** an effect needs per-frame engine state; keep it in the
+  view layer.
+
+### D19. Levels as generated Tiled JSON, proven by a bot
+Levels are written in a Python DSL (`tools/level_gen`) that outputs Tiled
+`.tmj`, so they can still be opened in Tiled. They are checked twice:
+- by a static validator (reachability with the movement limits)
+- by the `AutoPilot` bot, which must finish every level in
+  `bot_playthrough_test.dart`
+
+### D20. Generated chiptune instead of licensed music
+`tools/audio` synthesises every SFX and track (pulse, triangle, noise,
+tracker). It is original by construction, tiny (1.4 MB) and
+reproducible. Music is OGG Vorbis and SFX are WAV, for instant playback.
+
+### D21. Test store build for sideloading
+Play Billing works only for apps installed from Play, so a sideloaded APK
+would show a dead shop.
+- `--dart-define=TEST_STORE=true` swaps in `TestBillingService`. Every
+  purchase is free and instant, and the shop is labelled "TEST STORE".
+- The CI release APK uses it; the AAB for Play does not.
+
+### D22. Local wallet and receipt checks in v1, server in v2
+v1 must work offline, so the wallet and purchase checks run on the device
+(known SKU, non-empty token, a token granted once). The Firebase backend
+in `backend/` is written but not deployed. The migration is described in
+`MONETIZATION.md` §8.
+- **Risk:** a rooted device can edit its own save. The impact is limited
+  to that player's cosmetics; ranked modes never use paid power.
+
+### D23. Age handling: unknown age = minor
+Until the age gate is answered, these are off:
+- online features
+- paid capsules
+- personalised ads
+
+Ads for minors use Google's teen treatment, and the content rating is
+capped at T for everyone.
+
+### D24. Phone-first UI scale
+Flutter screens use a global pixel scale `kPx = 1.25`. Widget tests run at
+a 20:9 phone size (2400×1080 at 2.625 dpr, i.e. 914×411 dp), so overflow
+shows up in CI, not on a player's phone.
+
 ## Environment notes
 
-- The build container could not reach `dl.google.com` (Android SDK
-  downloads), so M1 was verified with `flutter analyze` and `flutter test`
-  only. No APK was built here; see README for the commands.
+- The build container cannot reach `dl.google.com` (Android SDK
+  downloads). APK/AAB builds therefore run in GitHub Actions
+  (`.github/workflows/orbit-commando-android.yml`). It analyzes, runs every
+  test, builds the debug and release APKs (test store) and the AAB, then
+  publishes them on the `orbit-commando-latest` pre-release.

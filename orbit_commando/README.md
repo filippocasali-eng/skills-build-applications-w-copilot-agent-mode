@@ -4,7 +4,27 @@ A retro 16-bit run & gun with planetary gravity, for Android. Flutter + Flame,
 with a custom deterministic 60 Hz simulation, a 640×360 pixel-perfect
 renderer and all-original generated art and audio.
 
-> Status: **M1 – Setup** done. See the milestone list in `DECISIONS.md`.
+> Status: **v1.0 feature-complete.**
+> - **Game:** 15 levels in 3 worlds, 3 bosses, 7 weapons, 3 vehicles,
+>   12 enemy types and 4 heroes.
+> - **Modes:** Campaign, Arcade, Boss Rush and Weekly with a ghost.
+> - **90s layer:** CRT filter, attract mode, secret codes, juke-box,
+>   gallery, 32 trophies.
+> - **Meta and monetization:** Workshop, Full Cartridge, gems, capsules
+>   with an odds screen and pity, season pass, daily shop and login,
+>   spending limit, AdMob with UMP.
+> - **Social:** moderated chat with an age gate. IT/EN.
+
+## Download
+
+Every push to the `claude/orbit-commando-94-android-*` branches runs CI and
+publishes the builds on the GitHub pre-release **`orbit-commando-latest`**:
+
+| File | What |
+|---|---|
+| `orbit-commando-94.apk` | Install on Android 7.0+ (allow installing from unknown sources). The shop is in **TEST STORE** mode: purchases are free and fake. |
+| `orbit-commando-94-debug.apk` | Debug build, same as above with logs |
+| `orbit-commando-94.aab` | Play Console bundle with real Play Billing (re-sign before upload, see `STORE_LAUNCH_KIT.md`) |
 
 ## Requirements
 
@@ -13,52 +33,74 @@ renderer and all-original generated art and audio.
 | Flutter | 3.47.x stable (Dart 3.13) |
 | Android SDK | platform for the current `targetSdk`, build-tools, NDK as requested by Flutter |
 | JDK | 17+ |
-| Python | 3.10+ with `pip install -r tools/pixel_art/requirements.txt` for the asset tools |
+| Python | 3.10+ with `pip install -r tools/pixel_art/requirements.txt` (and `ffmpeg` for audio) for the asset tools |
+| Node | 20 (only for `backend/`) |
 
 ## Common commands
 
 ```bash
 flutter pub get
-python3 tools/pixel_art/build.py      # regenerate sprites, characters, font, palette
 flutter analyze                       # must report no issues
-flutter test                          # unit + widget tests
+flutter test                          # unit, widget, integration (~180 tests)
 flutter run                           # on a device/emulator (landscape)
 
-# Save a frame of the renderer for inspection:
-ORBIT_DUMP=/tmp/frame.png flutter test test/widget/pixel_render_test.dart
+# Builds
+flutter build apk --release --dart-define=TEST_STORE=true   # sideload, fake shop
+flutter build appbundle --release                           # Play Store
+
+# Asset pipelines (outputs are committed)
+python3 tools/pixel_art/build.py              # sprites, characters, font, palette
+python3 tools/level_gen/build_levels.py       # levels → assets/levels/*.tmj
+python3 tools/level_validation/validate.py    # level checks
+python3 tools/audio/build_audio.py            # SFX (WAV) and music (OGG)
+python3 tools/l10n/strings.py                 # IT/EN strings → ARB files
+
+# Screenshots of the screens / in-game frames
+SHOT_DIR=/tmp/shots flutter test test/widget/screens_test.dart test/integration
+ORBIT_DUMP_DIR=/tmp/frames flutter test test/widget/play_render_test.dart
 ```
 
-## Build & sign
+## Build-time switches (`--dart-define`)
 
-```bash
-flutter build apk --debug                    # build/app/outputs/flutter-apk/app-debug.apk
-flutter build appbundle --release            # build/app/outputs/bundle/release/app-release.aab
-```
-
-Release signing (to be wired in M11): create `android/key.properties`
-(git-ignored) with `storePassword`, `keyPassword`, `keyAlias`, `storeFile`.
-Until then the release build is signed with the debug key and is **not**
-uploadable to Play.
+| Key | Effect |
+|---|---|
+| `TEST_STORE=true` | Fake billing (QA, sideloaded APKs) |
+| `ADMOB_REWARDED`, `ADMOB_INTERSTITIAL` | Real ad unit ids (Google test ids by default) |
+| `BACKEND_URL` | Online chat through `backend/` (offline demo otherwise) |
 
 ## Layout
 
 ```
 lib/
-  app/         routing, theme
-  core/        services (storage, …); Riverpod providers
-  engine/      deterministic loop, physics, camera, pixel renderer, replay
-  game/        OrbitGame, scenes, player, weapons, enemies, …
-  features/    Flutter screens (title, play, shop, settings, …)
-  l10n/        ARB files (EN template, IT) + generated localisations
-assets/        game-ready sprites/fonts (+ tiles, audio, levels, shaders later)
-art_source/    original art (character pack); converted by tools, not bundled
-tools/         pixel_art (Python generators), audio, level_validation
-test/          unit / widget / integration
+  app/         app shell, theme, pixel UI kit
+  core/        save, settings, progress, trophies, monetization, ads,
+               analytics, audio, profile, social, multiplayer (Riverpod)
+  engine/      fixed-step loop, physics + gravity fields, pixel renderer,
+               PRNG, replay
+  game/        GameSim (pure Dart) + player, weapons, enemies, bosses,
+               vehicles, levels, input, Flame view layer
+  features/    Flutter screens (title, menu, map, play, results, shop, …)
+  l10n/        ARB files (generated by tools/l10n)
+assets/        sprites, fonts, planets, levels, audio, data, shaders
+art_source/    original character pack (converted by tools, not bundled)
+backend/       Firebase functions + Firestore rules (optional, v2)
+tools/         Python generators: pixel_art, level_gen, level_validation,
+               audio, l10n
+test/          unit (engine, physics, sim, meta, monetization), widget,
+               integration
 ```
 
 ## Documentation
 
-- `DECISIONS.md`: technical decisions and their reasons.
-- `ART_PIPELINE.md`: how sprites and fonts are produced and how to replace them.
-- Later milestones add `GAME_DESIGN.md`, `MONETIZATION.md`,
-  `MULTIPLAYER_PLAN.md`, `PERFORMANCE.md`, `STORE_LAUNCH_KIT.md`.
+| Document | Contents |
+|---|---|
+| `GAME_DESIGN.md` | Mechanics, content, modes, the 90s layer |
+| `MONETIZATION.md` | Products, capsules and odds, protections, ads, validation |
+| `PRIVACY.md` | Data, age rules, moderation, Data safety answers |
+| `MULTIPLAYER_PLAN.md` | Ghosts today, verified leaderboards and rollback co-op tomorrow |
+| `PERFORMANCE.md` | Budgets, measurements, profiling |
+| `STORE_LAUNCH_KIT.md` | Signing, Play Console steps, listing texts, checklist |
+| `ROADMAP.md` | 15 ideas for v1.1–v2 |
+| `DECISIONS.md` | Technical decisions and their reasons |
+| `ART_PIPELINE.md` | How sprites and fonts are produced and replaced |
+| `backend/README.md` | Deploying the optional backend |

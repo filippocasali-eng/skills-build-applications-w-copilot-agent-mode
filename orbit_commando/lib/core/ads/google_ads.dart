@@ -22,9 +22,19 @@ class GoogleAdsProvider implements AdProvider {
   RewardedAd? _rewarded;
   InterstitialAd? _interstitial;
 
-  Future<void> init() async {
+  /// [minor]: the player is under 18 or has not answered the age gate yet.
+  /// Ads then get Google's teen treatment (no personalised ads). The content rating is capped at T for everyone.
+  Future<void> init({required bool minor}) async {
     try {
       await MobileAds.instance.initialize();
+      await MobileAds.instance.updateRequestConfiguration(
+        RequestConfiguration(
+          maxAdContentRating: MaxAdContentRating.t,
+          ageRestrictedTreatment: minor
+              ? AgeRestrictedTreatment.teen
+              : AgeRestrictedTreatment.unspecified,
+        ),
+      );
       _ready = true;
       _loadRewarded();
       _loadInterstitial();
