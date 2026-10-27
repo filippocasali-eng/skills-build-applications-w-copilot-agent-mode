@@ -1,17 +1,17 @@
-// Game screen controller: board rendering, drag & drop, power-ups, scoring.
+// Game screen controller: board rendering, drag & drop, power-ups, scoring, juice.
 
 import {
   SIZE, SHAPES, emptyBoard, canPlace, linesCompletedBy, placePiece, scoreMove, dealTray,
-  anyMoveLeft, hammer, bomb, reviveClear, mulberry32, hashString, challengeBoard,
+  anyMoveLeft, hammer, bomb, reviveClear, mulberry32, hashString, challengeBoard, fillRatio,
 } from './core.js';
 import { drawCell } from './skins.js';
 import { catSVG } from './cats.js';
-import { sfx, buzz } from './audio.js';
+import { sound, buzz, setIntensity, playMusic } from './audio.js';
 import { burst, floatText } from './fx.js';
 import { S, save, equipped, dayKey } from './state.js';
 import { CHALLENGE_TARGET } from './data.js';
 
-const RUN_KEY = 'blockitty-run-v1';
+const RUN_KEY = 'blockitty-run-v2';
 const $ = (id) => document.getElementById(id);
 
 let hooks = {};
@@ -22,8 +22,11 @@ let drag = null;
 let ghost = null; // {shape, r, c, color, lines}
 let target = null; // 'hammer' | 'bomb'
 let clearing = []; // {r,c,color,t}
+let flashes = []; // {rows, cols, t}
 let animating = false;
 let moodTimer = null;
+let shownScore = 0;
+let scoreAnim = null;
 
 export function initGame(h) {
   hooks = h;
@@ -34,12 +37,7 @@ export function initGame(h) {
   $('board').addEventListener('pointerdown', onBoardTap);
   document.querySelectorAll('.slot').forEach((el, i) => el.addEventListener('pointerdown', (e) => onPick(e, i)));
   document.querySelectorAll('[data-power]').forEach((b) => b.addEventListener('click', () => usePower(b.dataset.power)));
-  $('btn-pause').addEventListener('click', () => { sfx.tap(); hooks.onPause(); });
-}
-
-function newRng(mode) {
-  if (mode === 'challenge') return mulberry32(hashString(`challenge-${dayKey()}`));
-  return mulberry32((Math.random() * 2 ** 32) >>> 0);
+  $('btn-pause').addEventListener('click', () => { sound.tap(); hooks.onPause(); });
 }
 
 export function hasSavedRun() {
@@ -49,10 +47,8 @@ export function hasSavedRun() {
 function persist() {
   if (!G) return;
   try {
-    localStorage.setItem(RUN_KEY, JSON.stringify({
-      ...G, rng: undefined, rngSeed: undefined,
-      tray: G.tray.map((t) => (t ? { id: t.shape.id, color: t.color } : null)),
-    }));
+    const { rng, ...rest } = G;
+    localStorage.setItem(RUN_KEY, JSON.stringify({ ...rest, tray: G.tray.map((t) => (t ? { id: t.shape.id, color: t.color } : null)) }));
   } catch { /* ignore */ }
 }
 
@@ -60,51 +56,66 @@ export function clearSavedRun() {
   try { localStorage.removeItem(RUN_KEY); } catch { /* ignore */ }
 }
 
-export function start(mode, resume = false) {
-  mode = mode || 'classic';
+// opts: { mode: 'classic'|'challenge'|'duel', resume, seed, target, rival }
+export function start(opts = {}) {
   let restored = null;
-  if (resume) {
+  if (opts.resume) {
     try { restored = JSON.parse(localStorage.getItem(RUN_KEY)); } catch { restored = null; }
   }
   if (restored) {
     G = { ...restored, tray: restored.tray.map((t) => (t ? { shape: SHAPES.find((s) => s.id === t.id), color: t.color } : null)) };
-    G.rng = newRng('classic');
+    G.rng = mulberry32((G.seed + G.pieces * 7919) >>> 0);
   } else {
-    const rng = newRng(mode);
+    const mode = opts.mode || 'classic';
+    const seed = opts.seed != null ? opts.seed >>> 0
+      : mode === 'challenge' ? hashString(`challenge-${dayKey()}`)
+        : (Math.random() * 2 ** 32) >>> 0;
+    const rng = mulberry32(seed);
     G = {
       mode,
+      seed,
+      target: mode === 'challenge' ? CHALLENGE_TARGET : opts.target || 0,
+      rival: opts.rival || '',
       board: mode === 'challenge' ? challengeBoard(rng) : emptyBoard(),
       score: 0,
       comboState: { combo: 0, miss: 0 },
       bestCombo: 0,
       lines: 0, pieces: 0, powers: 0, multis: 0, perfects: 0,
       revived: false,
-      challengeHit: false,
+      targetHit: false,
+      bestAnnounced: false,
       tray: [],
       rng,
     };
-    G.tray = dealTray(G.board, G.rng);
+    G.tray = dealTray(G.board, G.rng, 0);
   }
   target = null;
   clearing = [];
+  flashes = [];
   ghost = null;
+  shownScore = G.score;
   layout();
-  updateHud();
+  updateHud(true);
   setMood('idle');
-  say(G.mode === 'challenge' ? `Daily goal: ${CHALLENGE_TARGET.toLocaleString()}!` : 'Let’s play!');
+  if (G.mode === 'challenge') say(`Daily goal: ${G.target.toLocaleString('en-US')}!`);
+  else if (G.mode === 'duel') say(`Beat ${G.rival}: ${G.target.toLocaleString('en-US')}!`);
+  else say(['Let’s play!', 'Ready? Meow!', 'Go go go! 🐾'][Math.floor(Math.random() * 3)]);
   $('tutorial').hidden = S.tutorialDone;
+  setIntensity(0);
+  playMusic('game');
   persist();
+  dealAnim();
   if (!anyMoveLeft(G.board, G.tray)) setTimeout(stuck, 400);
 }
 
 export function isRunning() { return !!G; }
 
 function layout() {
-  dpr = Math.min(window.devicePixelRatio || 1, 2);
+  dpr = Math.min(window.devicePixelRatio || 1, 3);
   const screen = $('screen-game');
-  const top = screen.querySelector('.game-top').offsetHeight + screen.querySelector('.buddy-row').offsetHeight;
-  const reserved = top + 230; // tray + powers + paddings
-  const avail = Math.min(window.innerWidth - 24, window.innerHeight - reserved, 520);
+  const top = screen.querySelector('.game-top').offsetHeight + screen.querySelector('.buddy-row').offsetHeight + ($('goal').hidden ? 0 : 30);
+  const reserved = top + 220;
+  const avail = Math.min(window.innerWidth - 28, window.innerHeight - reserved, 520);
   cell = Math.max(28, Math.floor(avail / SIZE));
   const px = cell * SIZE;
   const c = $('board');
@@ -139,28 +150,35 @@ function draw() {
       const x = col * cell, y = r * cell;
       ctx.fillStyle = th.cell;
       ctx.beginPath();
-      ctx.roundRect ? ctx.roundRect(x + 2, y + 2, cell - 4, cell - 4, cell * 0.14) : ctx.rect(x + 2, y + 2, cell - 4, cell - 4);
+      if (ctx.roundRect) ctx.roundRect(x + 2, y + 2, cell - 4, cell - 4, cell * 0.16); else ctx.rect(x + 2, y + 2, cell - 4, cell - 4);
       ctx.fill();
       const v = G.board[r][col];
       if (v) drawCell(ctx, x, y, cell, willClear.has(r * SIZE + col) ? ghost.color : v, sk);
     }
   }
   if (ghost) {
-    for (const [dr, dc] of ghost.shape.cells) drawCell(ctx, (ghost.c + dc) * cell, (ghost.r + dr) * cell, cell, ghost.color, sk, 0.5);
+    for (const [dr, dc] of ghost.shape.cells) drawCell(ctx, (ghost.c + dc) * cell, (ghost.r + dr) * cell, cell, ghost.color, sk, 0.45);
     if (willClear.size) {
       ctx.save();
       ctx.globalCompositeOperation = 'lighter';
-      ctx.fillStyle = 'rgba(255,255,255,.18)';
+      ctx.fillStyle = 'rgba(255,255,255,.16)';
       for (const k of willClear) ctx.fillRect((k % SIZE) * cell, Math.floor(k / SIZE) * cell, cell, cell);
       ctx.restore();
     }
   }
   const now = performance.now();
-  clearing = clearing.filter((p) => now - p.t < 320);
+  clearing = clearing.filter((p) => now - p.t < 340);
   for (const p of clearing) {
-    const k = 1 - (now - p.t) / 320;
-    const s = cell * k;
+    const k = Math.max(0, 1 - (now - p.t) / 340);
+    const s = cell * (0.2 + 0.8 * k);
     drawCell(ctx, p.c * cell + (cell - s) / 2, p.r * cell + (cell - s) / 2, s, p.color, sk, k);
+  }
+  flashes = flashes.filter((f) => now - f.t < 260);
+  for (const f of flashes) {
+    const a = 0.75 * (1 - (now - f.t) / 260);
+    ctx.fillStyle = `rgba(255,255,255,${a})`;
+    f.rows.forEach((r) => ctx.fillRect(0, r * cell, px, cell));
+    f.cols.forEach((col) => ctx.fillRect(col * cell, 0, cell, px));
   }
   if (target) {
     ctx.strokeStyle = target === 'bomb' ? '#ff5a36' : '#ffd400';
@@ -169,7 +187,7 @@ function draw() {
     ctx.strokeRect(2, 2, px - 4, px - 4);
     ctx.setLineDash([]);
   }
-  if (clearing.length && !animating) {
+  if ((clearing.length || flashes.length) && !animating) {
     animating = true;
     requestAnimationFrame(() => { animating = false; draw(); });
   }
@@ -194,16 +212,41 @@ function drawTray() {
     const p = G.tray[i];
     if (!p) return;
     const fits = anyMoveLeft(G.board, [p]);
-    const size = Math.floor(Math.min(cell * 0.62, slotW / p.shape.cols, 110 / p.shape.rows));
-    const cv = pieceCanvas(p, size, fits ? 1 : 0.35);
+    const size = Math.floor(Math.min(cell * 0.62, slotW / p.shape.cols, 112 / p.shape.rows));
+    const cv = pieceCanvas(p, size, fits ? 1 : 0.3);
     if (drag && drag.idx === i) cv.style.visibility = 'hidden';
     el.appendChild(cv);
   });
 }
 
-function updateHud() {
-  $('score').textContent = G.score.toLocaleString();
-  $('best').textContent = Math.max(S.best[G.mode] || 0, G.score).toLocaleString();
+function dealAnim() {
+  document.querySelectorAll('.slot canvas').forEach((cv, i) => {
+    cv.classList.remove('deal');
+    void cv.offsetWidth;
+    cv.style.animationDelay = `${i * 60}ms`;
+    cv.classList.add('deal');
+  });
+  sound.whoosh();
+}
+
+function animateScore() {
+  cancelAnimationFrame(scoreAnim);
+  const step = () => {
+    const diff = G ? G.score - shownScore : 0;
+    if (!G || diff <= 0) { if (G) $('score').textContent = G.score.toLocaleString('en-US'); return; }
+    shownScore += Math.max(1, Math.ceil(diff * 0.18));
+    $('score').textContent = shownScore.toLocaleString('en-US');
+    scoreAnim = requestAnimationFrame(step);
+  };
+  step();
+  const el = $('score');
+  el.classList.remove('bump'); void el.offsetWidth; el.classList.add('bump');
+}
+
+function updateHud(instant = false) {
+  if (instant) { shownScore = G.score; $('score').textContent = G.score.toLocaleString('en-US'); } else animateScore();
+  const best = Math.max(S.best[G.mode] || 0, G.score);
+  $('best').textContent = best.toLocaleString('en-US');
   const combo = G.comboState.combo;
   const el = $('combo');
   el.textContent = combo > 1 ? `🔥 Combo x${combo}` : '';
@@ -214,12 +257,14 @@ function updateHud() {
   }
   document.querySelectorAll('[data-power]').forEach((b) => b.classList.toggle('active', target === b.dataset.power));
   const goal = $('goal');
-  if (G.mode === 'challenge') {
+  if (G.target) {
     goal.hidden = false;
-    const pct = Math.min(100, (G.score / CHALLENGE_TARGET) * 100);
+    const pct = Math.min(100, (G.score / G.target) * 100);
     goal.querySelector('.fill').style.width = `${pct}%`;
-    goal.querySelector('.txt').textContent = G.challengeHit ? 'Goal complete! 🎉' : `Goal ${G.score.toLocaleString()} / ${CHALLENGE_TARGET.toLocaleString()}`;
+    const who = G.mode === 'duel' ? `${G.rival}'s score` : 'Goal';
+    goal.querySelector('.txt').textContent = G.targetHit ? (G.mode === 'duel' ? `You beat ${G.rival}! 🎉` : 'Goal complete! 🎉') : `${who} ${G.score.toLocaleString('en-US')} / ${G.target.toLocaleString('en-US')}`;
   } else goal.hidden = true;
+  $('screen-game').classList.toggle('danger', fillRatio(G.board) > 0.66);
 }
 
 export function setMood(mood, ms = 1400) {
@@ -241,6 +286,12 @@ function say(text) {
   s.classList.add('show');
 }
 
+function shake(strength = 1) {
+  const w = document.querySelector('.board-wrap');
+  w.style.setProperty('--shake', `${3 + strength * 3}px`);
+  w.classList.remove('shake'); void w.offsetWidth; w.classList.add('shake');
+}
+
 // ---------- drag & drop ----------
 function onPick(e, i) {
   if (!G || !G.tray[i] || target) return;
@@ -251,8 +302,8 @@ function onPick(e, i) {
   document.body.appendChild(el);
   const w = piece.shape.cols * cell, h = piece.shape.rows * cell;
   const touch = e.pointerType !== 'mouse';
-  drag = { idx: i, piece, el, w, h, lift: touch ? cell * 1.3 + h / 2 : 0 };
-  sfx.pick();
+  drag = { idx: i, piece, el, w, h, lift: touch ? cell * 1.4 + h / 2 : 0 };
+  sound.pick();
   positionDrag(e.clientX, e.clientY);
   drawTray();
 }
@@ -291,7 +342,7 @@ function onUp() {
     ghost = null;
     commit(d.idx, g.r, g.c);
   } else {
-    sfx.invalid();
+    sound.invalid();
     drawTray();
   }
 }
@@ -302,6 +353,7 @@ function cellCenter(r, c) {
 }
 
 const PRAISE = ['', '', 'Great!', 'Amazing!', 'Purrfect!', 'Un-fur-gettable!', 'Legendary!'];
+const CHEERS = ['Meow-velous!', 'Paw-some!', 'So good! 😻', 'Clawsome!', 'Yesss! 🐾'];
 
 function commit(idx, r, c) {
   const piece = G.tray[idx];
@@ -312,47 +364,58 @@ function commit(idx, r, c) {
   G.comboState = combo;
   G.score += points;
   G.bestCombo = Math.max(G.bestCombo, combo.combo);
+  setIntensity(combo.combo >= 4 ? 3 : combo.combo >= 2 ? 2 : combo.combo >= 1 ? 1 : 0);
   if (!S.tutorialDone) { S.tutorialDone = true; save(); $('tutorial').hidden = true; }
 
   if (move.lines) {
     G.lines += move.lines;
     if (move.lines >= 3) G.multis += 1;
     const now = performance.now();
-    clearing.push(...move.cleared.map((x, k) => ({ ...x, t: now + k * 4 })));
-    const fxId = equipped('fx').id;
-    burst(move.cleared.map((x) => ({ ...cellCenter(x.r, x.c), color: x.color })), fxId, skin().palette);
-    sfx.clear(move.lines, combo.combo);
+    clearing.push(...move.cleared.map((x) => ({ ...x, t: now + (x.r + x.c) * 6 })));
+    flashes.push({ rows: move.rows, cols: move.cols, t: now });
+    burst(move.cleared.map((x) => ({ ...cellCenter(x.r, x.c), color: x.color })), equipped('fx').id, skin().palette);
+    sound.clear(move.lines, combo.combo);
+    if (move.lines >= 2 || combo.combo >= 3) shake(Math.min(3, move.lines));
     const mid = cellCenter(r + piece.shape.rows / 2 - 0.5, c + piece.shape.cols / 2 - 0.5);
     floatText(`+${points}`, mid.x, mid.y, 'pts');
+    const b = $('board').getBoundingClientRect();
     if (move.perfect) {
       G.perfects += 1;
-      sfx.perfect();
-      const b = $('board').getBoundingClientRect();
+      sound.perfect();
       floatText('PURRFECT CLEAR!', b.left + b.width / 2, b.top + b.height / 2, 'big');
       setMood('wow', 2200);
       say('PURRFECT!! 😻');
     } else if (move.lines >= 2 || combo.combo >= 3) {
-      const b = $('board').getBoundingClientRect();
       const word = PRAISE[Math.min(move.lines + (combo.combo >= 3 ? 1 : 0), PRAISE.length - 1)] || 'Nice!';
       floatText(word, b.left + b.width / 2, b.top + b.height * 0.4, 'praise');
       setMood(combo.combo >= 3 ? 'love' : 'happy');
-      if (Math.random() < 0.5) sfx.meow();
-      say(combo.combo >= 3 ? `Combo x${combo.combo}! 🔥` : 'Meow-velous!');
+      if (Math.random() < 0.5) sound.meow();
+      say(combo.combo >= 3 ? `Combo x${combo.combo}! 🔥` : CHEERS[Math.floor(Math.random() * CHEERS.length)]);
     } else {
       setMood('happy', 900);
     }
   } else {
-    sfx.place();
+    sound.place();
   }
 
-  if (G.mode === 'challenge' && !G.challengeHit && G.score >= CHALLENGE_TARGET) {
-    G.challengeHit = true;
-    hooks.onChallengeHit();
+  const best = S.best[G.mode] || 0;
+  if (!G.bestAnnounced && best > 0 && G.score > best) {
+    G.bestAnnounced = true;
+    const b = $('board').getBoundingClientRect();
+    setTimeout(() => floatText('NEW BEST! 🏆', b.left + b.width / 2, b.top + b.height * 0.25, 'big'), 350);
+    sound.levelUp();
   }
 
-  if (G.tray.every((t) => !t)) G.tray = dealTray(G.board, G.rng);
+  if (G.target && !G.targetHit && G.score >= G.target) {
+    G.targetHit = true;
+    hooks.onTargetHit(G);
+  }
+
+  let dealt = false;
+  if (G.tray.every((t) => !t)) { G.tray = dealTray(G.board, G.rng, G.score); dealt = true; }
   draw();
   drawTray();
+  if (dealt) dealAnim();
   updateHud();
   persist();
   checkStuck();
@@ -360,8 +423,7 @@ function commit(idx, r, c) {
 
 function checkStuck() {
   if (anyMoveLeft(G.board, G.tray)) {
-    const filled = G.board.flat().filter(Boolean).length;
-    if (filled > 44 && Math.random() < 0.3) { setMood('shock'); say('Getting crowded… 😿'); }
+    if (fillRatio(G.board) > 0.7 && Math.random() < 0.25) { setMood('shock'); say('Getting crowded… 😿'); }
     return;
   }
   setTimeout(stuck, 450);
@@ -370,43 +432,46 @@ function checkStuck() {
 function stuck() {
   if (!G) return;
   setMood('shock', 2500);
-  sfx.invalid();
-  buzz([40, 60, 40]);
+  sound.invalid();
+  buzz('heavy');
+  setIntensity(0);
   const havePowers = S.power.hammer + S.power.bomb + S.power.shuffle > 0;
-  hooks.onStuck({ canRevive: !G.revived && G.mode !== 'challenge', havePowers });
+  hooks.onStuck({ canRevive: !G.revived, havePowers, score: G.score });
 }
 
 export function revive() {
   G.revived = true;
   const cleared = reviveClear(G.board);
   burst(cleared.map((x) => ({ ...cellCenter(x.r, x.c), color: x.color })), 'stars', skin().palette);
-  sfx.boom();
-  G.tray = dealTray(G.board, G.rng);
+  sound.boom();
+  G.tray = dealTray(G.board, G.rng, 0);
   setMood('love');
-  say('Second life! 9 left 😼');
-  draw(); drawTray(); updateHud(); persist();
+  say('Second life! 8 left 😼');
+  draw(); drawTray(); dealAnim(); updateHud(); persist();
 }
 
 export function end() {
   const run = G;
   G = null;
   clearSavedRun();
-  sfx.gameOver();
+  setIntensity(0);
+  sound.gameOver();
+  $('screen-game').classList.remove('danger');
   return run;
 }
 
 // ---------- power-ups ----------
 function usePower(id) {
   if (!G) return;
-  sfx.tap();
+  sound.tap();
   if (S.power[id] <= 0) { hooks.offerPower(id); return; }
   if (id === 'shuffle') {
     S.power.shuffle -= 1;
     G.powers += 1;
     save();
-    G.tray = dealTray(G.board, G.rng);
+    G.tray = dealTray(G.board, G.rng, 0);
     say('Fresh pieces! 🔄');
-    drawTray(); updateHud(); persist();
+    drawTray(); dealAnim(); updateHud(); persist();
     checkStuck();
     return;
   }
@@ -422,14 +487,14 @@ function onBoardTap(e) {
   const c = Math.floor((e.clientX - rect.left) / cell);
   const r = Math.floor((e.clientY - rect.top) / cell);
   const out = target === 'bomb' ? bomb(G.board, r, c) : hammer(G.board, r, c);
-  if (!out.length) { sfx.invalid(); return; }
+  if (!out.length) { sound.invalid(); return; }
   S.power[target] -= 1;
   G.powers += 1;
   save();
   const now = performance.now();
   clearing.push(...out.map((x) => ({ ...x, t: now })));
   burst(out.map((x) => ({ ...cellCenter(x.r, x.c), color: x.color })), target === 'bomb' ? 'stars' : equipped('fx').id, skin().palette);
-  target === 'bomb' ? sfx.boom() : sfx.place();
+  if (target === 'bomb') { sound.boom(); shake(3); } else sound.place();
   target = null;
   setMood('happy');
   draw(); drawTray(); updateHud(); persist();
@@ -439,8 +504,11 @@ function onBoardTap(e) {
 export function refresh() {
   if (!G) return;
   layout();
-  updateHud();
+  updateHud(true);
   setMood('idle');
 }
 
 export function current() { return G; }
+
+// Test hook: lets automated UI tests jump to the out-of-moves screen.
+export function debugStuck() { stuck(); }

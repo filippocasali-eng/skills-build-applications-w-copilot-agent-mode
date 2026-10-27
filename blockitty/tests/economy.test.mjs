@@ -21,28 +21,27 @@ test('premium box pity guarantees epic+ every 10 opens', () => {
   st.S.gems = 100000;
   let sinceEpic = 0;
   for (let i = 0; i < 200; i++) {
-    const [r] = st.openBox('premium', 1);
+    const [r] = st.openBox(1);
     sinceEpic = RARITY_ORDER.indexOf(r.item.rarity) >= 2 ? 0 : sinceEpic + 1;
     assert.ok(sinceEpic < PITY_EPIC);
   }
 });
 
-test('duplicates convert into yarn, and boxes never give exclusives', () => {
+test('duplicates convert into coins, and boxes never give exclusives', () => {
   st.setStorage(mem());
   st.load();
   st.S.gems = 1e6;
-  const res = st.openBox('premium', 10).concat(...Array.from({ length: 30 }, () => st.openBox('premium', 10)));
+  const res = st.openBox(10).concat(...Array.from({ length: 30 }, () => st.openBox(10)));
   assert.ok(res.every((r) => !r.item.exclusive));
-  assert.ok(res.some((r) => r.dup) && st.S.yarn > 0);
+  assert.ok(res.some((r) => r.dup && r.coins > 0));
 });
 
 test('boxes and purchases fail without currency', () => {
   st.setStorage(mem());
   st.load();
   st.S.gems = 0; st.S.coins = 0; st.S.freePulls = 0;
-  assert.equal(st.openBox('premium', 1), null);
-  assert.equal(st.openBox('basic', 1), null);
-  const item = ALL_ITEMS.find((i) => i.rarity === 'epic' && !i.exclusive);
+  assert.equal(st.openBox(1), null);
+    const item = ALL_ITEMS.find((i) => i.rarity === 'epic' && !i.exclusive);
   assert.equal(st.buyItem(`${item.type}:${item.id}`), false);
 });
 
@@ -82,6 +81,28 @@ test('daily shop is stable for a date and only sells buyable items', () => {
   const a = st.dailyShop('2026-10-27').map((i) => i.id);
   const b = st.dailyShop('2026-10-27').map((i) => i.id);
   assert.deepEqual(a, b);
-  assert.equal(new Set(a).size, 6);
+  assert.equal(new Set(a).size, 5);
   assert.ok(st.dailyShop('2026-10-27').every((i) => !i.exclusive && i.rarity !== 'mythic'));
+});
+
+test('streak grows on consecutive days and resets after a gap', () => {
+  st.setStorage(mem());
+  st.load();
+  st.S.streak = { count: 4, last: '2000-01-01' };
+  st.touchStreak();
+  assert.equal(st.S.streak.count, 1);
+  const y = new Date(); y.setDate(y.getDate() - 1);
+  st.S.streak = { count: 4, last: st.dayKey(y) };
+  st.touchStreak();
+  assert.equal(st.S.streak.count, 5);
+  assert.equal(st.touchStreak(), false);
+});
+
+test('v1 saves migrate yarn into coins', () => {
+  const m = mem();
+  m.setItem('blockitty-save-v1', JSON.stringify({ coins: 100, yarn: 10 }));
+  st.setStorage(m);
+  st.load();
+  assert.equal(st.S.coins, 350);
+  assert.equal(st.S.yarn, undefined);
 });

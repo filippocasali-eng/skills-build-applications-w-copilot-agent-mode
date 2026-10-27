@@ -1,9 +1,11 @@
 // Offline-first cache so the installed game works without network.
-const CACHE = 'blockitty-v1';
+const CACHE = 'blockitty-v2';
 const ASSETS = [
-  './', 'index.html', 'manifest.webmanifest', 'css/style.css',
-  'js/main.js', 'js/core.js', 'js/data.js', 'js/state.js', 'js/ui.js', 'js/game.js',
-  'js/cats.js', 'js/skins.js', 'js/fx.js', 'js/audio.js', 'js/billing.js',
+  './', 'index.html', 'privacy.html', 'manifest.webmanifest', 'css/style.css',
+  'js/main.js', 'js/config.js', 'js/core.js', 'js/data.js', 'js/state.js', 'js/ui.js', 'js/game.js',
+  'js/cats.js', 'js/skins.js', 'js/fx.js', 'js/audio.js', 'js/billing.js', 'js/ads.js', 'js/share.js', 'js/notify.js',
+  'fonts/fredoka-latin-400-normal.woff2', 'fonts/fredoka-latin-500-normal.woff2',
+  'fonts/fredoka-latin-600-normal.woff2', 'fonts/fredoka-latin-700-normal.woff2',
   'icons/icon-192.png', 'icons/icon-512.png', 'icons/maskable-512.png',
 ];
 

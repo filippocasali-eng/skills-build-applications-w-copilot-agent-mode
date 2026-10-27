@@ -1,4 +1,4 @@
-name: Blockitty Android APK
+name: Blockitty Android
 
 on:
   workflow_dispatch:
@@ -11,48 +11,73 @@ permissions:
   contents: write
 
 jobs:
-  apk:
+  build:
     runs-on: ubuntu-latest
     defaults:
       run:
         working-directory: blockitty
+    env:
+      VERSION_CODE: ${{ github.run_number }}
+      VERSION_NAME: 2.0.${{ github.run_number }}
+      ADMOB_APP_ID: ${{ secrets.ADMOB_APP_ID }}
+      HAS_KEYSTORE: ${{ secrets.KEYSTORE_BASE64 != '' }}
+      KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+      KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+      KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: '17'
+          java-version: '21'
       - uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
       - run: npm ci
       - run: npm test
+      - name: Decode upload keystore
+        if: env.HAS_KEYSTORE == 'true'
+        run: |
+          echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 -d > "$RUNNER_TEMP/upload.jks"
+          echo "KEYSTORE_PATH=$RUNNER_TEMP/upload.jks" >> "$GITHUB_ENV"
       - run: npm run android:init
-      - run: chmod +x android/gradlew && cd android && ./gradlew assembleDebug --no-daemon
+      - name: Build test APK
+        run: chmod +x android/gradlew && cd android && ./gradlew assembleDebug --no-daemon
+      - name: Build signed release (AAB for Play Store + APK)
+        if: env.HAS_KEYSTORE == 'true'
+        run: cd android && ./gradlew bundleRelease assembleRelease --no-daemon
+      - name: Collect outputs
+        run: |
+          mkdir -p out
+          cp android/app/build/outputs/apk/debug/app-debug.apk out/blockitty.apk
+          if [ -f android/app/build/outputs/bundle/release/app-release.aab ]; then
+            cp android/app/build/outputs/bundle/release/app-release.aab out/blockitty-release.aab
+            cp android/app/build/outputs/apk/release/app-release.apk out/blockitty.apk
+          fi
+          ls -la out
       - uses: actions/upload-artifact@v4
         with:
-          name: blockitty-apk
-          path: blockitty/android/app/build/outputs/apk/debug/app-debug.apk
-      - name: Rename APK
-        run: cp android/app/build/outputs/apk/debug/app-debug.apk blockitty.apk
-      - name: Publish APK as a release (direct download link)
+          name: blockitty-android
+          path: blockitty/out/*
+      - name: Publish release (direct download link)
         uses: softprops/action-gh-release@v2
         with:
           tag_name: blockitty-latest
           name: Blockitty (latest build)
           body: |
-            Direct download: open this page on your Android phone, tap **blockitty.apk**, then allow installing from unknown sources.
-            Built from ${{ github.sha }}.
+            Open this page on your Android phone and tap **blockitty.apk** to install.
+            `blockitty-release.aab` (when present) is the signed bundle to upload to Google Play Console.
+            Version ${{ env.VERSION_NAME }} · built from ${{ github.sha }}.
           make_latest: true
-          files: blockitty/blockitty.apk
+          files: blockitty/out/*
       - name: Push APK to the blockitty-apk branch (backup download)
         working-directory: ${{ github.workspace }}
         run: |
-          mkdir /tmp/apkbranch && cp blockitty/blockitty.apk /tmp/apkbranch/blockitty.apk
+          mkdir /tmp/apkbranch && cp blockitty/out/* /tmp/apkbranch/
           cd /tmp/apkbranch
           git init -q -b blockitty-apk
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add blockitty.apk
-          git commit -q -m "Blockitty APK from ${GITHUB_SHA}"
+          git add .
+          git commit -q -m "Blockitty build ${GITHUB_RUN_NUMBER} from ${GITHUB_SHA}"
           git push -f "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" blockitty-apk

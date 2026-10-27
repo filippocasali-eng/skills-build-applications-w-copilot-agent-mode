@@ -1,74 +1,54 @@
-# Blockitty: Cat Block Blast 🐱🧱
+# Blockitty: Cat Block Puzzle 🐱🧱 (v2)
 
-Block puzzle 8×8 (il formato di *Block Blast!*, n.1 per download su Google Play USA) con una
-**collezione di gatti, skin, temi ed effetti**. È pensato per chi compra cosmetici e funzioni extra.
+Block puzzle 8×8 con gatti da collezionare. È pensato per il trend n.1 per download su Google Play USA
+(block puzzle + gatti) e monetizza con le meccaniche dei giochi che incassano di più.
 
-![screenshot](icons/screenshot-game.png)
+![screenshot](store/screenshot-2.png)
 
-## 1. Analisi di mercato (Google Play USA, ottobre 2026)
+- **Pubblicazione sul Play Store**: guida passo-passo in [`PUBLISHING.md`](PUBLISHING.md).
+- **Scheda dello store** (testi, grafiche, prodotti in-app): [`store/listing.md`](store/listing.md).
 
-| Classifica | Chi domina | Cosa ci dice |
+## Cosa rende la v2 "trending"
+
+| Area | Scelta | Perché |
 |---|---|---|
-| **Top Free** | Meowdoku (sudoku con gatti), Royal Smash!, Gossip Harbor, Rotate Rings, Roblox, Block Blast!, Vita Mahjong, Magic Sort! | I **puzzle casual** dominano i download. I **gatti** sono il tema virale (Meowdoku è esploso grazie ai video brevi). |
-| **Top Grossing** | Monopoly GO!, Last War, Royal Match, Candy Crush, Whiteout Survival, Coin Master, Roblox, Pokémon TCG Pocket, Township | I soldi arrivano da **collezioni** (gli album di sticker di Monopoly GO, l'apertura di pacchetti di Pokémon TCG Pocket), dai **cosmetici** (Roblox) e dalle **offerte a tempo**. |
+| Primo avvio | Si entra **subito in partita** con il tutorial, i menu compaiono dopo la prima partita | Ogni schermata prima del gameplay perde utenti |
+| Equità | Ogni tris di pezzi è **sempre piazzabile** (verificato dall'algoritmo); inizio più facile, fine partita più impegnativa | "Pezzi impossibili" è la lamentela n.1 nelle recensioni di Block Blast |
+| Pubblicità | **Rewarded opzionali** (revive, monete x2, box e spin extra); interstitial solo dalla 4ª partita, al massimo 1 ogni 3 partite e ogni 3 minuti, **mai durante il gioco**; prodotto "No Ads" | Gli annunci aggressivi sono la lamentela n.1 anche per Meowdoku |
+| Viralità | **Sfida un amico**: il link fa giocare l'amico con gli *stessi pezzi* dal browser, senza installare nulla. Card del punteggio 1080×1350 per Instagram/TikTok. Gemme bonus alla prima condivisione del giorno | Sfida asincrona più "provalo subito" senza download |
+| Abitudine | Streak giornaliera 🔥, login di 7 giorni, missioni, ruota, box gratis, Daily Challenge, notifiche promemoria (chieste solo dopo la prima partita) | Il ciclo che fa tornare ogni giorno |
+| Spesa | Collezione a set, Mystery Box con pity, Paw Pass stagionale, offerte giornaliere, Starter Pack, gem pack, No Ads | Le meccaniche di Monopoly GO, Pokémon TCG Pocket e Roblox |
+| Semplicità | 4 schede, 2 valute (i doppioni diventano monete), un solo pulsante "Rewards" per tutto il giornaliero | Meno scelte, più gioco |
+| Audio | **Colonna sonora originale** generata in tempo reale (menu lo-fi e gioco pop che si intensifica con le combo), meow e SFX sintetizzati | Zero copyright, zero file audio, funziona offline |
+| Qualità | Font Fredoka (OFL), rendering fino a 3x, scossa e flash sulle linee, punteggio animato, vignetta di pericolo, haptics nativi | Sensazione "premium" |
 
-**Il vuoto di mercato:** Block Blast e Meowdoku hanno decine di milioni di giocatori, ma guadagnano
-quasi solo con la pubblicità. Meowdoku, ad esempio, ha il 100% dei ricavi da ads e nessun acquisto in-app.
-Il loro pubblico non ha niente su cui spendere. Blockitty unisce il gameplay del trend n.1 per download
-(block puzzle + gatti) alle meccaniche di spesa dei giochi che incassano di più:
+## Copyright e licenze
+- **Grafica**: gatti, blocchi, icone e banner sono generati dal codice di questo progetto.
+- **Musica e suoni**: composizioni originali sintetizzate con WebAudio, senza campioni.
+- **Font**: Fredoka, SIL Open Font License (`fonts/OFL-LICENSE.txt`), uso commerciale consentito.
+- **Nome**: "Blockitty" e "Paw Pass" sono nomi originali. Non usiamo marchi di altri giochi.
 
-- **Collezione a set** stile album di Monopoly GO: 6 set da 5 gatti più gli esclusivi. Ogni set completato dà un grande premio.
-- **Mystery Box** stile apertura pacchetti: 5 rarità (Common → Mythic), pity garantito (Epic ogni 10, Legendary entro 60), i doppioni diventano 🧶 Yarn per craftare l'oggetto che manca.
-- **Paw Pass** stagionale (28 giorni, 30 tier): traccia free e premium. Il premium restituisce più gemme di quante ne costa (960 contro 950), come i battle pass di Fortnite, e ha 2 gatti, 1 tema Mythic e 1 effetto esclusivi.
-- **Negozio giornaliero a rotazione** con timer (FOMO), **Starter Pack** una tantum a $2.99 ("valore $14.99"), gem pack da $0.99 a $49.99.
-- **Ritenzione**: login a 7 giorni, 3 missioni al giorno, ruota della fortuna, Daily Challenge uguale per tutti (seed giornaliero), livelli giocatore, revive gratuito una volta al giorno.
-- **Pay-for-looks**, non pay-to-win: lo scoring non dipende da cosa si compra. I power-up si comprano con monete guadagnate giocando. Le probabilità delle box sono pubbliche (richiesto da Google Play).
-
-## 2. Contenuti
-
-- **Gameplay**: trascini i pezzi, completi righe e colonne, combo con 3 mosse di tolleranza, bonus Perfect Clear. Il generatore di pezzi è "equo": se possibile almeno un pezzo entra sempre.
-- **Power-up**: 🔨 Martello (1 blocco), 💣 Bomba (area 3×3), 🔄 Shuffle.
-- **Gatto compagno** animato che reagisce alle mosse (felice, innamorato, wow, shock).
-- **33 gatti** procedurali in SVG, **11 skin** per i blocchi (glossy, neon, pixel, galaxy, oro, gemme...), **8 temi**, **8 effetti** particellari.
-- Suoni sintetizzati (WebAudio) e vibrazione. Funziona **offline**. La partita in corso viene salvata e si riprende con *Continue*.
-
-## 3. Installazione
-
-### Android (APK)
-Ogni push che tocca `blockitty/` avvia il workflow **Blockitty Android APK**: test, progetto Capacitor, `assembleDebug`.
-Scarica l'artifact `blockitty-apk` dalla pagina Actions e installalo sul telefono (abilita "origini sconosciute").
-
-In locale (servono Android SDK e Java 17):
+## Sviluppo
 ```bash
-cd blockitty
 npm install
-npm run android:init     # solo la prima volta
-npm run android:apk      # -> android/app/build/outputs/apk/debug/app-debug.apk
+npm test             # 18 test su logica di gioco ed economia
+npm start            # versione web su http://localhost:8080
+npm run assets       # rigenera icone, splash e screenshot dello store
+npm run android:init # crea il progetto Android (target API 36)
+npm run android:apk  # APK di test (serve l'Android SDK)
 ```
-
-### Web / PWA (installabile da Chrome)
-```bash
-cd blockitty && npm start   # http://localhost:8080
-```
-Il workflow **Blockitty Web** pubblica su GitHub Pages ad ogni push su `main`. Va abilitato una volta da Settings → Pages → Source: GitHub Actions.
-Dal telefono apri il link e scegli "Installa app".
-
-### Pubblicazione sul Play Store
-1. Account Google Play Console ($25 una tantum).
-2. Crea in Play Console i prodotti in-app con gli SKU di `js/data.js` (`gems_80`, `gems_500`, `gems_1200`, `gems_2600`, `gems_7000`, `starter_pack`).
-3. Pacchetto consigliato: **Trusted Web Activity** (Bubblewrap o PWABuilder) puntato al sito su Pages. In TWA `js/billing.js` usa già Google Play Billing (Digital Goods API). Altrimenti va aggiunto un plugin di billing al wrapper Capacitor.
-4. Prima di monetizzare davvero, verifica il `purchaseToken` lato server.
-
-> ⚠️ **Pagamenti**: fuori da Google Play il negozio è in **modalità DEMO**. Gli acquisti sono simulati, non viene addebitato nulla e l'interfaccia lo indica chiaramente.
-
-## 4. Sviluppo
+Ogni push avvia **GitHub Actions**, che produce l'APK di test, l'AAB firmato (se la chiave è configurata), la release `blockitty-latest` e il branch `blockitty-apk`.
 
 ```
-js/core.js     logica pura: board, pezzi, scoring, generatore (testata)
-js/state.js    economia: valute, box + pity, missioni, pass, negozio, salvataggi (testata)
-js/data.js     catalogo e tabelle economiche: si bilancia tutto da qui
-js/game.js     schermata di gioco, drag & drop, power-up
-js/ui.js       menu, negozio, box, collezione, pass, modali
-js/cats.js     generatore SVG dei gatti   js/skins.js  rendering delle skin
+js/core.js     logica pura: board, pezzi equi, scoring
+js/state.js    economia, collezione, box, missioni, streak, pass, salvataggi
+js/data.js     catalogo e bilanciamento: si modifica tutto da qui
+js/game.js     schermata di gioco ed effetti
+js/ui.js       menu, negozio, collezione, pass, sfide, risultati
+js/audio.js    musica originale + effetti sonori + vibrazione
+js/ads.js      AdMob (rewarded/interstitial + consenso GDPR)
+js/billing.js  Google Play Billing (demo nel browser)
+js/share.js    card del punteggio + link di sfida
+js/notify.js   promemoria locali
+js/config.js   ID AdMob, URL, regole di frequenza degli annunci
 ```
-`npm test` esegue 15 test su logica ed economia.

@@ -1,54 +1,84 @@
-// Real-money purchases.
-// - Inside the Play Store build (Trusted Web Activity) it uses Google Play
-//   Billing through the Digital Goods API + Payment Request API.
-// - Anywhere else (browser / local install) it runs in DEMO mode: purchases are
-//   simulated and nothing is charged. The UI says so clearly.
+// Real-money purchases through Google Play Billing (cordova-plugin-purchase,
+// bundled in the Android build). In the browser it runs in DEMO mode: purchases
+// are simulated, nothing is charged, and the UI says so.
 
-const PLAY_BILLING = 'https://play.google.com/billing';
-let service = null;
-let details = {};
+import { isNative } from './config.js';
+import { GEM_PACKS, STARTER_PACK, NO_ADS } from './data.js';
 
-export async function initBilling() {
-  if (!('getDigitalGoodsService' in window)) return false;
-  try {
-    service = await window.getDigitalGoodsService(PLAY_BILLING);
-    return true;
-  } catch {
-    service = null;
-    return false;
-  }
+let store = null;
+let onGrant = null;
+const pending = new Map(); // productId -> resolve
+const granted = new Set(JSON.parse(localStorage.getItem('blockitty-tx') || '[]'));
+
+const CONSUMABLES = [...GEM_PACKS.map((g) => g.sku), STARTER_PACK.sku];
+const NON_CONSUMABLES = [NO_ADS.sku];
+
+function rememberTx(id) {
+  granted.add(id);
+  try { localStorage.setItem('blockitty-tx', JSON.stringify([...granted].slice(-200))); } catch { /* ignore */ }
 }
 
-export const isDemo = () => !service;
-
-export async function loadPrices(skus) {
-  if (!service) return {};
-  try {
-    const list = await service.getDetails(skus);
-    details = Object.fromEntries(list.map((d) => [d.itemId, d]));
-    return Object.fromEntries(list.map((d) => [d.itemId, new Intl.NumberFormat(undefined, { style: 'currency', currency: d.price.currency }).format(d.price.value)]));
-  } catch {
-    return {};
-  }
+// grant(sku) is called exactly once per completed purchase.
+export async function initBilling(grant) {
+  onGrant = grant;
+  if (!isNative()) return;
+  await new Promise((r) => (window.CdvPurchase ? r() : document.addEventListener('deviceready', r, { once: true })));
+  const C = window.CdvPurchase;
+  if (!C) return;
+  store = C.store;
+  const P = C.Platform.GOOGLE_PLAY;
+  store.register([
+    ...CONSUMABLES.map((id) => ({ id, type: C.ProductType.CONSUMABLE, platform: P })),
+    ...NON_CONSUMABLES.map((id) => ({ id, type: C.ProductType.NON_CONSUMABLE, platform: P })),
+  ]);
+  store.when()
+    .approved((tx) => {
+      // Production tip: validate tx with your server (store.validator) before granting.
+      if (!granted.has(tx.transactionId)) {
+        rememberTx(tx.transactionId);
+        for (const p of tx.products) {
+          onGrant && onGrant(p.id);
+          const res = pending.get(p.id);
+          if (res) { pending.delete(p.id); res(true); }
+        }
+      }
+      tx.finish();
+    })
+    .productUpdated((p) => {
+      if (NON_CONSUMABLES.includes(p.id) && p.owned) onGrant && onGrant(p.id, true);
+    });
+  store.error(() => {
+    for (const [id, res] of pending) { pending.delete(id); res(false); }
+  });
+  await store.initialize([P]);
 }
 
-// Returns true when the purchase completed and the goods should be granted.
+export const isDemo = () => !store;
+
+export function localPrice(sku, fallback) {
+  const p = store && store.get(sku);
+  return (p && p.pricing && p.pricing.price) || fallback;
+}
+
+// Returns true when the purchase completed (goods are granted via onGrant).
 export async function purchase(sku, confirmDemo) {
-  if (!service) return confirmDemo();
-  try {
-    const request = new PaymentRequest(
-      [{ supportedMethods: PLAY_BILLING, data: { sku } }],
-      { total: { label: 'Total', amount: { currency: 'USD', value: '0' } } },
-    );
-    const response = await request.show();
-    const { purchaseToken } = response.details;
-    // Production: verify purchaseToken on your server before granting.
-    await response.complete('success');
-    if (sku !== 'starter_pack') await service.consume(purchaseToken);
-    return true;
-  } catch {
-    return false;
+  if (!store) {
+    const ok = await confirmDemo();
+    if (ok) onGrant && onGrant(sku);
+    return ok;
   }
+  const product = store.get(sku);
+  const offer = product && product.getOffer();
+  if (!offer) return false;
+  return new Promise((resolve) => {
+    pending.set(sku, resolve);
+    offer.order().then((err) => {
+      if (err) { pending.delete(sku); resolve(false); }
+    });
+    setTimeout(() => { if (pending.has(sku)) { pending.delete(sku); resolve(false); } }, 120000);
+  });
 }
 
-export { details as billingDetails };
+export async function restorePurchases() {
+  if (store) await store.restorePurchases();
+}

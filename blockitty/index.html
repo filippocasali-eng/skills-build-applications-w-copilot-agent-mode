@@ -3,40 +3,38 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
-  <title>Blockitty: Cat Block Blast</title>
-  <meta name="description" content="Drag, drop and blast blocks with your squad of collectible cats. Unlock 30+ cats, skins, themes and effects!">
-  <meta name="theme-color" content="#ff6a88">
+  <title>Blockitty: Cat Block Puzzle</title>
+  <meta name="description" content="Drag, drop and blast blocks with a squad of collectible cats. Free, relaxing, offline.">
+  <meta name="theme-color" content="#ff7a8a">
+  <meta property="og:title" content="Blockitty: Cat Block Puzzle">
+  <meta property="og:description" content="Cute cats + satisfying block puzzle. Can you beat my score?">
+  <meta property="og:image" content="icons/og.png">
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="icons/icon-192.png">
   <link rel="apple-touch-icon" href="icons/icon-192.png">
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="preload" href="fonts/fredoka-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
   <div id="app">
     <header id="topbar">
-      <button class="lvl" id="btn-profile" aria-label="Profile">
-        <span class="lvl-num" id="lvl">1</span>
-        <span class="lvl-bar"><span id="lvl-fill"></span></span>
+      <button class="lvl" id="btn-profile" aria-label="Level">
+        <span class="lvl-ring" id="lvl-ring"><span class="lvl-num" id="lvl">1</span></span>
       </button>
-      <div class="cur" id="cur-coins"><span>🪙</span><b id="coins">0</b></div>
-      <button class="cur" id="cur-gems"><span>💎</span><b id="gems">0</b><i>+</i></button>
-      <button class="icon-btn" id="btn-settings" aria-label="Settings">⚙️</button>
+      <div class="cur"><span>🪙</span><b id="coins">0</b></div>
+      <button class="cur" id="cur-gems" aria-label="Get gems"><span>💎</span><b id="gems">0</b><i>+</i></button>
     </header>
 
     <main>
       <section id="screen-home" class="screen active"></section>
+      <section id="screen-cats" class="screen"></section>
       <section id="screen-shop" class="screen"></section>
-      <section id="screen-boxes" class="screen"></section>
-      <section id="screen-collection" class="screen"></section>
       <section id="screen-pass" class="screen"></section>
 
       <section id="screen-game" class="screen">
         <div class="game-top">
           <button id="btn-pause" class="icon-btn" aria-label="Pause">⏸</button>
-          <div class="score-box"><div class="score-label">SCORE</div><div id="score">0</div></div>
+          <div class="score-box"><div id="score">0</div></div>
           <div class="best-box">👑 <span id="best">0</span></div>
         </div>
         <div class="buddy-row">
@@ -51,23 +49,22 @@
           <canvas id="board"></canvas>
           <div id="tutorial" class="tutorial" hidden>
             <div class="hand">👆</div>
-            <p>Drag a block onto the board.<br>Fill a <b>row</b> or <b>column</b> to blast it!</p>
+            <p>Drag a piece onto the board.<br>Fill a <b>row</b> or <b>column</b> to blast it!</p>
           </div>
         </div>
         <div id="tray" class="tray"><div class="slot"></div><div class="slot"></div><div class="slot"></div></div>
         <div class="powers">
-          <button data-power="hammer"><span>🔨</span><b class="count">0</b></button>
-          <button data-power="bomb"><span>💣</span><b class="count">0</b></button>
-          <button data-power="shuffle"><span>🔄</span><b class="count">0</b></button>
+          <button data-power="hammer" aria-label="Hammer"><span>🔨</span><b class="count">0</b></button>
+          <button data-power="bomb" aria-label="Bomb"><span>💣</span><b class="count">0</b></button>
+          <button data-power="shuffle" aria-label="Shuffle"><span>🔄</span><b class="count">0</b></button>
         </div>
       </section>
     </main>
 
     <nav id="nav">
-      <button data-nav="shop"><span>🛍️</span>Shop</button>
-      <button data-nav="boxes"><span>🎁</span>Boxes<i class="dot" id="dot-boxes"></i></button>
       <button data-nav="home" class="active"><span>🐾</span>Play</button>
-      <button data-nav="collection"><span>📖</span>Cats<i class="dot" id="dot-collection"></i></button>
+      <button data-nav="cats"><span>🐱</span>Cats<i class="dot" id="dot-cats"></i></button>
+      <button data-nav="shop"><span>🛍️</span>Shop<i class="dot" id="dot-shop"></i></button>
       <button data-nav="pass"><span>🎟️</span>Pass<i class="dot" id="dot-pass"></i></button>
     </nav>
   </div>

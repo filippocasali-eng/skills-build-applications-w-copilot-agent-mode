@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {
   SIZE, SHAPES, emptyBoard, canPlace, placePiece, scoreMove, dealTray, anyMoveLeft, mulberry32, bomb, hammer,
-  reviveClear, challengeBoard, fullLines, COMBO_GRACE,
+  reviveClear, challengeBoard, fullLines, COMBO_GRACE, traySolvable,
 } from '../js/core.js';
 
 const shape = (id) => SHAPES.find((s) => s.id === id);
@@ -77,4 +77,16 @@ test('challenge board is deterministic and has no full lines', () => {
   assert.deepEqual(a, b);
   const { rows, cols } = fullLines(a);
   assert.equal(rows.length + cols.length, 0);
+});
+
+test('early trays are always fully placeable on an empty-ish board', () => {
+  const rng = mulberry32(99);
+  for (let i = 0; i < 200; i++) {
+    const b = emptyBoard();
+    for (let k = 0; k < 20; k++) b[Math.floor(rng() * 8)][Math.floor(rng() * 8)] = 1;
+    const { rows, cols } = fullLines(b);
+    if (rows.length || cols.length) continue;
+    const tray = dealTray(b, rng, 0);
+    assert.ok(traySolvable(b, tray));
+  }
 });

@@ -1,11 +1,11 @@
 // Static catalog: cats, cosmetics, sets, economy tables.
 
 export const RARITIES = {
-  common: { name: 'Common', color: '#9aa5b1', rate: 55, yarn: 5 },
-  rare: { name: 'Rare', color: '#3b9cff', rate: 30, yarn: 15 },
-  epic: { name: 'Epic', color: '#b05cff', rate: 11, yarn: 40 },
-  legendary: { name: 'Legendary', color: '#ffb000', rate: 3.5, yarn: 120 },
-  mythic: { name: 'Mythic', color: '#ff3d7f', rate: 0.5, yarn: 300 },
+  common: { name: 'Common', color: '#9aa5b1', rate: 55, dup: 100 },
+  rare: { name: 'Rare', color: '#3b9cff', rate: 30, dup: 250 },
+  epic: { name: 'Epic', color: '#b05cff', rate: 11, dup: 600 },
+  legendary: { name: 'Legendary', color: '#ffb000', rate: 3.5, dup: 1500 },
+  mythic: { name: 'Mythic', color: '#ff3d7f', rate: 0.5, dup: 4000 },
 };
 export const RARITY_ORDER = ['common', 'rare', 'epic', 'legendary', 'mythic'];
 
@@ -109,11 +109,8 @@ export const itemKey = (i) => `${i.type}:${i.id}`;
 
 export const DEFAULTS = { cat: 'mochi', skin: 'classic', theme: 'cozy', fx: 'sparkle' };
 
-// Box (gacha) definitions
-export const BOXES = {
-  basic: { id: 'basic', name: 'Cardboard Box', currency: 'coins', price: 1500, rates: { common: 70, rare: 27, epic: 3, legendary: 0, mythic: 0 } },
-  premium: { id: 'premium', name: 'Mystery Litter Box', currency: 'gems', price: 100, price10: 900 },
-};
+// Mystery Box (the only box: simple to understand)
+export const BOX = { name: 'Mystery Box', price: 100, price10: 900 };
 export const PITY_EPIC = 10;
 export const PITY_LEGENDARY = 60;
 
@@ -139,7 +136,8 @@ export const GEM_PACKS = [
   { sku: 'gems_2600', gems: 2600, bonus: 600, price: '$19.99', label: 'Vault', tag: 'Best Value' },
   { sku: 'gems_7000', gems: 7000, bonus: 2000, price: '$49.99', label: 'Cat Castle' },
 ];
-export const STARTER_PACK = { sku: 'starter_pack', price: '$2.99', gems: 500, coins: 5000, cat: 'lucky', skin: 'candy', worth: '$14.99' };
+export const STARTER_PACK = { sku: 'starter_pack', price: '$2.99', gems: 500, coins: 5000, cat: 'lucky', skin: 'candy' };
+export const NO_ADS = { sku: 'no_ads', price: '$2.99', gems: 200 };
 export const PASS_PRICE_GEMS = 950;
 
 export const LOGIN_REWARDS = [
@@ -171,7 +169,7 @@ export const MISSION_POOL = [
   { id: 'combo', text: 'Reach a x{n} combo', stat: 'bestCombo', n: 4, reward: { gems: 15 } },
   { id: 'power', text: 'Use {n} power-ups', stat: 'powers', n: 2, reward: { coins: 300 } },
   { id: 'multi', text: 'Clear 3+ lines at once {n} times', stat: 'multis', n: 2, reward: { gems: 20 } },
-  { id: 'box', text: 'Open {n} box', stat: 'boxes', n: 1, reward: { coins: 500 } },
+  { id: 'perfect', text: 'Clear 10 lines in one game', stat: 'gameLines', n: 10, reward: { coins: 400 } },
 ];
 export const MISSION_XP = 150;
 

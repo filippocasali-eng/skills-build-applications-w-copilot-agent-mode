@@ -172,22 +172,61 @@ export function fillRatio(board) {
   return n / (SIZE * SIZE);
 }
 
-// Deal three pieces. Guarantees at least one fits when possible, and when the
-// board gets crowded it leans toward smaller pieces so runs feel fair.
-export function dealTray(board, rng) {
-  const crowded = fillRatio(board) > 0.55;
-  const pool = crowded
-    ? SHAPES.map((s) => ({ ...s, w: s.cells.length <= 3 ? s.w * 2.5 : s.w }))
-    : SHAPES;
+// Can all pieces of the tray be placed one after another (in some order)?
+// Greedy per order: each piece goes where it clears the most lines.
+export function traySolvable(board, tray) {
+  const pieces = tray.filter(Boolean);
+  const orders = pieces.length === 3
+    ? [[0, 1, 2], [0, 2, 1], [1, 0, 2], [1, 2, 0], [2, 0, 1], [2, 1, 0]]
+    : pieces.length === 2 ? [[0, 1], [1, 0]] : [[0]];
+  for (const order of orders) {
+    const b = cloneBoard(board);
+    let ok = true;
+    for (const i of order) {
+      const sh = pieces[i].shape;
+      let best = null;
+      for (let r = 0; r <= SIZE - sh.rows && ok; r++) {
+        for (let c = 0; c <= SIZE - sh.cols; c++) {
+          if (!canPlace(b, sh, r, c)) continue;
+          const l = linesCompletedBy(b, sh, r, c);
+          const n = l.rows.length + l.cols.length;
+          if (!best || n > best.n) best = { r, c, n };
+        }
+      }
+      if (!best) { ok = false; break; }
+      placePiece(b, sh, best.r, best.c, 1);
+    }
+    if (ok) return true;
+  }
+  return false;
+}
+
+// Deal three pieces. Fairness rules (the #1 complaint about this genre is
+// "impossible pieces"): the tray is always fully placeable when the board
+// allows it, early game leans to friendly shapes, crowded boards get smaller ones.
+export function dealTray(board, rng, score = 0) {
+  const fill = fillRatio(board);
+  const crowded = fill > 0.5;
+  const early = score < 600;
+  const pool = SHAPES.map((s) => {
+    let w = s.w;
+    if (crowded && s.cells.length <= 3) w *= 2.5;
+    if (early && s.cells.length >= 6) w *= 0.4;
+    return { ...s, w };
+  });
+  // Late game gets a little spicier so runs end and "one more game" kicks in.
+  const strict = score < 2500 || rng() < 0.8;
   let best = null;
-  for (let attempt = 0; attempt < 30; attempt++) {
+  for (let attempt = 0; attempt < 40; attempt++) {
     const tray = [0, 1, 2].map(() => {
       const s = pickWeighted(rng, pool);
       return { shape: SHAPES.find((x) => x.id === s.id), color: 1 + Math.floor(rng() * COLORS) };
     });
     const fitCount = tray.filter((t) => fitsAnywhere(board, t.shape)).length;
-    if (!best || fitCount > best.fitCount) best = { tray, fitCount };
-    if (fitCount >= (crowded ? 2 : 1)) return tray;
+    const solvable = fitCount === 3 && traySolvable(board, tray);
+    const rank = fitCount + (solvable ? 10 : 0);
+    if (!best || rank > best.rank) best = { tray, rank };
+    if (solvable || (!strict && fitCount >= 1)) return tray;
   }
   return best.tray;
 }
