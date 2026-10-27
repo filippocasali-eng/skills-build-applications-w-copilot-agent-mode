@@ -366,3 +366,12 @@ table.odds td, table.odds th { padding: 7px; text-align: center; border-bottom: 
   .hero-cat { width: 160px; }
   .logo { font-size: 40px; }
 }
+
+/* ---------- kittens & Catnip Frenzy (signature mechanic) ---------- */
+.meter { display: flex; gap: 2px; align-items: center; background: rgba(255,255,255,.3); border-radius: 99px; padding: 2px 8px; font-size: 13px; }
+.meter i { font-style: normal; opacity: .25; filter: grayscale(1); transition: all .3s; }
+.meter i.on { opacity: 1; filter: none; transform: scale(1.15); }
+.meter.frenzy { background: linear-gradient(90deg, #22c55e, #84cc16); color: #fff; animation: pulse .6s infinite; }
+.meter.frenzy span { font-size: 11px; opacity: .9; }
+.board-wrap.frenzy { box-shadow: 0 0 0 4px #84cc16, 0 0 34px #22c55e, 0 12px 30px rgba(0,0,0,.22); animation: frenzyGlow 1s ease-in-out infinite; }
+@keyframes frenzyGlow { 50% { box-shadow: 0 0 0 4px #fde047, 0 0 44px #84cc16, 0 12px 30px rgba(0,0,0,.22); } }

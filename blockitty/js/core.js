@@ -3,6 +3,13 @@
 export const SIZE = 8;
 export const COLORS = 7;
 
+// Signature mechanic: some blocks carry a trapped kitten. Board values keep the
+// color in the low bits and CAT_FLAG marks a kitten cell.
+export const CAT_FLAG = 16;
+export const colorOf = (v) => v & 15;
+export const isCat = (v) => (v & CAT_FLAG) !== 0;
+export const CAT_CHANCE = 0.22;
+
 export function mulberry32(seed) {
   let a = seed >>> 0;
   return function () {
@@ -117,8 +124,8 @@ export function fullLines(board) {
 export const LINE_POINTS = [0, 10, 30, 60, 100, 150, 210, 280, 360, 450, 550, 660, 780, 910, 1050, 1200, 1360];
 
 // Mutates board. Returns details of the move for scoring/effects.
-export function placePiece(board, shape, r, c, color) {
-  for (const [dr, dc] of shape.cells) board[r + dr][c + dc] = color;
+export function placePiece(board, shape, r, c, color, catCell = -1) {
+  shape.cells.forEach(([dr, dc], k) => { board[r + dr][c + dc] = k === catCell ? color | CAT_FLAG : color; });
   const { rows, cols } = fullLines(board);
   const cleared = [];
   const seen = new Set();
@@ -133,7 +140,8 @@ export function placePiece(board, shape, r, c, color) {
   for (const cell of cleared) board[cell.r][cell.c] = 0;
   const lines = rows.length + cols.length;
   const perfect = lines > 0 && board.every((row) => row.every((v) => !v));
-  return { rows, cols, lines, cleared, perfect, placed: shape.cells.length };
+  const cats = cleared.filter((x) => isCat(x.color)).length;
+  return { rows, cols, lines, cleared, perfect, cats, placed: shape.cells.length };
 }
 
 // Combo logic: combo grows with every clearing move, survives up to
@@ -149,6 +157,7 @@ export function scoreMove(move, comboState) {
     const base = LINE_POINTS[Math.min(move.lines, LINE_POINTS.length - 1)];
     points += base * next.combo;
     if (move.perfect) points += 300 * next.combo;
+    points += (move.cats || 0) * 25 * next.combo;
   } else {
     next.miss = comboState.miss + 1;
     if (next.miss >= COMBO_GRACE) next.combo = 0;
@@ -226,9 +235,17 @@ export function dealTray(board, rng, score = 0) {
     const solvable = fitCount === 3 && traySolvable(board, tray);
     const rank = fitCount + (solvable ? 10 : 0);
     if (!best || rank > best.rank) best = { tray, rank };
-    if (solvable || (!strict && fitCount >= 1)) return tray;
+    if (solvable || (!strict && fitCount >= 1)) return addKitten(tray, rng);
   }
-  return best.tray;
+  return addKitten(best.tray, rng);
+}
+
+function addKitten(tray, rng) {
+  if (rng() < CAT_CHANCE) {
+    const t = tray[Math.floor(rng() * tray.length)];
+    t.catCell = Math.floor(rng() * t.shape.cells.length);
+  }
+  return tray;
 }
 
 export function anyMoveLeft(board, tray) {
@@ -284,6 +301,7 @@ export function challengeBoard(rng) {
     board[r][c] = 1 + Math.floor(rng() * COLORS);
     const { rows, cols } = fullLines(board);
     if (rows.length || cols.length) { board[r][c] = 0; continue; }
+    if (placed < 3) board[r][c] |= CAT_FLAG; // a few kittens to rescue
     placed++;
   }
   return board;

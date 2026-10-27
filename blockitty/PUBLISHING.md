@@ -7,6 +7,9 @@ Tempo stimato: 1–2 ore di lavoro tuo, più i tempi di revisione di Google (di 
 - Build automatica su GitHub Actions: APK di test sempre. **AAB firmato** quando configuri la chiave (passo 2).
 - Grafiche dello store in `store/`, testi in `store/listing.md`, privacy policy in `privacy.html`.
 
+## 0b. Proteggi il progetto (prima di tutto)
+Rendi **privato** il repository GitHub (Settings › General › Change visibility › Private). I dettagli sono nella sezione "Protezione contro le copie" del README.
+
 ## 1. Account
 1. Crea l'account sviluppatore: https://play.google.com/console ($25 una tantum, verifica identità).
 2. **Account personali nuovi**: Google richiede un *closed test* con almeno **12 tester per 14 giorni** prima della produzione. Usa amici e parenti: è anche il primo test di viralità.

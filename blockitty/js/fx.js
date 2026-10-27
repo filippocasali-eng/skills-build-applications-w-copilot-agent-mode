@@ -58,7 +58,7 @@ export function burst(cells, fxId, palette) {
           : fxId === 'stars' ? ['#ffe14d', '#fff6b0', '#ffb000'][i % 3]
             : fxId === 'bubbles' ? 'rgba(180,230,255,.8)'
               : fxId === 'fish' ? ['#7ad3ff', '#ffb36b', '#a98bff'][i % 3]
-                : palette[(cell.color - 1 + i) % palette.length];
+                : palette[((cell.color & 15) - 1 + i) % palette.length];
       parts.push({
         x: cell.x, y: cell.y,
         vx: Math.cos(a) * sp, vy: Math.sin(a) * sp - (fxId === 'bubbles' ? 3 : 2),

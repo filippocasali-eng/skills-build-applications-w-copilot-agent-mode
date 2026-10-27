@@ -25,7 +25,7 @@ export function freshState() {
     seen: DEFAULT_KEYS.slice(),
     equip: { ...DEFAULTS },
     power: { hammer: 2, bomb: 1, shuffle: 2 },
-    stats: { games: 0, lines: 0, pieces: 0, bestCombo: 0, perfects: 0, boxes: 0, shares: 0 },
+    stats: { games: 0, lines: 0, pieces: 0, bestCombo: 0, perfects: 0, boxes: 0, shares: 0, rescued: 0 },
     daily: null,
     loginDay: 0,
     streak: { count: 0, last: '' },
@@ -446,7 +446,7 @@ export function grantAdSpin() {
 }
 
 // ---------- end of game bookkeeping ----------
-export function finishGame({ mode, score, lines, pieces, bestCombo, powers, multis, perfects }) {
+export function finishGame({ mode, score, lines, pieces, bestCombo, powers, multis, perfects, rescued = 0 }) {
   const prevBest = S.best[mode] || 0;
   const newBest = score > prevBest && score > 0;
   if (newBest) S.best[mode] = score;
@@ -454,6 +454,8 @@ export function finishGame({ mode, score, lines, pieces, bestCombo, powers, mult
   S.stats.lines += lines;
   S.stats.pieces += pieces;
   S.stats.perfects += perfects;
+  S.stats.rescued += rescued;
+  bumpMission('rescued', rescued);
   S.stats.bestCombo = Math.max(S.stats.bestCombo, bestCombo);
   bumpMission('games', 1);
   bumpMission('lines', lines);
@@ -464,7 +466,7 @@ export function finishGame({ mode, score, lines, pieces, bestCombo, powers, mult
   bumpMission('multis', multis);
   bumpMission('gameLines', lines, 'max');
   const streakUp = touchStreak();
-  const coins = Math.floor(score / 12) + lines * 3 + 10;
+  const coins = Math.floor(score / 12) + lines * 3 + rescued * 10 + 10;
   const xp = Math.min(500, Math.floor(score / 8) + lines * 2 + 20);
   S.coins += coins;
   const ups = addXp(xp);

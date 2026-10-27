@@ -1,0 +1,19 @@
+Blockitty — Proprietary License
+
+Copyright (c) 2026 Filippo Casali. All rights reserved.
+
+This directory ("blockitty/") and everything in it — source code, game design,
+the "trapped kittens" / "Catnip Frenzy" mechanic, characters, names (including
+"Blockitty" and "Paw Pass"), artwork, music, sound design, text and build
+outputs — are proprietary and confidential.
+
+No license is granted. You may not copy, modify, distribute, sublicense, sell,
+publish, decompile, re-host or create derivative works of any part of this
+software or its assets without prior written permission from the copyright holder.
+
+This notice overrides any other license file located elsewhere in this
+repository with respect to the contents of this directory.
+
+Third-party components keep their own licenses:
+- Fredoka font: SIL Open Font License 1.1 (fonts/OFL-LICENSE.txt)
+- npm build/runtime dependencies: their respective licenses

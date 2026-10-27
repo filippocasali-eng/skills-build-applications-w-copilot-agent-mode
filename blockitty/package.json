@@ -14,16 +14,20 @@
     "android:release": "cd android && ./gradlew bundleRelease assembleRelease"
   },
   "devDependencies": {
+    "@capacitor-community/admob": "^8.2.1",
     "@capacitor/android": "^8.5.3",
+    "@capacitor/app": "^8.1.2",
     "@capacitor/cli": "^8.5.3",
     "@capacitor/core": "^8.5.3",
-    "@capacitor/app": "^8.1.2",
+    "@capacitor/filesystem": "^8.1.5",
     "@capacitor/haptics": "^8.0.2",
     "@capacitor/local-notifications": "^8.3.1",
     "@capacitor/share": "^8.0.3",
-    "@capacitor/filesystem": "^8.1.5",
-    "@capacitor-community/admob": "^8.2.1",
+    "@fontsource/fredoka": "^5.3.0",
     "cordova-plugin-purchase": "^13.20.0",
-    "@fontsource/fredoka": "^5.3.0"
-  }
+    "esbuild": "^0.28.2",
+    "javascript-obfuscator": "^5.9.0"
+  },
+  "license": "UNLICENSED",
+  "author": "Filippo Casali"
 }

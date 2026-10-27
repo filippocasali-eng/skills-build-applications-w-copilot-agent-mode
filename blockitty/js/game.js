@@ -11,6 +11,9 @@ import { burst, floatText } from './fx.js';
 import { S, save, equipped, dayKey } from './state.js';
 import { CHALLENGE_TARGET } from './data.js';
 
+const FRENZY_AT = 5; // kittens to rescue to trigger Catnip Frenzy
+const FRENZY_MOVES = 3; // placements with x3 points
+
 const RUN_KEY = 'blockitty-run-v2';
 const $ = (id) => document.getElementById(id);
 
@@ -48,7 +51,7 @@ function persist() {
   if (!G) return;
   try {
     const { rng, ...rest } = G;
-    localStorage.setItem(RUN_KEY, JSON.stringify({ ...rest, tray: G.tray.map((t) => (t ? { id: t.shape.id, color: t.color } : null)) }));
+    localStorage.setItem(RUN_KEY, JSON.stringify({ ...rest, tray: G.tray.map((t) => (t ? { id: t.shape.id, color: t.color, catCell: t.catCell } : null)) }));
   } catch { /* ignore */ }
 }
 
@@ -63,7 +66,7 @@ export function start(opts = {}) {
     try { restored = JSON.parse(localStorage.getItem(RUN_KEY)); } catch { restored = null; }
   }
   if (restored) {
-    G = { ...restored, tray: restored.tray.map((t) => (t ? { shape: SHAPES.find((s) => s.id === t.id), color: t.color } : null)) };
+    G = { meter: 0, frenzy: 0, rescued: 0, ...restored, tray: restored.tray.map((t) => (t ? { shape: SHAPES.find((s) => s.id === t.id), color: t.color, catCell: t.catCell } : null)) };
     G.rng = mulberry32((G.seed + G.pieces * 7919) >>> 0);
   } else {
     const mode = opts.mode || 'classic';
@@ -81,6 +84,7 @@ export function start(opts = {}) {
       comboState: { combo: 0, miss: 0 },
       bestCombo: 0,
       lines: 0, pieces: 0, powers: 0, multis: 0, perfects: 0,
+      rescued: 0, meter: 0, frenzy: 0,
       revived: false,
       targetHit: false,
       bestAnnounced: false,
@@ -153,11 +157,11 @@ function draw() {
       if (ctx.roundRect) ctx.roundRect(x + 2, y + 2, cell - 4, cell - 4, cell * 0.16); else ctx.rect(x + 2, y + 2, cell - 4, cell - 4);
       ctx.fill();
       const v = G.board[r][col];
-      if (v) drawCell(ctx, x, y, cell, willClear.has(r * SIZE + col) ? ghost.color : v, sk);
+      if (v) drawCell(ctx, x, y, cell, willClear.has(r * SIZE + col) ? ghost.color | (v & 16) : v, sk);
     }
   }
   if (ghost) {
-    for (const [dr, dc] of ghost.shape.cells) drawCell(ctx, (ghost.c + dc) * cell, (ghost.r + dr) * cell, cell, ghost.color, sk, 0.45);
+    ghost.shape.cells.forEach(([dr, dc], k) => drawCell(ctx, (ghost.c + dc) * cell, (ghost.r + dr) * cell, cell, k === ghost.catCell ? ghost.color | 16 : ghost.color, sk, 0.45));
     if (willClear.size) {
       ctx.save();
       ctx.globalCompositeOperation = 'lighter';
@@ -200,7 +204,7 @@ function pieceCanvas(piece, size, alpha = 1) {
   c.style.width = `${w}px`; c.style.height = `${h}px`;
   const ctx = c.getContext('2d');
   ctx.scale(dpr, dpr);
-  for (const [r, col] of piece.shape.cells) drawCell(ctx, col * size, r * size, size, piece.color, skin(), alpha);
+  piece.shape.cells.forEach(([r, col], k) => drawCell(ctx, col * size, r * size, size, k === piece.catCell ? piece.color | 16 : piece.color, skin(), alpha));
   return c;
 }
 
@@ -265,6 +269,12 @@ function updateHud(instant = false) {
     goal.querySelector('.txt').textContent = G.targetHit ? (G.mode === 'duel' ? `You beat ${G.rival}! 🎉` : 'Goal complete! 🎉') : `${who} ${G.score.toLocaleString('en-US')} / ${G.target.toLocaleString('en-US')}`;
   } else goal.hidden = true;
   $('screen-game').classList.toggle('danger', fillRatio(G.board) > 0.66);
+  const m = $('meter');
+  m.innerHTML = G.frenzy > 0
+    ? `<b>CATNIP FRENZY ×3</b> <span>${G.frenzy} left</span>`
+    : `${Array.from({ length: FRENZY_AT }, (_, i) => `<i class="${i < G.meter ? 'on' : ''}">🐾</i>`).join('')}`;
+  m.classList.toggle('frenzy', G.frenzy > 0);
+  document.querySelector('.board-wrap').classList.toggle('frenzy', G.frenzy > 0);
 }
 
 export function setMood(mood, ms = 1400) {
@@ -317,7 +327,7 @@ function positionDrag(x, y) {
   const r = Math.round((top - rect.top) / cell);
   if (canPlace(G.board, drag.piece.shape, r, c)) {
     if (!ghost || ghost.r !== r || ghost.c !== c) {
-      ghost = { shape: drag.piece.shape, color: drag.piece.color, r, c, lines: linesCompletedBy(G.board, drag.piece.shape, r, c) };
+      ghost = { shape: drag.piece.shape, color: drag.piece.color, catCell: drag.piece.catCell, r, c, lines: linesCompletedBy(G.board, drag.piece.shape, r, c) };
       draw();
     }
   } else if (ghost) {
@@ -357,14 +367,20 @@ const CHEERS = ['Meow-velous!', 'Paw-some!', 'So good! 😻', 'Clawsome!', 'Yess
 
 function commit(idx, r, c) {
   const piece = G.tray[idx];
-  const move = placePiece(G.board, piece.shape, r, c, piece.color);
+  const move = placePiece(G.board, piece.shape, r, c, piece.color, piece.catCell ?? -1);
   G.tray[idx] = null;
   G.pieces += 1;
-  const { points, combo } = scoreMove(move, G.comboState);
+  const scored = scoreMove(move, G.comboState);
+  const combo = scored.combo;
+  let points = scored.points;
+  const inFrenzy = G.frenzy > 0;
+  if (inFrenzy) { points *= 3; G.frenzy -= 1; }
   G.comboState = combo;
   G.score += points;
+  if (move.cats) rescue(move.cats);
+  else if (inFrenzy && !G.frenzy) endFrenzyFx();
   G.bestCombo = Math.max(G.bestCombo, combo.combo);
-  setIntensity(combo.combo >= 4 ? 3 : combo.combo >= 2 ? 2 : combo.combo >= 1 ? 1 : 0);
+  setIntensity(G.frenzy > 0 || combo.combo >= 4 ? 3 : combo.combo >= 2 ? 2 : combo.combo >= 1 ? 1 : 0);
   if (!S.tutorialDone) { S.tutorialDone = true; save(); $('tutorial').hidden = true; }
 
   if (move.lines) {
@@ -412,13 +428,41 @@ function commit(idx, r, c) {
   }
 
   let dealt = false;
-  if (G.tray.every((t) => !t)) { G.tray = dealTray(G.board, G.rng, G.score); dealt = true; }
+  if (G.tray.every((t) => !t)) { G.tray = dealTray(G.board, G.rng, G.score); dealt = true; kittenHint(); }
   draw();
   drawTray();
   if (dealt) dealAnim();
   updateHud();
   persist();
   checkStuck();
+}
+
+function rescue(n) {
+  G.rescued += n;
+  G.meter += n;
+  sound.meow();
+  const b = $('board').getBoundingClientRect();
+  setTimeout(() => floatText(n > 1 ? `${n} kittens saved! 🐱` : 'Kitten saved! 🐱', b.left + b.width / 2, b.top + b.height * 0.62, 'praise'), 250);
+  if (G.meter >= FRENZY_AT && G.frenzy === 0) {
+    G.meter = 0;
+    G.frenzy = FRENZY_MOVES;
+    setTimeout(() => {
+      floatText('CATNIP FRENZY! ×3', b.left + b.width / 2, b.top + b.height * 0.35, 'big');
+      sound.perfect();
+      setMood('wow', 2500);
+      say('Catnip time!! 🌿😻');
+    }, 500);
+  } else {
+    setMood('love');
+  }
+}
+
+function endFrenzyFx() { say('Frenzy over. Save more kittens! 🐾'); }
+
+function kittenHint() {
+  if (S.stats.rescued || G.hinted || !G.tray.some((t) => t && t.catCell != null)) return;
+  G.hinted = true;
+  say('A kitten is trapped! Clear its line to save it 🐱');
 }
 
 function checkStuck() {
@@ -491,6 +535,8 @@ function onBoardTap(e) {
   S.power[target] -= 1;
   G.powers += 1;
   save();
+  const freed = out.filter((x) => x.color & 16).length;
+  if (freed) rescue(freed);
   const now = performance.now();
   clearing.push(...out.map((x) => ({ ...x, t: now })));
   burst(out.map((x) => ({ ...cellCenter(x.r, x.c), color: x.color })), target === 'bomb' ? 'stars' : equipped('fx').id, skin().palette);

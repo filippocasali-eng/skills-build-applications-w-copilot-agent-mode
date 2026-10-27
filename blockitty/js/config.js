@@ -8,6 +8,8 @@ export const VERSION = '2.0.0';
 // Public web version (GitHub Pages). Friend-challenge links open here so anyone
 // can play instantly, even without the app installed.
 export const WEB_URL = 'https://filippocasali-eng.github.io/skills-build-applications-w-copilot-agent-mode/';
+// Domains allowed to run the web version (anti-clone guard). Add your own domain here.
+export const WEB_HOSTS = ['filippocasali-eng.github.io', 'localhost', '127.0.0.1'];
 export const PLAY_URL = `https://play.google.com/store/apps/details?id=${APP_ID}`;
 export const SUPPORT_EMAIL = 'filippocasali@gmail.com';
 

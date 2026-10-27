@@ -37,7 +37,36 @@ function fish(ctx, cx, cy, s, color) {
 // Deterministic sparkle positions for galaxy cells
 const STAR_SPOTS = [[0.2, 0.25], [0.7, 0.2], [0.5, 0.55], [0.25, 0.75], [0.8, 0.7]];
 
-export function drawCell(ctx, x, y, s, colorIdx, skin, alpha = 1) {
+// Trapped kitten peeking out of a block (signature mechanic).
+function kitten(ctx, X, Y, S) {
+  const cx = X + S / 2, cy = Y + S * 0.56, r = S * 0.27;
+  ctx.fillStyle = 'rgba(255,255,255,.92)';
+  ctx.beginPath();
+  ctx.moveTo(cx - r * 0.95, cy - r * 0.2); ctx.lineTo(cx - r * 0.75, cy - r * 1.25); ctx.lineTo(cx - r * 0.15, cy - r * 0.85);
+  ctx.lineTo(cx + r * 0.15, cy - r * 0.85); ctx.lineTo(cx + r * 0.75, cy - r * 1.25); ctx.lineTo(cx + r * 0.95, cy - r * 0.2);
+  ctx.closePath(); ctx.fill();
+  ctx.beginPath(); ctx.ellipse(cx, cy, r * 1.05, r * 0.9, 0, 0, Math.PI * 2); ctx.fill();
+  ctx.fillStyle = '#2b1630';
+  ctx.beginPath(); ctx.ellipse(cx - r * 0.42, cy - r * 0.05, r * 0.14, r * 0.2, 0, 0, Math.PI * 2); ctx.fill();
+  ctx.beginPath(); ctx.ellipse(cx + r * 0.42, cy - r * 0.05, r * 0.14, r * 0.2, 0, 0, Math.PI * 2); ctx.fill();
+  ctx.fillStyle = '#ff6b8a';
+  ctx.beginPath(); ctx.moveTo(cx - r * 0.12, cy + r * 0.22); ctx.lineTo(cx + r * 0.12, cy + r * 0.22); ctx.lineTo(cx, cy + r * 0.36); ctx.closePath(); ctx.fill();
+  ctx.fillStyle = 'rgba(255,122,168,.45)';
+  ctx.beginPath(); ctx.arc(cx - r * 0.68, cy + r * 0.3, r * 0.16, 0, Math.PI * 2); ctx.fill();
+  ctx.beginPath(); ctx.arc(cx + r * 0.68, cy + r * 0.3, r * 0.16, 0, Math.PI * 2); ctx.fill();
+}
+
+export function drawCell(ctx, x, y, s, value, skin, alpha = 1) {
+  drawBlock(ctx, x, y, s, value & 15, skin, alpha);
+  if (value & 16) {
+    ctx.save();
+    ctx.globalAlpha = alpha;
+    kitten(ctx, x + s * 0.04, y + s * 0.04, s * 0.92);
+    ctx.restore();
+  }
+}
+
+function drawBlock(ctx, x, y, s, colorIdx, skin, alpha) {
   const base = skin.palette[(colorIdx - 1) % skin.palette.length];
   const pad = s * 0.04;
   const X = x + pad, Y = y + pad, S = s - pad * 2;

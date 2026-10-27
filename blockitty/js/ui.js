@@ -536,12 +536,12 @@ function settingsModal() {
     ${isNative() ? `<label class="toggle"><span>🔔 Reminders</span><input type="checkbox" data-s="notif" ${S.settings.notif ? 'checked' : ''}></label>` : ''}
     <div class="stats">
       <div>Games<b>${fmt(S.stats.games)}</b></div><div>Lines<b>${fmt(S.stats.lines)}</b></div>
-      <div>Best combo<b>x${S.stats.bestCombo}</b></div><div>Purrfect clears<b>${S.stats.perfects}</b></div>
+      <div>Best combo<b>x${S.stats.bestCombo}</b></div><div>Kittens saved<b>${fmt(S.stats.rescued || 0)}</b></div>
     </div>
     ${isNative() ? '<button class="big-btn small gray" data-restore>Restore purchases</button>' : ''}
     <div class="links"><a href="privacy.html" target="_blank" rel="noopener">Privacy Policy</a> · <a href="mailto:${SUPPORT_EMAIL}?subject=Blockitty%20feedback">Contact</a></div>
     <button class="link danger" data-reset>Reset progress</button>
-    <p class="fine">Blockitty v${VERSION} · ${isDemo() ? 'Demo store' : 'Google Play'}</p>`);
+    <p class="fine">Blockitty v${VERSION} · ${isDemo() ? 'Demo store' : 'Google Play'}<br>© 2026 Filippo Casali. All rights reserved.</p>`);
   m.querySelectorAll('[data-s]').forEach((c) => c.addEventListener('change', () => {
     S.settings[c.dataset.s] = c.checked; save();
     setAudio(S.settings);
@@ -589,7 +589,8 @@ async function shareRun(run) {
   const name = await askName();
   const url = challengeLink({ seed: run.seed, score: run.score, name });
   const canvas = await scoreCard({ score: run.score, best: S.best.classic, look: equipped('cat').look, headline: `${name} scored`, sub: 'Same pieces. Your turn!' });
-  const res = await shareContent({ text: `I scored ${fmt(run.score)} in Blockitty 🐱 Same pieces, can you beat me?`, url, canvas });
+  const saved = run.rescued ? ` and saved ${run.rescued} kitten${run.rescued > 1 ? 's' : ''}` : '';
+  const res = await shareContent({ text: `I scored ${fmt(run.score)}${saved} in Blockitty 🐱 Same pieces, can you beat me?`, url, canvas });
   afterShare(res);
 }
 
@@ -700,7 +701,7 @@ function countUp(el, to, ms = 900) {
 
 function finishRun(run, showResults) {
   if (!run) return;
-  const res = finishGame({ mode: run.mode, score: run.score, lines: run.lines, pieces: run.pieces, bestCombo: run.bestCombo, powers: run.powers, multis: run.multis, perfects: run.perfects });
+  const res = finishGame({ mode: run.mode, score: run.score, lines: run.lines, pieces: run.pieces, bestCombo: run.bestCombo, powers: run.powers, multis: run.multis, perfects: run.perfects, rescued: run.rescued || 0 });
   refreshTop();
   if (!showResults) return;
   playMusic('menu');
@@ -715,7 +716,7 @@ function finishRun(run, showResults) {
     <div class="final-score" id="final-score">0</div>
     ${!res.newBest && !duel && res.prevBest ? `<div class="muted">Best ${fmt(res.prevBest)} · ${fmt(Math.max(0, res.prevBest - run.score + 1))} to go</div>` : ''}
     ${duel ? `<div class="muted">${run.rival}: ${fmt(run.target)}</div>` : ''}
-    <div class="earned"><span>+🪙 <b id="earned-coins">${fmt(res.coins)}</b></span><span>+⭐ ${res.xp} XP</span>${res.streakUp ? `<span>🔥 ${res.streak} day streak</span>` : ''}</div>
+    <div class="earned"><span>+🪙 <b id="earned-coins">${fmt(res.coins)}</b></span><span>+⭐ ${res.xp} XP</span>${run.rescued ? `<span>🐱 ${run.rescued} saved</span>` : ''}${res.streakUp ? `<span>🔥 ${res.streak} day streak</span>` : ''}</div>
     ${res.ups.map((u) => `<div class="lvlup">LEVEL ${u.level}! ${rewardText(u.reward)}</div>`).join('')}
     <button class="big-btn small purple" data-double>▶ Double coins</button>
     <button class="big-btn play" data-again>▶ Play again</button>

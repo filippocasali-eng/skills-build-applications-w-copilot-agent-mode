@@ -90,3 +90,24 @@ test('early trays are always fully placeable on an empty-ish board', () => {
     assert.ok(traySolvable(b, tray));
   }
 });
+
+test('kittens: flagged cells keep their color and count when cleared', async () => {
+  const { CAT_FLAG, colorOf, isCat } = await import('../js/core.js');
+  const b = emptyBoard();
+  for (let c = 1; c < SIZE; c++) b[0][c] = 2 | (c === 3 ? CAT_FLAG : 0);
+  const move = placePiece(b, shape('dot'), 0, 0, 5, 0);
+  assert.equal(move.lines, 1);
+  assert.equal(move.cats, 2); // the placed dot carried a kitten + one on the board
+  assert.equal(colorOf(2 | CAT_FLAG), 2);
+  assert.ok(isCat(5 | CAT_FLAG) && !isCat(5));
+  const st = { combo: 0, miss: 0 };
+  const plain = scoreMove({ ...move, cats: 0 }, st).points;
+  assert.equal(scoreMove(move, st).points - plain, 2 * 25);
+});
+
+test('kittens appear in roughly a fifth of trays', () => {
+  const rng = mulberry32(5);
+  let n = 0;
+  for (let i = 0; i < 2000; i++) if (dealTray(emptyBoard(), rng, 0).some((t) => t.catCell != null)) n++;
+  assert.ok(n > 300 && n < 600, String(n));
+});

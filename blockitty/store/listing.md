@@ -1,7 +1,7 @@
 # Google Play listing: Blockitty
 
 **App name (30):** Blockitty: Cat Block Puzzle
-**Short description (80):** Drag, drop & blast blocks with adorable cats. Relaxing, free & works offline!
+**Short description (80):** Blast blocks, save trapped kittens & trigger Catnip Frenzy! Cute, free, offline.
 **Category:** Games › Puzzle · **Tags:** Block puzzle, Casual, Relaxing, Offline, Cute
 **Package:** com.blockitty.game · **Contact email:** filippocasali@gmail.com
 **Privacy policy URL:** https://filippocasali-eng.github.io/skills-build-applications-w-copilot-agent-mode/privacy.html
@@ -11,6 +11,9 @@
 Meet **Blockitty**, the cutest block puzzle on your phone! 🐱🧱
 
 Drag colorful blocks onto the 8×8 board, fill rows and columns, and watch them BLAST. Chain clears for huge combos while your cat buddy cheers you on. Easy to learn, impossible to put down.
+
+**SAVE THE KITTENS!** 🐱
+Some blocks hide a trapped kitten. Clear its row or column to set it free, fill your paw meter and unleash **Catnip Frenzy**, where every move scores ×3!
 
 **WHY YOU'LL LOVE IT**
 😺 **Fair & relaxing**: no timers, no lives. Every set of pieces is designed to be playable, so you're never stuck with impossible shapes.

@@ -110,7 +110,8 @@ function serve() {
     const g = (await import('./js/game.js')).current();
     const rows = ['12345670', '23450671', '00000000', '30004000', '45106210', '56702340', '67123450', '71234560'];
     rows.forEach((row, r) => [...row].forEach((v, c) => { g.board[r][c] = Number(v); }));
-    g.score = 8640; g.comboState = { combo: 4, miss: 0 };
+    g.score = 8640; g.comboState = { combo: 4, miss: 0 }; g.meter = 4;
+    g.board[0][2] |= 16; g.board[4][5] |= 16; g.board[6][1] |= 16; g.tray[1].catCell = 0;
     (await import('./js/game.js')).refresh();
   });
   await p.waitForTimeout(400);
@@ -130,7 +131,7 @@ function serve() {
 
   const captions = [
     ['Collect adorable cats', 'Over 30 cats to unlock & dress up'],
-    ['Blast satisfying combos', 'Fill rows & columns. Chain combos!'],
+    ['Save trapped kittens', 'Clear their line, trigger Catnip Frenzy ×3!'],
     ['Build your collection', 'Cats, block skins, themes & effects'],
     ['Open Mystery Boxes', 'Epic, Legendary & Mythic drops'],
     ['Earn Paw Pass rewards', 'Free & premium seasonal rewards'],

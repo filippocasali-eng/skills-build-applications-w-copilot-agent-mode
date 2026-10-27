@@ -170,6 +170,7 @@ export const MISSION_POOL = [
   { id: 'power', text: 'Use {n} power-ups', stat: 'powers', n: 2, reward: { coins: 300 } },
   { id: 'multi', text: 'Clear 3+ lines at once {n} times', stat: 'multis', n: 2, reward: { gems: 20 } },
   { id: 'perfect', text: 'Clear 10 lines in one game', stat: 'gameLines', n: 10, reward: { coins: 400 } },
+  { id: 'rescue', text: 'Save {n} trapped kittens', stat: 'rescued', n: 6, reward: { gems: 15 } },
 ];
 export const MISSION_XP = 150;
 

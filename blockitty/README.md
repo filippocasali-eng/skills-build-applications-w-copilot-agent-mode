@@ -12,6 +12,7 @@ Block puzzle 8×8 con gatti da collezionare. È pensato per il trend n.1 per dow
 
 | Area | Scelta | Perché |
 |---|---|---|
+| **Meccanica firma** | **Gattini intrappolati** nei blocchi: completando la loro linea li salvi; 5 salvataggi attivano la **Catnip Frenzy** (3 mosse a punti ×3). Gattini anche nella Daily Challenge e una missione dedicata | Un gioco riconoscibile e diverso dai cloni di Block Blast |
 | Primo avvio | Si entra **subito in partita** con il tutorial, i menu compaiono dopo la prima partita | Ogni schermata prima del gameplay perde utenti |
 | Equità | Ogni tris di pezzi è **sempre piazzabile** (verificato dall'algoritmo); inizio più facile, fine partita più impegnativa | "Pezzi impossibili" è la lamentela n.1 nelle recensioni di Block Blast |
 | Pubblicità | **Rewarded opzionali** (revive, monete x2, box e spin extra); interstitial solo dalla 4ª partita, al massimo 1 ogni 3 partite e ogni 3 minuti, **mai durante il gioco**; prodotto "No Ads" | Gli annunci aggressivi sono la lamentela n.1 anche per Meowdoku |
@@ -22,6 +23,15 @@ Block puzzle 8×8 con gatti da collezionare. È pensato per il trend n.1 per dow
 | Audio | **Colonna sonora originale** generata in tempo reale (menu lo-fi e gioco pop che si intensifica con le combo), meow e SFX sintetizzati | Zero copyright, zero file audio, funziona offline |
 | Qualità | Font Fredoka (OFL), rendering fino a 3x, scossa e flash sulle linee, punteggio animato, vignetta di pericolo, haptics nativi | Sensazione "premium" |
 
+## Protezione contro le copie
+- **Codice offuscato**: la build di produzione (APK, AAB e sito web) contiene un solo `app.js`, unito, minificato e offuscato con stringhe cifrate, flusso di controllo rimescolato e self-defending. Il sorgente leggibile non viene mai distribuito.
+- **Anti-clone**: il gioco parte solo con il package ufficiale `com.blockitty.game` o sui domini autorizzati (`WEB_HOSTS` in `js/config.js`). Altrove mostra "Unofficial copy" e il link al Play Store.
+- **Licenza proprietaria** in [`LICENSE`](LICENSE) (tutti i diritti riservati) e copyright visibile nel gioco.
+- ⚠️ **Da fare tu**: rendi il repository **privato** (Settings › General › Danger Zone › Change visibility). Finché è pubblico, chiunque vede il sorgente in chiaro. Note:
+  - con il repo privato GitHub Pages richiede GitHub Pro: in alternativa pubblica la cartella `www/` su Cloudflare Pages o Netlify (gratis) e aggiungi il dominio a `WEB_HOSTS`;
+  - i link di download delle release richiederanno il login: per i tester usa il canale di test di Play Console.
+- Consigliati: registra il marchio "Blockitty" (EUIPO/USPTO) e attiva la **Play Integrity API** quando aggiungerai un server (classifiche online).
+
 ## Copyright e licenze
 - **Grafica**: gatti, blocchi, icone e banner sono generati dal codice di questo progetto.
 - **Musica e suoni**: composizioni originali sintetizzate con WebAudio, senza campioni.
@@ -31,7 +41,7 @@ Block puzzle 8×8 con gatti da collezionare. È pensato per il trend n.1 per dow
 ## Sviluppo
 ```bash
 npm install
-npm test             # 18 test su logica di gioco ed economia
+npm test             # 20 test su logica di gioco ed economia
 npm start            # versione web su http://localhost:8080
 npm run assets       # rigenera icone, splash e screenshot dello store
 npm run android:init # crea il progetto Android (target API 36)

@@ -8,6 +8,7 @@ import { initGame, isRunning } from './game.js';
 import { readIncomingChallenge } from './share.js';
 import { scheduleReminders } from './notify.js';
 import { isNative, plugin } from './config.js';
+import { verifyOfficial } from './guard.js';
 
 function onBack() {
   const modals = document.querySelectorAll('#modal-root .modal-back');
@@ -23,6 +24,7 @@ function onBack() {
 }
 
 async function boot() {
+  await verifyOfficial();
   load();
   const newDay = ensureDaily();
   setAudio(S.settings);
