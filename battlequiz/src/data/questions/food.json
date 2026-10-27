@@ -1,0 +1,342 @@
+{
+ "category": "food",
+ "correctIndex": 0,
+ "questions": [
+  {
+   "key": "foo-001",
+   "difficulty": "easy",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Guacamole"
+   },
+   "it": {
+    "text": "Qual è l'ingrediente principale del guacamole?",
+    "options": [
+     "Avocado",
+     "Pomodoro",
+     "Peperone",
+     "Zucchina"
+    ],
+    "explanation": "Il guacamole è una salsa messicana a base di avocado."
+   },
+   "en": {
+    "text": "What is the main ingredient of guacamole?",
+    "options": [
+     "Avocado",
+     "Tomato",
+     "Pepper",
+     "Courgette"
+    ],
+    "explanation": "Guacamole is a Mexican dip made from avocado."
+   }
+  },
+  {
+   "key": "foo-002",
+   "difficulty": "easy",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Sushi"
+   },
+   "it": {
+    "text": "Da quale paese proviene il sushi?",
+    "options": [
+     "Giappone",
+     "Cina",
+     "Corea del Sud",
+     "Thailandia"
+    ],
+    "explanation": "Il sushi è un piatto tradizionale giapponese a base di riso."
+   },
+   "en": {
+    "text": "Which country does sushi come from?",
+    "options": [
+     "Japan",
+     "China",
+     "South Korea",
+     "Thailand"
+    ],
+    "explanation": "Sushi is a traditional Japanese rice dish."
+   }
+  },
+  {
+   "key": "foo-003",
+   "difficulty": "easy",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Pizza Margherita"
+   },
+   "it": {
+    "text": "Quale formaggio si usa sulla pizza Margherita?",
+    "options": [
+     "Mozzarella",
+     "Gorgonzola",
+     "Parmigiano",
+     "Pecorino"
+    ],
+    "explanation": "Pomodoro, mozzarella e basilico richiamano i colori della bandiera italiana."
+   },
+   "en": {
+    "text": "Which cheese goes on a Margherita pizza?",
+    "options": [
+     "Mozzarella",
+     "Gorgonzola",
+     "Parmesan",
+     "Pecorino"
+    ],
+    "explanation": "Tomato, mozzarella and basil recall the colours of the Italian flag."
+   }
+  },
+  {
+   "key": "foo-004",
+   "difficulty": "easy",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: French fries"
+   },
+   "it": {
+    "text": "Qual è l'ingrediente principale delle patatine fritte?",
+    "options": [
+     "Patate",
+     "Mais",
+     "Riso",
+     "Carote"
+    ],
+    "explanation": "Le patatine fritte sono bastoncini di patata fritti."
+   },
+   "en": {
+    "text": "What is the main ingredient of French fries?",
+    "options": [
+     "Potatoes",
+     "Corn",
+     "Rice",
+     "Carrots"
+    ],
+    "explanation": "French fries are fried strips of potato."
+   }
+  },
+  {
+   "key": "foo-005",
+   "difficulty": "medium",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Pesto"
+   },
+   "it": {
+    "text": "Da quale regione italiana proviene il pesto alla genovese?",
+    "options": [
+     "Liguria",
+     "Piemonte",
+     "Toscana",
+     "Campania"
+    ],
+    "explanation": "Genova è il capoluogo della Liguria."
+   },
+   "en": {
+    "text": "Which Italian region does pesto alla genovese come from?",
+    "options": [
+     "Liguria",
+     "Piedmont",
+     "Tuscany",
+     "Campania"
+    ],
+    "explanation": "Genoa is the capital of Liguria."
+   }
+  },
+  {
+   "key": "foo-006",
+   "difficulty": "medium",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Hummus"
+   },
+   "it": {
+    "text": "Qual è l'ingrediente principale dell'hummus?",
+    "options": [
+     "Ceci",
+     "Lenticchie",
+     "Fagioli",
+     "Piselli"
+    ],
+    "explanation": "L'hummus è una crema di ceci e tahina."
+   },
+   "en": {
+    "text": "What is the main ingredient of hummus?",
+    "options": [
+     "Chickpeas",
+     "Lentils",
+     "Beans",
+     "Peas"
+    ],
+    "explanation": "Hummus is a dip of chickpeas and tahini."
+   }
+  },
+  {
+   "key": "foo-007",
+   "difficulty": "medium",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Risotto alla milanese"
+   },
+   "it": {
+    "text": "Quale spezia dà al risotto alla milanese il suo colore giallo?",
+    "options": [
+     "Zafferano",
+     "Curcuma",
+     "Paprika",
+     "Curry"
+    ],
+    "explanation": "Lo zafferano si ricava dagli stimmi del Crocus sativus."
+   },
+   "en": {
+    "text": "Which spice gives risotto alla milanese its yellow colour?",
+    "options": [
+     "Saffron",
+     "Turmeric",
+     "Paprika",
+     "Curry"
+    ],
+    "explanation": "Saffron comes from the stigmas of Crocus sativus."
+   }
+  },
+  {
+   "key": "foo-008",
+   "difficulty": "medium",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Neapolitan pizza"
+   },
+   "it": {
+    "text": "Quale città è la patria della pizza tradizionale riconosciuta come STG?",
+    "options": [
+     "Napoli",
+     "Roma",
+     "Milano",
+     "Palermo"
+    ],
+    "explanation": "La pizza napoletana è Specialità Tradizionale Garantita dal 2009."
+   },
+   "en": {
+    "text": "Which city is home to the traditional pizza recognised as a TSG?",
+    "options": [
+     "Naples",
+     "Rome",
+     "Milan",
+     "Palermo"
+    ],
+    "explanation": "Neapolitan pizza has been a Traditional Speciality Guaranteed since 2009."
+   }
+  },
+  {
+   "key": "foo-009",
+   "difficulty": "hard",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Carbonara"
+   },
+   "it": {
+    "text": "Quali ingredienti, oltre a pasta e pepe, prevede la carbonara tradizionale?",
+    "options": [
+     "Guanciale, uova e pecorino",
+     "Pancetta, panna e parmigiano",
+     "Prosciutto, burro e grana",
+     "Salsiccia, uova e ricotta"
+    ],
+    "explanation": "La ricetta tradizionale romana non usa la panna."
+   },
+   "en": {
+    "text": "Besides pasta and pepper, what goes into traditional carbonara?",
+    "options": [
+     "Guanciale, eggs and pecorino",
+     "Pancetta, cream and parmesan",
+     "Ham, butter and grana",
+     "Sausage, eggs and ricotta"
+    ],
+    "explanation": "The traditional Roman recipe uses no cream."
+   }
+  },
+  {
+   "key": "foo-010",
+   "difficulty": "hard",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Paella"
+   },
+   "it": {
+    "text": "Da quale paese ha origine la paella?",
+    "options": [
+     "Spagna",
+     "Portogallo",
+     "Messico",
+     "Italia"
+    ],
+    "explanation": "La paella nasce nella regione di Valencia."
+   },
+   "en": {
+    "text": "Which country does paella come from?",
+    "options": [
+     "Spain",
+     "Portugal",
+     "Mexico",
+     "Italy"
+    ],
+    "explanation": "Paella originated in the Valencia region."
+   }
+  },
+  {
+   "key": "foo-011",
+   "difficulty": "hard",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Parmigiano Reggiano"
+   },
+   "it": {
+    "text": "Con il latte di quale animale si produce il Parmigiano Reggiano?",
+    "options": [
+     "Mucca",
+     "Pecora",
+     "Capra",
+     "Bufala"
+    ],
+    "explanation": "Il disciplinare DOP prevede latte vaccino crudo."
+   },
+   "en": {
+    "text": "Which animal's milk is used to make Parmigiano Reggiano?",
+    "options": [
+     "Cow",
+     "Sheep",
+     "Goat",
+     "Buffalo"
+    ],
+    "explanation": "The PDO rules require raw cow's milk."
+   }
+  },
+  {
+   "key": "foo-012",
+   "difficulty": "expert",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Scoville scale"
+   },
+   "it": {
+    "text": "Quale scala misura la piccantezza dei peperoncini?",
+    "options": [
+     "Scala di Scoville",
+     "Scala di Mohs",
+     "Scala Richter",
+     "Scala di Beaufort"
+    ],
+    "explanation": "Prende il nome dal farmacista Wilbur Scoville (1912)."
+   },
+   "en": {
+    "text": "Which scale measures the heat of chilli peppers?",
+    "options": [
+     "Scoville scale",
+     "Mohs scale",
+     "Richter scale",
+     "Beaufort scale"
+    ],
+    "explanation": "It is named after pharmacist Wilbur Scoville (1912)."
+   }
+  }
+ ]
+}

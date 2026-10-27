@@ -1,0 +1,342 @@
+{
+ "category": "technology",
+ "correctIndex": 0,
+ "questions": [
+  {
+   "key": "tec-001",
+   "difficulty": "easy",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: iPhone"
+   },
+   "it": {
+    "text": "Quale azienda produce l'iPhone?",
+    "options": [
+     "Apple",
+     "Samsung",
+     "Google",
+     "Nokia"
+    ],
+    "explanation": "L'iPhone è progettato da Apple."
+   },
+   "en": {
+    "text": "Which company makes the iPhone?",
+    "options": [
+     "Apple",
+     "Samsung",
+     "Google",
+     "Nokia"
+    ],
+    "explanation": "The iPhone is designed by Apple."
+   }
+  },
+  {
+   "key": "tec-002",
+   "difficulty": "easy",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Enter key"
+   },
+   "it": {
+    "text": "Quale tasto si usa di solito per andare a capo in un testo?",
+    "options": [
+     "Invio",
+     "Esc",
+     "Tab",
+     "Alt"
+    ],
+    "explanation": "Il tasto Invio inserisce una nuova riga."
+   },
+   "en": {
+    "text": "Which key usually starts a new line in a text?",
+    "options": [
+     "Enter",
+     "Esc",
+     "Tab",
+     "Alt"
+    ],
+    "explanation": "The Enter key inserts a new line."
+   }
+  },
+  {
+   "key": "tec-003",
+   "difficulty": "easy",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: USB"
+   },
+   "it": {
+    "text": "Che cosa significa la sigla USB?",
+    "options": [
+     "Universal Serial Bus",
+     "Unified System Board",
+     "Universal Software Bridge",
+     "User Service Bus"
+    ],
+    "explanation": "USB è lo standard per collegare periferiche ai computer."
+   },
+   "en": {
+    "text": "What does USB stand for?",
+    "options": [
+     "Universal Serial Bus",
+     "Unified System Board",
+     "Universal Software Bridge",
+     "User Service Bus"
+    ],
+    "explanation": "USB is the standard for connecting peripherals to computers."
+   }
+  },
+  {
+   "key": "tec-004",
+   "difficulty": "easy",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Android (operating system)"
+   },
+   "it": {
+    "text": "Quale sistema operativo per smartphone è sviluppato da Google?",
+    "options": [
+     "Android",
+     "iOS",
+     "Windows",
+     "macOS"
+    ],
+    "explanation": "Android è sviluppato da Google; iOS è di Apple."
+   },
+   "en": {
+    "text": "Which smartphone operating system is developed by Google?",
+    "options": [
+     "Android",
+     "iOS",
+     "Windows",
+     "macOS"
+    ],
+    "explanation": "Android is developed by Google; iOS belongs to Apple."
+   }
+  },
+  {
+   "key": "tec-005",
+   "difficulty": "medium",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Microsoft"
+   },
+   "it": {
+    "text": "Chi fondò Microsoft insieme a Paul Allen?",
+    "options": [
+     "Bill Gates",
+     "Steve Jobs",
+     "Larry Page",
+     "Mark Zuckerberg"
+    ],
+    "explanation": "Gates e Allen fondarono Microsoft nel 1975."
+   },
+   "en": {
+    "text": "Who co-founded Microsoft with Paul Allen?",
+    "options": [
+     "Bill Gates",
+     "Steve Jobs",
+     "Larry Page",
+     "Mark Zuckerberg"
+    ],
+    "explanation": "Gates and Allen founded Microsoft in 1975."
+   }
+  },
+  {
+   "key": "tec-006",
+   "difficulty": "medium",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Byte"
+   },
+   "it": {
+    "text": "Quanti bit compongono un byte?",
+    "options": [
+     "8",
+     "4",
+     "16",
+     "10"
+    ],
+    "explanation": "Un byte standard è formato da 8 bit."
+   },
+   "en": {
+    "text": "How many bits are in a byte?",
+    "options": [
+     "8",
+     "4",
+     "16",
+     "10"
+    ],
+    "explanation": "A standard byte is made of 8 bits."
+   }
+  },
+  {
+   "key": "tec-007",
+   "difficulty": "medium",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: HTML"
+   },
+   "it": {
+    "text": "Che cosa significa HTML?",
+    "options": [
+     "HyperText Markup Language",
+     "High Tech Modern Language",
+     "Hyperlink Text Management Language",
+     "Home Tool Markup Language"
+    ],
+    "explanation": "HTML è il linguaggio che descrive la struttura delle pagine web."
+   },
+   "en": {
+    "text": "What does HTML stand for?",
+    "options": [
+     "HyperText Markup Language",
+     "High Tech Modern Language",
+     "Hyperlink Text Management Language",
+     "Home Tool Markup Language"
+    ],
+    "explanation": "HTML describes the structure of web pages."
+   }
+  },
+  {
+   "key": "tec-008",
+   "difficulty": "medium",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: JavaScript"
+   },
+   "it": {
+    "text": "Quale linguaggio di programmazione viene eseguito nativamente dai browser web?",
+    "options": [
+     "JavaScript",
+     "Python",
+     "C++",
+     "Java"
+    ],
+    "explanation": "Tutti i browser moderni includono un motore JavaScript."
+   },
+   "en": {
+    "text": "Which programming language runs natively in web browsers?",
+    "options": [
+     "JavaScript",
+     "Python",
+     "C++",
+     "Java"
+    ],
+    "explanation": "Every modern browser ships with a JavaScript engine."
+   }
+  },
+  {
+   "key": "tec-009",
+   "difficulty": "hard",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: iPhone (1st generation)"
+   },
+   "it": {
+    "text": "In che anno fu presentato il primo iPhone?",
+    "options": [
+     "2007",
+     "2005",
+     "2009",
+     "2010"
+    ],
+    "explanation": "Steve Jobs lo presentò il 9 gennaio 2007."
+   },
+   "en": {
+    "text": "In which year was the first iPhone unveiled?",
+    "options": [
+     "2007",
+     "2005",
+     "2009",
+     "2010"
+    ],
+    "explanation": "Steve Jobs unveiled it on 9 January 2007."
+   }
+  },
+  {
+   "key": "tec-010",
+   "difficulty": "hard",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Tim Berners-Lee"
+   },
+   "it": {
+    "text": "Chi è considerato l'inventore del World Wide Web?",
+    "options": [
+     "Tim Berners-Lee",
+     "Vint Cerf",
+     "Alan Turing",
+     "Linus Torvalds"
+    ],
+    "explanation": "Berners-Lee lo ideò al CERN tra il 1989 e il 1991."
+   },
+   "en": {
+    "text": "Who is credited with inventing the World Wide Web?",
+    "options": [
+     "Tim Berners-Lee",
+     "Vint Cerf",
+     "Alan Turing",
+     "Linus Torvalds"
+    ],
+    "explanation": "Berners-Lee created it at CERN between 1989 and 1991."
+   }
+  },
+  {
+   "key": "tec-011",
+   "difficulty": "hard",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Binary number"
+   },
+   "it": {
+    "text": "Quale sistema di numerazione usa solo le cifre 0 e 1?",
+    "options": [
+     "Binario",
+     "Esadecimale",
+     "Ottale",
+     "Decimale"
+    ],
+    "explanation": "I computer rappresentano i dati in sistema binario."
+   },
+   "en": {
+    "text": "Which number system uses only the digits 0 and 1?",
+    "options": [
+     "Binary",
+     "Hexadecimal",
+     "Octal",
+     "Decimal"
+    ],
+    "explanation": "Computers represent data in binary."
+   }
+  },
+  {
+   "key": "tec-012",
+   "difficulty": "expert",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Turing test"
+   },
+   "it": {
+    "text": "Quale scienziato propose nel 1950 un test per valutare se una macchina sa \"pensare\"?",
+    "options": [
+     "Alan Turing",
+     "John von Neumann",
+     "Claude Shannon",
+     "Ada Lovelace"
+    ],
+    "explanation": "Il test fu descritto nell'articolo \"Computing Machinery and Intelligence\"."
+   },
+   "en": {
+    "text": "Which scientist proposed a test in 1950 to judge whether a machine can \"think\"?",
+    "options": [
+     "Alan Turing",
+     "John von Neumann",
+     "Claude Shannon",
+     "Ada Lovelace"
+    ],
+    "explanation": "The test appeared in the paper \"Computing Machinery and Intelligence\"."
+   }
+  }
+ ]
+}

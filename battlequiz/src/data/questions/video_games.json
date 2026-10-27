@@ -1,0 +1,342 @@
+{
+ "category": "video_games",
+ "correctIndex": 0,
+ "questions": [
+  {
+   "key": "vid-001",
+   "difficulty": "easy",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Mario"
+   },
+   "it": {
+    "text": "Come si chiama l'idraulico dal cappello rosso, mascotte di Nintendo?",
+    "options": [
+     "Mario",
+     "Luigi",
+     "Wario",
+     "Toad"
+    ],
+    "explanation": "Mario debuttò nel 1981 in Donkey Kong."
+   },
+   "en": {
+    "text": "What is the name of the red-capped plumber who is Nintendo's mascot?",
+    "options": [
+     "Mario",
+     "Luigi",
+     "Wario",
+     "Toad"
+    ],
+    "explanation": "Mario debuted in Donkey Kong in 1981."
+   }
+  },
+  {
+   "key": "vid-002",
+   "difficulty": "easy",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Minecraft"
+   },
+   "it": {
+    "text": "In quale gioco si costruisce con blocchi cubici e si incontrano i Creeper?",
+    "options": [
+     "Minecraft",
+     "Fortnite",
+     "Roblox",
+     "Terraria"
+    ],
+    "explanation": "Minecraft è uno dei videogiochi più venduti di sempre."
+   },
+   "en": {
+    "text": "In which game do you build with cubic blocks and meet Creepers?",
+    "options": [
+     "Minecraft",
+     "Fortnite",
+     "Roblox",
+     "Terraria"
+    ],
+    "explanation": "Minecraft is one of the best-selling video games ever."
+   }
+  },
+  {
+   "key": "vid-003",
+   "difficulty": "easy",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Sonic the Hedgehog (character)"
+   },
+   "it": {
+    "text": "Come si chiama il porcospino blu mascotte di SEGA?",
+    "options": [
+     "Sonic",
+     "Knuckles",
+     "Tails",
+     "Shadow"
+    ],
+    "explanation": "Sonic debuttò nel 1991."
+   },
+   "en": {
+    "text": "What is the name of SEGA's blue hedgehog mascot?",
+    "options": [
+     "Sonic",
+     "Knuckles",
+     "Tails",
+     "Shadow"
+    ],
+    "explanation": "Sonic debuted in 1991."
+   }
+  },
+  {
+   "key": "vid-004",
+   "difficulty": "easy",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Pac-Man"
+   },
+   "it": {
+    "text": "Quale gioco del 1980 ha un protagonista giallo che mangia puntini in un labirinto?",
+    "options": [
+     "Pac-Man",
+     "Space Invaders",
+     "Donkey Kong",
+     "Tetris"
+    ],
+    "explanation": "Pac-Man fu creato da Namco."
+   },
+   "en": {
+    "text": "Which 1980 game stars a yellow character eating dots in a maze?",
+    "options": [
+     "Pac-Man",
+     "Space Invaders",
+     "Donkey Kong",
+     "Tetris"
+    ],
+    "explanation": "Pac-Man was created by Namco."
+   }
+  },
+  {
+   "key": "vid-005",
+   "difficulty": "medium",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Link (The Legend of Zelda)"
+   },
+   "it": {
+    "text": "Come si chiama l'eroe protagonista della serie \"The Legend of Zelda\"?",
+    "options": [
+     "Link",
+     "Zelda",
+     "Ganondorf",
+     "Epona"
+    ],
+    "explanation": "Zelda è la principessa; il protagonista giocabile è Link."
+   },
+   "en": {
+    "text": "What is the name of the hero of \"The Legend of Zelda\" series?",
+    "options": [
+     "Link",
+     "Zelda",
+     "Ganondorf",
+     "Epona"
+    ],
+    "explanation": "Zelda is the princess; the playable hero is Link."
+   }
+  },
+  {
+   "key": "vid-006",
+   "difficulty": "medium",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Pikachu"
+   },
+   "it": {
+    "text": "Quale Pokémon di tipo Elettro è la mascotte della serie?",
+    "options": [
+     "Pikachu",
+     "Raichu",
+     "Jolteon",
+     "Pichu"
+    ],
+    "explanation": "Pikachu è il volto del franchise Pokémon."
+   },
+   "en": {
+    "text": "Which Electric-type Pokémon is the series mascot?",
+    "options": [
+     "Pikachu",
+     "Raichu",
+     "Jolteon",
+     "Pichu"
+    ],
+    "explanation": "Pikachu is the face of the Pokémon franchise."
+   }
+  },
+  {
+   "key": "vid-007",
+   "difficulty": "medium",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Tetris"
+   },
+   "it": {
+    "text": "Quale gioco, creato in Unione Sovietica, consiste nell'incastrare blocchi che cadono?",
+    "options": [
+     "Tetris",
+     "Columns",
+     "Arkanoid",
+     "Breakout"
+    ],
+    "explanation": "Tetris fu creato da Aleksej Pažitnov nel 1984."
+   },
+   "en": {
+    "text": "Which game, created in the Soviet Union, is about fitting falling blocks together?",
+    "options": [
+     "Tetris",
+     "Columns",
+     "Arkanoid",
+     "Breakout"
+    ],
+    "explanation": "Tetris was created by Alexey Pajitnov in 1984."
+   }
+  },
+  {
+   "key": "vid-008",
+   "difficulty": "medium",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: PlayStation"
+   },
+   "it": {
+    "text": "Quale azienda produce la console PlayStation?",
+    "options": [
+     "Sony",
+     "Microsoft",
+     "Nintendo",
+     "SEGA"
+    ],
+    "explanation": "La prima PlayStation uscì nel 1994."
+   },
+   "en": {
+    "text": "Which company makes the PlayStation console?",
+    "options": [
+     "Sony",
+     "Microsoft",
+     "Nintendo",
+     "SEGA"
+    ],
+    "explanation": "The first PlayStation was released in 1994."
+   }
+  },
+  {
+   "key": "vid-009",
+   "difficulty": "hard",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Nintendo Entertainment System"
+   },
+   "it": {
+    "text": "In che anno uscì in Giappone il Famicom, la console poi nota come NES?",
+    "options": [
+     "1983",
+     "1985",
+     "1979",
+     "1990"
+    ],
+    "explanation": "Il Famicom uscì in Giappone nel luglio 1983."
+   },
+   "en": {
+    "text": "In which year was the Famicom, later known as the NES, released in Japan?",
+    "options": [
+     "1983",
+     "1985",
+     "1979",
+     "1990"
+    ],
+    "explanation": "The Famicom launched in Japan in July 1983."
+   }
+  },
+  {
+   "key": "vid-010",
+   "difficulty": "hard",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: CD Projekt"
+   },
+   "it": {
+    "text": "Quale studio ha sviluppato la serie di videogiochi \"The Witcher\"?",
+    "options": [
+     "CD Projekt Red",
+     "Ubisoft",
+     "Bethesda",
+     "BioWare"
+    ],
+    "explanation": "CD Projekt Red ha sede in Polonia."
+   },
+   "en": {
+    "text": "Which studio developed \"The Witcher\" video game series?",
+    "options": [
+     "CD Projekt Red",
+     "Ubisoft",
+     "Bethesda",
+     "BioWare"
+    ],
+    "explanation": "CD Projekt Red is based in Poland."
+   }
+  },
+  {
+   "key": "vid-011",
+   "difficulty": "hard",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Space Invaders"
+   },
+   "it": {
+    "text": "Chi ha creato \"Space Invaders\" (1978)?",
+    "options": [
+     "Tomohiro Nishikado",
+     "Shigeru Miyamoto",
+     "Hideo Kojima",
+     "Toru Iwatani"
+    ],
+    "explanation": "Toru Iwatani è invece il creatore di Pac-Man."
+   },
+   "en": {
+    "text": "Who created \"Space Invaders\" (1978)?",
+    "options": [
+     "Tomohiro Nishikado",
+     "Shigeru Miyamoto",
+     "Hideo Kojima",
+     "Toru Iwatani"
+    ],
+    "explanation": "Toru Iwatani created Pac-Man instead."
+   }
+  },
+  {
+   "key": "vid-012",
+   "difficulty": "expert",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Shigeru Miyamoto"
+   },
+   "it": {
+    "text": "Chi ha creato i personaggi di Mario e Donkey Kong?",
+    "options": [
+     "Shigeru Miyamoto",
+     "Satoru Iwata",
+     "Hideo Kojima",
+     "Yu Suzuki"
+    ],
+    "explanation": "Miyamoto ha creato anche The Legend of Zelda."
+   },
+   "en": {
+    "text": "Who created the characters Mario and Donkey Kong?",
+    "options": [
+     "Shigeru Miyamoto",
+     "Satoru Iwata",
+     "Hideo Kojima",
+     "Yu Suzuki"
+    ],
+    "explanation": "Miyamoto also created The Legend of Zelda."
+   }
+  }
+ ]
+}

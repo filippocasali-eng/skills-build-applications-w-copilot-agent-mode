@@ -1,0 +1,342 @@
+{
+ "category": "art",
+ "correctIndex": 0,
+ "questions": [
+  {
+   "key": "art-001",
+   "difficulty": "easy",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Mona Lisa"
+   },
+   "it": {
+    "text": "Chi ha dipinto la Gioconda?",
+    "options": [
+     "Leonardo da Vinci",
+     "Michelangelo",
+     "Raffaello",
+     "Caravaggio"
+    ],
+    "explanation": "Leonardo la dipinse all'inizio del Cinquecento."
+   },
+   "en": {
+    "text": "Who painted the Mona Lisa?",
+    "options": [
+     "Leonardo da Vinci",
+     "Michelangelo",
+     "Raphael",
+     "Caravaggio"
+    ],
+    "explanation": "Leonardo painted it in the early 16th century."
+   }
+  },
+  {
+   "key": "art-002",
+   "difficulty": "easy",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Louvre"
+   },
+   "it": {
+    "text": "In quale museo è esposta la Gioconda?",
+    "options": [
+     "Louvre",
+     "Uffizi",
+     "Prado",
+     "British Museum"
+    ],
+    "explanation": "La Gioconda si trova al Louvre di Parigi."
+   },
+   "en": {
+    "text": "In which museum is the Mona Lisa displayed?",
+    "options": [
+     "The Louvre",
+     "The Uffizi",
+     "The Prado",
+     "The British Museum"
+    ],
+    "explanation": "The Mona Lisa hangs in the Louvre in Paris."
+   }
+  },
+  {
+   "key": "art-003",
+   "difficulty": "easy",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: The Starry Night"
+   },
+   "it": {
+    "text": "Chi ha dipinto \"Notte stellata\"?",
+    "options": [
+     "Vincent van Gogh",
+     "Claude Monet",
+     "Pablo Picasso",
+     "Paul Cézanne"
+    ],
+    "explanation": "Van Gogh la dipinse nel 1889."
+   },
+   "en": {
+    "text": "Who painted \"The Starry Night\"?",
+    "options": [
+     "Vincent van Gogh",
+     "Claude Monet",
+     "Pablo Picasso",
+     "Paul Cézanne"
+    ],
+    "explanation": "Van Gogh painted it in 1889."
+   }
+  },
+  {
+   "key": "art-004",
+   "difficulty": "easy",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: David (Michelangelo)"
+   },
+   "it": {
+    "text": "Chi ha scolpito il David della Galleria dell'Accademia di Firenze?",
+    "options": [
+     "Michelangelo",
+     "Donatello",
+     "Gian Lorenzo Bernini",
+     "Antonio Canova"
+    ],
+    "explanation": "Michelangelo lo completò nel 1504."
+   },
+   "en": {
+    "text": "Who sculpted the David in Florence's Galleria dell'Accademia?",
+    "options": [
+     "Michelangelo",
+     "Donatello",
+     "Gian Lorenzo Bernini",
+     "Antonio Canova"
+    ],
+    "explanation": "Michelangelo completed it in 1504."
+   }
+  },
+  {
+   "key": "art-005",
+   "difficulty": "medium",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Sistine Chapel ceiling"
+   },
+   "it": {
+    "text": "Chi ha affrescato la volta della Cappella Sistina?",
+    "options": [
+     "Michelangelo",
+     "Raffaello",
+     "Giotto",
+     "Sandro Botticelli"
+    ],
+    "explanation": "Michelangelo la dipinse tra il 1508 e il 1512."
+   },
+   "en": {
+    "text": "Who painted the Sistine Chapel ceiling?",
+    "options": [
+     "Michelangelo",
+     "Raphael",
+     "Giotto",
+     "Sandro Botticelli"
+    ],
+    "explanation": "Michelangelo painted it between 1508 and 1512."
+   }
+  },
+  {
+   "key": "art-006",
+   "difficulty": "medium",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: The Birth of Venus"
+   },
+   "it": {
+    "text": "Chi ha dipinto \"La nascita di Venere\"?",
+    "options": [
+     "Sandro Botticelli",
+     "Tiziano",
+     "Leonardo da Vinci",
+     "Masaccio"
+    ],
+    "explanation": "L'opera è conservata agli Uffizi di Firenze."
+   },
+   "en": {
+    "text": "Who painted \"The Birth of Venus\"?",
+    "options": [
+     "Sandro Botticelli",
+     "Titian",
+     "Leonardo da Vinci",
+     "Masaccio"
+    ],
+    "explanation": "The painting is held in the Uffizi in Florence."
+   }
+  },
+  {
+   "key": "art-007",
+   "difficulty": "medium",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Salvador Dalí"
+   },
+   "it": {
+    "text": "A quale movimento artistico è legato Salvador Dalí?",
+    "options": [
+     "Surrealismo",
+     "Impressionismo",
+     "Cubismo",
+     "Futurismo"
+    ],
+    "explanation": "\"La persistenza della memoria\" è una sua celebre opera surrealista."
+   },
+   "en": {
+    "text": "Which art movement is Salvador Dalí associated with?",
+    "options": [
+     "Surrealism",
+     "Impressionism",
+     "Cubism",
+     "Futurism"
+    ],
+    "explanation": "\"The Persistence of Memory\" is one of his famous surrealist works."
+   }
+  },
+  {
+   "key": "art-008",
+   "difficulty": "medium",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Guernica (Picasso)"
+   },
+   "it": {
+    "text": "Chi ha dipinto \"Guernica\"?",
+    "options": [
+     "Pablo Picasso",
+     "Joan Miró",
+     "Francisco Goya",
+     "Henri Matisse"
+    ],
+    "explanation": "Picasso lo dipinse nel 1937 dopo il bombardamento della città basca."
+   },
+   "en": {
+    "text": "Who painted \"Guernica\"?",
+    "options": [
+     "Pablo Picasso",
+     "Joan Miró",
+     "Francisco Goya",
+     "Henri Matisse"
+    ],
+    "explanation": "Picasso painted it in 1937 after the bombing of the Basque town."
+   }
+  },
+  {
+   "key": "art-009",
+   "difficulty": "hard",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: The Calling of Saint Matthew"
+   },
+   "it": {
+    "text": "Quale pittore realizzò la \"Vocazione di San Matteo\", celebre per il suo chiaroscuro?",
+    "options": [
+     "Caravaggio",
+     "Tintoretto",
+     "Giorgione",
+     "Andrea Mantegna"
+    ],
+    "explanation": "L'opera si trova nella chiesa di San Luigi dei Francesi a Roma."
+   },
+   "en": {
+    "text": "Which painter created \"The Calling of Saint Matthew\", famous for its chiaroscuro?",
+    "options": [
+     "Caravaggio",
+     "Tintoretto",
+     "Giorgione",
+     "Andrea Mantegna"
+    ],
+    "explanation": "The work is in the church of San Luigi dei Francesi in Rome."
+   }
+  },
+  {
+   "key": "art-010",
+   "difficulty": "hard",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: The Scream"
+   },
+   "it": {
+    "text": "Chi ha dipinto \"L'urlo\"?",
+    "options": [
+     "Edvard Munch",
+     "Gustav Klimt",
+     "Egon Schiele",
+     "Vasilij Kandinskij"
+    ],
+    "explanation": "Munch era un pittore norvegese."
+   },
+   "en": {
+    "text": "Who painted \"The Scream\"?",
+    "options": [
+     "Edvard Munch",
+     "Gustav Klimt",
+     "Egon Schiele",
+     "Wassily Kandinsky"
+    ],
+    "explanation": "Munch was a Norwegian painter."
+   }
+  },
+  {
+   "key": "art-011",
+   "difficulty": "hard",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Manifesto of Futurism"
+   },
+   "it": {
+    "text": "Chi scrisse il Manifesto del Futurismo pubblicato nel 1909?",
+    "options": [
+     "Filippo Tommaso Marinetti",
+     "Umberto Boccioni",
+     "Giacomo Balla",
+     "Gabriele D'Annunzio"
+    ],
+    "explanation": "Il manifesto uscì su Le Figaro il 20 febbraio 1909."
+   },
+   "en": {
+    "text": "Who wrote the Futurist Manifesto published in 1909?",
+    "options": [
+     "Filippo Tommaso Marinetti",
+     "Umberto Boccioni",
+     "Giacomo Balla",
+     "Gabriele D'Annunzio"
+    ],
+    "explanation": "The manifesto appeared in Le Figaro on 20 February 1909."
+   }
+  },
+  {
+   "key": "art-012",
+   "difficulty": "expert",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Brunelleschi's Dome"
+   },
+   "it": {
+    "text": "Chi progettò la cupola di Santa Maria del Fiore a Firenze?",
+    "options": [
+     "Filippo Brunelleschi",
+     "Leon Battista Alberti",
+     "Donato Bramante",
+     "Andrea Palladio"
+    ],
+    "explanation": "La cupola fu costruita tra il 1420 e il 1436."
+   },
+   "en": {
+    "text": "Who designed the dome of Florence Cathedral?",
+    "options": [
+     "Filippo Brunelleschi",
+     "Leon Battista Alberti",
+     "Donato Bramante",
+     "Andrea Palladio"
+    ],
+    "explanation": "The dome was built between 1420 and 1436."
+   }
+  }
+ ]
+}

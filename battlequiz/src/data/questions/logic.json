@@ -1,0 +1,342 @@
+{
+ "category": "logic",
+ "correctIndex": 0,
+ "questions": [
+  {
+   "key": "log-001",
+   "difficulty": "easy",
+   "source": {
+    "kind": "editorial",
+    "reference": "Editorial: arithmetic sequence"
+   },
+   "it": {
+    "text": "Qual è il numero successivo: 2, 4, 6, 8, ...?",
+    "options": [
+     "10",
+     "9",
+     "12",
+     "11"
+    ],
+    "explanation": "La sequenza aumenta di 2 ogni volta."
+   },
+   "en": {
+    "text": "What comes next: 2, 4, 6, 8, ...?",
+    "options": [
+     "10",
+     "9",
+     "12",
+     "11"
+    ],
+    "explanation": "The sequence increases by 2 each time."
+   }
+  },
+  {
+   "key": "log-002",
+   "difficulty": "easy",
+   "source": {
+    "kind": "editorial",
+    "reference": "Editorial: days of the week"
+   },
+   "it": {
+    "text": "Se oggi è lunedì, che giorno sarà tra 3 giorni?",
+    "options": [
+     "Giovedì",
+     "Mercoledì",
+     "Venerdì",
+     "Martedì"
+    ],
+    "explanation": "Lunedì + 3 giorni = giovedì."
+   },
+   "en": {
+    "text": "If today is Monday, what day will it be in 3 days?",
+    "options": [
+     "Thursday",
+     "Wednesday",
+     "Friday",
+     "Tuesday"
+    ],
+    "explanation": "Monday + 3 days = Thursday."
+   }
+  },
+  {
+   "key": "log-003",
+   "difficulty": "easy",
+   "source": {
+    "kind": "editorial",
+    "reference": "Editorial: multiplication"
+   },
+   "it": {
+    "text": "Quanto fa 7 × 8?",
+    "options": [
+     "56",
+     "54",
+     "63",
+     "48"
+    ],
+    "explanation": "7 × 8 = 56."
+   },
+   "en": {
+    "text": "What is 7 × 8?",
+    "options": [
+     "56",
+     "54",
+     "63",
+     "48"
+    ],
+    "explanation": "7 × 8 = 56."
+   }
+  },
+  {
+   "key": "log-004",
+   "difficulty": "easy",
+   "source": {
+    "kind": "editorial",
+    "reference": "Editorial: riddle"
+   },
+   "it": {
+    "text": "Indovinello: ha le lancette ma non ha mani. Che cos'è?",
+    "options": [
+     "Un orologio",
+     "Un guanto",
+     "Un calendario",
+     "Una bilancia"
+    ],
+    "explanation": "Le lancette indicano ore e minuti."
+   },
+   "en": {
+    "text": "Riddle: it has hands but cannot clap. What is it?",
+    "options": [
+     "A clock",
+     "A glove",
+     "A calendar",
+     "A scale"
+    ],
+    "explanation": "A clock's hands show the hours and minutes."
+   }
+  },
+  {
+   "key": "log-005",
+   "difficulty": "medium",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Fibonacci sequence"
+   },
+   "it": {
+    "text": "Qual è il numero successivo: 1, 1, 2, 3, 5, 8, ...?",
+    "options": [
+     "13",
+     "11",
+     "12",
+     "15"
+    ],
+    "explanation": "Ogni numero è la somma dei due precedenti (5 + 8)."
+   },
+   "en": {
+    "text": "What comes next: 1, 1, 2, 3, 5, 8, ...?",
+    "options": [
+     "13",
+     "11",
+     "12",
+     "15"
+    ],
+    "explanation": "Each number is the sum of the previous two (5 + 8)."
+   }
+  },
+  {
+   "key": "log-006",
+   "difficulty": "medium",
+   "source": {
+    "kind": "editorial",
+    "reference": "Editorial: algebra puzzle"
+   },
+   "it": {
+    "text": "Un mattone pesa 1 kg più mezzo mattone. Quanto pesa un mattone intero?",
+    "options": [
+     "2 kg",
+     "1,5 kg",
+     "1 kg",
+     "3 kg"
+    ],
+    "explanation": "Se m = 1 + m/2, allora m/2 = 1 e m = 2 kg."
+   },
+   "en": {
+    "text": "A brick weighs 1 kg plus half a brick. How much does a whole brick weigh?",
+    "options": [
+     "2 kg",
+     "1.5 kg",
+     "1 kg",
+     "3 kg"
+    ],
+    "explanation": "If b = 1 + b/2, then b/2 = 1 and b = 2 kg."
+   }
+  },
+  {
+   "key": "log-007",
+   "difficulty": "medium",
+   "source": {
+    "kind": "editorial",
+    "reference": "Editorial: rate puzzle"
+   },
+   "it": {
+    "text": "Se 5 macchine producono 5 pezzi in 5 minuti, quanto impiegano 100 macchine per 100 pezzi?",
+    "options": [
+     "5 minuti",
+     "100 minuti",
+     "20 minuti",
+     "50 minuti"
+    ],
+    "explanation": "Ogni macchina produce un pezzo in 5 minuti, in parallelo."
+   },
+   "en": {
+    "text": "If 5 machines make 5 parts in 5 minutes, how long do 100 machines take to make 100 parts?",
+    "options": [
+     "5 minutes",
+     "100 minutes",
+     "20 minutes",
+     "50 minutes"
+    ],
+    "explanation": "Each machine makes one part in 5 minutes, all in parallel."
+   }
+  },
+  {
+   "key": "log-008",
+   "difficulty": "medium",
+   "source": {
+    "kind": "editorial",
+    "reference": "Editorial: geometric sequence"
+   },
+   "it": {
+    "text": "Quale numero manca: 3, 9, 27, ?, 243",
+    "options": [
+     "81",
+     "54",
+     "72",
+     "90"
+    ],
+    "explanation": "Ogni termine è il precedente moltiplicato per 3."
+   },
+   "en": {
+    "text": "Which number is missing: 3, 9, 27, ?, 243",
+    "options": [
+     "81",
+     "54",
+     "72",
+     "90"
+    ],
+    "explanation": "Each term is the previous one multiplied by 3."
+   }
+  },
+  {
+   "key": "log-009",
+   "difficulty": "hard",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Cognitive reflection test"
+   },
+   "it": {
+    "text": "Mazza e palla costano insieme 1,10 €. La mazza costa 1 € più della palla. Quanto costa la palla?",
+    "options": [
+     "0,05 €",
+     "0,10 €",
+     "0,15 €",
+     "0,01 €"
+    ],
+    "explanation": "Palla = x, mazza = x + 1: 2x + 1 = 1,10, quindi x = 0,05 €."
+   },
+   "en": {
+    "text": "A bat and a ball cost €1.10 together. The bat costs €1 more than the ball. How much is the ball?",
+    "options": [
+     "€0.05",
+     "€0.10",
+     "€0.15",
+     "€0.01"
+    ],
+    "explanation": "Ball = x, bat = x + 1: 2x + 1 = 1.10, so x = €0.05."
+   }
+  },
+  {
+   "key": "log-010",
+   "difficulty": "hard",
+   "source": {
+    "kind": "editorial",
+    "reference": "Editorial: riddle"
+   },
+   "it": {
+    "text": "Quanti mesi dell'anno hanno almeno 28 giorni?",
+    "options": [
+     "12",
+     "1",
+     "6",
+     "11"
+    ],
+    "explanation": "Tutti i mesi hanno almeno 28 giorni."
+   },
+   "en": {
+    "text": "How many months of the year have at least 28 days?",
+    "options": [
+     "12",
+     "1",
+     "6",
+     "11"
+    ],
+    "explanation": "Every month has at least 28 days."
+   }
+  },
+  {
+   "key": "log-011",
+   "difficulty": "hard",
+   "source": {
+    "kind": "editorial",
+    "reference": "Editorial: riddle"
+   },
+   "it": {
+    "text": "Il padre di Maria ha cinque figlie: Lala, Lele, Lili, Lolo. Come si chiama la quinta?",
+    "options": [
+     "Maria",
+     "Lulu",
+     "Lala",
+     "Lilo"
+    ],
+    "explanation": "La quinta figlia è Maria stessa."
+   },
+   "en": {
+    "text": "Mary's father has five daughters: Lala, Lele, Lili, Lolo. What is the fifth one called?",
+    "options": [
+     "Mary",
+     "Lulu",
+     "Lala",
+     "Lilo"
+    ],
+    "explanation": "The fifth daughter is Mary herself."
+   }
+  },
+  {
+   "key": "log-012",
+   "difficulty": "expert",
+   "source": {
+    "kind": "editorial",
+    "reference": "Editorial: pronic numbers"
+   },
+   "it": {
+    "text": "Qual è il numero successivo: 2, 6, 12, 20, 30, ...?",
+    "options": [
+     "42",
+     "40",
+     "36",
+     "44"
+    ],
+    "explanation": "I termini sono n × (n + 1): 6 × 7 = 42."
+   },
+   "en": {
+    "text": "What comes next: 2, 6, 12, 20, 30, ...?",
+    "options": [
+     "42",
+     "40",
+     "36",
+     "44"
+    ],
+    "explanation": "The terms are n × (n + 1): 6 × 7 = 42."
+   }
+  }
+ ]
+}

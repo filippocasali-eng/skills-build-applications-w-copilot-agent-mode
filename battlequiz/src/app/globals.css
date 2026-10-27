@@ -1,0 +1,99 @@
+@import "tailwindcss";
+
+/* BattleQuiz design tokens. Dark mode is the only theme for the MVP. */
+@theme {
+  --color-bg: #0b1020;
+  --color-surface: #151b30;
+  --color-surface-2: #1c2440;
+  --color-line: #2a3358;
+  --color-primary: #7c3aed;
+  --color-primary-soft: #a78bfa;
+  --color-secondary: #06b6d4;
+  --color-success: #22c55e;
+  --color-error: #ef4444;
+  --color-gold: #fbbf24;
+  --color-text: #f8fafc;
+  --color-muted: #94a3b8;
+
+  --font-sans: var(--font-body), ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-display: var(--font-display-face), var(--font-body), ui-sans-serif, system-ui, sans-serif;
+
+  --animate-float: float 9s ease-in-out infinite;
+  --animate-shimmer: shimmer 2.4s linear infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0) translateX(0); opacity: 0.35; }
+  50% { transform: translateY(-24px) translateX(8px); opacity: 0.8; }
+}
+
+@keyframes shimmer {
+  from { background-position: 200% 0; }
+  to { background-position: -200% 0; }
+}
+
+:root {
+  color-scheme: dark;
+}
+
+html {
+  background: var(--color-bg);
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+}
+
+::selection {
+  background: color-mix(in oklab, var(--color-primary) 60%, transparent);
+}
+
+/* Visible keyboard focus everywhere. */
+:focus-visible {
+  outline: 3px solid var(--color-secondary);
+  outline-offset: 3px;
+}
+
+.text-gradient {
+  background: linear-gradient(100deg, #c4b5fd 0%, #7c3aed 35%, #06b6d4 70%, #67e8f9 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.text-gold-gradient {
+  background: linear-gradient(100deg, #fde68a, #fbbf24 45%, #f59e0b);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.card-glass {
+  background: linear-gradient(180deg, color-mix(in oklab, var(--color-surface) 92%, white 3%), var(--color-surface));
+  border: 1px solid color-mix(in oklab, var(--color-line) 80%, transparent);
+  box-shadow: 0 1px 0 0 rgb(255 255 255 / 0.04) inset, 0 20px 50px -24px rgb(0 0 0 / 0.6);
+}
+
+.shimmer {
+  background: linear-gradient(90deg, transparent, rgb(255 255 255 / 0.18), transparent);
+  background-size: 200% 100%;
+  animation: var(--animate-shimmer);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+html[data-motion="reduce"] *, html[data-motion="reduce"] *::before, html[data-motion="reduce"] *::after {
+  animation-duration: 0.001ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.001ms !important;
+}

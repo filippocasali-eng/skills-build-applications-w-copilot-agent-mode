@@ -1,0 +1,342 @@
+{
+ "category": "geography",
+ "correctIndex": 0,
+ "questions": [
+  {
+   "key": "geo-001",
+   "difficulty": "easy",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Paris"
+   },
+   "it": {
+    "text": "Qual è la capitale della Francia?",
+    "options": [
+     "Parigi",
+     "Lione",
+     "Marsiglia",
+     "Nizza"
+    ],
+    "explanation": "Parigi è la capitale e la città più popolosa della Francia."
+   },
+   "en": {
+    "text": "What is the capital of France?",
+    "options": [
+     "Paris",
+     "Lyon",
+     "Marseille",
+     "Nice"
+    ],
+    "explanation": "Paris is France's capital and largest city."
+   }
+  },
+  {
+   "key": "geo-002",
+   "difficulty": "easy",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Po (river)"
+   },
+   "it": {
+    "text": "Qual è il fiume più lungo d'Italia?",
+    "options": [
+     "Po",
+     "Tevere",
+     "Adige",
+     "Arno"
+    ],
+    "explanation": "Il Po è lungo circa 652 km."
+   },
+   "en": {
+    "text": "What is the longest river in Italy?",
+    "options": [
+     "Po",
+     "Tiber",
+     "Adige",
+     "Arno"
+    ],
+    "explanation": "The Po is about 652 km long."
+   }
+  },
+  {
+   "key": "geo-003",
+   "difficulty": "easy",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Egypt"
+   },
+   "it": {
+    "text": "In quale continente si trova la maggior parte dell'Egitto?",
+    "options": [
+     "Africa",
+     "Asia",
+     "Europa",
+     "Oceania"
+    ],
+    "explanation": "L'Egitto è in Africa nord-orientale; solo il Sinai è in Asia."
+   },
+   "en": {
+    "text": "On which continent is most of Egypt located?",
+    "options": [
+     "Africa",
+     "Asia",
+     "Europe",
+     "Oceania"
+    ],
+    "explanation": "Egypt lies in north-east Africa; only Sinai is in Asia."
+   }
+  },
+  {
+   "key": "geo-004",
+   "difficulty": "easy",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Pacific Ocean"
+   },
+   "it": {
+    "text": "Qual è l'oceano più grande della Terra?",
+    "options": [
+     "Oceano Pacifico",
+     "Oceano Atlantico",
+     "Oceano Indiano",
+     "Oceano Artico"
+    ],
+    "explanation": "Il Pacifico copre circa un terzo della superficie terrestre."
+   },
+   "en": {
+    "text": "What is the largest ocean on Earth?",
+    "options": [
+     "Pacific Ocean",
+     "Atlantic Ocean",
+     "Indian Ocean",
+     "Arctic Ocean"
+    ],
+    "explanation": "The Pacific covers about a third of Earth's surface."
+   }
+  },
+  {
+   "key": "geo-005",
+   "difficulty": "medium",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Canberra"
+   },
+   "it": {
+    "text": "Qual è la capitale dell'Australia?",
+    "options": [
+     "Canberra",
+     "Sydney",
+     "Melbourne",
+     "Perth"
+    ],
+    "explanation": "Canberra fu scelta come compromesso tra Sydney e Melbourne."
+   },
+   "en": {
+    "text": "What is the capital of Australia?",
+    "options": [
+     "Canberra",
+     "Sydney",
+     "Melbourne",
+     "Perth"
+    ],
+    "explanation": "Canberra was chosen as a compromise between Sydney and Melbourne."
+   }
+  },
+  {
+   "key": "geo-006",
+   "difficulty": "medium",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Mount Everest"
+   },
+   "it": {
+    "text": "Qual è la montagna più alta del mondo sul livello del mare?",
+    "options": [
+     "Everest",
+     "K2",
+     "Kangchenjunga",
+     "Monte Bianco"
+    ],
+    "explanation": "L'Everest supera gli 8.800 metri."
+   },
+   "en": {
+    "text": "What is the highest mountain above sea level?",
+    "options": [
+     "Everest",
+     "K2",
+     "Kangchenjunga",
+     "Mont Blanc"
+    ],
+    "explanation": "Everest rises above 8,800 metres."
+   }
+  },
+  {
+   "key": "geo-007",
+   "difficulty": "medium",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Strait of Gibraltar"
+   },
+   "it": {
+    "text": "Quale stretto separa la Spagna dal Marocco?",
+    "options": [
+     "Stretto di Gibilterra",
+     "Bosforo",
+     "Stretto di Messina",
+     "Dardanelli"
+    ],
+    "explanation": "Lo Stretto di Gibilterra collega il Mediterraneo all'Atlantico."
+   },
+   "en": {
+    "text": "Which strait separates Spain from Morocco?",
+    "options": [
+     "Strait of Gibraltar",
+     "Bosphorus",
+     "Strait of Messina",
+     "Dardanelles"
+    ],
+    "explanation": "The Strait of Gibraltar links the Mediterranean and the Atlantic."
+   }
+  },
+  {
+   "key": "geo-008",
+   "difficulty": "medium",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Ottawa"
+   },
+   "it": {
+    "text": "Qual è la capitale del Canada?",
+    "options": [
+     "Ottawa",
+     "Toronto",
+     "Montréal",
+     "Vancouver"
+    ],
+    "explanation": "Ottawa si trova nella provincia dell'Ontario."
+   },
+   "en": {
+    "text": "What is the capital of Canada?",
+    "options": [
+     "Ottawa",
+     "Toronto",
+     "Montreal",
+     "Vancouver"
+    ],
+    "explanation": "Ottawa is in the province of Ontario."
+   }
+  },
+  {
+   "key": "geo-009",
+   "difficulty": "hard",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Lake Garda"
+   },
+   "it": {
+    "text": "Qual è il lago più grande d'Italia?",
+    "options": [
+     "Lago di Garda",
+     "Lago Maggiore",
+     "Lago di Como",
+     "Lago Trasimeno"
+    ],
+    "explanation": "Il Garda ha una superficie di circa 370 km²."
+   },
+   "en": {
+    "text": "What is the largest lake in Italy?",
+    "options": [
+     "Lake Garda",
+     "Lake Maggiore",
+     "Lake Como",
+     "Lake Trasimeno"
+    ],
+    "explanation": "Lake Garda covers about 370 km²."
+   }
+  },
+  {
+   "key": "geo-010",
+   "difficulty": "hard",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Sahara"
+   },
+   "it": {
+    "text": "Qual è il deserto caldo più grande del mondo?",
+    "options": [
+     "Sahara",
+     "Gobi",
+     "Kalahari",
+     "Deserto arabico"
+    ],
+    "explanation": "Il Sahara è il più grande deserto caldo; l'Antartide è il più grande deserto in assoluto."
+   },
+   "en": {
+    "text": "What is the largest hot desert in the world?",
+    "options": [
+     "Sahara",
+     "Gobi",
+     "Kalahari",
+     "Arabian Desert"
+    ],
+    "explanation": "The Sahara is the largest hot desert; Antarctica is the largest desert overall."
+   }
+  },
+  {
+   "key": "geo-011",
+   "difficulty": "hard",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Ulaanbaatar"
+   },
+   "it": {
+    "text": "Qual è la capitale della Mongolia?",
+    "options": [
+     "Ulan Bator",
+     "Astana",
+     "Biškek",
+     "Taškent"
+    ],
+    "explanation": "Ulan Bator è anche la città più popolosa della Mongolia."
+   },
+   "en": {
+    "text": "What is the capital of Mongolia?",
+    "options": [
+     "Ulaanbaatar",
+     "Astana",
+     "Bishkek",
+     "Tashkent"
+    ],
+    "explanation": "Ulaanbaatar is also Mongolia's largest city."
+   }
+  },
+  {
+   "key": "geo-012",
+   "difficulty": "expert",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Mariana Trench"
+   },
+   "it": {
+    "text": "Dove si trova il punto più profondo conosciuto degli oceani?",
+    "options": [
+     "Fossa delle Marianne",
+     "Fossa di Porto Rico",
+     "Fossa di Giava",
+     "Fossa delle Tonga"
+    ],
+    "explanation": "Il Challenger Deep, nella Fossa delle Marianne, scende a quasi 11.000 metri."
+   },
+   "en": {
+    "text": "Where is the deepest known point of the oceans?",
+    "options": [
+     "Mariana Trench",
+     "Puerto Rico Trench",
+     "Java Trench",
+     "Tonga Trench"
+    ],
+    "explanation": "Challenger Deep in the Mariana Trench reaches nearly 11,000 metres."
+   }
+  }
+ ]
+}

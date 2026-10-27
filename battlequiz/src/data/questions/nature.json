@@ -1,0 +1,342 @@
+{
+ "category": "nature",
+ "correctIndex": 0,
+ "questions": [
+  {
+   "key": "nat-001",
+   "difficulty": "easy",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Cheetah"
+   },
+   "it": {
+    "text": "Qual è l'animale terrestre più veloce?",
+    "options": [
+     "Ghepardo",
+     "Leone",
+     "Cavallo",
+     "Antilope"
+    ],
+    "explanation": "Il ghepardo può superare i 100 km/h in brevi scatti."
+   },
+   "en": {
+    "text": "What is the fastest land animal?",
+    "options": [
+     "Cheetah",
+     "Lion",
+     "Horse",
+     "Antelope"
+    ],
+    "explanation": "The cheetah can exceed 100 km/h in short sprints."
+   }
+  },
+  {
+   "key": "nat-002",
+   "difficulty": "easy",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Blue whale"
+   },
+   "it": {
+    "text": "Qual è l'animale più grande mai esistito?",
+    "options": [
+     "Balenottera azzurra",
+     "Elefante africano",
+     "Orca",
+     "Squalo balena"
+    ],
+    "explanation": "La balenottera azzurra può superare i 25 metri di lunghezza."
+   },
+   "en": {
+    "text": "What is the largest animal known to have ever lived?",
+    "options": [
+     "Blue whale",
+     "African elephant",
+     "Orca",
+     "Whale shark"
+    ],
+    "explanation": "Blue whales can exceed 25 metres in length."
+   }
+  },
+  {
+   "key": "nat-003",
+   "difficulty": "easy",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Giant panda"
+   },
+   "it": {
+    "text": "Di che cosa si nutre principalmente il panda gigante?",
+    "options": [
+     "Bambù",
+     "Pesce",
+     "Insetti",
+     "Frutti di bosco"
+    ],
+    "explanation": "Il bambù costituisce oltre il 99% della dieta del panda."
+   },
+   "en": {
+    "text": "What does the giant panda mainly eat?",
+    "options": [
+     "Bamboo",
+     "Fish",
+     "Insects",
+     "Berries"
+    ],
+    "explanation": "Bamboo makes up over 99% of a panda's diet."
+   }
+  },
+  {
+   "key": "nat-004",
+   "difficulty": "easy",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Calf"
+   },
+   "it": {
+    "text": "Come si chiama il piccolo della mucca?",
+    "options": [
+     "Vitello",
+     "Puledro",
+     "Agnello",
+     "Capretto"
+    ],
+    "explanation": "Il puledro è il piccolo del cavallo, l'agnello della pecora."
+   },
+   "en": {
+    "text": "What is a baby cow called?",
+    "options": [
+     "Calf",
+     "Foal",
+     "Lamb",
+     "Kid"
+    ],
+    "explanation": "A foal is a baby horse and a lamb a baby sheep."
+   }
+  },
+  {
+   "key": "nat-005",
+   "difficulty": "medium",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Octopus"
+   },
+   "it": {
+    "text": "Quanti cuori ha un polpo?",
+    "options": [
+     "3",
+     "1",
+     "2",
+     "4"
+    ],
+    "explanation": "Due cuori pompano il sangue alle branchie e uno al resto del corpo."
+   },
+   "en": {
+    "text": "How many hearts does an octopus have?",
+    "options": [
+     "3",
+     "1",
+     "2",
+     "4"
+    ],
+    "explanation": "Two hearts pump blood to the gills and one to the rest of the body."
+   }
+  },
+  {
+   "key": "nat-006",
+   "difficulty": "medium",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Acorn"
+   },
+   "it": {
+    "text": "Quale albero produce le ghiande?",
+    "options": [
+     "Quercia",
+     "Pino",
+     "Castagno",
+     "Faggio"
+    ],
+    "explanation": "Le ghiande sono i frutti della quercia."
+   },
+   "en": {
+    "text": "Which tree produces acorns?",
+    "options": [
+     "Oak",
+     "Pine",
+     "Chestnut",
+     "Beech"
+    ],
+    "explanation": "Acorns are the fruit of the oak."
+   }
+  },
+  {
+   "key": "nat-007",
+   "difficulty": "medium",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Emperor penguin"
+   },
+   "it": {
+    "text": "Quale uccello incapace di volare vive e si riproduce in Antartide?",
+    "options": [
+     "Pinguino imperatore",
+     "Struzzo",
+     "Kiwi",
+     "Emù"
+    ],
+    "explanation": "Il pinguino imperatore si riproduce durante l'inverno antartico."
+   },
+   "en": {
+    "text": "Which flightless bird lives and breeds in Antarctica?",
+    "options": [
+     "Emperor penguin",
+     "Ostrich",
+     "Kiwi",
+     "Emu"
+    ],
+    "explanation": "The emperor penguin breeds during the Antarctic winter."
+   }
+  },
+  {
+   "key": "nat-008",
+   "difficulty": "medium",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Giraffe"
+   },
+   "it": {
+    "text": "Qual è l'animale terrestre più alto?",
+    "options": [
+     "Giraffa",
+     "Elefante",
+     "Cammello",
+     "Struzzo"
+    ],
+    "explanation": "Una giraffa maschio adulta può superare i 5 metri."
+   },
+   "en": {
+    "text": "What is the tallest land animal?",
+    "options": [
+     "Giraffe",
+     "Elephant",
+     "Camel",
+     "Ostrich"
+    ],
+    "explanation": "An adult male giraffe can exceed 5 metres."
+   }
+  },
+  {
+   "key": "nat-009",
+   "difficulty": "hard",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Amazon rainforest"
+   },
+   "it": {
+    "text": "Qual è la foresta pluviale tropicale più estesa del mondo?",
+    "options": [
+     "Amazzonia",
+     "Foresta del Congo",
+     "Foresta di Daintree",
+     "Foresta del Borneo"
+    ],
+    "explanation": "L'Amazzonia si estende su nove paesi del Sud America."
+   },
+   "en": {
+    "text": "What is the largest tropical rainforest in the world?",
+    "options": [
+     "The Amazon",
+     "The Congo Rainforest",
+     "The Daintree Rainforest",
+     "The Borneo Rainforest"
+    ],
+    "explanation": "The Amazon spans nine South American countries."
+   }
+  },
+  {
+   "key": "nat-010",
+   "difficulty": "hard",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Metamorphosis"
+   },
+   "it": {
+    "text": "Come si chiama il processo con cui un bruco diventa farfalla?",
+    "options": [
+     "Metamorfosi",
+     "Fotosintesi",
+     "Mitosi",
+     "Germinazione"
+    ],
+    "explanation": "Le farfalle attraversano uovo, larva, pupa e adulto."
+   },
+   "en": {
+    "text": "What is the process by which a caterpillar becomes a butterfly?",
+    "options": [
+     "Metamorphosis",
+     "Photosynthesis",
+     "Mitosis",
+     "Germination"
+    ],
+    "explanation": "Butterflies go through egg, larva, pupa and adult stages."
+   }
+  },
+  {
+   "key": "nat-011",
+   "difficulty": "hard",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Bat"
+   },
+   "it": {
+    "text": "Qual è l'unico mammifero capace di volo attivo?",
+    "options": [
+     "Pipistrello",
+     "Scoiattolo volante",
+     "Colugo",
+     "Petauro dello zucchero"
+    ],
+    "explanation": "Scoiattoli volanti, colughi e petauri planano, ma non volano attivamente."
+   },
+   "en": {
+    "text": "Which is the only mammal capable of true powered flight?",
+    "options": [
+     "Bat",
+     "Flying squirrel",
+     "Colugo",
+     "Sugar glider"
+    ],
+    "explanation": "Flying squirrels, colugos and sugar gliders glide but cannot truly fly."
+   }
+  },
+  {
+   "key": "nat-012",
+   "difficulty": "expert",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Axolotl"
+   },
+   "it": {
+    "text": "A quale classe di animali appartiene l'axolotl?",
+    "options": [
+     "Anfibi",
+     "Rettili",
+     "Pesci",
+     "Mammiferi"
+    ],
+    "explanation": "L'axolotl è una salamandra che conserva tratti larvali da adulta."
+   },
+   "en": {
+    "text": "To which class of animals does the axolotl belong?",
+    "options": [
+     "Amphibians",
+     "Reptiles",
+     "Fish",
+     "Mammals"
+    ],
+    "explanation": "The axolotl is a salamander that keeps larval traits as an adult."
+   }
+  }
+ ]
+}

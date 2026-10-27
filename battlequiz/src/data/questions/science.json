@@ -1,0 +1,342 @@
+{
+ "category": "science",
+ "correctIndex": 0,
+ "questions": [
+  {
+   "key": "sci-001",
+   "difficulty": "easy",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Water"
+   },
+   "it": {
+    "text": "Qual è la formula chimica dell'acqua?",
+    "options": [
+     "H₂O",
+     "CO₂",
+     "O₂",
+     "NaCl"
+    ],
+    "explanation": "Ogni molecola d'acqua ha due atomi di idrogeno e uno di ossigeno."
+   },
+   "en": {
+    "text": "What is the chemical formula of water?",
+    "options": [
+     "H₂O",
+     "CO₂",
+     "O₂",
+     "NaCl"
+    ],
+    "explanation": "Each water molecule has two hydrogen atoms and one oxygen atom."
+   }
+  },
+  {
+   "key": "sci-002",
+   "difficulty": "easy",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Mars"
+   },
+   "it": {
+    "text": "Quale pianeta è chiamato \"pianeta rosso\"?",
+    "options": [
+     "Marte",
+     "Venere",
+     "Giove",
+     "Mercurio"
+    ],
+    "explanation": "Il colore rosso di Marte è dovuto agli ossidi di ferro sulla superficie."
+   },
+   "en": {
+    "text": "Which planet is called the \"Red Planet\"?",
+    "options": [
+     "Mars",
+     "Venus",
+     "Jupiter",
+     "Mercury"
+    ],
+    "explanation": "Mars looks red because of iron oxides on its surface."
+   }
+  },
+  {
+   "key": "sci-003",
+   "difficulty": "easy",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Sun"
+   },
+   "it": {
+    "text": "Qual è la stella più vicina alla Terra?",
+    "options": [
+     "Il Sole",
+     "Proxima Centauri",
+     "Sirio",
+     "Betelgeuse"
+    ],
+    "explanation": "Il Sole è una stella; dopo di lui la più vicina è Proxima Centauri."
+   },
+   "en": {
+    "text": "What is the closest star to Earth?",
+    "options": [
+     "The Sun",
+     "Proxima Centauri",
+     "Sirius",
+     "Betelgeuse"
+    ],
+    "explanation": "The Sun is a star; the next closest is Proxima Centauri."
+   }
+  },
+  {
+   "key": "sci-004",
+   "difficulty": "easy",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Insect"
+   },
+   "it": {
+    "text": "Quante zampe ha un insetto adulto?",
+    "options": [
+     "6",
+     "8",
+     "4",
+     "10"
+    ],
+    "explanation": "Gli insetti hanno sei zampe; i ragni, che sono aracnidi, ne hanno otto."
+   },
+   "en": {
+    "text": "How many legs does an adult insect have?",
+    "options": [
+     "6",
+     "8",
+     "4",
+     "10"
+    ],
+    "explanation": "Insects have six legs; spiders, which are arachnids, have eight."
+   }
+  },
+  {
+   "key": "sci-005",
+   "difficulty": "medium",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Gold"
+   },
+   "it": {
+    "text": "Qual è il simbolo chimico dell'oro?",
+    "options": [
+     "Au",
+     "Ag",
+     "Or",
+     "Go"
+    ],
+    "explanation": "Au deriva dal latino \"aurum\". Ag è l'argento."
+   },
+   "en": {
+    "text": "What is the chemical symbol for gold?",
+    "options": [
+     "Au",
+     "Ag",
+     "Or",
+     "Go"
+    ],
+    "explanation": "Au comes from the Latin \"aurum\". Ag is silver."
+   }
+  },
+  {
+   "key": "sci-006",
+   "difficulty": "medium",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Boiling point"
+   },
+   "it": {
+    "text": "A quanti gradi Celsius bolle l'acqua al livello del mare?",
+    "options": [
+     "100 °C",
+     "90 °C",
+     "120 °C",
+     "80 °C"
+    ],
+    "explanation": "A pressione atmosferica standard l'acqua bolle a 100 °C."
+   },
+   "en": {
+    "text": "At what temperature does water boil at sea level?",
+    "options": [
+     "100 °C",
+     "90 °C",
+     "120 °C",
+     "80 °C"
+    ],
+    "explanation": "At standard atmospheric pressure water boils at 100 °C."
+   }
+  },
+  {
+   "key": "sci-007",
+   "difficulty": "medium",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Jupiter"
+   },
+   "it": {
+    "text": "Qual è il pianeta più grande del Sistema solare?",
+    "options": [
+     "Giove",
+     "Saturno",
+     "Nettuno",
+     "Urano"
+    ],
+    "explanation": "Giove ha una massa più che doppia rispetto a tutti gli altri pianeti messi insieme."
+   },
+   "en": {
+    "text": "What is the largest planet in the Solar System?",
+    "options": [
+     "Jupiter",
+     "Saturn",
+     "Neptune",
+     "Uranus"
+    ],
+    "explanation": "Jupiter is more than twice as massive as all other planets combined."
+   }
+  },
+  {
+   "key": "sci-008",
+   "difficulty": "medium",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Photosynthesis"
+   },
+   "it": {
+    "text": "Quale gas assorbono le piante durante la fotosintesi?",
+    "options": [
+     "Anidride carbonica",
+     "Ossigeno",
+     "Azoto",
+     "Elio"
+    ],
+    "explanation": "Le piante usano CO₂, acqua e luce per produrre zuccheri e rilasciare ossigeno."
+   },
+   "en": {
+    "text": "Which gas do plants absorb during photosynthesis?",
+    "options": [
+     "Carbon dioxide",
+     "Oxygen",
+     "Nitrogen",
+     "Helium"
+    ],
+    "explanation": "Plants use CO₂, water and light to make sugars and release oxygen."
+   }
+  },
+  {
+   "key": "sci-009",
+   "difficulty": "hard",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Carbon"
+   },
+   "it": {
+    "text": "Qual è il numero atomico del carbonio?",
+    "options": [
+     "6",
+     "12",
+     "8",
+     "4"
+    ],
+    "explanation": "Il carbonio ha 6 protoni; 12 è il numero di massa del suo isotopo più comune."
+   },
+   "en": {
+    "text": "What is the atomic number of carbon?",
+    "options": [
+     "6",
+     "12",
+     "8",
+     "4"
+    ],
+    "explanation": "Carbon has 6 protons; 12 is the mass number of its most common isotope."
+   }
+  },
+  {
+   "key": "sci-010",
+   "difficulty": "hard",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: General relativity"
+   },
+   "it": {
+    "text": "Chi formulò la teoria della relatività generale?",
+    "options": [
+     "Albert Einstein",
+     "Isaac Newton",
+     "Niels Bohr",
+     "Max Planck"
+    ],
+    "explanation": "Einstein pubblicò la relatività generale nel 1915."
+   },
+   "en": {
+    "text": "Who developed the theory of general relativity?",
+    "options": [
+     "Albert Einstein",
+     "Isaac Newton",
+     "Niels Bohr",
+     "Max Planck"
+    ],
+    "explanation": "Einstein published general relativity in 1915."
+   }
+  },
+  {
+   "key": "sci-011",
+   "difficulty": "hard",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Femur"
+   },
+   "it": {
+    "text": "Qual è l'osso più lungo del corpo umano?",
+    "options": [
+     "Femore",
+     "Tibia",
+     "Omero",
+     "Perone"
+    ],
+    "explanation": "Il femore è l'osso della coscia."
+   },
+   "en": {
+    "text": "What is the longest bone in the human body?",
+    "options": [
+     "Femur",
+     "Tibia",
+     "Humerus",
+     "Fibula"
+    ],
+    "explanation": "The femur is the thigh bone."
+   }
+  },
+  {
+   "key": "sci-012",
+   "difficulty": "expert",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Speed of light"
+   },
+   "it": {
+    "text": "Qual è, approssimativamente, la velocità della luce nel vuoto?",
+    "options": [
+     "Circa 300.000 km/s",
+     "Circa 150.000 km/s",
+     "Circa 30.000 km/s",
+     "Circa 3.000.000 km/s"
+    ],
+    "explanation": "Il valore esatto è 299.792,458 km/s."
+   },
+   "en": {
+    "text": "What is the approximate speed of light in a vacuum?",
+    "options": [
+     "About 300,000 km/s",
+     "About 150,000 km/s",
+     "About 30,000 km/s",
+     "About 3,000,000 km/s"
+    ],
+    "explanation": "The exact value is 299,792.458 km/s."
+   }
+  }
+ ]
+}

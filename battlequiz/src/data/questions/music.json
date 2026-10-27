@@ -1,0 +1,342 @@
+{
+ "category": "music",
+ "correctIndex": 0,
+ "questions": [
+  {
+   "key": "mus-001",
+   "difficulty": "easy",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Classical guitar"
+   },
+   "it": {
+    "text": "Quante corde ha normalmente una chitarra classica?",
+    "options": [
+     "6",
+     "4",
+     "5",
+     "12"
+    ],
+    "explanation": "La chitarra classica standard ha sei corde."
+   },
+   "en": {
+    "text": "How many strings does a standard classical guitar have?",
+    "options": [
+     "6",
+     "4",
+     "5",
+     "12"
+    ],
+    "explanation": "A standard classical guitar has six strings."
+   }
+  },
+  {
+   "key": "mus-002",
+   "difficulty": "easy",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: The Beatles"
+   },
+   "it": {
+    "text": "Quale band britannica era formata da John, Paul, George e Ringo?",
+    "options": [
+     "The Beatles",
+     "The Rolling Stones",
+     "Queen",
+     "The Who"
+    ],
+    "explanation": "I Beatles nacquero a Liverpool."
+   },
+   "en": {
+    "text": "Which British band was made up of John, Paul, George and Ringo?",
+    "options": [
+     "The Beatles",
+     "The Rolling Stones",
+     "Queen",
+     "The Who"
+    ],
+    "explanation": "The Beatles formed in Liverpool."
+   }
+  },
+  {
+   "key": "mus-003",
+   "difficulty": "easy",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Michael Jackson"
+   },
+   "it": {
+    "text": "Chi è soprannominato il \"Re del Pop\"?",
+    "options": [
+     "Michael Jackson",
+     "Elvis Presley",
+     "Prince",
+     "Freddie Mercury"
+    ],
+    "explanation": "Elvis è invece noto come il \"Re del Rock and Roll\"."
+   },
+   "en": {
+    "text": "Who is nicknamed the \"King of Pop\"?",
+    "options": [
+     "Michael Jackson",
+     "Elvis Presley",
+     "Prince",
+     "Freddie Mercury"
+    ],
+    "explanation": "Elvis is instead known as the \"King of Rock and Roll\"."
+   }
+  },
+  {
+   "key": "mus-004",
+   "difficulty": "easy",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Piano"
+   },
+   "it": {
+    "text": "Quale strumento ha una tastiera con tasti bianchi e neri?",
+    "options": [
+     "Pianoforte",
+     "Violino",
+     "Flauto",
+     "Tromba"
+    ],
+    "explanation": "Un pianoforte moderno ha 88 tasti."
+   },
+   "en": {
+    "text": "Which instrument has a keyboard with black and white keys?",
+    "options": [
+     "Piano",
+     "Violin",
+     "Flute",
+     "Trumpet"
+    ],
+    "explanation": "A modern piano has 88 keys."
+   }
+  },
+  {
+   "key": "mus-005",
+   "difficulty": "medium",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: The Four Seasons (Vivaldi)"
+   },
+   "it": {
+    "text": "Chi ha composto \"Le quattro stagioni\"?",
+    "options": [
+     "Antonio Vivaldi",
+     "Wolfgang Amadeus Mozart",
+     "Johann Sebastian Bach",
+     "Giuseppe Verdi"
+    ],
+    "explanation": "Vivaldi pubblicò i quattro concerti nel 1725."
+   },
+   "en": {
+    "text": "Who composed \"The Four Seasons\"?",
+    "options": [
+     "Antonio Vivaldi",
+     "Wolfgang Amadeus Mozart",
+     "Johann Sebastian Bach",
+     "Giuseppe Verdi"
+    ],
+    "explanation": "Vivaldi published the four concertos in 1725."
+   }
+  },
+  {
+   "key": "mus-006",
+   "difficulty": "medium",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Freddie Mercury"
+   },
+   "it": {
+    "text": "Chi era il cantante dei Queen?",
+    "options": [
+     "Freddie Mercury",
+     "Brian May",
+     "Mick Jagger",
+     "David Bowie"
+    ],
+    "explanation": "Brian May era il chitarrista dei Queen."
+   },
+   "en": {
+    "text": "Who was the lead singer of Queen?",
+    "options": [
+     "Freddie Mercury",
+     "Brian May",
+     "Mick Jagger",
+     "David Bowie"
+    ],
+    "explanation": "Brian May was Queen's guitarist."
+   }
+  },
+  {
+   "key": "mus-007",
+   "difficulty": "medium",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Sanremo Music Festival"
+   },
+   "it": {
+    "text": "In quale città si svolge il Festival della canzone italiana?",
+    "options": [
+     "Sanremo",
+     "Milano",
+     "Roma",
+     "Napoli"
+    ],
+    "explanation": "Il Festival si tiene a Sanremo dal 1951."
+   },
+   "en": {
+    "text": "In which city is the Italian Song Festival held?",
+    "options": [
+     "Sanremo",
+     "Milan",
+     "Rome",
+     "Naples"
+    ],
+    "explanation": "The festival has been held in Sanremo since 1951."
+   }
+  },
+  {
+   "key": "mus-008",
+   "difficulty": "medium",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Diatonic scale"
+   },
+   "it": {
+    "text": "Quante note ha la scala diatonica (do, re, mi, fa, sol, la, si)?",
+    "options": [
+     "7",
+     "8",
+     "5",
+     "12"
+    ],
+    "explanation": "Le sette note sono do, re, mi, fa, sol, la, si."
+   },
+   "en": {
+    "text": "How many notes are in the diatonic scale (do, re, mi, fa, sol, la, ti)?",
+    "options": [
+     "7",
+     "8",
+     "5",
+     "12"
+    ],
+    "explanation": "The seven notes are do, re, mi, fa, sol, la, ti."
+   }
+  },
+  {
+   "key": "mus-009",
+   "difficulty": "hard",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Aida"
+   },
+   "it": {
+    "text": "Chi ha composto l'opera \"Aida\"?",
+    "options": [
+     "Giuseppe Verdi",
+     "Giacomo Puccini",
+     "Gioachino Rossini",
+     "Gaetano Donizetti"
+    ],
+    "explanation": "Aida debuttò al Cairo nel 1871."
+   },
+   "en": {
+    "text": "Who composed the opera \"Aida\"?",
+    "options": [
+     "Giuseppe Verdi",
+     "Giacomo Puccini",
+     "Gioachino Rossini",
+     "Gaetano Donizetti"
+    ],
+    "explanation": "Aida premiered in Cairo in 1871."
+   }
+  },
+  {
+   "key": "mus-010",
+   "difficulty": "hard",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Ludwig van Beethoven"
+   },
+   "it": {
+    "text": "Quale compositore continuò a comporre dopo essere diventato quasi completamente sordo?",
+    "options": [
+     "Ludwig van Beethoven",
+     "Franz Schubert",
+     "Fryderyk Chopin",
+     "Johannes Brahms"
+    ],
+    "explanation": "Beethoven compose la Nona Sinfonia quando era ormai sordo."
+   },
+   "en": {
+    "text": "Which composer kept composing after becoming almost completely deaf?",
+    "options": [
+     "Ludwig van Beethoven",
+     "Franz Schubert",
+     "Frédéric Chopin",
+     "Johannes Brahms"
+    ],
+    "explanation": "Beethoven wrote his Ninth Symphony when he was already deaf."
+   }
+  },
+  {
+   "key": "mus-011",
+   "difficulty": "hard",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Eurovision Song Contest 2021"
+   },
+   "it": {
+    "text": "Quale gruppo italiano vinse l'Eurovision Song Contest nel 2021?",
+    "options": [
+     "Måneskin",
+     "Il Volo",
+     "Pinguini Tattici Nucleari",
+     "Modà"
+    ],
+    "explanation": "I Måneskin vinsero a Rotterdam con \"Zitti e buoni\"."
+   },
+   "en": {
+    "text": "Which Italian band won the 2021 Eurovision Song Contest?",
+    "options": [
+     "Måneskin",
+     "Il Volo",
+     "Pinguini Tattici Nucleari",
+     "Modà"
+    ],
+    "explanation": "Måneskin won in Rotterdam with \"Zitti e buoni\"."
+   }
+  },
+  {
+   "key": "mus-012",
+   "difficulty": "expert",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Nessun dorma"
+   },
+   "it": {
+    "text": "Da quale opera di Puccini proviene l'aria \"Nessun dorma\"?",
+    "options": [
+     "Turandot",
+     "Tosca",
+     "La bohème",
+     "Madama Butterfly"
+    ],
+    "explanation": "Turandot rimase incompiuta alla morte di Puccini nel 1924."
+   },
+   "en": {
+    "text": "Which Puccini opera features the aria \"Nessun dorma\"?",
+    "options": [
+     "Turandot",
+     "Tosca",
+     "La bohème",
+     "Madama Butterfly"
+    ],
+    "explanation": "Turandot was left unfinished when Puccini died in 1924."
+   }
+  }
+ ]
+}

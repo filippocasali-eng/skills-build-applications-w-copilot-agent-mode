@@ -1,0 +1,342 @@
+{
+ "category": "pop_culture",
+ "correctIndex": 0,
+ "questions": [
+  {
+   "key": "pop-001",
+   "difficulty": "easy",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Spider-Man"
+   },
+   "it": {
+    "text": "Quale supereroe è conosciuto come l'Uomo Ragno?",
+    "options": [
+     "Spider-Man",
+     "Batman",
+     "Superman",
+     "Iron Man"
+    ],
+    "explanation": "Spider-Man fu creato da Stan Lee e Steve Ditko."
+   },
+   "en": {
+    "text": "Which superhero is known as the web-slinger?",
+    "options": [
+     "Spider-Man",
+     "Batman",
+     "Superman",
+     "Iron Man"
+    ],
+    "explanation": "Spider-Man was created by Stan Lee and Steve Ditko."
+   }
+  },
+  {
+   "key": "pop-002",
+   "difficulty": "easy",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: SpongeBob SquarePants"
+   },
+   "it": {
+    "text": "Quale personaggio dei cartoni vive in un ananas sotto il mare?",
+    "options": [
+     "SpongeBob",
+     "Patrick",
+     "Squiddi",
+     "Nemo"
+    ],
+    "explanation": "SpongeBob vive a Bikini Bottom."
+   },
+   "en": {
+    "text": "Which cartoon character lives in a pineapple under the sea?",
+    "options": [
+     "SpongeBob",
+     "Patrick",
+     "Squidward",
+     "Nemo"
+    ],
+    "explanation": "SpongeBob lives in Bikini Bottom."
+   }
+  },
+  {
+   "key": "pop-003",
+   "difficulty": "easy",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: The Simpsons"
+   },
+   "it": {
+    "text": "Di che colore è la pelle dei Simpson?",
+    "options": [
+     "Gialla",
+     "Verde",
+     "Blu",
+     "Arancione"
+    ],
+    "explanation": "Il giallo è il tratto distintivo della serie di Matt Groening."
+   },
+   "en": {
+    "text": "What colour is the Simpsons' skin?",
+    "options": [
+     "Yellow",
+     "Green",
+     "Blue",
+     "Orange"
+    ],
+    "explanation": "Yellow skin is the trademark of Matt Groening's show."
+   }
+  },
+  {
+   "key": "pop-004",
+   "difficulty": "easy",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Barbie"
+   },
+   "it": {
+    "text": "Come si chiama la celebre bambola lanciata da Mattel nel 1959?",
+    "options": [
+     "Barbie",
+     "Bratz",
+     "Polly Pocket",
+     "Cicciobello"
+    ],
+    "explanation": "Barbie fu presentata alla fiera del giocattolo di New York nel 1959."
+   },
+   "en": {
+    "text": "What is the name of the famous doll launched by Mattel in 1959?",
+    "options": [
+     "Barbie",
+     "Bratz",
+     "Polly Pocket",
+     "Cabbage Patch Kid"
+    ],
+    "explanation": "Barbie was presented at the New York Toy Fair in 1959."
+   }
+  },
+  {
+   "key": "pop-005",
+   "difficulty": "medium",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Sherlock Holmes"
+   },
+   "it": {
+    "text": "In quale città vive Sherlock Holmes nei racconti di Arthur Conan Doyle?",
+    "options": [
+     "Londra",
+     "Edimburgo",
+     "Parigi",
+     "Dublino"
+    ],
+    "explanation": "Holmes abita al 221B di Baker Street."
+   },
+   "en": {
+    "text": "In which city does Sherlock Holmes live in Arthur Conan Doyle's stories?",
+    "options": [
+     "London",
+     "Edinburgh",
+     "Paris",
+     "Dublin"
+    ],
+    "explanation": "Holmes lives at 221B Baker Street."
+   }
+  },
+  {
+   "key": "pop-006",
+   "difficulty": "medium",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Superman"
+   },
+   "it": {
+    "text": "Qual è l'identità segreta di Superman?",
+    "options": [
+     "Clark Kent",
+     "Bruce Wayne",
+     "Peter Parker",
+     "Tony Stark"
+    ],
+    "explanation": "Bruce Wayne è Batman, Peter Parker è Spider-Man."
+   },
+   "en": {
+    "text": "What is Superman's secret identity?",
+    "options": [
+     "Clark Kent",
+     "Bruce Wayne",
+     "Peter Parker",
+     "Tony Stark"
+    ],
+    "explanation": "Bruce Wayne is Batman and Peter Parker is Spider-Man."
+   }
+  },
+  {
+   "key": "pop-007",
+   "difficulty": "medium",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: TikTok"
+   },
+   "it": {
+    "text": "Quale app è la versione internazionale della piattaforma cinese Douyin?",
+    "options": [
+     "TikTok",
+     "WeChat",
+     "Instagram",
+     "Snapchat"
+    ],
+    "explanation": "Entrambe sono di proprietà di ByteDance."
+   },
+   "en": {
+    "text": "Which app is the international version of China's Douyin?",
+    "options": [
+     "TikTok",
+     "WeChat",
+     "Instagram",
+     "Snapchat"
+    ],
+    "explanation": "Both are owned by ByteDance."
+   }
+  },
+  {
+   "key": "pop-008",
+   "difficulty": "medium",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: The Chronicles of Narnia"
+   },
+   "it": {
+    "text": "Come si chiama il mondo magico raggiungibile attraverso un armadio nei libri di C.S. Lewis?",
+    "options": [
+     "Narnia",
+     "Terra di Mezzo",
+     "L'Isola che non c'è",
+     "Oz"
+    ],
+    "explanation": "\"Il leone, la strega e l'armadio\" uscì nel 1950."
+   },
+   "en": {
+    "text": "What is the magical land reached through a wardrobe in C.S. Lewis's books?",
+    "options": [
+     "Narnia",
+     "Middle-earth",
+     "Neverland",
+     "Oz"
+    ],
+    "explanation": "\"The Lion, the Witch and the Wardrobe\" was published in 1950."
+   }
+  },
+  {
+   "key": "pop-009",
+   "difficulty": "hard",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Nineteen Eighty-Four"
+   },
+   "it": {
+    "text": "Chi ha scritto il romanzo \"1984\"?",
+    "options": [
+     "George Orwell",
+     "Aldous Huxley",
+     "Ray Bradbury",
+     "H.G. Wells"
+    ],
+    "explanation": "Orwell pubblicò \"1984\" nel 1949."
+   },
+   "en": {
+    "text": "Who wrote the novel \"Nineteen Eighty-Four\"?",
+    "options": [
+     "George Orwell",
+     "Aldous Huxley",
+     "Ray Bradbury",
+     "H.G. Wells"
+    ],
+    "explanation": "Orwell published it in 1949."
+   }
+  },
+  {
+   "key": "pop-010",
+   "difficulty": "hard",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: The Hobbit"
+   },
+   "it": {
+    "text": "Come si chiama lo hobbit protagonista de \"Lo Hobbit\" di Tolkien?",
+    "options": [
+     "Bilbo Baggins",
+     "Frodo Baggins",
+     "Samvise Gamgee",
+     "Peregrino Tuc"
+    ],
+    "explanation": "Frodo è il protagonista de \"Il Signore degli Anelli\"."
+   },
+   "en": {
+    "text": "What is the name of the hobbit hero of Tolkien's \"The Hobbit\"?",
+    "options": [
+     "Bilbo Baggins",
+     "Frodo Baggins",
+     "Samwise Gamgee",
+     "Peregrin Took"
+    ],
+    "explanation": "Frodo is the hero of \"The Lord of the Rings\"."
+   }
+  },
+  {
+   "key": "pop-011",
+   "difficulty": "hard",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Mickey Mouse"
+   },
+   "it": {
+    "text": "Chi creò Topolino insieme a Ub Iwerks?",
+    "options": [
+     "Walt Disney",
+     "Stan Lee",
+     "Charles Schulz",
+     "William Hanna"
+    ],
+    "explanation": "Topolino debuttò nel 1928 in \"Steamboat Willie\"."
+   },
+   "en": {
+    "text": "Who created Mickey Mouse together with Ub Iwerks?",
+    "options": [
+     "Walt Disney",
+     "Stan Lee",
+     "Charles Schulz",
+     "William Hanna"
+    ],
+    "explanation": "Mickey debuted in 1928 in \"Steamboat Willie\"."
+   }
+  },
+  {
+   "key": "pop-012",
+   "difficulty": "expert",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Action Comics 1"
+   },
+   "it": {
+    "text": "In che anno uscì Action Comics n. 1, con la prima apparizione di Superman?",
+    "options": [
+     "1938",
+     "1945",
+     "1929",
+     "1955"
+    ],
+    "explanation": "Action Comics #1 è datato giugno 1938."
+   },
+   "en": {
+    "text": "In which year was Action Comics #1, Superman's first appearance, published?",
+    "options": [
+     "1938",
+     "1945",
+     "1929",
+     "1955"
+    ],
+    "explanation": "Action Comics #1 is cover-dated June 1938."
+   }
+  }
+ ]
+}

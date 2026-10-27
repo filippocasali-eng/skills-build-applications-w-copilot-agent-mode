@@ -1,0 +1,342 @@
+{
+ "category": "general",
+ "correctIndex": 0,
+ "questions": [
+  {
+   "key": "gen-001",
+   "difficulty": "easy",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Leap year"
+   },
+   "it": {
+    "text": "Quanti giorni ha un anno bisestile?",
+    "options": [
+     "366",
+     "365",
+     "364",
+     "367"
+    ],
+    "explanation": "Un anno bisestile aggiunge il 29 febbraio, arrivando a 366 giorni."
+   },
+   "en": {
+    "text": "How many days are in a leap year?",
+    "options": [
+     "366",
+     "365",
+     "364",
+     "367"
+    ],
+    "explanation": "A leap year adds 29 February, for a total of 366 days."
+   }
+  },
+  {
+   "key": "gen-002",
+   "difficulty": "easy",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Hexagon"
+   },
+   "it": {
+    "text": "Quanti lati ha un esagono?",
+    "options": [
+     "6",
+     "5",
+     "7",
+     "8"
+    ],
+    "explanation": "Il prefisso greco \"hexa\" significa sei."
+   },
+   "en": {
+    "text": "How many sides does a hexagon have?",
+    "options": [
+     "6",
+     "5",
+     "7",
+     "8"
+    ],
+    "explanation": "The Greek prefix \"hexa\" means six."
+   }
+  },
+  {
+   "key": "gen-003",
+   "difficulty": "easy",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Secondary color"
+   },
+   "it": {
+    "text": "Che colore si ottiene mescolando blu e giallo?",
+    "options": [
+     "Verde",
+     "Viola",
+     "Arancione",
+     "Marrone"
+    ],
+    "explanation": "Blu e giallo, mescolati come pigmenti, danno il verde."
+   },
+   "en": {
+    "text": "What colour do you get by mixing blue and yellow?",
+    "options": [
+     "Green",
+     "Purple",
+     "Orange",
+     "Brown"
+    ],
+    "explanation": "Mixed as pigments, blue and yellow make green."
+   }
+  },
+  {
+   "key": "gen-004",
+   "difficulty": "easy",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Day"
+   },
+   "it": {
+    "text": "Quante ore ci sono in un giorno?",
+    "options": [
+     "24",
+     "12",
+     "48",
+     "36"
+    ],
+    "explanation": "Un giorno solare medio dura 24 ore."
+   },
+   "en": {
+    "text": "How many hours are there in a day?",
+    "options": [
+     "24",
+     "12",
+     "48",
+     "36"
+    ],
+    "explanation": "A mean solar day lasts 24 hours."
+   }
+  },
+  {
+   "key": "gen-005",
+   "difficulty": "medium",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Portuguese language"
+   },
+   "it": {
+    "text": "Qual è la lingua ufficiale del Brasile?",
+    "options": [
+     "Portoghese",
+     "Spagnolo",
+     "Inglese",
+     "Francese"
+    ],
+    "explanation": "Il Brasile fu una colonia portoghese: il portoghese è la sua lingua ufficiale."
+   },
+   "en": {
+    "text": "What is the official language of Brazil?",
+    "options": [
+     "Portuguese",
+     "Spanish",
+     "English",
+     "French"
+    ],
+    "explanation": "Brazil was a Portuguese colony and Portuguese is its official language."
+   }
+  },
+  {
+   "key": "gen-006",
+   "difficulty": "medium",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Standard 52-card deck"
+   },
+   "it": {
+    "text": "Quante carte ha un mazzo francese standard senza jolly?",
+    "options": [
+     "52",
+     "54",
+     "40",
+     "48"
+    ],
+    "explanation": "Quattro semi da 13 carte ciascuno: 52 carte."
+   },
+   "en": {
+    "text": "How many cards are in a standard French deck without jokers?",
+    "options": [
+     "52",
+     "54",
+     "40",
+     "48"
+    ],
+    "explanation": "Four suits of 13 cards each make 52 cards."
+   }
+  },
+  {
+   "key": "gen-007",
+   "difficulty": "medium",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Headquarters of the United Nations"
+   },
+   "it": {
+    "text": "In quale città si trova la sede principale dell'ONU?",
+    "options": [
+     "New York",
+     "Ginevra",
+     "Parigi",
+     "Vienna"
+    ],
+    "explanation": "Il Palazzo di Vetro dell'ONU si trova a Manhattan, New York."
+   },
+   "en": {
+    "text": "In which city is the main headquarters of the United Nations?",
+    "options": [
+     "New York",
+     "Geneva",
+     "Paris",
+     "Vienna"
+    ],
+    "explanation": "The UN headquarters stands in Manhattan, New York City."
+   }
+  },
+  {
+   "key": "gen-008",
+   "difficulty": "medium",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Japanese yen"
+   },
+   "it": {
+    "text": "Qual è la valuta del Giappone?",
+    "options": [
+     "Yen",
+     "Yuan",
+     "Won",
+     "Ringgit"
+    ],
+    "explanation": "Lo yen è la moneta ufficiale del Giappone."
+   },
+   "en": {
+    "text": "What is the currency of Japan?",
+    "options": [
+     "Yen",
+     "Yuan",
+     "Won",
+     "Ringgit"
+    ],
+    "explanation": "The yen is Japan's official currency."
+   }
+  },
+  {
+   "key": "gen-009",
+   "difficulty": "hard",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Wedding anniversary"
+   },
+   "it": {
+    "text": "Quanti anni di matrimonio si festeggiano con le nozze d'oro?",
+    "options": [
+     "50",
+     "25",
+     "40",
+     "60"
+    ],
+    "explanation": "Le nozze d'argento sono a 25 anni, quelle d'oro a 50."
+   },
+   "en": {
+    "text": "How many years of marriage does a golden anniversary celebrate?",
+    "options": [
+     "50",
+     "25",
+     "40",
+     "60"
+    ],
+    "explanation": "Silver is 25 years; gold is 50 years."
+   }
+  },
+  {
+   "key": "gen-010",
+   "difficulty": "hard",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Prime number"
+   },
+   "it": {
+    "text": "Qual è l'unico numero primo pari?",
+    "options": [
+     "2",
+     "4",
+     "0",
+     "6"
+    ],
+    "explanation": "Ogni altro numero pari è divisibile per 2, quindi non è primo."
+   },
+   "en": {
+    "text": "What is the only even prime number?",
+    "options": [
+     "2",
+     "4",
+     "0",
+     "6"
+    ],
+    "explanation": "Every other even number is divisible by 2, so it is not prime."
+   }
+  },
+  {
+   "key": "gen-011",
+   "difficulty": "hard",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Euro banknotes"
+   },
+   "it": {
+    "text": "In che anno sono entrate in circolazione le banconote e le monete in euro?",
+    "options": [
+     "2002",
+     "1999",
+     "2001",
+     "1992"
+    ],
+    "explanation": "L'euro nacque come moneta contabile nel 1999; contanti dal 1° gennaio 2002."
+   },
+   "en": {
+    "text": "In which year did euro banknotes and coins enter circulation?",
+    "options": [
+     "2002",
+     "1999",
+     "2001",
+     "1992"
+    ],
+    "explanation": "The euro existed for accounting from 1999; cash arrived on 1 January 2002."
+   }
+  },
+  {
+   "key": "gen-012",
+   "difficulty": "expert",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Mohs scale"
+   },
+   "it": {
+    "text": "Che cosa misura la scala di Mohs?",
+    "options": [
+     "La durezza dei minerali",
+     "L'intensità dei terremoti",
+     "L'acidità di una soluzione",
+     "La luminosità delle stelle"
+    ],
+    "explanation": "La scala di Mohs ordina i minerali da 1 (talco) a 10 (diamante) per durezza."
+   },
+   "en": {
+    "text": "What does the Mohs scale measure?",
+    "options": [
+     "Mineral hardness",
+     "Earthquake intensity",
+     "Acidity of a solution",
+     "Star brightness"
+    ],
+    "explanation": "The Mohs scale ranks minerals from 1 (talc) to 10 (diamond) by hardness."
+   }
+  }
+ ]
+}

@@ -1,0 +1,342 @@
+{
+ "category": "history",
+ "correctIndex": 0,
+ "questions": [
+  {
+   "key": "his-001",
+   "difficulty": "easy",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: George Washington"
+   },
+   "it": {
+    "text": "Chi fu il primo presidente degli Stati Uniti?",
+    "options": [
+     "George Washington",
+     "Abraham Lincoln",
+     "Thomas Jefferson",
+     "John Adams"
+    ],
+    "explanation": "Washington fu presidente dal 1789 al 1797."
+   },
+   "en": {
+    "text": "Who was the first President of the United States?",
+    "options": [
+     "George Washington",
+     "Abraham Lincoln",
+     "Thomas Jefferson",
+     "John Adams"
+    ],
+    "explanation": "Washington served from 1789 to 1797."
+   }
+  },
+  {
+   "key": "his-002",
+   "difficulty": "easy",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Fall of the Berlin Wall"
+   },
+   "it": {
+    "text": "In che anno è caduto il Muro di Berlino?",
+    "options": [
+     "1989",
+     "1991",
+     "1985",
+     "1979"
+    ],
+    "explanation": "Il Muro cadde il 9 novembre 1989."
+   },
+   "en": {
+    "text": "In which year did the Berlin Wall fall?",
+    "options": [
+     "1989",
+     "1991",
+     "1985",
+     "1979"
+    ],
+    "explanation": "The Wall fell on 9 November 1989."
+   }
+  },
+  {
+   "key": "his-003",
+   "difficulty": "easy",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Giza pyramid complex"
+   },
+   "it": {
+    "text": "Quale civiltà costruì le piramidi di Giza?",
+    "options": [
+     "Gli antichi Egizi",
+     "I Romani",
+     "I Maya",
+     "I Greci"
+    ],
+    "explanation": "Le piramidi di Giza furono costruite durante l'Antico Regno egizio."
+   },
+   "en": {
+    "text": "Which civilisation built the pyramids of Giza?",
+    "options": [
+     "The ancient Egyptians",
+     "The Romans",
+     "The Maya",
+     "The Greeks"
+    ],
+    "explanation": "The Giza pyramids were built during Egypt's Old Kingdom."
+   }
+  },
+  {
+   "key": "his-004",
+   "difficulty": "easy",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Christopher Columbus"
+   },
+   "it": {
+    "text": "Chi raggiunse le Americhe nel 1492 navigando per conto della Spagna?",
+    "options": [
+     "Cristoforo Colombo",
+     "Amerigo Vespucci",
+     "Vasco da Gama",
+     "Ferdinando Magellano"
+    ],
+    "explanation": "Colombo approdò ai Caraibi il 12 ottobre 1492."
+   },
+   "en": {
+    "text": "Who reached the Americas in 1492 sailing for Spain?",
+    "options": [
+     "Christopher Columbus",
+     "Amerigo Vespucci",
+     "Vasco da Gama",
+     "Ferdinand Magellan"
+    ],
+    "explanation": "Columbus landed in the Caribbean on 12 October 1492."
+   }
+  },
+  {
+   "key": "his-005",
+   "difficulty": "medium",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: World War I"
+   },
+   "it": {
+    "text": "In che anno è iniziata la Prima guerra mondiale?",
+    "options": [
+     "1914",
+     "1918",
+     "1912",
+     "1939"
+    ],
+    "explanation": "La guerra iniziò nel 1914 e terminò nel 1918."
+   },
+   "en": {
+    "text": "In which year did World War I begin?",
+    "options": [
+     "1914",
+     "1918",
+     "1912",
+     "1939"
+    ],
+    "explanation": "The war began in 1914 and ended in 1918."
+   }
+  },
+  {
+   "key": "his-006",
+   "difficulty": "medium",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Battle of Waterloo"
+   },
+   "it": {
+    "text": "Quale imperatore francese fu sconfitto a Waterloo nel 1815?",
+    "options": [
+     "Napoleone Bonaparte",
+     "Luigi XIV",
+     "Carlo Magno",
+     "Napoleone III"
+    ],
+    "explanation": "Waterloo segnò la fine definitiva del potere di Napoleone."
+   },
+   "en": {
+    "text": "Which French emperor was defeated at Waterloo in 1815?",
+    "options": [
+     "Napoleon Bonaparte",
+     "Louis XIV",
+     "Charlemagne",
+     "Napoleon III"
+    ],
+    "explanation": "Waterloo marked the final end of Napoleon's rule."
+   }
+  },
+  {
+   "key": "his-007",
+   "difficulty": "medium",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: 1946 Italian institutional referendum"
+   },
+   "it": {
+    "text": "In che anno gli italiani scelsero la Repubblica con un referendum?",
+    "options": [
+     "1946",
+     "1948",
+     "1861",
+     "1945"
+    ],
+    "explanation": "Il referendum istituzionale si tenne il 2 giugno 1946."
+   },
+   "en": {
+    "text": "In which year did Italians choose a republic by referendum?",
+    "options": [
+     "1946",
+     "1948",
+     "1861",
+     "1945"
+    ],
+    "explanation": "The institutional referendum was held on 2 June 1946."
+   }
+  },
+  {
+   "key": "his-008",
+   "difficulty": "medium",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Pompeii"
+   },
+   "it": {
+    "text": "Quale città romana fu sepolta dall'eruzione del Vesuvio nel 79 d.C.?",
+    "options": [
+     "Pompei",
+     "Ostia",
+     "Paestum",
+     "Cuma"
+    ],
+    "explanation": "Pompei fu sepolta da ceneri e lapilli durante l'eruzione del 79 d.C."
+   },
+   "en": {
+    "text": "Which Roman city was buried by the eruption of Vesuvius in AD 79?",
+    "options": [
+     "Pompeii",
+     "Ostia",
+     "Paestum",
+     "Cumae"
+    ],
+    "explanation": "Pompeii was buried under ash and pumice in AD 79."
+   }
+  },
+  {
+   "key": "his-009",
+   "difficulty": "hard",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Kingdom of Italy"
+   },
+   "it": {
+    "text": "In che anno fu proclamato il Regno d'Italia?",
+    "options": [
+     "1861",
+     "1870",
+     "1848",
+     "1871"
+    ],
+    "explanation": "Il Regno d'Italia fu proclamato il 17 marzo 1861."
+   },
+   "en": {
+    "text": "In which year was the Kingdom of Italy proclaimed?",
+    "options": [
+     "1861",
+     "1870",
+     "1848",
+     "1871"
+    ],
+    "explanation": "The Kingdom of Italy was proclaimed on 17 March 1861."
+   }
+  },
+  {
+   "key": "his-010",
+   "difficulty": "hard",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Augustus"
+   },
+   "it": {
+    "text": "Chi fu il primo imperatore romano?",
+    "options": [
+     "Augusto",
+     "Giulio Cesare",
+     "Nerone",
+     "Tiberio"
+    ],
+    "explanation": "Ottaviano ricevette il titolo di Augusto nel 27 a.C. Cesare non fu mai imperatore."
+   },
+   "en": {
+    "text": "Who was the first Roman emperor?",
+    "options": [
+     "Augustus",
+     "Julius Caesar",
+     "Nero",
+     "Tiberius"
+    ],
+    "explanation": "Octavian became Augustus in 27 BC. Caesar was never emperor."
+   }
+  },
+  {
+   "key": "his-011",
+   "difficulty": "hard",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Treaty of Rome"
+   },
+   "it": {
+    "text": "Quale trattato del 1957 istituì la Comunità Economica Europea?",
+    "options": [
+     "I Trattati di Roma",
+     "Il Trattato di Maastricht",
+     "Il Trattato di Lisbona",
+     "Il Trattato di Parigi"
+    ],
+    "explanation": "I Trattati di Roma furono firmati il 25 marzo 1957."
+   },
+   "en": {
+    "text": "Which 1957 treaty established the European Economic Community?",
+    "options": [
+     "The Treaties of Rome",
+     "The Maastricht Treaty",
+     "The Treaty of Lisbon",
+     "The Treaty of Paris"
+    ],
+    "explanation": "The Treaties of Rome were signed on 25 March 1957."
+   }
+  },
+  {
+   "key": "his-012",
+   "difficulty": "expert",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Battle of Hastings"
+   },
+   "it": {
+    "text": "In che anno si combatté la battaglia di Hastings?",
+    "options": [
+     "1066",
+     "1215",
+     "1096",
+     "987"
+    ],
+    "explanation": "Guglielmo il Conquistatore sconfisse Aroldo II nel 1066."
+   },
+   "en": {
+    "text": "In which year was the Battle of Hastings fought?",
+    "options": [
+     "1066",
+     "1215",
+     "1096",
+     "987"
+    ],
+    "explanation": "William the Conqueror defeated Harold II in 1066."
+   }
+  }
+ ]
+}

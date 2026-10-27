@@ -1,0 +1,342 @@
+{
+ "category": "sports",
+ "correctIndex": 0,
+ "questions": [
+  {
+   "key": "spo-001",
+   "difficulty": "easy",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Association football"
+   },
+   "it": {
+    "text": "Quanti giocatori ha in campo ogni squadra in una partita di calcio?",
+    "options": [
+     "11",
+     "10",
+     "9",
+     "12"
+    ],
+    "explanation": "Ogni squadra schiera dieci giocatori di movimento più il portiere."
+   },
+   "en": {
+    "text": "How many players does each team have on the pitch in a football match?",
+    "options": [
+     "11",
+     "10",
+     "9",
+     "12"
+    ],
+    "explanation": "Each team fields ten outfield players plus a goalkeeper."
+   }
+  },
+  {
+   "key": "spo-002",
+   "difficulty": "easy",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Tennis"
+   },
+   "it": {
+    "text": "In quale sport si colpisce una pallina gialla con una racchetta oltre una rete?",
+    "options": [
+     "Tennis",
+     "Golf",
+     "Baseball",
+     "Pallavolo"
+    ],
+    "explanation": "Le palline da tennis gialle sono standard da decenni."
+   },
+   "en": {
+    "text": "In which sport do you hit a yellow ball with a racket over a net?",
+    "options": [
+     "Tennis",
+     "Golf",
+     "Baseball",
+     "Volleyball"
+    ],
+    "explanation": "Yellow tennis balls have been standard for decades."
+   }
+  },
+  {
+   "key": "spo-003",
+   "difficulty": "easy",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Summer Olympic Games"
+   },
+   "it": {
+    "text": "Ogni quanti anni si svolgono le Olimpiadi estive?",
+    "options": [
+     "4",
+     "2",
+     "3",
+     "5"
+    ],
+    "explanation": "Il ciclo di quattro anni si chiama olimpiade."
+   },
+   "en": {
+    "text": "How often are the Summer Olympics held?",
+    "options": [
+     "Every 4 years",
+     "Every 2 years",
+     "Every 3 years",
+     "Every 5 years"
+    ],
+    "explanation": "The four-year cycle is called an Olympiad."
+   }
+  },
+  {
+   "key": "spo-004",
+   "difficulty": "easy",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Touchdown"
+   },
+   "it": {
+    "text": "In quale sport si segna un \"touchdown\"?",
+    "options": [
+     "Football americano",
+     "Rugby",
+     "Basket",
+     "Hockey"
+    ],
+    "explanation": "Nel rugby la segnatura equivalente si chiama meta."
+   },
+   "en": {
+    "text": "In which sport do you score a \"touchdown\"?",
+    "options": [
+     "American football",
+     "Rugby",
+     "Basketball",
+     "Hockey"
+    ],
+    "explanation": "In rugby the equivalent score is called a try."
+   }
+  },
+  {
+   "key": "spo-005",
+   "difficulty": "medium",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Three-point field goal"
+   },
+   "it": {
+    "text": "Quanti punti vale un canestro segnato da oltre la linea dei tre punti?",
+    "options": [
+     "3",
+     "2",
+     "4",
+     "1"
+    ],
+    "explanation": "Un tiro libero vale 1 punto, un canestro normale 2."
+   },
+   "en": {
+    "text": "How many points is a basket from beyond the three-point line worth?",
+    "options": [
+     "3",
+     "2",
+     "4",
+     "1"
+    ],
+    "explanation": "A free throw is worth 1 point and a regular basket 2."
+   }
+  },
+  {
+   "key": "spo-006",
+   "difficulty": "medium",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Scuderia Ferrari"
+   },
+   "it": {
+    "text": "Quale scuderia di Formula 1 ha sede a Maranello?",
+    "options": [
+     "Ferrari",
+     "McLaren",
+     "Red Bull",
+     "Mercedes"
+    ],
+    "explanation": "La Scuderia Ferrari corre in Formula 1 dal 1950."
+   },
+   "en": {
+    "text": "Which Formula 1 team is based in Maranello?",
+    "options": [
+     "Ferrari",
+     "McLaren",
+     "Red Bull",
+     "Mercedes"
+    ],
+    "explanation": "Scuderia Ferrari has raced in Formula 1 since 1950."
+   }
+  },
+  {
+   "key": "spo-007",
+   "difficulty": "medium",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Golf course"
+   },
+   "it": {
+    "text": "Quante buche ha un percorso da golf regolamentare completo?",
+    "options": [
+     "18",
+     "9",
+     "12",
+     "21"
+    ],
+    "explanation": "Un giro completo di golf prevede 18 buche."
+   },
+   "en": {
+    "text": "How many holes does a full regulation golf course have?",
+    "options": [
+     "18",
+     "9",
+     "12",
+     "21"
+    ],
+    "explanation": "A full round of golf has 18 holes."
+   }
+  },
+  {
+   "key": "spo-008",
+   "difficulty": "medium",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Giro d'Italia"
+   },
+   "it": {
+    "text": "Quale corsa ciclistica a tappe assegna la maglia rosa al leader?",
+    "options": [
+     "Giro d'Italia",
+     "Tour de France",
+     "Vuelta a España",
+     "Milano-Sanremo"
+    ],
+    "explanation": "Il rosa richiama il colore della Gazzetta dello Sport."
+   },
+   "en": {
+    "text": "Which stage race awards the pink jersey to its leader?",
+    "options": [
+     "Giro d'Italia",
+     "Tour de France",
+     "Vuelta a España",
+     "Milan–San Remo"
+    ],
+    "explanation": "Pink recalls the colour of the Gazzetta dello Sport newspaper."
+   }
+  },
+  {
+   "key": "spo-009",
+   "difficulty": "hard",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: 1960 Summer Olympics"
+   },
+   "it": {
+    "text": "In quale città si svolsero le Olimpiadi estive del 1960?",
+    "options": [
+     "Roma",
+     "Tokyo",
+     "Melbourne",
+     "Città del Messico"
+    ],
+    "explanation": "Roma ospitò i Giochi della XVII Olimpiade."
+   },
+   "en": {
+    "text": "Which city hosted the 1960 Summer Olympics?",
+    "options": [
+     "Rome",
+     "Tokyo",
+     "Melbourne",
+     "Mexico City"
+    ],
+    "explanation": "Rome hosted the Games of the XVII Olympiad."
+   }
+  },
+  {
+   "key": "spo-010",
+   "difficulty": "hard",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Marathon"
+   },
+   "it": {
+    "text": "Quanto è lunga una maratona?",
+    "options": [
+     "42,195 km",
+     "40 km",
+     "21,097 km",
+     "45 km"
+    ],
+    "explanation": "21,097 km è la distanza della mezza maratona."
+   },
+   "en": {
+    "text": "How long is a marathon?",
+    "options": [
+     "42.195 km",
+     "40 km",
+     "21.097 km",
+     "45 km"
+    ],
+    "explanation": "21.097 km is the half-marathon distance."
+   }
+  },
+  {
+   "key": "spo-011",
+   "difficulty": "hard",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: 1930 FIFA World Cup"
+   },
+   "it": {
+    "text": "Quale nazionale vinse il primo Mondiale di calcio, nel 1930?",
+    "options": [
+     "Uruguay",
+     "Argentina",
+     "Brasile",
+     "Italia"
+    ],
+    "explanation": "L'Uruguay, paese ospitante, batté l'Argentina in finale."
+   },
+   "en": {
+    "text": "Which national team won the first FIFA World Cup in 1930?",
+    "options": [
+     "Uruguay",
+     "Argentina",
+     "Brazil",
+     "Italy"
+    ],
+    "explanation": "Hosts Uruguay beat Argentina in the final."
+   }
+  },
+  {
+   "key": "spo-012",
+   "difficulty": "expert",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: 1934 FIFA World Cup"
+   },
+   "it": {
+    "text": "In che anno l'Italia vinse il suo primo Mondiale di calcio?",
+    "options": [
+     "1934",
+     "1938",
+     "1950",
+     "1982"
+    ],
+    "explanation": "L'Italia vinse in casa nel 1934 e si ripeté nel 1938."
+   },
+   "en": {
+    "text": "In which year did Italy win its first FIFA World Cup?",
+    "options": [
+     "1934",
+     "1938",
+     "1950",
+     "1982"
+    ],
+    "explanation": "Italy won at home in 1934 and again in 1938."
+   }
+  }
+ ]
+}

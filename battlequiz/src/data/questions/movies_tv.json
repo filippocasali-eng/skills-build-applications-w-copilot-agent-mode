@@ -1,0 +1,342 @@
+{
+ "category": "movies_tv",
+ "correctIndex": 0,
+ "questions": [
+  {
+   "key": "mov-001",
+   "difficulty": "easy",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Harry Potter"
+   },
+   "it": {
+    "text": "Come si chiama il giovane mago protagonista dei romanzi di J.K. Rowling?",
+    "options": [
+     "Harry Potter",
+     "Frodo Baggins",
+     "Gandalf",
+     "Merlino"
+    ],
+    "explanation": "La saga di Harry Potter conta sette romanzi."
+   },
+   "en": {
+    "text": "What is the name of the young wizard in J.K. Rowling's novels?",
+    "options": [
+     "Harry Potter",
+     "Frodo Baggins",
+     "Gandalf",
+     "Merlin"
+    ],
+    "explanation": "The Harry Potter saga has seven novels."
+   }
+  },
+  {
+   "key": "mov-002",
+   "difficulty": "easy",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: The Lion King"
+   },
+   "it": {
+    "text": "Quale film Disney del 1994 racconta la storia del leoncino Simba?",
+    "options": [
+     "Il re leone",
+     "Bambi",
+     "Dumbo",
+     "Tarzan"
+    ],
+    "explanation": "Il re leone uscì nel 1994."
+   },
+   "en": {
+    "text": "Which 1994 Disney film tells the story of the lion cub Simba?",
+    "options": [
+     "The Lion King",
+     "Bambi",
+     "Dumbo",
+     "Tarzan"
+    ],
+    "explanation": "The Lion King was released in 1994."
+   }
+  },
+  {
+   "key": "mov-003",
+   "difficulty": "easy",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Joker (character)"
+   },
+   "it": {
+    "text": "Quale nemico di Batman ha l'aspetto di un clown?",
+    "options": [
+     "Joker",
+     "Lex Luthor",
+     "Thanos",
+     "Magneto"
+    ],
+    "explanation": "Il Joker è l'antagonista più famoso di Batman."
+   },
+   "en": {
+    "text": "Which Batman villain looks like a clown?",
+    "options": [
+     "The Joker",
+     "Lex Luthor",
+     "Thanos",
+     "Magneto"
+    ],
+    "explanation": "The Joker is Batman's most famous foe."
+   }
+  },
+  {
+   "key": "mov-004",
+   "difficulty": "easy",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Darth Vader"
+   },
+   "it": {
+    "text": "In quale saga compare Darth Vader?",
+    "options": [
+     "Star Wars",
+     "Star Trek",
+     "Il Signore degli Anelli",
+     "Matrix"
+    ],
+    "explanation": "Darth Vader è uno dei cattivi più iconici di Star Wars."
+   },
+   "en": {
+    "text": "In which saga does Darth Vader appear?",
+    "options": [
+     "Star Wars",
+     "Star Trek",
+     "The Lord of the Rings",
+     "The Matrix"
+    ],
+    "explanation": "Darth Vader is one of Star Wars' most iconic villains."
+   }
+  },
+  {
+   "key": "mov-005",
+   "difficulty": "medium",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Titanic (1997 film)"
+   },
+   "it": {
+    "text": "Chi ha diretto il film \"Titanic\" del 1997?",
+    "options": [
+     "James Cameron",
+     "Steven Spielberg",
+     "Ridley Scott",
+     "Christopher Nolan"
+    ],
+    "explanation": "Titanic vinse 11 premi Oscar."
+   },
+   "en": {
+    "text": "Who directed the 1997 film \"Titanic\"?",
+    "options": [
+     "James Cameron",
+     "Steven Spielberg",
+     "Ridley Scott",
+     "Christopher Nolan"
+    ],
+    "explanation": "Titanic won 11 Academy Awards."
+   }
+  },
+  {
+   "key": "mov-006",
+   "difficulty": "medium",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: La Dolce Vita"
+   },
+   "it": {
+    "text": "Quale regista italiano ha diretto \"La dolce vita\"?",
+    "options": [
+     "Federico Fellini",
+     "Michelangelo Antonioni",
+     "Pier Paolo Pasolini",
+     "Sergio Leone"
+    ],
+    "explanation": "Il film del 1960 contiene la celebre scena della Fontana di Trevi."
+   },
+   "en": {
+    "text": "Which Italian director made \"La Dolce Vita\"?",
+    "options": [
+     "Federico Fellini",
+     "Michelangelo Antonioni",
+     "Pier Paolo Pasolini",
+     "Sergio Leone"
+    ],
+    "explanation": "The 1960 film features the famous Trevi Fountain scene."
+   }
+  },
+  {
+   "key": "mov-007",
+   "difficulty": "medium",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: WALL-E"
+   },
+   "it": {
+    "text": "Come si chiama il robottino Pixar del 2008 che pulisce la Terra abbandonata?",
+    "options": [
+     "WALL-E",
+     "EVE",
+     "Baymax",
+     "R2-D2"
+    ],
+    "explanation": "WALL-E è un film d'animazione Pixar del 2008."
+   },
+   "en": {
+    "text": "What is the name of the 2008 Pixar robot who cleans an abandoned Earth?",
+    "options": [
+     "WALL-E",
+     "EVE",
+     "Baymax",
+     "R2-D2"
+    ],
+    "explanation": "WALL-E is a 2008 Pixar animated film."
+   }
+  },
+  {
+   "key": "mov-008",
+   "difficulty": "medium",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Friends"
+   },
+   "it": {
+    "text": "In quale città è ambientata la sitcom \"Friends\"?",
+    "options": [
+     "New York",
+     "Los Angeles",
+     "Chicago",
+     "Boston"
+    ],
+    "explanation": "I sei amici vivono a Manhattan, New York."
+   },
+   "en": {
+    "text": "In which city is the sitcom \"Friends\" set?",
+    "options": [
+     "New York",
+     "Los Angeles",
+     "Chicago",
+     "Boston"
+    ],
+    "explanation": "The six friends live in Manhattan, New York."
+   }
+  },
+  {
+   "key": "mov-009",
+   "difficulty": "hard",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Life Is Beautiful"
+   },
+   "it": {
+    "text": "Quale film di Roberto Benigni vinse l'Oscar al miglior film straniero nel 1999?",
+    "options": [
+     "La vita è bella",
+     "Nuovo Cinema Paradiso",
+     "Mediterraneo",
+     "Il postino"
+    ],
+    "explanation": "Benigni vinse anche l'Oscar come miglior attore."
+   },
+   "en": {
+    "text": "Which Roberto Benigni film won the 1999 Oscar for Best Foreign Language Film?",
+    "options": [
+     "Life Is Beautiful",
+     "Cinema Paradiso",
+     "Mediterraneo",
+     "Il Postino"
+    ],
+    "explanation": "Benigni also won the Oscar for Best Actor."
+   }
+  },
+  {
+   "key": "mov-010",
+   "difficulty": "hard",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Ennio Morricone"
+   },
+   "it": {
+    "text": "Chi compose le colonne sonore dei western di Sergio Leone?",
+    "options": [
+     "Ennio Morricone",
+     "Nino Rota",
+     "John Williams",
+     "Hans Zimmer"
+    ],
+    "explanation": "Morricone firmò, tra le altre, la musica de \"Il buono, il brutto, il cattivo\"."
+   },
+   "en": {
+    "text": "Who composed the scores for Sergio Leone's westerns?",
+    "options": [
+     "Ennio Morricone",
+     "Nino Rota",
+     "John Williams",
+     "Hans Zimmer"
+    ],
+    "explanation": "Morricone scored, among others, \"The Good, the Bad and the Ugly\"."
+   }
+  },
+  {
+   "key": "mov-011",
+   "difficulty": "hard",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Game of Thrones"
+   },
+   "it": {
+    "text": "Quale serie TV è ambientata nel continente immaginario di Westeros?",
+    "options": [
+     "Il Trono di Spade",
+     "The Witcher",
+     "Vikings",
+     "Gli anelli del potere"
+    ],
+    "explanation": "Il Trono di Spade è tratto dai romanzi di George R.R. Martin."
+   },
+   "en": {
+    "text": "Which TV series is set on the fictional continent of Westeros?",
+    "options": [
+     "Game of Thrones",
+     "The Witcher",
+     "Vikings",
+     "The Rings of Power"
+    ],
+    "explanation": "Game of Thrones is based on George R.R. Martin's novels."
+   }
+  },
+  {
+   "key": "mov-012",
+   "difficulty": "expert",
+   "source": {
+    "kind": "seed_ai_assisted",
+    "reference": "Wikipedia: Snow White and the Seven Dwarfs (1937 film)"
+   },
+   "it": {
+    "text": "Qual è stato il primo lungometraggio d'animazione Disney, uscito nel 1937?",
+    "options": [
+     "Biancaneve e i sette nani",
+     "Pinocchio",
+     "Fantasia",
+     "Cenerentola"
+    ],
+    "explanation": "Biancaneve uscì nel dicembre 1937."
+   },
+   "en": {
+    "text": "What was Disney's first animated feature film, released in 1937?",
+    "options": [
+     "Snow White and the Seven Dwarfs",
+     "Pinocchio",
+     "Fantasia",
+     "Cinderella"
+    ],
+    "explanation": "Snow White premiered in December 1937."
+   }
+  }
+ ]
+}
