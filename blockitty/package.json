@@ -1,0 +1,20 @@
+{
+  "name": "blockitty",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Blockitty: Cat Block Blast - block puzzle with collectible cats",
+  "type": "module",
+  "scripts": {
+    "start": "python3 -m http.server 8080",
+    "test": "node --test tests/*.test.mjs",
+    "build:web": "node tools/build-web.mjs",
+    "android:init": "npm run build:web && npx cap add android && node tools/android-icons.mjs",
+    "android:sync": "npm run build:web && npx cap sync android",
+    "android:apk": "npm run android:sync && cd android && ./gradlew assembleDebug"
+  },
+  "devDependencies": {
+    "@capacitor/android": "^6.2.0",
+    "@capacitor/cli": "^6.2.0",
+    "@capacitor/core": "^6.2.0"
+  }
+}

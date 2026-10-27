@@ -1,0 +1,6 @@
+{
+  "appId": "com.blockitty.game",
+  "appName": "Blockitty",
+  "webDir": "www",
+  "android": { "backgroundColor": "#ff8a8a" }
+}
