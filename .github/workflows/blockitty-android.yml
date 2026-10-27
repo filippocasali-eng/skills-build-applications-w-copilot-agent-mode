@@ -7,6 +7,9 @@ on:
       - 'blockitty/**'
       - '.github/workflows/blockitty-android.yml'
 
+permissions:
+  contents: write
+
 jobs:
   apk:
     runs-on: ubuntu-latest
@@ -30,3 +33,15 @@ jobs:
         with:
           name: blockitty-apk
           path: blockitty/android/app/build/outputs/apk/debug/app-debug.apk
+      - name: Rename APK
+        run: cp android/app/build/outputs/apk/debug/app-debug.apk blockitty.apk
+      - name: Publish APK as a release (direct download link)
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: blockitty-latest
+          name: Blockitty (latest build)
+          body: |
+            Direct download: open this page on your Android phone, tap **blockitty.apk**, then allow installing from unknown sources.
+            Built from ${{ github.sha }}.
+          make_latest: true
+          files: blockitty/blockitty.apk
