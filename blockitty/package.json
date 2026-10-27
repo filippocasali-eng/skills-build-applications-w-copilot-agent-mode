@@ -1,6 +1,6 @@
 {
   "name": "blockitty",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "private": true,
   "description": "Blockitty: Cat Block Blast - block puzzle with collectible cats",
   "type": "module",
@@ -15,6 +15,7 @@
   },
   "devDependencies": {
     "@capacitor-community/admob": "^8.2.1",
+    "@capacitor-community/in-app-review": "^8.0.0",
     "@capacitor/android": "^8.5.3",
     "@capacitor/app": "^8.1.2",
     "@capacitor/cli": "^8.5.3",

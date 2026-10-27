@@ -3,7 +3,7 @@
 
 export const APP_ID = 'com.blockitty.game';
 export const APP_NAME = 'Blockitty';
-export const VERSION = '2.0.0';
+export const VERSION = '2.1.0';
 
 // Public web version (GitHub Pages). Friend-challenge links open here so anyone
 // can play instantly, even without the app installed.

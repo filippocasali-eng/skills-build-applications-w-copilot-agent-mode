@@ -36,8 +36,8 @@ export async function scheduleReminders() {
     const [t2, b2] = pick(2);
     await LN.schedule({
       notifications: [
-        { id: 1, title: t1, body: b1, schedule: { at: at(1, 19), allowWhileIdle: true } },
-        { id: 2, title: t2, body: b2, schedule: { at: at(2, 18), allowWhileIdle: true } },
+        { id: 1, title: t1, body: b1, schedule: { at: at(1, 19) } },
+        { id: 2, title: t2, body: b2, schedule: { at: at(2, 18) } },
       ],
     });
   } catch { /* ignore */ }

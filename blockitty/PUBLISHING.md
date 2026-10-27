@@ -42,6 +42,7 @@ Al push successivo la release su GitHub conterrà **`blockitty-release.aab`**: �
 - **Pubblico target**: **13+** (non selezionare fasce sotto i 13: con loot box e annunci personalizzati le policy Families sarebbero molto restrittive).
 - **Sicurezza dei dati**: raccoglie *ID dispositivo/pubblicità* e *interazioni con l'app* tramite AdMob (pubblicità, analisi). Dati crittografati in transito: sì. Nessun dato personale raccolto dallo sviluppatore. Gli acquisti sono gestiti da Google Play.
 - **App governative / finanziarie / salute**: No.
+- **Permessi sensibili**: nessuno. Niente sveglie esatte, posizione, contatti o fotocamera. Le notifiche (Android 13+) sono chieste solo dopo la prima partita.
 
 ## 5. Rilascio
 1. *Test › Test chiuso*: carica l'AAB, aggiungi i 12+ tester e attendi 14 giorni.

@@ -20,7 +20,7 @@ import { purchase, isDemo, localPrice, restorePurchases } from './billing.js';
 import { showRewarded, maybeInterstitial } from './ads.js';
 import { scoreCard, shareContent, challengeLink } from './share.js';
 import { askNotifications, scheduleReminders } from './notify.js';
-import { isNative, PLAY_URL, SUPPORT_EMAIL, VERSION } from './config.js';
+import { isNative, plugin, PLAY_URL, SUPPORT_EMAIL, VERSION } from './config.js';
 import * as game from './game.js';
 
 const $ = (id) => document.getElementById(id);
@@ -624,15 +624,13 @@ export function incomingChallenge(ch) {
   });
 }
 
+// Google Play In-App Review: native sheet, no custom pre-prompt (Play guidelines
+// forbid steering ratings). Google decides whether it actually appears.
 function ratePrompt() {
-  if (S.rated || S.stats.games < 3) return false;
+  const R = plugin('InAppReview');
+  if (S.rated || S.stats.games < 3 || !isNative() || !R) return false;
   S.rated = true; save();
-  const m = modal(`<div class="stuck-cat">${catSVG(equipped('cat').look, 'love')}</div>
-    <h2>Enjoying Blockitty?</h2><p>A quick rating helps a tiny indie team a lot 💖</p>
-    <button class="big-btn green" data-yes>⭐⭐⭐⭐⭐ Rate it</button>
-    <button class="link" data-no>Send feedback instead</button>`);
-  m.querySelector('[data-yes]').addEventListener('click', () => { m.close(); window.open(PLAY_URL, '_blank'); });
-  m.querySelector('[data-no]').addEventListener('click', () => { m.close(); window.open(`mailto:${SUPPORT_EMAIL}?subject=Blockitty%20feedback`); });
+  R.requestReview().catch(() => {});
   return true;
 }
 

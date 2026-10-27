@@ -2,5 +2,9 @@
   "appId": "com.blockitty.game",
   "appName": "Blockitty",
   "webDir": "www",
-  "android": { "backgroundColor": "#ff8a8a" }
+  "android": { "backgroundColor": "#ff8a8a" },
+  "plugins": {
+    "SystemBars": { "insetsHandling": "native", "initialViewportFitValueHint": "cover", "style": "LIGHT" },
+    "LocalNotifications": { "smallIcon": "ic_stat_paw", "iconColor": "#FF6A88" }
+  }
 }

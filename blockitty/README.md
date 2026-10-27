@@ -23,6 +23,11 @@ Block puzzle 8×8 con gatti da collezionare. È pensato per il trend n.1 per dow
 | Audio | **Colonna sonora originale** generata in tempo reale (menu lo-fi e gioco pop che si intensifica con le combo), meow e SFX sintetizzati | Zero copyright, zero file audio, funziona offline |
 | Qualità | Font Fredoka (OFL), rendering fino a 3x, scossa e flash sulle linee, punteggio animato, vignetta di pericolo, haptics nativi | Sensazione "premium" |
 
+## Ottimizzazioni finali (v2.1)
+- **Conformità Play Store**: target API 36, edge-to-edge gestito (barre di sistema con icone scure), rimosso il permesso limitato `SCHEDULE_EXACT_ALARM` (i promemoria non lo richiedono), recensioni tramite l'**API ufficiale In-App Review** (nessun popup che orienta il voto), icona di notifica monocromatica.
+- **Prestazioni**: verificate con CPU rallentata 4× (telefono economico): 61 fps, caricamento in 1,6 s, drag fluido. Tetto alle particelle e rispetto dell'impostazione "riduci animazioni".
+- **Affidabilità**: la partita in corso si riprende sempre, anche se l'app viene chiusa durante la prima partita. 15 scenari end-to-end automatici superati (ripresa, gattini e Frenzy, Daily Challenge, cambio giorno, sfide, Pass, negozio).
+
 ## Protezione contro le copie
 - **Codice offuscato**: la build di produzione (APK, AAB e sito web) contiene un solo `app.js`, unito, minificato e offuscato con stringhe cifrate, flusso di controllo rimescolato e self-defending. Il sorgente leggibile non viene mai distribuito.
 - **Anti-clone**: il gioco parte solo con il package ufficiale `com.blockitty.game` o sui domini autorizzati (`WEB_HOSTS` in `js/config.js`). Altrove mostra "Unofficial copy" e il link al Play Store.

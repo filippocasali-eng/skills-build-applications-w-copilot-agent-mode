@@ -375,3 +375,8 @@ table.odds td, table.odds th { padding: 7px; text-align: center; border-bottom: 
 .meter.frenzy span { font-size: 11px; opacity: .9; }
 .board-wrap.frenzy { box-shadow: 0 0 0 4px #84cc16, 0 0 34px #22c55e, 0 12px 30px rgba(0,0,0,.22); animation: frenzyGlow 1s ease-in-out infinite; }
 @keyframes frenzyGlow { 50% { box-shadow: 0 0 0 4px #fde047, 0 0 44px #84cc16, 0 12px 30px rgba(0,0,0,.22); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .idle-bob, .hero-cat .shadow, .big-btn.play, .dot.on, .combo.show, .pass-cell.can, .box-art, .rays, .hand, .lvlup,
+  .board-wrap.frenzy, .board-wrap.shake, .meter.frenzy, .offer, #screen-game.danger::after { animation: none !important; }
+}

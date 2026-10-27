@@ -4,7 +4,7 @@ import { initFx } from './fx.js';
 import { initBilling } from './billing.js';
 import { initAds } from './ads.js';
 import { initUI, show, gameHooks, rerender, refreshTop, startGame, incomingChallenge, grantSku } from './ui.js';
-import { initGame, isRunning } from './game.js';
+import { initGame, isRunning, hasSavedRun } from './game.js';
 import { readIncomingChallenge } from './share.js';
 import { scheduleReminders } from './notify.js';
 import { isNative, plugin } from './config.js';
@@ -41,7 +41,7 @@ async function boot() {
 
   if (S.stats.games === 0 && !challenge) {
     // Instant play: the first launch drops straight into a game.
-    startGame({ mode: 'classic' });
+    startGame(hasSavedRun() ? { resume: true } : { mode: 'classic' });
   } else {
     show('home');
     if (challenge) incomingChallenge(challenge);

@@ -6,6 +6,8 @@ const ctx = canvas.getContext('2d');
 let parts = [];
 let running = false;
 let dpr = 1;
+const MAX_PARTS = 420;
+const reducedMotion = typeof matchMedia !== 'undefined' && matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 export function initFx() {
   document.body.appendChild(canvas);
@@ -48,6 +50,7 @@ function fishShape(c, s) {
 }
 
 export function burst(cells, fxId, palette) {
+  if (reducedMotion) cells = cells.filter((_, i) => i % 3 === 0);
   for (const cell of cells) {
     const n = fxId === 'rainbow' ? 7 : 5;
     for (let i = 0; i < n; i++) {
@@ -70,6 +73,7 @@ export function burst(cells, fxId, palette) {
       });
     }
   }
+  if (parts.length > MAX_PARTS) parts.splice(0, parts.length - MAX_PARTS); // keep low-end phones smooth
   if (!running) { running = true; requestAnimationFrame(tick); }
 }
 

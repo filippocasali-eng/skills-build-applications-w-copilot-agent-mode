@@ -18,12 +18,16 @@ if (!xml.includes('screenOrientation')) xml = xml.replace('<activity', '<activit
 if (!xml.includes('com.google.android.gms.ads.APPLICATION_ID')) {
   xml = xml.replace('</application>', `    <meta-data android:name="com.google.android.gms.ads.APPLICATION_ID" android:value="${env.ADMOB_APP_ID || ADMOB_TEST_APP}"/>\n    </application>`);
 }
+// Exact alarms are restricted by Play policy to alarm/calendar apps: our
+// reminders are fine as inexact, so drop the permission the plugin adds.
+if (!xml.includes('xmlns:tools')) xml = xml.replace('<manifest ', '<manifest xmlns:tools="http://schemas.android.com/tools" ');
+if (!xml.includes('SCHEDULE_EXACT_ALARM')) xml = xml.replace('</manifest>', '    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" tools:node="remove" />\n</manifest>');
 writeFileSync(mf, xml);
 
 const gradle = 'android/app/build.gradle';
 let g = readFileSync(gradle, 'utf8');
 g = g.replace(/versionCode \d+/, `versionCode ${Number(env.VERSION_CODE) || 1}`)
-  .replace(/versionName "[^"]*"/, `versionName "${env.VERSION_NAME || '2.0.0'}"`);
+  .replace(/versionName "[^"]*"/, `versionName "${env.VERSION_NAME || '2.1.0'}"`);
 if (env.KEYSTORE_PATH && !g.includes('signingConfigs')) {
   g = g.replace('    buildTypes {', `    signingConfigs {
         release {
