@@ -38,3 +38,4 @@ __pycache__/
 # Blockitty build outputs
 blockitty/www/
 blockitty/android/
+/blockitty.apk
