@@ -143,14 +143,35 @@ jobs:
           working-directory: marketpilot
           script: |
             adb logcat -c || true
-            ./gradlew :app:connectedDebugAndroidTest || (adb logcat -d -s MarketPilotE2E:I AndroidRuntime:E TestRunner:* > e2e-logcat.txt; exit 1)
-            adb logcat -d -s MarketPilotE2E:I > e2e-logcat.txt || true
+            ./gradlew :app:connectedDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=com.marketpilot.ai.EndToEndTest || touch e2e_failed
+            adb logcat -d -s MarketPilotE2E:I AndroidRuntime:E TestRunner:* > e2e-logcat.txt || true
+            adb install -r app/build/outputs/apk/debug/app-debug.apk && adb install -r app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk || true
+            adb shell pm clear com.marketpilot.ai || true
+            adb shell am instrument -w -e class com.marketpilot.ai.ScreenshotTour com.marketpilot.ai.test/androidx.test.runner.AndroidJUnitRunner > tour.txt 2>&1 || true
+            adb logcat -d -s MarketPilotTour:* > tour-logcat.txt || true
+            mkdir -p screens && adb pull /sdcard/Android/data/com.marketpilot.ai/files/screens screens/ || true
+            test ! -f e2e_failed
       - name: E2E evidence
         if: always()
         run: |
           python3 scripts/test_summary.py . || true
           grep -h MarketPilotE2E e2e-logcat.txt 2>/dev/null | head -80 || true
           grep -h -E 'AndroidRuntime|Caused by' e2e-logcat.txt 2>/dev/null | head -30 || true
+      - name: Publish screenshots (UI review)
+        if: always() && github.event_name == 'push'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          tail -5 tour.txt 2>/dev/null || true
+          cat tour-logcat.txt 2>/dev/null | grep -E "failed|Done" | head -30 || true
+          if ls screens/screens/*.png >/dev/null 2>&1; then
+            (cd screens/screens && zip -q ../../ui-screens.zip *.png)
+            gh release delete marketpilot-screenshots --cleanup-tag --yes || true
+            gh release create marketpilot-screenshots ui-screens.zip --target "$GITHUB_SHA" --prerelease \
+              --title "MarketPilot UI screenshots" --notes "Screenshot automatici dall'emulatore (build ${GITHUB_RUN_NUMBER}, ${GITHUB_SHA::7})."
+          else
+            echo "No screenshots captured"
+          fi
       - uses: actions/upload-artifact@v4
         if: always()
         with:
