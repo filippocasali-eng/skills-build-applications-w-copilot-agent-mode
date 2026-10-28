@@ -34,6 +34,8 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import java.time.Instant
 import java.time.LocalDate
 import javax.inject.Inject
@@ -157,7 +159,10 @@ class PortfolioRepository @Inject constructor(
      * Evaluates pending orders against stored daily bars (no look-ahead, only completed sessions) and
      * persists fills + ledger rows atomically. Safe to call repeatedly (e.g. at app start and after refresh).
      */
-    suspend fun reconcile(): ReconcileResult = engineLock.withLock {
+    suspend fun reconcile(): ReconcileResult = withContext(Dispatchers.IO) { reconcileLocked() }
+
+    // Lock held off the main thread (see MarketDataRepository.ensureCatalog).
+    private suspend fun reconcileLocked(): ReconcileResult = engineLock.withLock {
         val now = clock.now()
         val s = settings.current()
         val orders = orders()

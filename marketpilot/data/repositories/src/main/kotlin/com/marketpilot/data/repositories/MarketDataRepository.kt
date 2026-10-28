@@ -12,7 +12,9 @@ import com.marketpilot.domain.papertrading.FxLookup
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.sync.withLock
+import kotlinx.coroutines.withContext
 import java.time.LocalDate
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -27,10 +29,14 @@ class MarketDataRepository @Inject constructor(
     @Volatile private var seeded = false
 
     /** Seeds/updates the canonical catalog (identity data only, no prices). User-added instruments are kept. */
-    suspend fun ensureCatalog() = seedLock.withLock {
-        if (seeded) return@withLock
-        db.instrumentDao().upsert(InstrumentCatalog.all.map { it.toEntity() })
-        seeded = true
+    // Locks are taken off the main thread: a holder suspended on Main could otherwise deadlock
+    // with a caller that blocks Main while waiting for the same lock.
+    suspend fun ensureCatalog() = withContext(Dispatchers.IO) {
+        seedLock.withLock {
+            if (seeded) return@withLock
+            db.instrumentDao().upsert(InstrumentCatalog.all.map { it.toEntity() })
+            seeded = true
+        }
     }
 
     fun observeInstruments(): Flow<List<Instrument>> = db.instrumentDao().observeAll().map { l -> l.map { it.toModel() } }
