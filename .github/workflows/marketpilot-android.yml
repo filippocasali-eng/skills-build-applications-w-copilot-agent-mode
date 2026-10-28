@@ -44,7 +44,8 @@ jobs:
           ./gradlew $JVM_TEST_TASKS testDebugUnitTest --continue 2>&1 | tee build.log
       - name: Compiler errors
         if: failure()
-        run: grep -E "^e: |What went wrong|Execution failed|error:|Unresolved|> Task .* FAILED" build.log | head -80 || true
+        run: |
+          grep -E "^e: |What went wrong|Execution failed|error:|Unresolved|> Task .* FAILED" build.log | head -80 || true
       - name: Test summary
         if: always()
         run: python3 scripts/test_summary.py .
@@ -54,7 +55,8 @@ jobs:
           ./gradlew :app:assembleDebug 2>&1 | tee assemble.log
       - name: Assemble errors
         if: failure()
-        run: grep -E "^e: |What went wrong|Execution failed|error:|> Task .* FAILED" assemble.log | head -80 || true
+        run: |
+          grep -E "^e: |What went wrong|Execution failed|error:|> Task .* FAILED" assemble.log | head -80 || true
       - name: Room schema (for migration tracking)
         if: always()
         run: ls -R core/database/schemas || true
