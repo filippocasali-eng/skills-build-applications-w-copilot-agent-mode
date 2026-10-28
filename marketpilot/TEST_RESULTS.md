@@ -24,7 +24,7 @@ i test Android girano solo in CI; i moduli Kotlin puri sono stati compilati e te
 | data/repositories | RepositoryIntegrationTest (refresh offline, refresh concorrente, errore fonte con cache, ciclo ordine, export/import cifrato, storico decisioni, avvisi, trasferimenti, registro immutabile) | 9 | PASS |
 | app | UiFlowsTest (Compose UI su Robolectric: onboarding, navigazione completa, aggiornamento offline, ETF e scheda titolo, ordine simulato e annullamento, diario dopo ricreazione) | 6 | PASS |
 
-## Test su rete reale — `LiveProvidersTest` (5 test)
+## Test su rete reale — `LiveProvidersTest` (5 test, PASS nell'ultima esecuzione; include ora anche FRED DEXUSEU)
 Esito dettagliato e date osservate: vedi [DATA_SOURCES.md](DATA_SOURCES.md). Superati 5/5 nelle esecuzioni delle 08:03
 e 12:36 UTC; nell'esecuzione delle 13:46 UTC Stooq ha risposto con un timeout invece della pagina anti-bot e
 l'asserzione (troppo rigida) è fallita: corretta per accettare qualsiasi errore classificato (Stooq è disattivato).
@@ -35,7 +35,18 @@ dettaglio VWCE → watchlist + scheda MSFT → ordine simulato dal ticket → ri
 barre reali (deve essere eseguito sulla prima seduta successiva, all'apertura reale) → portafoglio → ricreazione
 dell'activity → export cifrato.
 
-Esito: vedi la sezione *Stato finale* in fondo (aggiornata con l'ultima esecuzione).
+**Esito finale: PASS** (run 40716797481, 28/10/2026 15:54 UTC, commit d1f0329, APK build 21). Evidenze dal log:
+- SPY: 751 barre giornaliere reali, ultima seduta 27/10/2026 (= ultima seduta conclusa attesa)
+- Regime di mercato calcolato: FAVORABLE, punteggio 73, copertura dati 100%
+- Fonti operative sul dispositivo: Yahoo, SEC EDGAR, Cboe, FRED, Fed RSS, SEC RSS, Yahoo RSS
+- BCE: DEGRADED sull'emulatore (certificato non riconosciuto da Android) → 747 cambi EUR/USD dalla riserva FRED
+- Ordine simulato dal ticket SPY: accettato (stato NEW)
+- Ordine retrodatato di 10 sedute: FILLED nella prima seduta successiva, al prezzo di apertura reale o peggiore
+- Ricreazione dell'activity: dati e capitale (20.000 € ETF) conservati
+- Export cifrato: 105.161 byte
+
+Esecuzioni precedenti fallite (tutte corrette): deadlock all'avvio, dialog permesso notifiche, cambio BCE non disponibile su Android,
+passi del test.
 
 ## Problemi trovati e corretti grazie ai test
 - Deadlock all'avvio: lock dei repository tenuti sul main thread (ora su `Dispatchers.IO`).
