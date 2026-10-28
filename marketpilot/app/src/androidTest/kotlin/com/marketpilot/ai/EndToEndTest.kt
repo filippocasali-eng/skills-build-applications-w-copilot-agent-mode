@@ -2,6 +2,7 @@ package com.marketpilot.ai
 
 import android.content.Context
 import android.util.Log
+import androidx.compose.ui.test.SemanticsMatcher
 import androidx.compose.ui.test.hasTestTag
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
@@ -53,6 +54,10 @@ class EndToEndTest {
 
     private fun waitTag(tag: String, ms: Long = 30_000) = compose.waitUntil(ms) { compose.onAllNodes(hasTestTag(tag)).fetchSemanticsNodes().isNotEmpty() }
     private fun waitText(text: String, ms: Long = 30_000) = compose.waitUntil(ms) { compose.onAllNodes(hasText(text, substring = true)).fetchSemanticsNodes().isNotEmpty() }
+    /** Lazy lists only compose visible items: keep scrolling the container until the node exists. */
+    private fun scrollUntil(container: String, matcher: SemanticsMatcher, ms: Long = 30_000) =
+        compose.waitUntil(ms) { runCatching { compose.onNodeWithTag(container).performScrollToNode(matcher) }.isSuccess }
+
     private fun log(msg: String) = Log.i("MarketPilotE2E", msg)
 
     @Test fun fullJourneyWithRealData() {
@@ -87,7 +92,7 @@ class EndToEndTest {
         // 5. ETF analysis
         compose.onNodeWithTag("tab_etf").performClick()
         waitTag("etf_radar")
-        compose.onNodeWithTag("etf_radar").performScrollToNode(hasTestTag("etf_VWCE"))
+        scrollUntil("etf_radar", hasTestTag("etf_VWCE"))
         compose.onNodeWithTag("etf_VWCE").performClick()
         waitTag("etf_detail")
         compose.onNodeWithTag("back").performClick()
@@ -102,7 +107,7 @@ class EndToEndTest {
         waitTag("watch_MSFT")
         compose.onNodeWithTag("watch_MSFT").performClick()
         waitTag("stock_detail")
-        compose.onNodeWithTag("stock_detail").performScrollToNode(hasTestTag("decision_card"))
+        scrollUntil("stock_detail", hasTestTag("decision_card"))
         compose.onNodeWithTag("back").performClick()
         compose.onNodeWithTag("back").performClick()
 
@@ -113,11 +118,11 @@ class EndToEndTest {
         compose.onNodeWithTag("ticket_search").performTextInput("SPY")
         waitTag("result_SPY")
         compose.onNodeWithTag("result_SPY").performClick()
-        compose.onNodeWithTag("ticket").performScrollToNode(hasTestTag("ticket_qty"))
+        scrollUntil("ticket", hasTestTag("ticket_qty"))
         compose.onNodeWithTag("ticket_qty").performTextReplacement("1")
-        compose.onNodeWithTag("ticket").performScrollToNode(hasTestTag("ticket_place"))
+        scrollUntil("ticket", hasTestTag("ticket_place"))
         compose.onNodeWithTag("ticket_place").performClick()
-        waitText("Ordine")
+        scrollUntil("ticket", hasText("Ordine simulato registrato", substring = true))
 
         // 8. Reconciliation of an order that was pending while the app was closed: an order created
         //    10 sessions ago must fill on the first session after its creation, from real bars only.
