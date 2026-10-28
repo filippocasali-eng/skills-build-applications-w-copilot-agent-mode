@@ -85,6 +85,23 @@ class MarketDataRepository @Inject constructor(
     suspend fun latestEurUsd(): Pair<LocalDate, Double>? =
         db.macroDao().fxOnOrBefore("USD", clock.now().atZone(AppClock.DISPLAY_ZONE).toLocalDate().toEpochDay())?.let { LocalDate.ofEpochDay(it.epochDay) to it.rate }
 
+    fun observeProviderStatus(): Flow<List<com.marketpilot.core.model.ProviderStatus>> = db.providerStatusDao().observeAll().map { l ->
+        l.map {
+            com.marketpilot.core.model.ProviderStatus(
+                it.providerId, runCatching { com.marketpilot.core.model.ProviderOperationalState.valueOf(it.state) }.getOrDefault(com.marketpilot.core.model.ProviderOperationalState.UNTESTED),
+                it.lastSuccessAtMs?.let(java.time.Instant::ofEpochMilli), it.lastAttemptAtMs?.let(java.time.Instant::ofEpochMilli), it.lastError, it.successCount, it.failureCount,
+            )
+        }
+    }
+
+    data class RefreshInfo(val finishedAt: java.time.Instant?, val status: String, val summary: RefreshSummaryDto?)
+
+    fun observeLastRefresh(): Flow<RefreshInfo?> = db.refreshLogDao().observeLatest().map { e ->
+        e?.let { RefreshInfo(it.finishedAtMs?.let(java.time.Instant::ofEpochMilli), it.status, runCatching { dbJson.decodeFromString(RefreshSummaryDto.serializer(), it.summaryJson) }.getOrNull()) }
+    }
+
+    fun observeLastSuccessfulRefresh(): Flow<java.time.Instant?> = db.refreshLogDao().observeLastSuccessful().map { it?.finishedAtMs?.let(java.time.Instant::ofEpochMilli) }
+
     // Watchlist ------------------------------------------------------------------------------------
     fun observeWatchlist(): Flow<List<String>> = db.watchlistDao().observe().map { l -> l.map { it.instrumentId } }
     suspend fun watchlist(): List<String> = db.watchlistDao().all().map { it.instrumentId }

@@ -61,10 +61,11 @@ class AlertRepository @Inject constructor(
             val last = market.candles(id).lastOrNull()
             val price = market.quote(id)?.quote?.price ?: last?.close ?: continue
             val score = db.analysisDao().latestStockScore(id)?.score
+            val th = a.threshold ?: continue
             val hit = when (runCatching { AlertType.valueOf(a.type) }.getOrNull()) {
-                AlertType.PRICE_ABOVE -> a.threshold != null && price >= a.threshold
-                AlertType.PRICE_BELOW -> a.threshold != null && price <= a.threshold
-                AlertType.SCORE_ABOVE -> a.threshold != null && score != null && score >= a.threshold
+                AlertType.PRICE_ABOVE -> price >= th
+                AlertType.PRICE_BELOW -> price <= th
+                AlertType.SCORE_ABOVE -> score != null && score >= th
                 null -> false
             }
             val recently = a.lastTriggeredAtMs?.let { Duration.between(java.time.Instant.ofEpochMilli(it), now) < Duration.ofHours(20) } ?: false

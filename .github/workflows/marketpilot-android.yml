@@ -92,9 +92,9 @@ jobs:
         env:
           MP_LIVE_TESTS: "1"
         run: ./gradlew :data:providers:test --tests "*LiveProvidersTest" | tail -5 || true
+      - name: Provider sample probe (diagnostic)
+        if: always()
+        run: python3 scripts/probe_providers.py 2>/dev/null | head -20 || true
       - name: Result summary
         if: always()
         run: python3 scripts/test_summary.py . && ! grep -l "<failure" data/providers/build/test-results/test/*Live*.xml
-      - name: Provider sample probe (diagnostic)
-        if: always()
-        run: python3 scripts/probe_providers.py | head -60
