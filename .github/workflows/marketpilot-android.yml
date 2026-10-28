@@ -57,9 +57,18 @@ jobs:
         if: failure()
         run: |
           grep -E "^e: |What went wrong|Execution failed|error:|> Task .* FAILED" assemble.log | head -80 || true
-      - name: Room schema (for migration tracking)
-        if: always()
-        run: ls -R core/database/schemas || true
+      - name: Commit exported Room schema (migration tracking)
+        if: always() && github.event_name == 'push'
+        run: |
+          if [ -n "$(git status --porcelain core/database/schemas)" ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add core/database/schemas
+            git commit -m "Update exported Room schema [skip ci]"
+            git push origin HEAD:${GITHUB_REF_NAME} || echo "Schema push skipped (branch moved)"
+          else
+            echo "Room schema unchanged"
+          fi
       - uses: actions/upload-artifact@v4
         if: always()
         with:
