@@ -30,7 +30,7 @@ export function Countdown() {
   }, [n, start, locale, soundOn]);
 
   return (
-    <div className="grid min-h-[60vh] place-items-center" role="status" aria-live="assertive">
+    <div className="grid h-full place-items-center" role="status" aria-live="assertive">
       <AnimatePresence mode="popLayout">
         {n >= 0 && (
           <motion.div

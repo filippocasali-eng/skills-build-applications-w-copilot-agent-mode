@@ -2,7 +2,7 @@
 
 import { create } from "zustand";
 import { ApiError, gameApi } from "@/features/gameplay/client-api";
-import type { AnswerFeedback, CategorySelection, Locale, MatchResults, PublicQuestion } from "@/types/game";
+import type { AnswerFeedback, CategorySelection, GameMode, Locale, MatchResults, PublicQuestion } from "@/types/game";
 
 /**
  * Client-side view of a match. The server owns the truth (timer, scoring,
@@ -24,6 +24,7 @@ export type SlotResult = "correct" | "wrong" | "timeout";
 
 interface GameState {
   phase: GamePhase;
+  mode: GameMode;
   category: CategorySelection;
   matchId: string | null;
   question: PublicQuestion | null;
@@ -38,8 +39,8 @@ interface GameState {
   results: MatchResults | null;
   errorCode: string | null;
 
-  setCategory: (c: CategorySelection) => void;
-  beginCountdown: () => void;
+  /** Resets the match and starts the 3-2-1 countdown for the given mode/category. */
+  beginCountdown: (mode?: GameMode, category?: CategorySelection) => void;
   start: (locale: Locale) => Promise<void>;
   answer: (index: number | null) => Promise<void>;
   advance: () => Promise<void>;
@@ -66,16 +67,16 @@ const codeOf = (err: unknown) => (err instanceof ApiError ? err.code : "UNKNOWN"
 
 export const useGame = create<GameState>()((set, get) => ({
   ...initial,
+  mode: "quick_play",
   category: "mixed",
 
-  setCategory: (category) => set({ category }),
-
-  beginCountdown: () => set({ ...initial, phase: "countdown" }),
+  beginCountdown: (mode, category) =>
+    set((s) => ({ ...initial, phase: "countdown", mode: mode ?? s.mode, category: category ?? s.category })),
 
   start: async (locale) => {
     set({ phase: "starting" });
     try {
-      const { matchId, question } = await gameApi.start(locale, get().category);
+      const { matchId, question } = await gameApi.start(locale, get().category, get().mode);
       set({ matchId, question, deadline: now() + question.remainingMs, phase: "question" });
     } catch (err) {
       set({ phase: "error", errorCode: codeOf(err) });

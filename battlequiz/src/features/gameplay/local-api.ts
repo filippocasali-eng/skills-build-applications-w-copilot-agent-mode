@@ -1,8 +1,8 @@
 import { createMemoryRepositories } from "@/lib/store/memory";
 import type { Repositories } from "@/lib/store/types";
-import type { CategorySelection, Locale } from "@/types/game";
+import type { CategorySelection, GameMode, Locale } from "@/types/game";
 import { ApiError } from "./client-api-error";
-import { answerQuestion, availableCategories, GameServiceError, getCurrentQuestion, getResults, startQuickPlay } from "./service";
+import { answerQuestion, availableCategories, GameServiceError, getCurrentQuestion, getResults, startDailyChallenge, startQuickPlay } from "./service";
 
 /**
  * OFFLINE MODE (Android app build). The same tested game engine runs on the
@@ -57,8 +57,12 @@ async function call<T>(fn: () => Promise<T>): Promise<T> {
 
 export const localGameApi = {
   categories: (locale: Locale) => call(async () => ({ categories: await availableCategories(getRepos(), locale) })),
-  start: (locale: Locale, category: CategorySelection) =>
-    call(() => startQuickPlay(getRepos(), { playerKey: PLAYER, locale, category, now: Date.now() })),
+  start: (locale: Locale, category: CategorySelection, mode: GameMode = "quick_play") =>
+    call(() =>
+      mode === "daily_challenge"
+        ? startDailyChallenge(getRepos(), { playerKey: PLAYER, locale, now: Date.now() })
+        : startQuickPlay(getRepos(), { playerKey: PLAYER, locale, category, now: Date.now() }),
+    ),
   current: (matchId: string) => call(() => getCurrentQuestion(getRepos(), { matchId, playerKey: PLAYER, now: Date.now() })),
   answer: (matchId: string, questionIndex: number, selectedIndex: number | null) =>
     call(() => answerQuestion(getRepos(), { matchId, playerKey: PLAYER, questionIndex, selectedIndex, now: Date.now() })),

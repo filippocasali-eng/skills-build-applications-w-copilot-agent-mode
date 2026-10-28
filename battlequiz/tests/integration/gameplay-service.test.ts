@@ -5,6 +5,7 @@ import {
   GameServiceError,
   getCurrentQuestion,
   getResults,
+  startDailyChallenge,
   startQuickPlay,
 } from "@/features/gameplay/service";
 import { createRng } from "@/lib/random";
@@ -52,6 +53,8 @@ export function gameplaySuite(name: string, makeRepos: () => Promise<Repositorie
       expect(results.xpEarned).toBe(90);
       expect(results.score).toBeGreaterThan(0);
       expect(results.rulesetVersion).toBe("v1");
+      expect(results.mode).toBe("quick_play");
+      expect(results.review.every((r) => r.elapsedMs >= 0 && r.elapsedMs <= 13_000)).toBe(true);
 
       const final = await getCurrentQuestion(repos, { matchId, playerKey, now });
       expect(final.status).toBe("COMPLETED");
@@ -116,6 +119,25 @@ export function gameplaySuite(name: string, makeRepos: () => Promise<Repositorie
       const a = await ids(1);
       const b = await ids(2);
       expect(a.filter((id) => b.includes(id))).toHaveLength(0);
+    });
+
+    it("gives every player the same daily challenge, independent of history", async () => {
+      const repos = await makeRepos();
+      const day = Date.UTC(2026, 9, 28, 9);
+      const seq = async (playerKey: string, at: number) => {
+        const { matchId } = await startDailyChallenge(repos, { playerKey, locale: "it", now: at });
+        const s = (await repos.matches.get(matchId))!;
+        expect(s.mode).toBe("daily_challenge");
+        expect(s.challengeDate).toBe(new Date(at).toISOString().slice(0, 10));
+        return s.questions.map((q) => `${q.questionId}:${q.optionOrder.join("")}`);
+      };
+      const p1 = player();
+      await startQuickPlay(repos, { playerKey: p1, locale: "it", category: "mixed", now: day });
+      const a = await seq(p1, day);
+      const b = await seq(player(), day + 3_600_000);
+      expect(a).toEqual(b);
+      const nextDay = await seq(player(), day + 86_400_000);
+      expect(nextDay).not.toEqual(a);
     });
 
     it("lists every seeded category as playable", async () => {

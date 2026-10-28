@@ -19,6 +19,8 @@ export const viewport: Viewport = {
   themeColor: "#0B1020",
   width: "device-width",
   initialScale: 1,
+  // Edge-to-edge on phones; safe areas are handled with the .safe-top/.safe-bottom utilities.
+  viewportFit: "cover",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

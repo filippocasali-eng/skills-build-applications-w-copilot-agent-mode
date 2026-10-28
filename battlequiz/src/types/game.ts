@@ -71,7 +71,7 @@ export const MATCH_STATUSES = [
 ] as const;
 export type MatchStatus = (typeof MATCH_STATUSES)[number];
 
-export type GameMode = "quick_play";
+export type GameMode = "quick_play" | "daily_challenge";
 
 /** A question slot inside a match, with the answer order fixed at creation time. */
 export interface MatchQuestion {
@@ -108,6 +108,8 @@ export interface MatchState {
   playerKey: string;
   locale: Locale;
   category: CategorySelection;
+  /** UTC day of a daily challenge (YYYY-MM-DD), otherwise null. */
+  challengeDate?: string | null;
   rulesetVersion: string;
   questions: MatchQuestion[];
   currentIndex: number;
@@ -161,11 +163,17 @@ export interface MatchReviewItem {
   correct: boolean;
   timedOut: boolean;
   points: number;
+  /** Server-measured response time (ms); the time limit for unanswered questions. */
+  elapsedMs: number;
   explanation: string;
 }
 
 export interface MatchResults {
   matchId: string;
+  mode: GameMode;
+  category: CategorySelection;
+  /** UTC day (YYYY-MM-DD) for daily challenges, otherwise null. */
+  challengeDate: string | null;
   status: MatchStatus;
   score: number;
   correctCount: number;

@@ -1,7 +1,7 @@
 import { matchXp } from "@/features/progression/levels";
 import { buildMatchQuestions, QUICK_PLAY_LENGTH, selectQuestions } from "@/features/questions/selection";
 import { createRng, type Rng } from "@/lib/random";
-import { CURRENT_RULESET, summarizeAnswers } from "@/lib/scoring";
+import { CURRENT_RULESET, getRuleset, summarizeAnswers } from "@/lib/scoring";
 import type { Repositories } from "@/lib/store/types";
 import {
   QUESTION_CATEGORIES,
@@ -14,6 +14,7 @@ import {
   type PublicQuestion,
   type QuestionCategory,
 } from "@/types/game";
+import { utcDay } from "./service-time";
 import { deliverCurrentQuestion, expireIfStale, MatchError, submitAnswer, toPublicQuestion, createSoloMatch } from "./engine";
 
 /** How many recently seen questions are deprioritised when building a match. */
@@ -84,15 +85,44 @@ export interface StartInput {
   matchId?: string;
 }
 
-export async function startQuickPlay(
+export { utcDay };
+
+/** Seed shared by every player for a given day, locale and ruleset. */
+export function dailySeed(day: string, locale: Locale): string {
+  return `daily:${day}:${locale}:${CURRENT_RULESET.version}`;
+}
+
+export interface StartMatchInput extends StartInput {
+  mode?: "quick_play" | "daily_challenge";
+}
+
+/**
+ * Daily Challenge: everyone gets the same questions in the same order with the
+ * same answer layout, so the sequence derives only from (UTC day, locale, ruleset)
+ * and ignores personal history.
+ * One ranked attempt per day is enforced with accounts (Milestone 3); until then
+ * daily results are unranked.
+ */
+export async function startDailyChallenge(repos: Repositories, input: Omit<StartInput, "category" | "rng">) {
+  return startMatch(repos, { ...input, category: "mixed", mode: "daily_challenge" });
+}
+
+export async function startQuickPlay(repos: Repositories, input: StartInput) {
+  return startMatch(repos, { ...input, mode: "quick_play" });
+}
+
+async function startMatch(
   repos: Repositories,
-  input: StartInput,
+  input: StartMatchInput,
 ): Promise<{ matchId: string; question: PublicQuestion }> {
+  const mode = input.mode ?? "quick_play";
+  const daily = mode === "daily_challenge";
+  const challengeDate = daily ? utcDay(input.now) : null;
   const matchId = input.matchId ?? crypto.randomUUID();
-  const rng = input.rng ?? createRng(`${matchId}:${input.now}`);
+  const rng = daily ? createRng(dailySeed(challengeDate!, input.locale)) : (input.rng ?? createRng(`${matchId}:${input.now}`));
   const [pool, recentlySeen] = await Promise.all([
     repos.questions.listPlayable(input.locale),
-    repos.history.recent(input.playerKey, HISTORY_WINDOW),
+    daily ? Promise.resolve([]) : repos.history.recent(input.playerKey, HISTORY_WINDOW),
   ]);
 
   let picked;
@@ -104,10 +134,11 @@ export async function startQuickPlay(
 
   const created = createSoloMatch({
     id: matchId,
-    mode: "quick_play",
+    mode,
     playerKey: input.playerKey,
     locale: input.locale,
     category: input.category,
+    challengeDate,
     rulesetVersion: CURRENT_RULESET.version,
     questions: buildMatchQuestions(picked, rng),
     now: input.now,
@@ -116,7 +147,7 @@ export async function startQuickPlay(
   const state = deliverCurrentQuestion(created, input.now);
   await repos.matches.create(state);
   await repos.history.record(input.playerKey, picked.map((q) => q.id), input.now);
-  await repos.audit.log({ actorKey: input.playerKey, action: "match.created", subject: matchId, metadata: { mode: "quick_play", category: input.category } });
+  await repos.audit.log({ actorKey: input.playerKey, action: "match.created", subject: matchId, metadata: { mode, category: input.category } });
 
   return { matchId, question: toPublicQuestion(state, picked[0], input.now) };
 }
@@ -196,6 +227,9 @@ export async function getResults(
 
   return {
     matchId: state.id,
+    mode: state.mode,
+    category: state.category,
+    challengeDate: state.challengeDate ?? null,
     status: state.status,
     score: summary.score,
     correctCount: summary.correctCount,
@@ -219,6 +253,7 @@ export async function getResults(
         correct: a?.correct ?? false,
         timedOut: a?.timedOut ?? true,
         points: a?.points ?? 0,
+        elapsedMs: a?.elapsedMs ?? getRuleset(state.rulesetVersion).timeLimitMs,
         explanation: q?.explanation ?? "",
       };
     }),

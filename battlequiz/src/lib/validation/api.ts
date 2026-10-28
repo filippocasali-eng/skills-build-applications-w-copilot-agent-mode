@@ -6,6 +6,7 @@ export const LocaleSchema = z.enum(LOCALES);
 export const CreateMatchSchema = z.object({
   locale: LocaleSchema.default("it"),
   category: z.enum([...QUESTION_CATEGORIES, "mixed"]).default("mixed"),
+  mode: z.enum(["quick_play", "daily_challenge"]).default("quick_play"),
 });
 
 export const SubmitAnswerSchema = z.object({

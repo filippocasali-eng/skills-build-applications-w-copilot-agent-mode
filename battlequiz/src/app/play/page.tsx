@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import { PlayClient } from "@/components/game/PlayClient";
+import { AppShell } from "@/components/app/AppShell";
 
-export const metadata: Metadata = { title: "Partita rapida · BattleQuiz" };
+export const metadata: Metadata = { title: "Gioca · BattleQuiz" };
 
 export default function PlayPage() {
-  return <PlayClient />;
+  return <AppShell initialTab="play" />;
 }

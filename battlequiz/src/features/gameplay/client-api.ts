@@ -1,4 +1,4 @@
-import type { AnswerFeedback, CategorySelection, Locale, MatchResults, PublicQuestion, QuestionCategory } from "@/types/game";
+import type { AnswerFeedback, CategorySelection, GameMode, Locale, MatchResults, PublicQuestion, QuestionCategory } from "@/types/game";
 import { ApiError } from "./client-api-error";
 import type { MatchSnapshot } from "./service";
 
@@ -38,10 +38,10 @@ async function withRetry<T>(fn: () => Promise<T>, attempts = 3): Promise<T> {
 /** Typed browser client for the gameplay HTTP API. */
 const httpGameApi = {
   categories: (locale: Locale) => request<{ categories: QuestionCategory[] }>(`/api/categories?locale=${locale}`),
-  start: (locale: Locale, category: CategorySelection) =>
+  start: (locale: Locale, category: CategorySelection, mode: GameMode = "quick_play") =>
     request<{ matchId: string; question: PublicQuestion }>("/api/matches", {
       method: "POST",
-      body: JSON.stringify({ locale, category }),
+      body: JSON.stringify({ locale, category, mode }),
     }),
   current: (matchId: string) => withRetry(() => request<MatchSnapshot>(`/api/matches/${matchId}/question`)),
   answer: (matchId: string, questionIndex: number, selectedIndex: number | null) =>

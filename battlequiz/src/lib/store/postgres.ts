@@ -119,10 +119,10 @@ export function createPostgresRepositories(connectionString: string): Repositori
       async create(s) {
         await inTransaction(pool, async (c) => {
           await c.query(
-            `insert into matches (id, mode, status, locale, category, ruleset_version, created_by, created_at, completed_at, version)
-             values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)`,
-            [s.id, s.mode, s.status, s.locale, s.category, s.rulesetVersion, s.playerKey, new Date(s.createdAt),
-              ts(s.completedAt), s.version],
+            `insert into matches (id, mode, status, locale, category, challenge_date, ruleset_version, created_by, created_at, completed_at, version)
+             values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)`,
+            [s.id, s.mode, s.status, s.locale, s.category, s.challengeDate ?? null, s.rulesetVersion, s.playerKey,
+              new Date(s.createdAt), ts(s.completedAt), s.version],
           );
           const userId = s.playerKey.startsWith("user:") ? s.playerKey.slice(5) : null;
           await c.query(
@@ -143,9 +143,9 @@ export function createPostgresRepositories(connectionString: string): Repositori
 
       async get(id) {
         const m = await pool.query(
-          `select m.*, p.player_key, p.current_index, p.current_issued_at, p.score, p.streak, p.best_streak
+          `select m.*, to_char(m.challenge_date, 'YYYY-MM-DD') as challenge_day, p.player_key, p.current_index, p.current_issued_at, p.score, p.streak, p.best_streak
              from matches m join match_players p on p.match_id = m.id
-            where m.id = $1 and m.mode = 'quick_play'`,
+            where m.id = $1 and m.mode in ('quick_play', 'daily_challenge')`,
           [id],
         );
         if (m.rowCount === 0) return null;
@@ -184,6 +184,7 @@ export function createPostgresRepositories(connectionString: string): Repositori
           playerKey: row.player_key,
           locale: row.locale,
           category: row.category,
+          challengeDate: row.challenge_day ?? null,
           rulesetVersion: row.ruleset_version,
           questions,
           currentIndex: row.current_index,

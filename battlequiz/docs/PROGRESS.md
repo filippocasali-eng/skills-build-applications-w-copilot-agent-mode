@@ -23,6 +23,13 @@ Docs in this folder; full schema migration (30 tables incl. `staff_roles`, RLS o
 - Offline Android build: static export + Capacitor 8, branded icon and splash, on-device engine with persisted question history. A full offline match was verified in a mobile browser (no network calls), and `tests/integration/offline-api.test.ts` covers it.
 - The APK is built on GitHub Actions because this development environment cannot reach Google's Android repositories (`dl.google.com`). Debug-signed, for sideloading.
 
+## App redesign v0.2 (28 Oct 2026)
+- Native-style app shell with tabs, Home dashboard, Play, Trophies, Profile, Settings, History, onboarding, full-screen match with bottom-sheet quit, haptics and Android back-button handling.
+- **Daily Challenge** (mode B) playable: identical sequence and answer layout for everyone per UTC day + locale + ruleset (server and offline). One attempt per day is enforced on the device; server-side one-ranked-attempt enforcement needs accounts (M3), so daily results are unranked for now.
+- On-device progression and 11 achievements (9 unlockable solo; First Victory and Five Consecutive Wins need multiplayer).
+- Migration `20261028000000_match_challenge_date.sql` adds `matches.challenge_date`.
+- Tests: 112 Vitest (incl. PostgreSQL), 20 Playwright (desktop + mobile).
+
 ## Known issues / caveats
 - Seed questions were written with AI assistance from stable, well-known facts and reference articles; they are `approved` for casual play but `ranked_eligible = false` until a human editor signs them off.
 - Guest progress (XP/level/best) lives in localStorage and can be lost; this is by design until accounts exist.

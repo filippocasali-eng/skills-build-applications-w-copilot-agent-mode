@@ -64,6 +64,7 @@ export interface CreateMatchInput {
   playerKey: string;
   locale: Locale;
   category: CategorySelection;
+  challengeDate?: string | null;
   rulesetVersion: string;
   questions: MatchQuestion[];
   now: number;
@@ -79,6 +80,7 @@ export function createSoloMatch(input: CreateMatchInput): MatchState {
     playerKey: input.playerKey,
     locale: input.locale,
     category: input.category,
+    challengeDate: input.challengeDate ?? null,
     rulesetVersion: input.rulesetVersion,
     questions: input.questions,
     currentIndex: 0,

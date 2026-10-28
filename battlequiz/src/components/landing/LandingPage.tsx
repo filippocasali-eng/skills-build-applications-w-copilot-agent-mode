@@ -114,7 +114,7 @@ export function LandingPage() {
           <div className="flex items-center gap-2">
             <LanguageSwitch />
             <Button asChild size="sm" className="hidden sm:inline-flex">
-              <Link href="/play">{m.common.playNow}</Link>
+              <Link href="/app">{m.common.playNow}</Link>
             </Button>
           </div>
         </div>
@@ -137,7 +137,7 @@ export function LandingPage() {
             <p className="mt-6 max-w-xl text-lg text-muted">{m.landing.heroText}</p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <Button asChild size="xl" data-testid="hero-play">
-                <Link href="/play">
+                <Link href="/app">
                   <Play className="h-6 w-6 fill-current" /> {m.common.playNow}
                 </Link>
               </Button>
@@ -245,7 +245,7 @@ export function LandingPage() {
                 </ul>
                 {i === 0 ? (
                   <Button asChild className="mt-7 w-full" size="lg">
-                    <Link href="/play">{m.common.playNow}</Link>
+                    <Link href="/app">{m.common.playNow}</Link>
                   </Button>
                 ) : (
                   <>
@@ -286,7 +286,7 @@ export function LandingPage() {
             <h2 className="relative font-display text-3xl font-black sm:text-4xl">{m.landing.ctaTitle}</h2>
             <p className="relative mt-2 text-white/80">{m.landing.ctaText}</p>
             <Button asChild size="xl" variant="gold" className="relative mt-7">
-              <Link href="/play">
+              <Link href="/app">
                 <Play className="h-6 w-6 fill-current" /> {m.common.playNow}
               </Link>
             </Button>

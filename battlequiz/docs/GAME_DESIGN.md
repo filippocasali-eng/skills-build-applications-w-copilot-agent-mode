@@ -1,5 +1,20 @@
 # Game Design
 
+## App experience (v0.2)
+The game runs in a native-style **app shell** (`src/components/app`), used by the Android app and by the web at `/app` and `/play`:
+- **Bottom tab bar:** Home · Gioca · Trofei · Profilo, with an animated active indicator and haptic feedback.
+- **Home:** greeting + avatar, day-streak flame, level ring and XP bar, Quick Play hero card, Daily Challenge card (state + countdown to the next UTC day), category carousel, next-trophy progress, recent matches.
+- **Gioca:** mode cards (Quick Play, Daily Challenge, locked Friend Battle and Live 1v1) and a category practice grid.
+- **Trofei:** 11 achievements with progress bars, rewards and unlock dates; personal records.
+- **Profilo:** large avatar, level, six stat tiles, accuracy by category, match history.
+- **Settings** (pushed screen): nickname, avatar colour, language, sound, vibration, animations, reset progress (bottom-sheet confirmation), version, legal.
+- **Onboarding** on first launch: three slides + nickname and colour; skippable.
+- **Match** is a full-screen pushed page: question card at the top, answers at the bottom in thumb reach, quit confirmation as a bottom sheet, results with level-up and unlocked trophies and sticky actions.
+- Native polish: edge-to-edge with safe areas, light system-bar icons, Android back button (closes sheets, confirms quitting a live match, pops screens, returns to Home), haptics, no text selection or tap highlight in the UI, press-scale feedback.
+
+## Progression (on device until accounts exist)
+`src/features/progression/player.ts` (pure, tested): XP, levels, day streak (local calendar), per-category accuracy, history (last 50), daily results, idempotent crediting by match id. Achievements: `src/features/achievements/catalog.ts`; multiplayer ones stay locked until battles exist.
+
 ## Flow (M1)
 Landing → **Setup** (category: Mix + every category with ≥ 10 approved questions) → **3-2-1 countdown** (the server timer starts only after it) → **10 questions** → **Results** → Play again.
 

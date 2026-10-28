@@ -6,6 +6,10 @@ const config: CapacitorConfig = {
   appName: "BattleQuiz",
   webDir: "out",
   backgroundColor: "#0B1020",
+  plugins: {
+    // Edge-to-edge with safe-area CSS variables (--safe-area-inset-*) and light icons on our dark UI.
+    SystemBars: { insetsHandling: "css", initialViewportFitValueHint: "cover", style: "DARK" },
+  },
   android: {
     allowMixedContent: false,
     webContentsDebuggingEnabled: false,
