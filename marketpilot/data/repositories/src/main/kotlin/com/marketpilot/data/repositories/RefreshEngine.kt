@@ -284,6 +284,23 @@ class RefreshEngine @Inject constructor(
         if (historyStart == null || historyStart.isAfter(defaultStart.plusDays(10))) {
             if (storeFx(defaultStart, 120_000)) notes += "Storico cambi BCE scaricato"
         }
+        // Fallback: Federal Reserve H.10 rates via FRED (DEXUSEU = USD per EUR, DEXUSUK = USD per GBP)
+        // when the ECB is unreachable (e.g. its certificate chain is not trusted by the device).
+        val usdAfter = db.macroDao().fxSeries("USD").lastOrNull()?.epochDay?.let(LocalDate::ofEpochDay)
+        if ((usdAfter == null || usdAfter.isBefore(today.minusDays(10))) && registry.isEnabled(registry.fred)) {
+            val from = usdAfter?.minusDays(10) ?: defaultStart
+            val eurUsd = withTimeoutOrNull(60_000) { registry.fred.series("DEXUSEU", from) }
+            val gbpUsd = withTimeoutOrNull(60_000) { registry.fred.series("DEXUSUK", from) }
+            val usdByDate = eurUsd?.data.orEmpty().associate { it.date to it.value }
+            if (usdByDate.isNotEmpty()) {
+                val rows = usdByDate.map { (d, v) -> FxRateEntity("USD", d.toEpochDay(), v, registry.fred.descriptor.id) } +
+                    gbpUsd?.data.orEmpty().mapNotNull { g -> usdByDate[g.date]?.let { u -> FxRateEntity("GBP", g.date.toEpochDay(), u / g.value, registry.fred.descriptor.id) } }
+                db.macroDao().upsertFx(rows)
+                notes += "Cambi da Federal Reserve (FRED) come riserva della BCE"
+            } else {
+                notes += "Cambi non disponibili né da BCE né da FRED"
+            }
+        }
         // VIX + macro
         suspend fun macro(seriesId: String, store: String, chain: List<com.marketpilot.data.providers.MacroDataProvider>) {
             val last = market.macro(store).lastOrNull()?.date

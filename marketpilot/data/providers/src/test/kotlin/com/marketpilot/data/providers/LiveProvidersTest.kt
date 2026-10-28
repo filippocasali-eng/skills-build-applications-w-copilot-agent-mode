@@ -77,6 +77,9 @@ class LiveProvidersTest {
         val vix = CboeVixProvider(http).series("VIX", today.minusDays(60)); report("cboe-vix", vix); assertTrue(vix.isSuccess)
         val dgs = FredProvider(http).series("DGS10", today.minusDays(60)); report("fred-dgs10", dgs); assertTrue(dgs.isSuccess)
         val curve = FredProvider(http).series("T10Y2Y", today.minusDays(60)); report("fred-t10y2y", curve); assertTrue(curve.isSuccess)
+        // Fallback FX when the ECB is unreachable on a device: USD per EUR (Federal Reserve H.10).
+        val eurUsd = FredProvider(http).series("DEXUSEU", today.minusDays(60)); report("fred-dexuseu", eurUsd)
+        assertTrue(eurUsd.isSuccess && eurUsd.data!!.all { it.value in 0.5..2.0 })
         val fx = EcbFxProvider(http).eurRates(setOf("USD", "GBP"), today.minusDays(30)); report("ecb-90d", fx); assertTrue(fx.isSuccess)
         val fxHist = EcbFxProvider(http).eurRates(setOf("USD"), today.minusYears(2)); report("ecb-hist", fxHist)
         assertTrue(fxHist.isSuccess && fxHist.data!!.size > 400)
