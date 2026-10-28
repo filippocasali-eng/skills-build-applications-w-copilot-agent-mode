@@ -81,7 +81,7 @@ object ProviderCatalog {
     val all = listOf(YAHOO, ALPHA_VANTAGE, FINNHUB, SEC, CBOE, FRED, ECB, FED_RSS, SEC_RSS, YAHOO_RSS, REDDIT, STOOQ)
 
     /** Human-readable source name for an id (falls back to the id). */
-    fun displayName(id: String): String = all.firstOrNull { it.id == id }?.name ?: id
+    fun displayName(id: String): String = all.firstOrNull { it.id == id }?.displayName ?: id
 
     /** Short Italian explanation of a stored technical error, for display to the user. */
     fun friendlyError(raw: String?): String? {
