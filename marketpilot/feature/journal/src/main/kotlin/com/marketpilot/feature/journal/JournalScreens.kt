@@ -158,7 +158,7 @@ fun DecisionTrackerScreen(onBack: () -> Unit, vm: TrackerViewModel = hiltViewMod
                 MpColors.Info,
             )
         }
-        item { ChipRow(listOf<SnapshotKind?>(SnapshotKind.STOCK, SnapshotKind.ETF, SnapshotKind.MARKET, null), kind, { it?.name ?: "TUTTI" }, { vm.kind.value = it }) }
+        item { ChipRow(listOf<SnapshotKind?>(SnapshotKind.STOCK, SnapshotKind.ETF, SnapshotKind.MARKET, null), kind, { when (it) { SnapshotKind.STOCK -> "Titoli"; SnapshotKind.ETF -> "ETF"; SnapshotKind.MARKET -> "Mercato"; null -> "Tutti" } }, { vm.kind.value = it }) }
         if (o == null) { item { Text("Caricamento…") }; return@MpScreen }
         item {
             MpCard {

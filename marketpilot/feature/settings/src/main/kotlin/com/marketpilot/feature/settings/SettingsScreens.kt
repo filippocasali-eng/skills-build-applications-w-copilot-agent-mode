@@ -322,7 +322,10 @@ fun DataSourcesScreen(onBack: () -> Unit, vm: DataSourcesViewModel = hiltViewMod
                     Text(d.termsNote, style = MaterialTheme.typography.bodySmall, color = MpColors.TextSecondary)
                     st?.let {
                         Text("Ultimo successo: ${it.lastSuccessAt?.let(Fmt::dateTime) ?: "mai"} · tentativi ok/ko ${it.successCount}/${it.failureCount}", style = MaterialTheme.typography.labelSmall, color = MpColors.TextSecondary)
-                        it.lastError?.let { e -> Text("Ultimo errore: $e", style = MaterialTheme.typography.labelSmall, color = MpColors.Warning) }
+                        it.lastError?.let { e ->
+                            Text("Ultimo problema: ${ProviderCatalog.friendlyError(e)}", style = MaterialTheme.typography.labelSmall, color = MpColors.Warning)
+                            if (d.id == ProviderIds.ECB) Text("I cambi EUR/USD ed EUR/GBP vengono presi dalla Federal Reserve (FRED) come riserva.", style = MaterialTheme.typography.labelSmall, color = MpColors.Info)
+                        }
                     }
                     secretFor(d.id)?.let { name -> SecretField(name, vm) }
                     if (d.id == ProviderIds.SEC) ContactField(s.providers.secContactEmail, vm)

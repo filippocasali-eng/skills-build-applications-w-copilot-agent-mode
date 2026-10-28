@@ -32,6 +32,8 @@ object Fmt {
         else -> num(x, 0)
     }
     fun date(d: LocalDate?): String = d?.format(dateFmt) ?: "—"
+    /** Formats a stored ISO date ("2026-10-28") the Italian way; returns the input if it is not a date. */
+    fun date(iso: String?): String = iso?.let { runCatching { LocalDate.parse(it).format(dateFmt) }.getOrDefault(it) } ?: "—"
     fun dateTime(i: Instant?): String = i?.atZone(AppClock.DISPLAY_ZONE)?.format(dateTimeFmt) ?: "—"
     fun time(i: Instant?): String = i?.atZone(AppClock.DISPLAY_ZONE)?.format(timeFmt) ?: "—"
 

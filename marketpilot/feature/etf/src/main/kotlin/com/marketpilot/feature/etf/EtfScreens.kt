@@ -49,6 +49,7 @@ import com.marketpilot.core.designsystem.toDoubleOrZero
 import com.marketpilot.core.model.Candle
 import com.marketpilot.core.model.Instrument
 import com.marketpilot.core.model.InstrumentRole
+import com.marketpilot.data.providers.ProviderCatalog
 import com.marketpilot.data.repositories.AnalysisRepository
 import com.marketpilot.data.repositories.EtfAnalysisDto
 import com.marketpilot.data.repositories.EtfDecisionDto
@@ -110,7 +111,7 @@ private fun EtfRowCard(r: EtfRow, onOpen: (String) -> Unit) {
                         Spacer(Modifier.width(8.dp))
                         Text(Fmt.pct(t.change1d), color = changeColor(t.change1d))
                     }
-                    Text("Chiusura del ${t.lastDate}", style = MaterialTheme.typography.bodySmall, color = MpColors.TextSecondary)
+                    Text("Chiusura del ${Fmt.date(t.lastDate)}", style = MaterialTheme.typography.bodySmall, color = MpColors.TextSecondary)
                 } else Text("Dati non disponibili", color = MpColors.TextSecondary)
                 r.analysis?.let { Text("Tattico: ${it.tactical.verdict}", style = MaterialTheme.typography.bodySmall) }
             }
@@ -210,7 +211,7 @@ private fun Overview(inst: Instrument, s: EtfDetailState) {
                 Spacer(Modifier.weight(1f))
                 FreshnessPill(MarketSessions.classify(Calendars.forExchange(inst.exchange), q.quote.observedAt, java.time.Instant.now()))
             }
-            Text("Prezzo del ${Fmt.dateTime(q.quote.observedAt)} · fonte ${q.providerId}", style = MaterialTheme.typography.bodySmall, color = MpColors.TextSecondary)
+            Text("Prezzo del ${Fmt.dateTime(q.quote.observedAt)} · fonte ${ProviderCatalog.displayName(q.providerId)}", style = MaterialTheme.typography.bodySmall, color = MpColors.TextSecondary)
         }
         if (s.loading) Text("Verifica aggiornamenti…", style = MaterialTheme.typography.bodySmall, color = MpColors.TextSecondary)
         s.message?.let { Banner(it) }
@@ -255,7 +256,7 @@ private fun Decision(d: EtfDecisionDto) {
 private fun Metrics(a: EtfAnalysisDto, inst: Instrument) {
     val t = a.technical ?: return
     MpCard {
-        SectionTitle("Indicatori (chiusura ${t.lastDate})")
+        SectionTitle("Indicatori (chiusura ${Fmt.date(t.lastDate)})")
         MetricRow("Prezzo", Fmt.money(t.close, inst.currency))
         MetricRow("Var. giornaliera / settimanale / mensile", "${Fmt.pct(t.change1d)} / ${Fmt.pct(t.change5d)} / ${Fmt.pct(t.change21d)}")
         MetricRow("Massimo / minimo 52 settimane", "${Fmt.num(t.high52w)} / ${Fmt.num(t.low52w)}")

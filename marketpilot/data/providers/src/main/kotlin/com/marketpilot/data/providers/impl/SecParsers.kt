@@ -14,7 +14,8 @@ object Form4Parser {
         val doc = SafeXml.parse(xml).documentElement
         val issuer = doc.child("issuer")
         val issuerCik = issuer.valueOf("issuerCik")?.trimStart('0') ?: ""
-        val symbol = issuer.valueOf("issuerTradingSymbol")?.uppercase() ?: ""
+        // Some filers write the exchange prefix ("NYSE:FLG"): keep the ticker only.
+        val symbol = issuer.valueOf("issuerTradingSymbol")?.uppercase()?.substringAfterLast(':')?.trim() ?: ""
         val owners = doc.children("reportingOwner")
         val owner = owners.firstOrNull()
         val name = owners.mapNotNull { it.child("reportingOwnerId").valueOf("rptOwnerName") }.joinToString(" / ").ifBlank { "n/d" }

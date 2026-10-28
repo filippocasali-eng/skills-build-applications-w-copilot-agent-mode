@@ -21,6 +21,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ExpandLess
 import androidx.compose.material.icons.filled.ExpandMore
+import androidx.compose.material.icons.outlined.CheckCircle
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.outlined.WarningAmber
 import androidx.compose.material3.Card
@@ -210,7 +211,12 @@ fun Banner(text: String, color: Color = MpColors.Warning, modifier: Modifier = M
             .border(1.dp, color.copy(alpha = 0.4f), MaterialTheme.shapes.small).padding(12.dp),
         verticalAlignment = Alignment.Top,
     ) {
-        Icon(Icons.Outlined.WarningAmber, null, tint = color, modifier = Modifier.size(18.dp))
+        val icon = when (color) {
+            MpColors.Positive -> Icons.Outlined.CheckCircle
+            MpColors.Info -> Icons.Outlined.Info
+            else -> Icons.Outlined.WarningAmber
+        }
+        Icon(icon, null, tint = color, modifier = Modifier.size(18.dp))
         Spacer(Modifier.width(8.dp))
         Text(text, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurface)
     }

@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
@@ -120,7 +121,7 @@ class OnboardingViewModel @Inject constructor(
 @Composable
 fun OnboardingScreen(onFinished: () -> Unit, vm: OnboardingViewModel = hiltViewModel()) {
     val s by vm.state.collectAsStateWithLifecycle()
-    Column(Modifier.fillMaxSize().padding(20.dp).testTag("onboarding"), verticalArrangement = Arrangement.spacedBy(14.dp)) {
+    Column(Modifier.fillMaxSize().safeDrawingPadding().padding(20.dp).testTag("onboarding"), verticalArrangement = Arrangement.spacedBy(14.dp)) {
         Text("MarketPilot AI", style = MaterialTheme.typography.headlineMedium, color = MpColors.Positive, fontWeight = FontWeight.Bold)
         LinearProgressIndicator(progress = { (s.step + 1f) / OnboardingState.STEPS }, modifier = Modifier.fillMaxWidth(), color = MpColors.Positive, trackColor = MpColors.Outline)
         Column(Modifier.weight(1f).verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(12.dp)) {
@@ -165,7 +166,7 @@ private fun Capital(s: OnboardingState, vm: OnboardingViewModel) {
     NumberField("Capitale ETF (lungo periodo)", s.etfCapital, { v -> vm.update { it.copy(etfCapital = v) } }, suffix = "€", tag = "etf_capital")
     NumberField("Capitale Trading (breve/swing)", s.tradingCapital, { v -> vm.update { it.copy(tradingCapital = v) } }, suffix = "€", tag = "trading_capital")
     NumberField("Versamento mensile ETF (PAC)", s.monthly, { v -> vm.update { it.copy(monthly = v) } }, suffix = "€/mese")
-    Text("Valuta di base: EUR (unica valuta supportata nella versione 1; gli strumenti in USD sono convertiti con i cambi BCE).", style = MaterialTheme.typography.bodySmall, color = MpColors.TextSecondary)
+    Text("Valuta di base: EUR (unica valuta supportata nella versione 1; gli strumenti in USD sono convertiti con i cambi ufficiali BCE o, in loro assenza, Federal Reserve).", style = MaterialTheme.typography.bodySmall, color = MpColors.TextSecondary)
 }
 
 @Composable

@@ -83,7 +83,7 @@ fun InsiderRadarScreen(onBack: () -> Unit, onOpenStock: (String) -> Unit, vm: In
                     item(key = "p_$sym") {
                         MpCard(onClick = { onOpenStock(InstrumentCatalog.stockId(sym)) }) {
                             Row(verticalAlignment = Alignment.CenterVertically) {
-                                Text(sym, style = MaterialTheme.typography.titleMedium, modifier = Modifier.weight(1f))
+                                Text(sym.substringAfterLast(':'), style = MaterialTheme.typography.titleMedium, modifier = Modifier.weight(1f))
                                 Pill("Conviction ${sig.score.toInt()}", scoreColor(sig.score))
                             }
                             Text(sig.explanation, style = MaterialTheme.typography.bodySmall)

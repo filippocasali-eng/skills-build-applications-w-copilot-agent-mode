@@ -121,7 +121,9 @@ fun WatchlistScreen(onBack: () -> Unit, onOpen: (Instrument) -> Unit, vm: Watchl
                                     q.quote.changePercent?.let { Text(Fmt.pct(it / 100), color = changeColor(it)) }
                                 }
                                 Text(Fmt.dateTime(q.quote.observedAt), style = MaterialTheme.typography.labelSmall, color = MpColors.TextSecondary)
-                            } ?: Text("Prezzo non ancora scaricato", style = MaterialTheme.typography.bodySmall, color = MpColors.TextSecondary)
+                            } ?: (r.lastClose ?: r.score?.technical?.close)?.let { close ->
+                                Text("${Fmt.money(close, r.instrument.currency)} · ultima chiusura" + (r.score?.technical?.lastDate?.let { " del ${Fmt.date(it)}" } ?: ""), fontWeight = FontWeight.SemiBold)
+                            } ?: Text("Prezzo non ancora scaricato: aggiorna il mercato", style = MaterialTheme.typography.bodySmall, color = MpColors.TextSecondary)
                         }
                         r.score?.let { sc -> Pill(Recommendation.valueOf(sc.recommendation).label, recommendationColor(Recommendation.valueOf(sc.recommendation))) }
                         IconButton(onClick = { vm.remove(r.instrument.id) }) { Icon(Icons.Outlined.Delete, contentDescription = "Rimuovi ${r.instrument.symbol}") }

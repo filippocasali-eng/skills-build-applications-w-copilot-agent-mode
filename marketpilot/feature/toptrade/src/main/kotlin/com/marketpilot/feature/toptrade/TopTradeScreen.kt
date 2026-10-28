@@ -119,19 +119,18 @@ fun CandidateCard(rank: Int, st: StockScoreDto, quote: StoredQuote?, onOpen: (St
         }
         val price = quote?.quote?.price ?: st.technical?.close
         Text(
-            "${Fmt.money(price, "USD")} · " + (quote?.let { "quotazione ${Fmt.dateTime(it.quote.observedAt)}" } ?: "chiusura ${st.technical?.lastDate ?: "n/d"}"),
+            "${Fmt.money(price, "USD")} · " + (quote?.let { "quotazione ${Fmt.dateTime(it.quote.observedAt)}" } ?: "chiusura ${Fmt.date(st.technical?.lastDate)}"),
             style = MaterialTheme.typography.bodySmall,
         )
-        Row {
-            Text("Score ${st.score?.toInt() ?: "n/d"}", color = scoreColor(st.score), fontWeight = FontWeight.SemiBold)
-            Spacer(Modifier.width(12.dp))
-            Text("Copertura ${(st.coverage * 100).toInt()}%", style = MaterialTheme.typography.bodySmall)
-            Spacer(Modifier.width(12.dp))
-            Text("Fiducia ${(st.confidence * 100).toInt()}%", style = MaterialTheme.typography.bodySmall)
-            Spacer(Modifier.width(12.dp))
-            Text("Rischio ${risk.label}", color = riskColor(risk), style = MaterialTheme.typography.bodySmall)
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Text("Score ${st.score?.toInt() ?: "n/d"}", color = scoreColor(st.score), fontWeight = FontWeight.SemiBold, modifier = Modifier.weight(1f))
+            Text("Rischio ${risk.label.lowercase()}", color = riskColor(risk), style = MaterialTheme.typography.bodySmall)
         }
-        Text(st.explanation, style = MaterialTheme.typography.bodySmall, color = MpColors.TextSecondary)
+        Text("Dati disponibili ${(st.coverage * 100).toInt()}% · affidabilità ${(st.confidence * 100).toInt()}%", style = MaterialTheme.typography.bodySmall, color = MpColors.TextSecondary)
+        // The first explanation line repeats the score/coverage shown above: keep only the reasons.
+        st.explanation.lines().filterNot { "punteggio" in it && "copertura" in it }.filter { it.isNotBlank() }.forEach {
+            Text(it, style = MaterialTheme.typography.bodySmall, color = MpColors.TextSecondary)
+        }
         st.plan?.let { p ->
             Column {
                 MetricRow("Zona di ingresso (${p.setup})", "${Fmt.num(p.entryLow)} – ${Fmt.num(p.entryHigh)}")
@@ -140,7 +139,7 @@ fun CandidateCard(rank: Int, st: StockScoreDto, quote: StoredQuote?, onOpen: (St
                 MetricRow("Rendimento/rischio", Fmt.num(p.riskReward))
             }
         } ?: st.noTradeReason?.let { Text("Nessun piano: $it", style = MaterialTheme.typography.bodySmall, color = MpColors.Warning) }
-        Text("Catalizzatore: ${st.catalyst}", style = MaterialTheme.typography.bodySmall)
+        if (!st.catalyst.startsWith("Nessun")) Text("Catalizzatore: ${st.catalyst}", style = MaterialTheme.typography.bodySmall)
         st.bearCase.firstOrNull()?.let { Text("Scenario negativo: $it", style = MaterialTheme.typography.bodySmall, color = MpColors.Negative) }
         WhyExpandable(st.components, footer = "Fonti: prezzi Yahoo Finance; insider SEC Form 4; 13F SEC; fondamentali SEC XBRL; notizie RSS. Dettagli e link nella scheda titolo.")
         TextButton(onClick = { onOpen(st.instrumentId) }) { Text("Analisi completa") }

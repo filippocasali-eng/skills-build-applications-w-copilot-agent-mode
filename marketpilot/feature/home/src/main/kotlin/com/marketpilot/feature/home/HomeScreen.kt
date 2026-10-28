@@ -71,6 +71,7 @@ import com.marketpilot.data.repositories.RefreshState
 import com.marketpilot.data.repositories.RefreshTrigger
 import com.marketpilot.data.repositories.StockScoreDto
 import com.marketpilot.data.repositories.StoredQuote
+import com.marketpilot.data.providers.ProviderCatalog
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -183,6 +184,13 @@ fun HomeScreen(
         item { Header(s) }
         item { RefreshCard(s, vm::refresh, vm::cancel) }
         s.message?.let { m -> item { Banner(m, if (m.startsWith("Aggiornamento completato")) MpColors.Positive else MpColors.Warning) } }
+        if (s.assessment == null && s.lastRefresh == null && s.refresh !is RefreshState.Running) {
+            // First launch: one clear next step instead of a page of empty cards.
+            item { GettingStarted() }
+            item { PortfolioCard(s, onNavigate) }
+            item { Text(DISCLAIMER, style = MaterialTheme.typography.bodySmall, color = MpColors.TextSecondary) }
+            return@MpScreen
+        }
         item { RegimeCard(s.assessment) }
         item { ScoresCard(s.assessment) }
         item { RisksCard(s.assessment) }
@@ -242,11 +250,33 @@ private fun RefreshCard(s: HomeState, onRefresh: () -> Unit, onCancel: () -> Uni
         (s.refresh as? RefreshState.Finished)?.let { f ->
             WhyExpandable(
                 components = emptyList(), title = "Riepilogo aggiornamento (${if (f.status == "COMPLETED") "completo" else "parziale"})",
-                footer = f.summary.steps.joinToString("\n") { "• ${it.name}: ${it.status} — ${it.detail}" } +
+                footer = f.summary.steps.joinToString("\n") { "${stepIcon(it.status)} ${it.name}: ${it.detail}" } +
                     (if (f.summary.notes.isNotEmpty()) "\n" + f.summary.notes.joinToString("\n") else ""),
             )
         }
     }
+}
+
+@Composable
+private fun GettingStarted() {
+    MpCard(Modifier.testTag("getting_started")) {
+        SectionTitle("Per iniziare")
+        Text("Scarica i dati di mercato", style = MaterialTheme.typography.titleLarge)
+        Text(
+            "1. Premi AGGIORNA MERCATO: il primo download (circa 3 anni di storico) richiede 1–3 minuti.\n" +
+                "2. Qui comparirà il quadro di oggi: regime di mercato, punteggi, migliori opportunità o NESSUN TRADE.\n" +
+                "3. Apri ETF, Top Trade e Simulatore per approfondire e simulare ordini senza rischi reali.",
+            style = MaterialTheme.typography.bodyMedium,
+        )
+        Text("Serve la connessione a Internet. I dati restano salvati sul telefono e consultabili offline.", style = MaterialTheme.typography.bodySmall, color = MpColors.TextSecondary)
+    }
+}
+
+private fun stepIcon(status: String) = when (status) {
+    "OK", "COMPLETED", "SUCCESS" -> "✓"
+    "SKIPPED" -> "–"
+    "PARTIAL", "WARNING" -> "!"
+    else -> "✗"
 }
 
 @Composable
@@ -360,9 +390,9 @@ private fun NewsCard(news: List<NewsItem>, onNavigate: (String) -> Unit) {
 @Composable
 private fun DataQualityCard(s: HomeState, onNavigate: (String) -> Unit) {
     MpCard(onClick = { onNavigate("datasources") }) {
-        SectionTitle("Qualità e freschezza dei dati")
+        SectionTitle("Qualità e freschezza dei dati") { androidx.compose.material3.TextButton(onClick = { onNavigate("datasources") }) { Text("Dettagli") } }
         if (s.providers.isEmpty()) Text("Nessuna fonte ancora contattata.", color = MpColors.TextSecondary)
-        s.providers.sortedBy { it.providerId }.forEach { p ->
+        s.providers.sortedBy { ProviderCatalog.displayName(it.providerId) }.forEach { p ->
             Row(verticalAlignment = Alignment.CenterVertically) {
                 val c = when (p.state) {
                     ProviderOperationalState.OPERATIONAL -> MpColors.Positive
@@ -371,8 +401,8 @@ private fun DataQualityCard(s: HomeState, onNavigate: (String) -> Unit) {
                     ProviderOperationalState.UNSUPPORTED -> MpColors.Negative
                 }
                 Text("● ", color = c)
-                Text(p.providerId, modifier = Modifier.weight(1f), style = MaterialTheme.typography.bodySmall)
-                Text(p.lastSuccessAt?.let { Fmt.dateTime(it) } ?: "mai riuscito", style = MaterialTheme.typography.bodySmall, color = MpColors.TextSecondary)
+                Text(ProviderCatalog.displayName(p.providerId), modifier = Modifier.weight(1f), style = MaterialTheme.typography.bodySmall)
+                Text(p.lastSuccessAt?.let { Fmt.dateTime(it) } ?: "non riuscito", style = MaterialTheme.typography.bodySmall, color = MpColors.TextSecondary)
             }
         }
         val stale = s.assessment?.let { it.asOf.isBefore(s.session.lastCompletedSession) } ?: false

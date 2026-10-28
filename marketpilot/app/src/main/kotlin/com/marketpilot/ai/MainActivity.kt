@@ -1,3 +1,5 @@
+@file:OptIn(androidx.compose.foundation.layout.ExperimentalLayoutApi::class)
+
 package com.marketpilot.ai
 
 import android.Manifest
@@ -11,6 +13,8 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.AccountBalanceWallet
@@ -23,6 +27,7 @@ import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -67,7 +72,12 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContent { MarketPilotTheme { MarketPilotRoot() } }
+        setContent {
+            MarketPilotTheme {
+                // Root surface: every Text inherits the light content colour on the dark background.
+                Surface(Modifier.fillMaxSize(), color = MpColors.Background, contentColor = MpColors.TextPrimary) { MarketPilotRoot() }
+            }
+        }
     }
 }
 
@@ -125,7 +135,10 @@ private fun MainNav() {
             }
         },
     ) { pad ->
-        NavHost(nav, startDestination = "home", modifier = Modifier.padding(pad)) {
+        // Only the bottom (tab bar or navigation bar) is applied here: each screen's top bar handles the
+        // status bar itself, otherwise the top inset would be added twice.
+        val bottom = PaddingValues(bottom = pad.calculateBottomPadding())
+        NavHost(nav, startDestination = "home", modifier = Modifier.padding(bottom).consumeWindowInsets(bottom)) {
             val back: () -> Unit = { nav.popBackStack() }
             composable("home") {
                 HomeScreen(onOpenStock = { nav.navigate(detailRoute(it)) }, onOpenEtf = { nav.navigate(detailRoute(it)) }, onNavigate = { r ->

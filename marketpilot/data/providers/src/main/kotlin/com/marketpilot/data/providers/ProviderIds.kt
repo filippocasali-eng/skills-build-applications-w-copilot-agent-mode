@@ -79,4 +79,20 @@ object ProviderCatalog {
     )
 
     val all = listOf(YAHOO, ALPHA_VANTAGE, FINNHUB, SEC, CBOE, FRED, ECB, FED_RSS, SEC_RSS, YAHOO_RSS, REDDIT, STOOQ)
+
+    /** Human-readable source name for an id (falls back to the id). */
+    fun displayName(id: String): String = all.firstOrNull { it.id == id }?.name ?: id
+
+    /** Short Italian explanation of a stored technical error, for display to the user. */
+    fun friendlyError(raw: String?): String? {
+        val e = raw ?: return null
+        return when {
+            "CertPath" in e || "Trust anchor" in e || "SSLHandshake" in e ->
+                "Il certificato del sito non è riconosciuto da questo telefono: la connessione è stata rifiutata per sicurezza."
+            "UnknownHost" in e || "Unable to resolve host" in e -> "Sito non raggiungibile: controlla la connessione."
+            "timeout" in e.lowercase() || "Timeout" in e -> "Il sito non ha risposto in tempo."
+            "429" in e -> "Troppe richieste: il sito ha chiesto di riprovare più tardi."
+            else -> e.substringBefore(": java.").substringBefore(" java.").take(160)
+        }
+    }
 }

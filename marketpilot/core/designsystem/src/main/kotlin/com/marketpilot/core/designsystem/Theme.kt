@@ -28,6 +28,13 @@ object MpColors {
 private val scheme = darkColorScheme(
     primary = MpColors.Positive,
     onPrimary = Color(0xFF00281A),
+    // Containers (FABs, selected chips, nav indicator) stay in the app palette instead of the default purple.
+    primaryContainer = MpColors.Positive,
+    onPrimaryContainer = Color(0xFF00281A),
+    secondaryContainer = Color(0xFF173A30),
+    onSecondaryContainer = MpColors.Positive,
+    tertiaryContainer = Color(0xFF3A2E12),
+    onTertiaryContainer = MpColors.Warning,
     secondary = MpColors.Info,
     tertiary = MpColors.Warning,
     background = MpColors.Background,

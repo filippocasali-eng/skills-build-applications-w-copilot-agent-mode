@@ -45,6 +45,7 @@ import com.marketpilot.core.designsystem.SectionTitle
 import com.marketpilot.core.designsystem.toDoubleOrZero
 import com.marketpilot.core.model.AssetClass
 import com.marketpilot.core.model.Instrument
+import com.marketpilot.data.repositories.AnalysisRepository
 import com.marketpilot.data.repositories.MarketDataRepository
 import com.marketpilot.data.repositories.OnDemandRepository
 import com.marketpilot.data.repositories.PortfolioRepository
@@ -187,6 +188,7 @@ data class TicketState(
     val preview: TicketPreview? = null,
     val result: String? = null,
     val placed: Boolean = false,
+    val planNote: String? = null,
 )
 
 @HiltViewModel
@@ -196,6 +198,7 @@ class TicketViewModel @Inject constructor(
     private val portfolio: PortfolioRepository,
     private val onDemand: OnDemandRepository,
     private val settings: SettingsRepository,
+    private val analysis: AnalysisRepository,
 ) : ViewModel() {
     private val _state = MutableStateFlow(TicketState())
     val state: StateFlow<TicketState> = _state
@@ -224,7 +227,22 @@ class TicketViewModel @Inject constructor(
             instrument = inst, results = emptyList(), query = inst.symbol, lastPrice = last, atrPercent = snap?.atrPercent,
             account = if (inst.assetClass == AssetClass.ETF && inst.isUcits) AccountType.ETF else AccountType.TRADING,
             limit = last?.let { "%.2f".format(java.util.Locale.US, it) } ?: "",
+            stopLoss = "", takeProfit = "", planNote = null,
         )
+        // Prefill from the model's plan when one exists (editable): entry, stop loss and first target.
+        val plan = if (inst.assetClass == AssetClass.STOCK) runCatching { analysis.stockScore(inst.id)?.plan }.getOrNull() else null
+        if (plan != null) {
+            val f = { x: Double -> "%.2f".format(java.util.Locale.US, x) }
+            val breakout = last != null && plan.entry > last * 1.001
+            _state.value = _state.value.copy(
+                type = if (breakout) OrderType.STOP else OrderType.LIMIT,
+                stop = if (breakout) f(plan.entry) else "",
+                limit = if (breakout) _state.value.limit else f(plan.entry),
+                stopLoss = f(plan.stop), takeProfit = f(plan.target1),
+                planNote = "Valori precompilati dal piano del modello (${plan.setup}): ingresso ${f(plan.entry)}, stop ${f(plan.stop)}, target ${f(plan.target1)}. " +
+                    "Puoi modificarli. Premi \"Calcola quantità dal rischio\" per la quantità.",
+            )
+        }
     }
 
     private fun ticket(s: TicketState): OrderTicket? {
@@ -293,6 +311,7 @@ fun TicketScreen(onBack: () -> Unit, onDone: () -> Unit, vm: TicketViewModel = h
             MpCard {
                 Text("${inst.symbol} · ${inst.name}", fontWeight = FontWeight.SemiBold)
                 Text("Ultimo prezzo disponibile: ${Fmt.money(s.lastPrice, inst.currency)}" + (s.atrPercent?.let { " · ATR ${Fmt.pct(it, signed = false)}" } ?: ""), style = MaterialTheme.typography.bodySmall)
+                s.planNote?.let { Text(it, style = MaterialTheme.typography.bodySmall, color = MpColors.Info) }
                 ChipRow(AccountType.entries, s.account, { it.label }, { a -> vm.update { it.copy(account = a) } })
                 ChipRow(OrderSide.entries, s.side, { it.label }, { v -> vm.update { it.copy(side = v) } })
                 ChipRow(OrderType.entries, s.type, { it.label }, { v -> vm.update { it.copy(type = v) } }, Modifier.testTag("order_type"))

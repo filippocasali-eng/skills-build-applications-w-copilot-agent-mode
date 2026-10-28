@@ -65,6 +65,7 @@ import com.marketpilot.core.model.NewsItem
 import com.marketpilot.core.model.Recommendation
 import com.marketpilot.core.model.RedditTickerStats
 import com.marketpilot.core.model.RiskCategory
+import com.marketpilot.data.providers.ProviderCatalog
 import com.marketpilot.data.repositories.AlertRepository
 import com.marketpilot.data.repositories.AlertType
 import com.marketpilot.data.repositories.AnalysisRepository
@@ -160,19 +161,21 @@ fun StockDetailScreen(onBack: () -> Unit, onTrade: (String) -> Unit, onJournal: 
     ) {
         if (inst == null) { item { Text(if (s.loading) "Caricamento…" else "Strumento non trovato") }; return@MpScreen }
         item { Overview(inst, s) }
+        // Actions near the top: no need to scroll through the whole analysis to act on it.
+        item {
+            Row {
+                Button(onClick = { onTrade(inst.id) }, modifier = Modifier.weight(1.3f).testTag("stock_trade")) { Text("Simula ordine", maxLines = 1) }
+                Spacer(Modifier.width(6.dp))
+                OutlinedButton(onClick = { alertDialog = true }, modifier = Modifier.weight(1f)) { Text("Avviso", maxLines = 1) }
+                Spacer(Modifier.width(6.dp))
+                OutlinedButton(onClick = { onJournal(inst.id) }, modifier = Modifier.weight(1f)) { Text("Nota", maxLines = 1) }
+            }
+        }
         item { Chart(s) }
         item { DecisionCard(s.score) }
         item { Fundamentals(s.fundamentals) }
         item { Signals(s) }
         item { NewsBlock(s.news) }
-        item {
-            Row {
-                Button(onClick = { onTrade(inst.id) }, modifier = Modifier.weight(1f).testTag("stock_trade")) { Text("Ordine simulato") }
-                Spacer(Modifier.width(8.dp))
-                OutlinedButton(onClick = { alertDialog = true }, modifier = Modifier.weight(1f)) { Text("Avviso") }
-            }
-        }
-        item { OutlinedButton(onClick = { onJournal(inst.id) }, modifier = Modifier.fillMaxWidth()) { Text("Nota nel diario") } }
     }
     if (alertDialog) AlertDialogContent(onDismiss = { alertDialog = false }, onAdd = { t, v -> vm.addAlert(t, v); alertDialog = false })
 }
@@ -210,7 +213,7 @@ private fun Overview(inst: Instrument, s: StockDetailState) {
             q?.let { FreshnessPill(MarketSessions.classify(Calendars.NYSE, it.quote.observedAt, Instant.now())) }
         }
         Text(
-            q?.let { "Quotazione del ${Fmt.dateTime(it.quote.observedAt)} (fonte ${it.providerId})" } ?: last?.let { "Chiusura del ${Fmt.date(it.date)}" } ?: "Nessun prezzo disponibile",
+            q?.let { "Quotazione del ${Fmt.dateTime(it.quote.observedAt)} (fonte ${ProviderCatalog.displayName(it.providerId)})" } ?: last?.let { "Chiusura del ${Fmt.date(it.date)}" } ?: "Nessun prezzo disponibile",
             style = MaterialTheme.typography.bodySmall, color = MpColors.TextSecondary,
         )
         MetricRow("Valuta / borsa", "${inst.currency} · NYSE/Nasdaq")

@@ -57,7 +57,8 @@ object InsiderConviction {
         if (cluster) score += 5
         return InsiderSignal(
             score.coerceIn(0.0, 100.0), purchases, buyers.size, total, sales.size, excluded,
-            "${purchases.size} acquisti sul mercato da ${buyers.size} insider per circa ${"%,.0f".format(total)} USD negli ultimi $windowDays giorni" +
+            "${purchases.size} ${if (purchases.size == 1) "acquisto" else "acquisti"} sul mercato da ${buyers.size} insider " +
+                "per circa ${String.format(java.util.Locale.ITALY, "%,.0f", total)} USD negli ultimi $windowDays giorni" +
                 (if (cluster) " (acquisti concentrati: più insider nello stesso mese)" else "") + ".",
         )
     }

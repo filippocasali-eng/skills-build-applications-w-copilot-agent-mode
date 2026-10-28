@@ -72,7 +72,7 @@ fun NewsScreen(onBack: () -> Unit, vm: NewsViewModel = hiltViewModel()) {
                         Pill(categoryLabel(n.category), MpColors.Info)
                     }
                     if (n.relatedSymbols.isNotEmpty()) Text("Ticker: ${n.relatedSymbols.joinToString()}", style = MaterialTheme.typography.bodySmall)
-                    Text("Rilevanza ${(n.relevance * 100).toInt()}% (automatica)", style = MaterialTheme.typography.labelSmall, color = MpColors.TextSecondary)
+                    if (n.relevance >= 0.05) Text("Rilevanza stimata ${(n.relevance * 100).toInt()}%", style = MaterialTheme.typography.labelSmall, color = MpColors.TextSecondary)
                     TextButton(onClick = { runCatching { uri.openUri(n.url) } }) { Text("Leggi alla fonte") }
                 }
             }

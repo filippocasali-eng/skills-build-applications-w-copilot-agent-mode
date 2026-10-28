@@ -113,9 +113,14 @@ fun PortfolioScreen(onOpenInstrument: (String) -> Unit, vm: PortfolioViewModel =
         if (snap == null) { item { Text("Caricamento…") }; return@MpScreen }
         item { Summary(snap, account, s.monthly) }
         item {
-            Row(Modifier.fillMaxWidth()) {
-                CashOp.entries.forEach { op ->
-                    OutlinedButton(onClick = { dialog = op }, modifier = Modifier.weight(1f).padding(horizontal = 2.dp).testTag("cash_${op.name}")) { Text(op.label, style = MaterialTheme.typography.labelSmall) }
+            // Two buttons per row so labels are never broken across lines on narrow phones.
+            Column {
+                CashOp.entries.chunked(2).forEach { pair ->
+                    Row(Modifier.fillMaxWidth()) {
+                        pair.forEach { op ->
+                            OutlinedButton(onClick = { dialog = op }, modifier = Modifier.weight(1f).padding(horizontal = 4.dp).testTag("cash_${op.name}")) { Text(op.label, maxLines = 1) }
+                        }
+                    }
                 }
             }
         }
