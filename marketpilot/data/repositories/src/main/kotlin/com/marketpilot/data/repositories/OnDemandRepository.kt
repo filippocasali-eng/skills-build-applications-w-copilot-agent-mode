@@ -125,6 +125,50 @@ class OnDemandRepository @Inject constructor(
         return StockScoreDto.from(StockScorer.score(input, asOf, regime, SettingsRepository.weights(s), SettingsRepository.risk(s)))
     }
 
+    /** Performs one small real request against a provider and records the outcome in the provider status table. */
+    suspend fun testProvider(providerId: String): String {
+        if (!network.isOnline()) return "Offline: impossibile verificare"
+        val today = clock.now().atZone(AppClock.DISPLAY_ZONE).toLocalDate()
+        val spy = market.instrument(InstrumentCatalog.SPY) ?: return "Catalogo non disponibile"
+        val result: com.marketpilot.core.model.ProviderResult<*>? = withTimeoutOrNull(60_000) {
+            when (providerId) {
+                registry.yahoo.descriptor.id -> registry.yahoo.quote(spy)
+                registry.alphaVantage.descriptor.id -> registry.alphaVantage.quote(spy)
+                registry.finnhub.descriptor.id -> registry.finnhub.news(listOf("AAPL"), today.minusDays(3))
+                registry.sec.descriptor.id -> registry.sec.insiderTransactions(InstrumentCatalog.stock("AAPL", "Apple"), today.minusDays(30), emptySet(), 1)
+                registry.fred.descriptor.id -> registry.fred.series("DGS10", today.minusDays(30))
+                registry.cboe.descriptor.id -> registry.cboe.series("VIX", today.minusDays(30))
+                registry.ecb.descriptor.id -> registry.ecb.eurRates(setOf("USD"), today.minusDays(10))
+                registry.fedNews.descriptor.id -> registry.fedNews.news(emptyList(), today.minusDays(60))
+                registry.secNews.descriptor.id -> registry.secNews.news(emptyList(), today.minusDays(60))
+                registry.yahooNews.descriptor.id -> registry.yahooNews.news(listOf("AAPL"), today.minusDays(14))
+                registry.reddit.descriptor.id -> registry.reddit.tickerStats(setOf("AAPL", "NVDA", "TSLA"))
+                registry.stooq.descriptor.id -> registry.stooq.dailyHistory(spy, today.minusDays(10))
+                else -> null
+            }
+        }
+        val now = clock.now().toEpochMilli()
+        val prev = db.providerStatusDao().byId(providerId)
+        val ok = result?.isSuccess == true
+        val state = when {
+            ok -> com.marketpilot.core.model.ProviderOperationalState.OPERATIONAL
+            result?.error?.kind == com.marketpilot.core.model.ProviderErrorKind.NOT_CONFIGURED -> com.marketpilot.core.model.ProviderOperationalState.NEEDS_CONFIGURATION
+            result?.error?.kind == com.marketpilot.core.model.ProviderErrorKind.BLOCKED -> com.marketpilot.core.model.ProviderOperationalState.UNSUPPORTED
+            else -> com.marketpilot.core.model.ProviderOperationalState.DEGRADED
+        }
+        db.providerStatusDao().upsert(
+            com.marketpilot.core.database.ProviderStatusEntity(
+                providerId, state.name, if (ok) now else prev?.lastSuccessAtMs, now, if (ok) null else (result?.error?.message ?: "Timeout"),
+                (prev?.successCount ?: 0) + if (ok) 1 else 0, (prev?.failureCount ?: 0) + if (ok) 0 else 1,
+            ),
+        )
+        return when {
+            result == null -> "Timeout: nessuna risposta entro 60 secondi"
+            ok -> "Funzionante: risposta reale ricevuta (${result.source.sourceUrl})"
+            else -> "Non funzionante: ${result.error?.message}"
+        }
+    }
+
     suspend fun entryComparison(id: String, amount: Double, horizonSessions: Int = 252): EntryComparison? =
         EntryStrategyBacktest.compare(market.candles(id), amount, horizonSessions)
 }

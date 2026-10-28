@@ -3,3 +3,7 @@ plugins {
 }
 
 android { namespace = "com.marketpilot.feature.settings" }
+
+dependencies {
+    implementation(libs.androidx.activity.compose)
+}

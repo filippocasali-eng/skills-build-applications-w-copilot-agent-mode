@@ -61,6 +61,9 @@ dependencies {
     implementation(project(":core:database"))
     implementation(project(":core:datastore"))
     implementation(project(":core:security"))
+    implementation(project(":data:repositories"))
+    listOf("onboarding", "home", "etf", "toptrade", "stockdetail", "reddit", "insiders", "news", "watchlist", "portfolio", "simulator", "journal", "settings")
+        .forEach { implementation(project(":feature:$it")) }
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.lifecycle.runtime.compose)

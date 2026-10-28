@@ -47,7 +47,8 @@ class SecEdgarProvider(
 
     private fun headers(): Map<String, String> {
         val c = contact()?.takeIf { it.isNotBlank() } ?: "contatto non fornito"
-        return mapOf("User-Agent" to "MarketPilotAI/1.0 (app Android personale; $c)", "Accept-Encoding" to "gzip, deflate")
+        // Accept-Encoding is left to OkHttp, which then decompresses gzip transparently.
+        return mapOf("User-Agent" to "MarketPilotAI/1.0 (app Android personale; $c)")
     }
 
     private suspend fun text(url: String): Pair<String?, ProviderError?> = when (val r = http.get(url, headers())) {

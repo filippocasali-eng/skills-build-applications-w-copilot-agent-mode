@@ -89,7 +89,8 @@ class LiveProvidersTest {
         val av = AlphaVantageProvider(http, { "demo" })
         val r = av.dailyHistory(InstrumentCatalog.stock("IBM", "IBM"), today.minusDays(120))
         report("alphavantage-demo-IBM", r)
-        assertTrue(r.isSuccess || r.error?.kind == ProviderErrorKind.RATE_LIMITED)
+        // The public "demo" key only serves the exact documentation URLs: a refusal must be classified, never crash.
+        assertTrue(r.isSuccess || r.error?.kind in setOf(ProviderErrorKind.RATE_LIMITED, ProviderErrorKind.AUTH))
     }
 
     @Test fun unsupportedAndUnconfiguredProvidersAreReportedHonestly() = runBlocking {

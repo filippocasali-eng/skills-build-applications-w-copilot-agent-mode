@@ -84,6 +84,14 @@ object AlphaVantageParser {
         return root["Note"].str ?: root["Information"].str ?: root["Error Message"].str
     }
 
+    /** Alpha Vantage answers HTTP 200 with a text notice: map it to the right error kind. */
+    fun noticeError(notice: String): ProviderError = when {
+        notice.contains("api key", ignoreCase = true) && (notice.contains("demo", ignoreCase = true) || notice.contains("invalid", ignoreCase = true)) ->
+            ProviderError(ProviderErrorKind.AUTH, "Alpha Vantage: chiave non valida o non autorizzata per questa richiesta")
+        notice.contains("premium", ignoreCase = true) -> ProviderError(ProviderErrorKind.UNSUPPORTED, "Alpha Vantage: funzione disponibile solo con piano a pagamento")
+        else -> ProviderError(ProviderErrorKind.RATE_LIMITED, "Alpha Vantage: ${notice.take(160)}")
+    }
+
     fun daily(body: String, instrumentId: String): List<Candle> {
         val root = lenientJson.parseToJsonElement(body)
         val series = root["Time Series (Daily)"] as? kotlinx.serialization.json.JsonObject ?: return emptyList()
@@ -125,7 +133,7 @@ class AlphaVantageProvider(
         return when (val b = callApi(http, host) { api.query("TIME_SERIES_DAILY", sym, key, outputSize = "compact") }) {
             is ApiBody.Err -> fail(descriptor, url, now, b.error, instrument.id)
             is ApiBody.Ok -> {
-                AlphaVantageParser.notice(b.body)?.let { return fail(descriptor, url, now, ProviderError(ProviderErrorKind.RATE_LIMITED, "Alpha Vantage: $it"), instrument.id) }
+                AlphaVantageParser.notice(b.body)?.let { return fail(descriptor, url, now, AlphaVantageParser.noticeError(it), instrument.id) }
                 val cal = Calendars.forExchange(instrument.exchange)
                 val norm = CandleNormalizer.normalize(AlphaVantageParser.daily(b.body, instrument.id).filter { !it.date.isBefore(from) }, cal, now)
                 if (norm.candles.isEmpty()) fail(descriptor, url, now, ProviderError(ProviderErrorKind.EMPTY, "Nessuna barra"), instrument.id)
@@ -142,7 +150,7 @@ class AlphaVantageProvider(
         return when (val b = callApi(http, host) { api.query("GLOBAL_QUOTE", instrument.symbol, key) }) {
             is ApiBody.Err -> fail(descriptor, url, now, b.error, instrument.id)
             is ApiBody.Ok -> {
-                AlphaVantageParser.notice(b.body)?.let { return fail(descriptor, url, now, ProviderError(ProviderErrorKind.RATE_LIMITED, "Alpha Vantage: $it"), instrument.id) }
+                AlphaVantageParser.notice(b.body)?.let { return fail(descriptor, url, now, AlphaVantageParser.noticeError(it), instrument.id) }
                 val q = lenientJson.parseToJsonElement(b.body)["Global Quote"]
                 val price = q["05. price"].dbl ?: return fail(descriptor, url, now, parseError("Prezzo assente"), instrument.id)
                 val day = q["07. latest trading day"].str?.let { runCatching { LocalDate.parse(it) }.getOrNull() } ?: return fail(descriptor, url, now, parseError("Data assente"), instrument.id)
