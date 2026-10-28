@@ -1,6 +1,7 @@
 package com.marketpilot.ai
 
 import android.content.Context
+import androidx.compose.ui.test.SemanticsMatcher
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.hasTestTag
 import androidx.compose.ui.test.hasText
@@ -70,6 +71,10 @@ class UiFlowsTest {
 
     private fun waitForText(text: String, timeout: Long = 15_000) =
         compose.waitUntil(timeout) { compose.onAllNodes(hasText(text, substring = true)).fetchSemanticsNodes().isNotEmpty() }
+
+    /** Lazy lists only compose visible items: keep scrolling the container until the node exists. */
+    private fun scrollUntil(container: String, matcher: SemanticsMatcher, timeout: Long = 15_000) =
+        compose.waitUntil(timeout) { runCatching { compose.onNodeWithTag(container).performScrollToNode(matcher) }.isSuccess }
 
     private fun completeOnboardingDirectly() = runBlocking {
         market.ensureCatalog()
@@ -158,10 +163,10 @@ class UiFlowsTest {
         relaunch()
         compose.onNodeWithTag("tab_etf").performClick()
         waitForTag("etf_radar")
-        compose.onNodeWithTag("etf_radar").performScrollToNode(hasTestTag("etf_VWCE"))
+        scrollUntil("etf_radar", hasTestTag("etf_VWCE"))
         compose.onNodeWithTag("etf_VWCE").performClick()
         waitForTag("etf_detail")
-        compose.onNodeWithTag("etf_detail").performScrollToNode(hasTestTag("entry_comparison"))
+        scrollUntil("etf_detail", hasTestTag("entry_comparison"))
         compose.onNodeWithTag("back").performClick()
         runBlocking { market.addToWatchlist(InstrumentCatalog.stockId("AAPL")) }
         compose.onNodeWithTag("tab_home").performClick()
@@ -170,7 +175,7 @@ class UiFlowsTest {
         waitForTag("watch_AAPL")
         compose.onNodeWithTag("watch_AAPL").performClick()
         waitForTag("stock_detail")
-        compose.onNodeWithTag("stock_detail").performScrollToNode(hasTestTag("decision_card"))
+        scrollUntil("stock_detail", hasTestTag("decision_card"))
         compose.onNodeWithTag("decision_card").assertExists()
     }
 
@@ -187,17 +192,17 @@ class UiFlowsTest {
         waitForTag("result_AAPL")
         compose.onNodeWithTag("result_AAPL").performClick()
         waitForTag("ticket_qty")
-        compose.onNodeWithTag("ticket").performScrollToNode(hasTestTag("ticket_qty"))
+        scrollUntil("ticket", hasTestTag("ticket_qty"))
         compose.onNodeWithTag("ticket_qty").performTextReplacement("2")
-        compose.onNodeWithTag("ticket").performScrollToNode(hasTestTag("ticket_place"))
+        scrollUntil("ticket", hasTestTag("ticket_place"))
         compose.onNodeWithTag("ticket_place").performClick()
-        waitForText("Ordine simulato registrato")
-        compose.onNodeWithTag("ticket").performScrollToNode(hasTestTag("ticket_done"))
+        scrollUntil("ticket", hasText("Ordine simulato registrato", substring = true))
+        scrollUntil("ticket", hasTestTag("ticket_done"))
         compose.onNodeWithTag("ticket_done").performClick()
         waitForTag("order_card")
-        compose.onNodeWithTag("simulator").performScrollToNode(hasTestTag("cancel_order"))
+        scrollUntil("simulator", hasTestTag("cancel_order"))
         compose.onNodeWithTag("cancel_order").performClick()
-        waitForText("Ordine annullato")
+        scrollUntil("simulator", hasText("Ordine annullato"))
         runBlocking { check(portfolio.orders().single().status.name == "CANCELLED") }
     }
 

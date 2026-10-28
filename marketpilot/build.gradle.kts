@@ -15,6 +15,7 @@ plugins {
 subprojects {
     tasks.withType<Test>().configureEach {
         timeout.set(java.time.Duration.ofMinutes(20))
+        maxHeapSize = "4g" // Robolectric + Compose UI tests exceed the 512 MB default
         testLogging {
             events("started", "passed", "failed", "skipped")
             exceptionFormat = org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
