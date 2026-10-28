@@ -23,6 +23,7 @@ tasks.test {
 
 dependencies {
     api(project(":core:network"))
+    api(project(":domain:scoring"))
     implementation(libs.retrofit)
     implementation(libs.retrofit.kotlinx.serialization)
     implementation(libs.retrofit.scalars)

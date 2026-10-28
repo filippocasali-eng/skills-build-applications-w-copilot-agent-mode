@@ -77,13 +77,36 @@ class HostRateLimiter(private val minIntervalMsByHost: Map<String, Long>, privat
 }
 
 class HttpFetcher(
-    private val client: OkHttpClient,
-    private val limiter: HostRateLimiter = HostRateLimiter(DEFAULT_LIMITS),
+    val client: OkHttpClient,
+    val limiter: HostRateLimiter = HostRateLimiter(DEFAULT_LIMITS),
     private val maxAttempts: Int = 3,
     private val baseBackoffMs: Long = 800,
 ) {
     suspend fun get(url: String, headers: Map<String, String> = emptyMap()): FetchResult =
         execute(Request.Builder().url(url).apply { headers.forEach { (k, v) -> header(k, v) } }.get().build())
+
+    sealed interface BytesResult {
+        class Ok(val bytes: ByteArray) : BytesResult
+        data class Failed(val error: ProviderError) : BytesResult
+    }
+
+    /** Binary download (e.g. zipped CSV); limited to [maxBytes] to avoid unbounded memory use. */
+    suspend fun getBytes(url: String, headers: Map<String, String> = emptyMap(), maxBytes: Long = 20_000_000): BytesResult {
+        val request = Request.Builder().url(url).apply { headers.forEach { (k, v) -> header(k, v) } }.get().build()
+        limiter.acquire(request.url.host)
+        return try {
+            client.newCall(request).await().use { resp ->
+                if (!resp.isSuccessful) return BytesResult.Failed(ProviderError(ProviderErrorKind.HTTP, "Errore HTTP ${resp.code}", resp.code))
+                val body = resp.body ?: return BytesResult.Failed(ProviderError(ProviderErrorKind.EMPTY, "Risposta vuota"))
+                if (body.contentLength() > maxBytes) return BytesResult.Failed(ProviderError(ProviderErrorKind.PARSE, "File troppo grande"))
+                BytesResult.Ok(body.bytes())
+            }
+        } catch (e: CancellationException) {
+            throw e
+        } catch (e: IOException) {
+            BytesResult.Failed(ProviderError(ProviderErrorKind.NETWORK, "Errore di rete: ${e.message ?: e.javaClass.simpleName}"))
+        }
+    }
 
     suspend fun postForm(url: String, form: Map<String, String>, headers: Map<String, String> = emptyMap()): FetchResult {
         val body = FormBody.Builder().apply { form.forEach { (k, v) -> add(k, v) } }.build()
