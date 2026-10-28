@@ -1,0 +1,47 @@
+name: MarketPilot AI Android
+
+on:
+  push:
+    paths: ["marketpilot/**", ".github/workflows/marketpilot-android.yml"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: marketpilot-android-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  provider-probe:
+    name: Live provider probe (real network)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Probe free data providers
+        run: |
+          UA="MarketPilotAI/1.0 (personal research app; contact marketpilot-ci@example.com)"
+          probe() {
+            echo "=================== $1"
+            code=$(curl -sS -L -A "$UA" -o body.bin -w "%{http_code} %{content_type} %{size_download}" --max-time 30 "$1") || true
+            echo "HTTP $code"
+            head -c ${2:-700} body.bin; echo
+          }
+          probe "https://stooq.com/q/d/l/?s=spy.us&i=d" 400
+          probe "https://stooq.com/q/d/l/?s=^spx&i=d" 300
+          probe "https://stooq.com/q/d/l/?s=vwce.de&i=d" 300
+          probe "https://stooq.com/q/l/?s=spy.us+aapl.us&f=sd2t2ohlcvn&h&e=csv" 400
+          probe "https://query1.finance.yahoo.com/v8/finance/chart/SPY?range=5d&interval=1d" 1500
+          probe "https://query1.finance.yahoo.com/v8/finance/chart/VWCE.DE?range=5d&interval=1d" 600
+          probe "https://www.sec.gov/files/company_tickers.json" 300
+          probe "https://data.sec.gov/submissions/CIK0000320193.json" 600
+          probe "https://www.sec.gov/cgi-bin/browse-edgar?action=getcurrent&type=4&count=10&output=atom" 2500
+          probe "https://efts.sec.gov/LATEST/search-index?q=%22%22&forms=4" 300
+          probe "https://fred.stlouisfed.org/graph/fredgraph.csv?id=VIXCLS" 300
+          probe "https://www.ecb.europa.eu/stats/eurofxref/eurofxref-hist-90d.xml" 900
+          probe "https://api.frankfurter.app/latest?from=EUR&to=USD" 300
+          probe "https://www.federalreserve.gov/feeds/press_all.xml" 1200
+          probe "https://www.sec.gov/news/pressreleases.rss" 800
+          probe "https://feeds.finance.yahoo.com/rss/2.0/headline?s=AAPL&region=US&lang=en-US" 1200
+          probe "https://www.reddit.com/r/wallstreetbets/hot.json?limit=2" 300
+          probe "https://www.cboe.com/us/options/market_statistics/daily/" 200
+          probe "https://cdn.cboe.com/api/global/us_indices/daily_prices/VIX_History.csv" 300
