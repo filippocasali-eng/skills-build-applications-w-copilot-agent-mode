@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
@@ -85,6 +84,14 @@ fun JournalScreen(onBack: () -> Unit, onTracker: () -> Unit, vm: JournalViewMode
         "Diario di trading", onBack = onBack, testTag = "journal",
         floating = { ExtendedFloatingActionButton(onClick = { creating = true }, icon = { Icon(Icons.Filled.Add, null) }, text = { Text("Nuova nota") }, modifier = Modifier.testTag("journal_new")) },
     ) {
+        if (creating || editing != null) {
+            item(key = "editor_${editing?.id ?: "new"}") {
+                EntryEditor(editing, vm.prefillInstrument, onDismiss = { creating = false; editing = null }, onDelete = editing?.let { e -> { vm.delete(e.id); editing = null } }) { title, body, setup, emotion, lessons, tags ->
+                    vm.save(editing?.id, title, body, editing?.instrumentId ?: vm.prefillInstrument, setup, emotion, lessons, tags)
+                    creating = false; editing = null
+                }
+            }
+        }
         item { TextButton(onClick = onTracker) { Text("Apri lo storico delle decisioni del modello →") } }
         if (entries.isEmpty()) item { Text("Nessuna nota. Registra motivazioni, emozioni e lezioni di ogni operazione simulata.", color = MpColors.TextSecondary) }
         entries.forEach { e ->
@@ -101,43 +108,31 @@ fun JournalScreen(onBack: () -> Unit, onTracker: () -> Unit, vm: JournalViewMode
             }
         }
     }
-    if (creating || editing != null) {
-        EntryDialog(editing, vm.prefillInstrument, onDismiss = { creating = false; editing = null }, onDelete = editing?.let { e -> { vm.delete(e.id); editing = null } }) { title, body, setup, emotion, lessons, tags ->
-            vm.save(editing?.id, title, body, editing?.instrumentId ?: vm.prefillInstrument, setup, emotion, lessons, tags)
-            creating = false; editing = null
-        }
-    }
 }
 
+/** Inline editor card (no dialog window): easier to use with the keyboard open on a phone. */
 @Composable
-private fun EntryDialog(e: JournalEntryEntity?, instrument: String?, onDismiss: () -> Unit, onDelete: (() -> Unit)?, onSave: (String, String, String, String, String, String) -> Unit) {
+private fun EntryEditor(e: JournalEntryEntity?, instrument: String?, onDismiss: () -> Unit, onDelete: (() -> Unit)?, onSave: (String, String, String, String, String, String) -> Unit) {
     var title by remember { mutableStateOf(e?.title ?: instrument?.substringBefore(':')?.let { "Nota su $it" } ?: "") }
     var body by remember { mutableStateOf(e?.body ?: "") }
     var setup by remember { mutableStateOf(e?.setup ?: "") }
     var emotion by remember { mutableStateOf(e?.emotion ?: "") }
     var lessons by remember { mutableStateOf(e?.lessons ?: "") }
     var tags by remember { mutableStateOf(e?.tagsCsv ?: "") }
-    AlertDialog(
-        onDismissRequest = onDismiss,
-        title = { Text(if (e == null) "Nuova nota" else "Modifica nota") },
-        text = {
-            Column {
-                OutlinedTextField(title, { title = it }, label = { Text("Titolo") }, singleLine = true, modifier = Modifier.fillMaxWidth().testTag("journal_title"))
-                OutlinedTextField(body, { body = it }, label = { Text("Motivazione / note") }, minLines = 3, modifier = Modifier.fillMaxWidth().testTag("journal_body"))
-                OutlinedTextField(setup, { setup = it }, label = { Text("Setup") }, singleLine = true, modifier = Modifier.fillMaxWidth())
-                OutlinedTextField(emotion, { emotion = it }, label = { Text("Stato emotivo") }, singleLine = true, modifier = Modifier.fillMaxWidth())
-                OutlinedTextField(lessons, { lessons = it }, label = { Text("Lezioni apprese") }, modifier = Modifier.fillMaxWidth())
-                OutlinedTextField(tags, { tags = it }, label = { Text("Tag (separati da virgola)") }, singleLine = true, modifier = Modifier.fillMaxWidth())
-            }
-        },
-        confirmButton = { Button(onClick = { onSave(title, body, setup, emotion, lessons, tags) }, modifier = Modifier.testTag("journal_save")) { Text("Salva") } },
-        dismissButton = {
-            Row {
-                onDelete?.let { TextButton(onClick = it) { Text("Elimina", color = MpColors.Negative) } }
-                TextButton(onClick = onDismiss) { Text("Annulla") }
-            }
-        },
-    )
+    MpCard(Modifier.testTag("journal_editor")) {
+        Text(if (e == null) "Nuova nota" else "Modifica nota", style = MaterialTheme.typography.titleMedium)
+        OutlinedTextField(title, { title = it }, label = { Text("Titolo") }, singleLine = true, modifier = Modifier.fillMaxWidth().testTag("journal_title"))
+        OutlinedTextField(body, { body = it }, label = { Text("Motivazione / note") }, minLines = 3, modifier = Modifier.fillMaxWidth().testTag("journal_body"))
+        OutlinedTextField(setup, { setup = it }, label = { Text("Setup") }, singleLine = true, modifier = Modifier.fillMaxWidth())
+        OutlinedTextField(emotion, { emotion = it }, label = { Text("Stato emotivo") }, singleLine = true, modifier = Modifier.fillMaxWidth())
+        OutlinedTextField(lessons, { lessons = it }, label = { Text("Lezioni apprese") }, modifier = Modifier.fillMaxWidth())
+        OutlinedTextField(tags, { tags = it }, label = { Text("Tag (separati da virgola)") }, singleLine = true, modifier = Modifier.fillMaxWidth())
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Button(onClick = { onSave(title, body, setup, emotion, lessons, tags) }, modifier = Modifier.testTag("journal_save")) { Text("Salva") }
+            TextButton(onClick = onDismiss) { Text("Annulla") }
+            onDelete?.let { TextButton(onClick = it) { Text("Elimina", color = MpColors.Negative) } }
+        }
+    }
 }
 
 // -------------------------------------------------------------------------------------------------

@@ -28,6 +28,9 @@ for path in sorted(glob.glob(os.path.join(root, "**/build/test-results/**/*.xml"
             if f is not None:
                 print(f"FAILED {suite.get('name')}.{case.get('name')}: {(f.get('message') or '')[:600]}")
                 print((f.text or "")[:1500])
+                # Project frames (where in our code it failed), which the truncated trace may hide.
+                for fr in [l.strip() for l in (f.text or "").splitlines() if "com.marketpilot" in l][:12]:
+                    print("    " + fr)
         out_el = suite.find("system-out")
         if out_el is not None and out_el.text:
             for line in out_el.text.splitlines():

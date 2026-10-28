@@ -214,15 +214,10 @@ class UiFlowsTest {
         compose.onNodeWithTag("menu_journal").performClick()
         waitForTag("journal_new")
         compose.onNodeWithTag("journal_new").performClick()
-        // The editor is a dialog: its focused text field blinks the cursor forever, so Compose would
-        // never report idle. Drive the clock manually while the dialog is open.
-        compose.mainClock.autoAdvance = false
-        compose.mainClock.advanceTimeBy(1_000)
+        waitForTag("journal_editor")
         compose.onNodeWithTag("journal_title").performTextInput("Test SXR8")
         compose.onNodeWithTag("journal_body").performTextInput("Ingresso a tranche, nessuna fretta.")
         compose.onNodeWithTag("journal_save").performClick()
-        compose.mainClock.advanceTimeBy(1_000)
-        compose.mainClock.autoAdvance = true
         waitForTag("journal_entry")
         relaunch()
         compose.onNodeWithTag("home_menu").performClick()

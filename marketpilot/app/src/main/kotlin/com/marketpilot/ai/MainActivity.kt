@@ -152,7 +152,7 @@ private fun MainNav() {
                     navArgument("instrumentId") { type = NavType.StringType; nullable = true; defaultValue = null },
                     navArgument("account") { type = NavType.StringType; nullable = true; defaultValue = null },
                 ),
-            ) { TicketScreen(onBack = back, onDone = { nav.navigateTab("simulator") }) }
+            ) { TicketScreen(onBack = back, onDone = { nav.showOrders() }) }
             composable(
                 "journal?instrumentId={instrumentId}",
                 arguments = listOf(navArgument("instrumentId") { type = NavType.StringType; nullable = true; defaultValue = null }),
@@ -165,6 +165,16 @@ private fun MainNav() {
             composable("settings") { SettingsScreen(onBack = back, onDataSources = { nav.navigate("datasources") }) }
             composable("datasources") { DataSourcesScreen(onBack = back) }
         }
+    }
+}
+
+/**
+ * After a ticket, go back to the order list. Tab navigation would restore the simulator tab's saved
+ * stack, which still contains the ticket itself.
+ */
+private fun NavHostController.showOrders() {
+    if (!popBackStack("simulator", inclusive = false)) {
+        navigate("simulator") { popUpTo(graph.findStartDestination().id); launchSingleTop = true }
     }
 }
 
