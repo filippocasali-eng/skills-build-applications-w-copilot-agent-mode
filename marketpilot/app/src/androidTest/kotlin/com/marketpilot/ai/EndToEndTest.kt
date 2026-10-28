@@ -129,7 +129,12 @@ class EndToEndTest {
         compose.onNodeWithTag("ticket_qty").performTextReplacement("1")
         scrollUntil("ticket", hasTestTag("ticket_place"))
         compose.onNodeWithTag("ticket_place").performClick()
-        scrollUntil("ticket", hasText("Ordine simulato registrato", substring = true))
+        compose.waitUntil(30_000) { runBlocking { hooks.portfolio().orders().isNotEmpty() } }
+        runBlocking {
+            val placed = hooks.portfolio().orders().single()
+            log("Ticket order status=${placed.status} limit=${placed.limitPrice} qty=${placed.quantity} reason=${placed.statusReason}")
+            assertTrue("Ticket order accepted: ${placed.statusReason}", placed.status != OrderStatus.REJECTED)
+        }
 
         // 8. Reconciliation of an order that was pending while the app was closed: an order created
         //    10 sessions ago must fill on the first session after its creation, from real bars only.

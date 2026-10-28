@@ -96,7 +96,8 @@ class LiveProvidersTest {
     @Test fun unsupportedAndUnconfiguredProvidersAreReportedHonestly() = runBlocking {
         val st = StooqProvider(http).dailyHistory(InstrumentCatalog.stock("SPY", "SPY"), today.minusDays(30))
         report("stooq", st)
-        if (!st.isSuccess) assertTrue(st.error!!.kind in setOf(ProviderErrorKind.BLOCKED, ProviderErrorKind.HTTP, ProviderErrorKind.EMPTY))
+        // Stooq is disabled by default (bot wall); any failure must be classified, never a fake success.
+        if (!st.isSuccess) assertTrue(st.error!!.kind in setOf(ProviderErrorKind.BLOCKED, ProviderErrorKind.HTTP, ProviderErrorKind.EMPTY, ProviderErrorKind.TIMEOUT, ProviderErrorKind.NETWORK))
         val rd = RedditProvider(http, { null }, { "DO_NOT_TRACK_THIS_DEVICE" }).tickerStats(setOf("AAPL"))
         report("reddit-unconfigured", rd)
         assertEquals(ProviderErrorKind.NOT_CONFIGURED, rd.error!!.kind)
