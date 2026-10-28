@@ -217,7 +217,11 @@ private fun RefreshCard(s: HomeState, onRefresh: () -> Unit, onCancel: () -> Uni
     if (running != null) {
         MpCard {
             Row(verticalAlignment = Alignment.CenterVertically) {
-                CircularProgressIndicator(Modifier.size(22.dp), strokeWidth = 2.dp, color = MpColors.Positive)
+                // Determinate (step-based) progress: no infinite animation, so UI tests can reach idle.
+                CircularProgressIndicator(
+                    progress = { running.step.toFloat() / running.totalSteps.coerceAtLeast(1) },
+                    modifier = Modifier.size(22.dp), strokeWidth = 2.dp, color = MpColors.Positive,
+                )
                 Spacer(Modifier.width(12.dp))
                 Column(Modifier.weight(1f)) {
                     Text("Aggiornamento in corso (${running.step}/${running.totalSteps})", fontWeight = FontWeight.SemiBold)

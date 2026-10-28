@@ -18,7 +18,6 @@ import androidx.compose.material.icons.outlined.CandlestickChart
 import androidx.compose.material.icons.outlined.PieChart
 import androidx.compose.material.icons.outlined.Today
 import androidx.compose.material.icons.outlined.TrendingUp
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -94,7 +93,8 @@ fun MarketPilotRoot(vm: MainViewModel = hiltViewModel()) {
         if (ready == StartState.MAIN && Build.VERSION.SDK_INT >= 33) permission.launch(Manifest.permission.POST_NOTIFICATIONS)
     }
     when (ready) {
-        StartState.LOADING -> Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) { CircularProgressIndicator(color = MpColors.Positive) }
+        // Static splash while settings load (milliseconds); no infinite spinner animation.
+        StartState.LOADING -> Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) { Text("MarketPilot AI", color = MpColors.Positive) }
         StartState.ONBOARDING -> OnboardingScreen(onFinished = vm::onboardingDone)
         StartState.MAIN -> MainNav()
     }

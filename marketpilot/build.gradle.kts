@@ -9,3 +9,15 @@ plugins {
     alias(libs.plugins.hilt) apply false
     alias(libs.plugins.room) apply false
 }
+
+// Every test task logs each test as it starts/ends and is bounded, so a hanging test is
+// visible in CI logs and fails the build instead of blocking it for hours.
+subprojects {
+    tasks.withType<Test>().configureEach {
+        timeout.set(java.time.Duration.ofMinutes(20))
+        testLogging {
+            events("started", "passed", "failed", "skipped")
+            exceptionFormat = org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
+        }
+    }
+}
