@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Stylised rising chart line inside a compass-like ring (vector, no external assets). -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp" android:height="108dp" android:viewportWidth="108" android:viewportHeight="108">
+    <path android:strokeColor="#2ECC8F" android:strokeWidth="4" android:fillColor="#00000000"
+        android:pathData="M54,26a28,28 0 1,1 0,56a28,28 0 1,1 0,-56" />
+    <path android:strokeColor="#EAF0FA" android:strokeWidth="5" android:strokeLineCap="round" android:strokeLineJoin="round" android:fillColor="#00000000"
+        android:pathData="M38,66 L50,54 L58,60 L72,44" />
+    <path android:fillColor="#2ECC8F" android:pathData="M66,42 L74,42 L74,50 Z" />
+</vector>

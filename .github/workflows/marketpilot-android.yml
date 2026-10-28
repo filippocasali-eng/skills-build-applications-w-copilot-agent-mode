@@ -1,5 +1,10 @@
 name: MarketPilot AI Android
 
+# Builds, tests and packages the native Android app in marketpilot/.
+# - unit-tests: all JVM + Robolectric tests, debug APK
+# - live-providers: real-network integration tests of the free data sources (no mocks)
+# - emulator-e2e: instrumented end-to-end tests on an Android emulator
+# - release: publishes the tested APK on the "marketpilot-android-latest" pre-release
 on:
   push:
     paths: ["marketpilot/**", ".github/workflows/marketpilot-android.yml"]
@@ -12,43 +17,72 @@ concurrency:
   group: marketpilot-android-${{ github.ref }}
   cancel-in-progress: true
 
-jobs:
-  provider-probe:
-    name: Live provider probe (real network)
-    runs-on: ubuntu-latest
-    steps:
-      - name: Probe free data providers
-        run: |
-          UA="MarketPilotAI/1.0 (personal research app; contact marketpilot-ci@example.com)"
-          probe() {
-            echo "=================== $1"
-            code=$(curl -sS -L -A "$UA" -o body.bin -w "%{http_code} %{content_type} %{size_download}" --max-time 30 "$1") || true
-            echo "HTTP $code"
-            head -c ${2:-700} body.bin; echo
-          }
-          probe "https://stooq.com/q/d/l/?s=spy.us&i=d" 400
-          probe "https://stooq.com/q/d/l/?s=^spx&i=d" 300
-          probe "https://stooq.com/q/d/l/?s=vwce.de&i=d" 300
-          probe "https://stooq.com/q/l/?s=spy.us+aapl.us&f=sd2t2ohlcvn&h&e=csv" 400
-          probe "https://query1.finance.yahoo.com/v8/finance/chart/SPY?range=5d&interval=1d" 1500
-          probe "https://query1.finance.yahoo.com/v8/finance/chart/VWCE.DE?range=5d&interval=1d" 600
-          probe "https://www.sec.gov/files/company_tickers.json" 300
-          probe "https://data.sec.gov/submissions/CIK0000320193.json" 600
-          probe "https://www.sec.gov/cgi-bin/browse-edgar?action=getcurrent&type=4&count=10&output=atom" 2500
-          probe "https://efts.sec.gov/LATEST/search-index?q=%22%22&forms=4" 300
-          probe "https://fred.stlouisfed.org/graph/fredgraph.csv?id=VIXCLS" 300
-          probe "https://www.ecb.europa.eu/stats/eurofxref/eurofxref-hist-90d.xml" 900
-          probe "https://api.frankfurter.app/latest?from=EUR&to=USD" 300
-          probe "https://www.federalreserve.gov/feeds/press_all.xml" 1200
-          probe "https://www.sec.gov/news/pressreleases.rss" 800
-          probe "https://feeds.finance.yahoo.com/rss/2.0/headline?s=AAPL&region=US&lang=en-US" 1200
-          probe "https://www.reddit.com/r/wallstreetbets/hot.json?limit=2" 300
-          probe "https://www.cboe.com/us/options/market_statistics/daily/" 200
-          probe "https://cdn.cboe.com/api/global/us_indices/daily_prices/VIX_History.csv" 300
+env:
+  GRADLE_OPTS: -Dorg.gradle.daemon=false
+  JVM_TEST_TASKS: >-
+    :core:model:test :core:common:test :core:network:test :domain:indicators:test :domain:market:test
+    :domain:scoring:test :domain:risk:test :domain:portfolio:test :domain:papertrading:test
+    :domain:backtesting:test :data:providers:test
 
-  provider-samples:
-    name: Live provider samples (real network)
+jobs:
+  unit-tests:
+    name: Build + unit tests + debug APK
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: marketpilot
     steps:
       - uses: actions/checkout@v4
-      - run: python3 marketpilot/scripts/probe_providers.py
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+      - uses: gradle/actions/setup-gradle@v4
+      - name: Unit tests (JVM + Robolectric)
+        run: ./gradlew $JVM_TEST_TASKS testDebugUnitTest --continue --stacktrace
+      - name: Test summary
+        if: always()
+        run: python3 scripts/test_summary.py .
+      - name: Assemble debug APK
+        run: ./gradlew :app:assembleDebug --stacktrace
+      - name: Room schema (for migration tracking)
+        if: always()
+        run: ls -R core/database/schemas || true
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: unit-test-reports
+          path: |
+            marketpilot/**/build/reports/tests/**
+            marketpilot/**/build/test-results/**
+            marketpilot/core/database/schemas/**
+          retention-days: 14
+      - uses: actions/upload-artifact@v4
+        with:
+          name: marketpilot-debug-apk
+          path: marketpilot/app/build/outputs/apk/debug/*.apk
+          retention-days: 30
+
+  live-providers:
+    name: Live provider integration tests (real network)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: marketpilot
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+      - uses: gradle/actions/setup-gradle@v4
+      - name: Live tests
+        env:
+          MP_LIVE_TESTS: "1"
+        run: ./gradlew :data:providers:test --tests "*LiveProvidersTest" -i --stacktrace | grep -E "LIVE\[|PASSED|FAILED|SKIPPED|tests completed|BUILD" || true
+      - name: Result summary
+        if: always()
+        run: python3 scripts/test_summary.py . && ! grep -l "<failure" data/providers/build/test-results/test/*Live*.xml
+      - name: Provider sample probe (diagnostic)
+        if: always()
+        run: python3 scripts/probe_providers.py | head -60

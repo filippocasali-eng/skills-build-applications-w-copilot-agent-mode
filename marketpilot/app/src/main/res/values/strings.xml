@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">MarketPilot AI</string>
+    <string name="channel_alerts">Avvisi di mercato</string>
+    <string name="channel_alerts_desc">Soglie di prezzo, punteggi, stop/target simulati e reminder di analisi</string>
+    <string name="channel_refresh">Aggiornamento dati</string>
+</resources>

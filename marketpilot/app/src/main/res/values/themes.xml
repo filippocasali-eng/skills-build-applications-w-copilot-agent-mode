@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.MarketPilot" parent="android:Theme.Material.NoActionBar">
+        <item name="android:windowBackground">@color/mp_background</item>
+        <item name="android:statusBarColor">@color/mp_background</item>
+        <item name="android:navigationBarColor">@color/mp_background</item>
+    </style>
+    <color name="mp_background">#FF070B14</color>
+    <color name="mp_emerald">#FF2ECC8F</color>
+</resources>
