@@ -20,7 +20,8 @@ in CI, oppure pulsante *Verifica* nella schermata *Fonti dati* dell'app).
 | SEC XBRL companyfacts | Fondamentali annuali (10-K) | No | Sì | ✅ MSFT |
 | Cboe VIX_History.csv | Volatilità | No | Sì | ✅ chiusura 27/10 |
 | FRED (fredgraph.csv) | DGS10, T10Y2Y, VIXCLS (riserva) | No | Sì | ✅ |
-| BCE eurofxref 90d + storico zip | Cambi EUR/USD, EUR/GBP | No | Sì | ✅ |
+| BCE eurofxref 90d + storico zip | Cambi EUR/USD, EUR/GBP | No | Sì | ✅ su JVM; ⚠️ **sull'emulatore Android 14 il certificato del sito BCE non è riconosciuto** (CertPathValidatorException): l'app non disattiva i controlli TLS e passa alla riserva FRED |
+| FRED DEXUSEU / DEXUSUK | Riserva ufficiale cambi (Federal Reserve H.10) | No | Sì | ✅ JVM ed emulatore Android (747 osservazioni EUR/USD salvate nel test E2E) |
 | Federal Reserve RSS | Comunicati (FOMC) | No | Sì | ✅ |
 | SEC RSS comunicati | Regolamentazione | No | Sì | ✅ |
 | Yahoo Finance RSS per titolo | Titoli di notizie per ticker | No | No | ✅ |

@@ -11,6 +11,8 @@
 - **Fondamentali**: solo da SEC XBRL (società USA); gli ETF non hanno fondamentali. TER degli ETF non scaricato automaticamente.
 - **Universo**: 47 titoli USA a grande capitalizzazione + ETF predefiniti; altri titoli USA sono cercabili tramite la mappa ticker SEC e scaricati su richiesta.
 
+- **Cambi BCE su Android**: sull'emulatore Android 14 la catena di certificati del sito BCE non è accettata. L'app usa allora i cambi ufficiali della Federal Reserve (FRED H.10), pubblicati con un ritardo fino a circa una settimana: per i controvalori in EUR viene usato l'ultimo cambio disponibile.
+
 ## Modelli
 - I punteggi sono **euristici e non validati statisticamente** su lunghi periodi; la calibrazione nello Storico decisioni diventa significativa solo dopo mesi di snapshot.
 - Il sentiment di notizie e Reddit è basato su parole chiave, non su modelli linguistici.
