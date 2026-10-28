@@ -13,7 +13,7 @@ import androidx.room.RoomDatabase
         WatchlistEntity::class, LedgerEntryEntity::class, PaperOrderEntity::class, PaperFillEntity::class,
         OpenPositionEntity::class, ClosedPositionEntity::class, AlertEntity::class, JournalEntryEntity::class,
         DecisionSnapshotEntity::class, EvaluationResultEntity::class, FxRateEntity::class, MacroObservationEntity::class,
-        EarningsEventEntity::class, SecTickerEntity::class, RefreshLogEntity::class,
+        EarningsEventEntity::class, SecTickerEntity::class, RefreshLogEntity::class, FundamentalsEntity::class, FetchMarkerEntity::class,
     ],
     version = 1,
     exportSchema = true,
@@ -34,6 +34,7 @@ abstract class MarketPilotDatabase : RoomDatabase() {
     abstract fun journalDao(): JournalDao
     abstract fun decisionDao(): DecisionDao
     abstract fun refreshLogDao(): RefreshLogDao
+    abstract fun cacheDao(): CacheDao
 
     companion object {
         const val NAME = "marketpilot.db"

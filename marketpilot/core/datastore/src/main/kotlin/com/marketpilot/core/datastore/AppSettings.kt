@@ -21,6 +21,8 @@ data class AppSettings(
     val cache: CacheSettings = CacheSettings(),
     val notifications: NotificationSettings = NotificationSettings(),
     val deviceId: String = "",
+    /** Last time the paper-trading engine evaluated pending orders (UTC epoch ms). */
+    val lastPaperEvaluationMs: Long? = null,
 )
 
 @Serializable

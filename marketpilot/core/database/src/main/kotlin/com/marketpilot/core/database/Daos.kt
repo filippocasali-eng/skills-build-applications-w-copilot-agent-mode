@@ -191,6 +191,10 @@ interface LedgerDao {
     /** Append-only: conflicting ids abort instead of silently replacing an existing entry. */
     @Insert(onConflict = OnConflictStrategy.ABORT)
     suspend fun append(items: List<LedgerEntryEntity>)
+
+    /** Used ONLY by an explicit, user-confirmed restore from a backup file. */
+    @Query("DELETE FROM ledger_entries")
+    suspend fun clearForRestore()
 }
 
 @Dao
@@ -212,6 +216,9 @@ interface PaperTradingDao {
     fun observeClosedPositions(): Flow<List<ClosedPositionEntity>>
     @Query("DELETE FROM open_positions") suspend fun clearOpen()
     @Query("DELETE FROM closed_positions") suspend fun clearClosed()
+    @Query("DELETE FROM paper_orders") suspend fun clearOrdersForRestore()
+    @Query("DELETE FROM paper_fills") suspend fun clearFillsForRestore()
+    @Query("SELECT * FROM paper_fills") suspend fun fills(): List<PaperFillEntity>
     @Insert suspend fun insertOpen(items: List<OpenPositionEntity>)
     @Insert suspend fun insertClosed(items: List<ClosedPositionEntity>)
 
@@ -226,6 +233,8 @@ interface AlertDao {
     @Upsert suspend fun upsert(item: AlertEntity): Long
     @Query("DELETE FROM alerts WHERE id = :id")
     suspend fun delete(id: Long)
+    @Query("SELECT * FROM alerts") suspend fun all(): List<AlertEntity>
+    @Insert(onConflict = OnConflictStrategy.REPLACE) suspend fun insertAll(items: List<AlertEntity>)
 }
 
 @Dao
@@ -237,6 +246,7 @@ interface JournalDao {
     @Upsert suspend fun upsert(item: JournalEntryEntity): Long
     @Query("DELETE FROM journal_entries WHERE id = :id")
     suspend fun delete(id: Long)
+    @Insert(onConflict = OnConflictStrategy.REPLACE) suspend fun insertAll(items: List<JournalEntryEntity>)
 }
 
 /** Decision Tracker: insert-only snapshots (no update or delete methods by design). */
@@ -266,4 +276,19 @@ interface RefreshLogDao {
     fun observeLastSuccessful(): Flow<RefreshLogEntity?>
     @Query("DELETE FROM refresh_log WHERE startedAtMs < :beforeMs")
     suspend fun prune(beforeMs: Long)
+}
+
+@Dao
+interface CacheDao {
+    @Upsert suspend fun upsertFundamentals(item: FundamentalsEntity)
+    @Query("SELECT * FROM fundamentals WHERE instrumentId = :id")
+    suspend fun fundamentals(id: String): FundamentalsEntity?
+    @Query("SELECT * FROM fundamentals")
+    suspend fun allFundamentals(): List<FundamentalsEntity>
+
+    @Upsert suspend fun mark(item: FetchMarkerEntity)
+    @Query("SELECT * FROM fetch_markers WHERE `key` = :key")
+    suspend fun marker(key: String): FetchMarkerEntity?
+    @Query("SELECT * FROM fetch_markers WHERE `key` LIKE :prefix || '%'")
+    suspend fun markers(prefix: String): List<FetchMarkerEntity>
 }

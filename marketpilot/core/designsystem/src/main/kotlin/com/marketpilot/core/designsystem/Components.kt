@@ -183,11 +183,12 @@ fun ComponentRow(c: ScoreComponent) {
             Spacer(Modifier.width(8.dp))
             Text("peso ${(c.weight * 100).toInt()}%", style = MaterialTheme.typography.bodySmall, color = MpColors.TextSecondary)
         }
-        if (c.score != null) {
+        val score = c.score
+        if (score != null) {
             LinearProgressIndicator(
-                progress = { (c.score / 100.0).toFloat().coerceIn(0f, 1f) },
+                progress = { (score / 100.0).toFloat().coerceIn(0f, 1f) },
                 modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp).height(4.dp),
-                color = scoreColor(c.score), trackColor = MpColors.Outline,
+                color = scoreColor(score), trackColor = MpColors.Outline,
             )
         }
         Text(c.explanation, style = MaterialTheme.typography.bodySmall, color = MpColors.TextSecondary)

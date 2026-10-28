@@ -39,12 +39,22 @@ jobs:
           java-version: 17
       - uses: gradle/actions/setup-gradle@v4
       - name: Unit tests (JVM + Robolectric)
-        run: ./gradlew $JVM_TEST_TASKS testDebugUnitTest --continue --stacktrace
+        run: |
+          set -o pipefail
+          ./gradlew $JVM_TEST_TASKS testDebugUnitTest --continue 2>&1 | tee build.log
+      - name: Compiler errors
+        if: failure()
+        run: grep -E "^e: |What went wrong|Execution failed|error:|Unresolved|> Task .* FAILED" build.log | head -80 || true
       - name: Test summary
         if: always()
         run: python3 scripts/test_summary.py .
       - name: Assemble debug APK
-        run: ./gradlew :app:assembleDebug --stacktrace
+        run: |
+          set -o pipefail
+          ./gradlew :app:assembleDebug 2>&1 | tee assemble.log
+      - name: Assemble errors
+        if: failure()
+        run: grep -E "^e: |What went wrong|Execution failed|error:|> Task .* FAILED" assemble.log | head -80 || true
       - name: Room schema (for migration tracking)
         if: always()
         run: ls -R core/database/schemas || true
@@ -79,7 +89,7 @@ jobs:
       - name: Live tests
         env:
           MP_LIVE_TESTS: "1"
-        run: ./gradlew :data:providers:test --tests "*LiveProvidersTest" -i --stacktrace | grep -E "LIVE\[|PASSED|FAILED|SKIPPED|tests completed|BUILD" || true
+        run: ./gradlew :data:providers:test --tests "*LiveProvidersTest" | tail -5 || true
       - name: Result summary
         if: always()
         run: python3 scripts/test_summary.py . && ! grep -l "<failure" data/providers/build/test-results/test/*Live*.xml

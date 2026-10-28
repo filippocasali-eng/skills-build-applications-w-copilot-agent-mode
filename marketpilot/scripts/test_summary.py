@@ -22,9 +22,17 @@ for path in sorted(glob.glob(os.path.join(root, "**/build/test-results/**/*.xml"
         module = path.split("/build/")[0].replace(root, "").strip("/")
         rows.append((module, suite.get("name", "?"), t))
         for case in suite.findall("testcase"):
-            f = case.find("failure") or case.find("error")
+            f = case.find("failure")
+            if f is None:
+                f = case.find("error")
             if f is not None:
-                print(f"FAILED {suite.get('name')}.{case.get('name')}: {(f.get('message') or '')[:300]}")
+                print(f"FAILED {suite.get('name')}.{case.get('name')}: {(f.get('message') or '')[:600]}")
+                print((f.text or "")[:1500])
+        out_el = suite.find("system-out")
+        if out_el is not None and out_el.text:
+            for line in out_el.text.splitlines():
+                if line.startswith("LIVE["):
+                    print(line[:400])
 lines = ["| Modulo | Suite | Test | Falliti | Errori | Saltati |", "|---|---|---|---|---|---|"]
 for module, name, t in rows:
     lines.append(f"| {module} | {name.split('.')[-1]} | {t['tests']} | {t['failures']} | {t['errors']} | {t['skipped']} |")

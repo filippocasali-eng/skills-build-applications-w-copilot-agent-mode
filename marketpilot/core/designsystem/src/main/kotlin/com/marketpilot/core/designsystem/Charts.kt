@@ -111,8 +111,9 @@ fun CandlestickChart(
                 val top = y(maxOf(c.open, c.close))
                 val bodyH = maxOf(1f, y(minOf(c.open, c.close)) - top)
                 drawRect(color, Offset(x(i) - step * 0.35f, top), Size(step * 0.7f, bodyH))
-                if (maxVol != null && maxVol > 0 && c.volume != null) {
-                    val vh = volH * c.volume / maxVol
+                val vol = c.volume
+                if (maxVol != null && maxVol > 0 && vol != null) {
+                    val vh = volH * vol / maxVol
                     drawRect(color.copy(alpha = 0.35f), Offset(x(i) - step * 0.35f, size.height - vh), Size(step * 0.7f, vh))
                 }
             }

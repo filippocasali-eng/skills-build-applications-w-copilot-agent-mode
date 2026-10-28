@@ -7,6 +7,7 @@ import androidx.room.Index
 // exchange calendar, enums are stored by name. JSON columns hold small, bounded explanation payloads.
 
 @Entity(tableName = "instruments")
+@kotlinx.serialization.Serializable
 data class InstrumentEntity(
     @androidx.room.PrimaryKey val id: String,
     val symbol: String,
@@ -198,6 +199,7 @@ data class RedditObservationEntity(
 )
 
 @Entity(tableName = "watchlist")
+@kotlinx.serialization.Serializable
 data class WatchlistEntity(
     @androidx.room.PrimaryKey val instrumentId: String,
     val addedAtMs: Long,
@@ -209,6 +211,7 @@ data class WatchlistEntity(
  * portfolio transactions are the rows of the respective account; balances are always derived.
  */
 @Entity(tableName = "ledger_entries", indices = [Index("account"), Index("instrumentId"), Index("referenceId")])
+@kotlinx.serialization.Serializable
 data class LedgerEntryEntity(
     @androidx.room.PrimaryKey val id: String,
     val account: String,
@@ -227,6 +230,7 @@ data class LedgerEntryEntity(
 )
 
 @Entity(tableName = "paper_orders", indices = [Index("status"), Index("instrumentId")])
+@kotlinx.serialization.Serializable
 data class PaperOrderEntity(
     @androidx.room.PrimaryKey val id: String,
     val account: String,
@@ -258,6 +262,7 @@ data class PaperOrderEntity(
 )
 
 @Entity(tableName = "paper_fills", indices = [Index("orderId")])
+@kotlinx.serialization.Serializable
 data class PaperFillEntity(
     @androidx.room.PrimaryKey val id: String,
     val orderId: String,
@@ -304,6 +309,7 @@ data class ClosedPositionEntity(
 )
 
 @Entity(tableName = "alerts")
+@kotlinx.serialization.Serializable
 data class AlertEntity(
     @androidx.room.PrimaryKey(autoGenerate = true) val id: Long = 0,
     val type: String,
@@ -317,6 +323,7 @@ data class AlertEntity(
 )
 
 @Entity(tableName = "journal_entries")
+@kotlinx.serialization.Serializable
 data class JournalEntryEntity(
     @androidx.room.PrimaryKey(autoGenerate = true) val id: Long = 0,
     val createdAtMs: Long,
@@ -337,6 +344,7 @@ data class JournalEntryEntity(
     tableName = "decision_snapshots",
     indices = [Index(value = ["assessmentEpochDay", "instrumentId", "kind"], unique = true), Index("instrumentId")],
 )
+@kotlinx.serialization.Serializable
 data class DecisionSnapshotEntity(
     @androidx.room.PrimaryKey val id: String,
     val assessmentEpochDay: Long,
@@ -359,6 +367,7 @@ data class DecisionSnapshotEntity(
 )
 
 @Entity(tableName = "evaluation_results", primaryKeys = ["snapshotId", "horizonSessions"])
+@kotlinx.serialization.Serializable
 data class EvaluationResultEntity(
     val snapshotId: String,
     val horizonSessions: Int,
@@ -397,4 +406,21 @@ data class RefreshLogEntity(
     val trigger: String,
     val status: String,
     val summaryJson: String,
+)
+
+/** Latest annual fundamentals per instrument (SEC XBRL), cached to respect fair-access limits. */
+@Entity(tableName = "fundamentals")
+data class FundamentalsEntity(
+    @androidx.room.PrimaryKey val instrumentId: String,
+    val json: String,
+    val fiscalEndEpochDay: Long?,
+    val sourceUrl: String,
+    val retrievedAtMs: Long,
+)
+
+/** Last successful fetch time for budgeted/cached downloads (e.g. "13f:1067983", "form4:AAPL"). */
+@Entity(tableName = "fetch_markers")
+data class FetchMarkerEntity(
+    @androidx.room.PrimaryKey val key: String,
+    val lastFetchMs: Long,
 )
