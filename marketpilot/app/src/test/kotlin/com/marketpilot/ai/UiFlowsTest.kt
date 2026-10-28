@@ -220,8 +220,8 @@ class UiFlowsTest {
         compose.onNodeWithTag("journal_save").performClick()
         waitForTag("journal_entry")
         relaunch()
-        compose.onNodeWithTag("home_menu").performClick()
-        compose.onNodeWithTag("menu_journal").performClick()
+        // Recreation keeps the navigation state: still on the journal, and the note is persisted.
+        waitForTag("journal")
         waitForText("Test SXR8")
     }
 }
