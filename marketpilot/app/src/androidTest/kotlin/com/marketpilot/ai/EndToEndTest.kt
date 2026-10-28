@@ -133,7 +133,10 @@ class EndToEndTest {
         runBlocking {
             val placed = hooks.portfolio().orders().single()
             log("Ticket order status=${placed.status} limit=${placed.limitPrice} qty=${placed.quantity} reason=${placed.statusReason}")
-            assertTrue("Ticket order accepted: ${placed.statusReason}", placed.status != OrderStatus.REJECTED)
+            val ecb = hooks.db().providerStatusDao().byId("ecb")
+            val fx = hooks.db().macroDao().fxSeries("USD")
+            log("ECB status=${ecb?.state} lastError=${ecb?.lastError} usdRates=${fx.size} last=${fx.lastOrNull()?.epochDay}")
+            assertTrue("Ticket order accepted: ${placed.statusReason} | ECB ${ecb?.state} ${ecb?.lastError} rates=${fx.size}", placed.status != OrderStatus.REJECTED)
         }
 
         // 8. Reconciliation of an order that was pending while the app was closed: an order created

@@ -149,7 +149,8 @@ jobs:
         if: always()
         run: |
           python3 scripts/test_summary.py . || true
-          cat e2e-logcat.txt 2>/dev/null | tail -60 || true
+          grep -h MarketPilotE2E e2e-logcat.txt 2>/dev/null | head -80 || true
+          grep -h -E 'AndroidRuntime|Caused by' e2e-logcat.txt 2>/dev/null | head -30 || true
       - uses: actions/upload-artifact@v4
         if: always()
         with:
