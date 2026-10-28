@@ -267,13 +267,23 @@ class RefreshEngine @Inject constructor(
         val defaultStart = today.minusYears(historyYears.toLong())
         val notes = mutableListOf<String>()
         // FX (ECB)
-        val lastFx = db.macroDao().fxSeries("USD").lastOrNull()?.epochDay?.let(LocalDate::ofEpochDay)
-        withTimeoutOrNull(90_000) {
-            val r = registry.ecb.eurRates(setOf("USD", "GBP"), lastFx?.minusDays(7) ?: defaultStart)
+        val fxSeries = db.macroDao().fxSeries("USD")
+        val lastFx = fxSeries.lastOrNull()?.epochDay?.let(LocalDate::ofEpochDay)
+        suspend fun storeFx(from: LocalDate, timeoutMs: Long): Boolean = withTimeoutOrNull(timeoutMs) {
+            val r = registry.ecb.eurRates(setOf("USD", "GBP"), from)
             recordStatus(registry.ecb, r)
             r.data?.let { rates -> db.macroDao().upsertFx(rates.map { FxRateEntity(it.quote, it.date.toEpochDay(), it.rate, registry.ecb.descriptor.id) }) }
-            notes += if (r.isSuccess) "Cambi BCE aggiornati" else "Cambi BCE non disponibili: ${r.error?.message}"
-        } ?: notes.add("Timeout cambi BCE")
+            if (!r.isSuccess) notes += "Cambi BCE non disponibili: ${r.error?.message}"
+            r.isSuccess
+        } ?: false.also { notes += "Timeout cambi BCE" }
+        // Recent rates first (small 90-day file): orders and valuations need today's rate even if the
+        // multi-year history download is slow or fails.
+        val recentOk = storeFx(maxOf(lastFx?.minusDays(7) ?: today.minusDays(80), today.minusDays(80)), 60_000)
+        if (recentOk) notes += "Cambi BCE aggiornati"
+        val historyStart = fxSeries.firstOrNull()?.epochDay?.let(LocalDate::ofEpochDay)
+        if (historyStart == null || historyStart.isAfter(defaultStart.plusDays(10))) {
+            if (storeFx(defaultStart, 120_000)) notes += "Storico cambi BCE scaricato"
+        }
         // VIX + macro
         suspend fun macro(seriesId: String, store: String, chain: List<com.marketpilot.data.providers.MacroDataProvider>) {
             val last = market.macro(store).lastOrNull()?.date
