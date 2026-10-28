@@ -162,7 +162,11 @@ class EndToEndTest {
             assertTrue("fill derived from that session's real open", fill.priceCcy >= bar.open)
         }
 
-        // 9. Portfolio review
+        // 9. Back to the order list (not to the ticket), then portfolio review
+        scrollUntil("ticket", hasTestTag("ticket_done"))
+        compose.onNodeWithTag("ticket_done").performClick()
+        waitTag("simulator")
+        scrollUntil("simulator", hasTestTag("order_card"))
         compose.onNodeWithTag("tab_portfolio").performClick()
         waitTag("account_tabs")
         waitTag("equity_value")
