@@ -1,6 +1,8 @@
 package com.marketpilot.ai
 
+import android.Manifest
 import android.content.Context
+import android.os.Build
 import android.util.Log
 import androidx.compose.ui.test.SemanticsMatcher
 import androidx.compose.ui.test.hasTestTag
@@ -14,6 +16,7 @@ import androidx.compose.ui.test.performTextReplacement
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
+import androidx.test.rule.GrantPermissionRule
 import com.marketpilot.core.common.Calendars
 import com.marketpilot.core.common.InstrumentCatalog
 import com.marketpilot.core.common.MarketSessions
@@ -47,7 +50,11 @@ import java.time.ZoneOffset
 @RunWith(AndroidJUnit4::class)
 @LargeTest
 class EndToEndTest {
-    @get:Rule val compose = createAndroidComposeRule<MainActivity>()
+    // Without this the system permission dialog pauses the activity right after onboarding.
+    @get:Rule(order = 0) val notifications: GrantPermissionRule =
+        if (Build.VERSION.SDK_INT >= 33) GrantPermissionRule.grant(Manifest.permission.POST_NOTIFICATIONS) else GrantPermissionRule.grant()
+
+    @get:Rule(order = 1) val compose = createAndroidComposeRule<MainActivity>()
 
     private val context: Context = ApplicationProvider.getApplicationContext()
     private val hooks: TestHooks by lazy { EntryPointAccessors.fromApplication(context, TestHooks::class.java) }
