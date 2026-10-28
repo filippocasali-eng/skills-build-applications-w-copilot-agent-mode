@@ -45,3 +45,10 @@ jobs:
           probe "https://www.reddit.com/r/wallstreetbets/hot.json?limit=2" 300
           probe "https://www.cboe.com/us/options/market_statistics/daily/" 200
           probe "https://cdn.cboe.com/api/global/us_indices/daily_prices/VIX_History.csv" 300
+
+  provider-samples:
+    name: Live provider samples (real network)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 marketpilot/scripts/probe_providers.py
