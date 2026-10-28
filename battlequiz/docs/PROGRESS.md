@@ -19,6 +19,10 @@ Docs in this folder; full schema migration (30 tables incl. `staff_roles`, RLS o
 
 **Not in M1 (by plan)**: accounts, persistent server-side progression, achievements unlock, friends, daily challenge, leaderboards, live multiplayer, AI generation, admin dashboard, shop/subscriptions, analytics dashboard, settings screen (language & sound toggles exist inline; motion follows the OS).
 
+## Android app (28 Oct 2026)
+- Offline Android build: static export + Capacitor 8, branded icon and splash, on-device engine with persisted question history. A full offline match was verified in a mobile browser (no network calls), and `tests/integration/offline-api.test.ts` covers it.
+- The APK is built on GitHub Actions because this development environment cannot reach Google's Android repositories (`dl.google.com`). Debug-signed, for sideloading.
+
 ## Known issues / caveats
 - Seed questions were written with AI assistance from stable, well-known facts and reference articles; they are `approved` for casual play but `ranked_eligible = false` until a human editor signs them off.
 - Guest progress (XP/level/best) lives in localStorage and can be lost; this is by design until accounts exist.

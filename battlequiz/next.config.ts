@@ -25,21 +25,39 @@ const securityHeaders = [
   { key: "Strict-Transport-Security", value: "max-age=63072000; includeSubDomains; preload" },
 ];
 
-const nextConfig: NextConfig = {
+/**
+ * Android app build (`npm run build:android`): a static export that runs the
+ * game offline on the device. Route handlers (*.ts) are excluded because only
+ * *.tsx files are treated as app routes; HTTP headers don't apply to exports.
+ */
+const isAndroid = process.env.BQ_TARGET === "android";
+
+const turbopack: NextConfig["turbopack"] = {
+  rules: {
+    "*.css": {
+      loaders: ["@tailwindcss/turbopack"],
+      as: "*.css",
+    },
+  },
+};
+
+const androidConfig: NextConfig = {
+  output: "export",
+  trailingSlash: true,
+  pageExtensions: ["tsx"],
+  poweredByHeader: false,
+  env: { NEXT_PUBLIC_BQ_OFFLINE: "1" },
+  turbopack,
+};
+
+const webConfig: NextConfig = {
   cacheComponents: true,
   partialPrefetching: true,
   poweredByHeader: false,
-  turbopack: {
-    rules: {
-      "*.css": {
-        loaders: ["@tailwindcss/turbopack"],
-        as: "*.css",
-      },
-    },
-  },
+  turbopack,
   async headers() {
     return [{ source: "/:path*", headers: securityHeaders }];
   },
 };
 
-export default nextConfig;
+export default isAndroid ? androidConfig : webConfig;

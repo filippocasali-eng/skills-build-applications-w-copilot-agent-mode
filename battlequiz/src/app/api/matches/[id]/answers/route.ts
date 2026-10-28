@@ -6,7 +6,7 @@ import { getRepositories } from "@/lib/store";
 import { MatchIdSchema, SubmitAnswerSchema } from "@/lib/validation/api";
 
 /** Submits an answer. Scoring uses server time only; resubmissions are idempotent. */
-export async function POST(req: NextRequest, ctx: RouteContext<"/api/matches/[id]/answers">) {
+export async function POST(req: NextRequest, ctx: { params: Promise<{ id: string }> }) {
   const now = Date.now();
   if (!sameOrigin(req)) return apiError("FORBIDDEN", "Cross-site request rejected", 403);
   const limited = checkRate(req, "match:answer", RATE_LIMITS.answer);

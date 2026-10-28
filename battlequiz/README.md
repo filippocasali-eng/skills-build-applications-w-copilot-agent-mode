@@ -27,6 +27,10 @@ npm run dev
 
 `GET /api/health` reports which store is active (`memory` or `postgres`).
 
+## Android APK
+
+Download the latest APK from the repository's **Releases → `battlequiz-android-latest`** (built by GitHub Actions), or build it yourself — see [DEPLOYMENT](docs/DEPLOYMENT.md#android-app-apk). The app plays Quick Play offline.
+
 ## Checks
 
 ```bash

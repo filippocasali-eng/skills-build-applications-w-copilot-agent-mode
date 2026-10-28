@@ -1,0 +1,63 @@
+name: BattleQuiz Android APK
+
+# Builds the offline Android app (static export + Capacitor) and publishes the
+# APK on the "battlequiz-android-latest" pre-release for direct download.
+on:
+  push:
+    paths: ["battlequiz/**", ".github/workflows/battlequiz-android.yml"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: battlequiz-android-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  apk:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: battlequiz
+    env:
+      NEXT_TELEMETRY_DISABLED: "1"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: battlequiz/package-lock.json
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+      - uses: gradle/actions/setup-gradle@v4
+      - run: npm ci
+      - name: Build offline web app and sync into Android
+        run: npm run build:android
+      - name: Assemble APK (debug-signed, for sideloading)
+        working-directory: battlequiz/android
+        run: ./gradlew assembleDebug --no-daemon
+      - name: Name the APK
+        run: |
+          mkdir -p dist
+          cp android/app/build/outputs/apk/debug/app-debug.apk "dist/BattleQuiz-0.1.0-build${GITHUB_RUN_NUMBER}.apk"
+          ls -l dist
+      - uses: actions/upload-artifact@v4
+        with:
+          name: BattleQuiz-apk
+          path: battlequiz/dist/*.apk
+          retention-days: 30
+      - name: Publish pre-release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TAG=battlequiz-android-latest
+          gh release delete "$TAG" --cleanup-tag --yes || true
+          gh release create "$TAG" dist/*.apk \
+            --target "$GITHUB_SHA" \
+            --prerelease \
+            --title "BattleQuiz Android (build ${GITHUB_RUN_NUMBER})" \
+            --notes "Offline Quick Play build from ${GITHUB_SHA::7} on ${GITHUB_REF_NAME}. Debug-signed APK for testing: enable 'Install unknown apps' for your browser, open the APK, install. Not for the Play Store."

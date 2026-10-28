@@ -48,3 +48,6 @@ next-env.d.ts
 /test-results/
 /playwright-report/
 /coverage/
+
+# Capacitor web build copied into the Android project
+/android/app/src/main/assets/public/

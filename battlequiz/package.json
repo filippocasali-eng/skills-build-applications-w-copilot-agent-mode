@@ -14,9 +14,13 @@
     "test:e2e": "playwright test",
     "db:migrate": "tsx scripts/db.ts migrate",
     "db:seed": "tsx scripts/db.ts seed",
-    "db:setup-local": "tsx scripts/db.ts setup-local"
+    "db:setup-local": "tsx scripts/db.ts setup-local",
+    "build:android": "BQ_TARGET=android next build && cap sync android",
+    "android:assets": "node scripts/generate-android-assets.mjs"
   },
   "dependencies": {
+    "@capacitor/android": "^8.5.3",
+    "@capacitor/core": "^8.5.3",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-react": "^1.62.0",
@@ -31,6 +35,7 @@
     "zustand": "^5.0.16"
   },
   "devDependencies": {
+    "@capacitor/cli": "^8.5.3",
     "@playwright/test": "^1.63.0",
     "@tailwindcss/turbopack": "^4",
     "@testing-library/dom": "^10.4.2",

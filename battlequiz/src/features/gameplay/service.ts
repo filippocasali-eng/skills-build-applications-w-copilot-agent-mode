@@ -1,4 +1,3 @@
-import { randomUUID } from "node:crypto";
 import { matchXp } from "@/features/progression/levels";
 import { buildMatchQuestions, QUICK_PLAY_LENGTH, selectQuestions } from "@/features/questions/selection";
 import { createRng, type Rng } from "@/lib/random";
@@ -89,7 +88,7 @@ export async function startQuickPlay(
   repos: Repositories,
   input: StartInput,
 ): Promise<{ matchId: string; question: PublicQuestion }> {
-  const matchId = input.matchId ?? randomUUID();
+  const matchId = input.matchId ?? crypto.randomUUID();
   const rng = input.rng ?? createRng(`${matchId}:${input.now}`);
   const [pool, recentlySeen] = await Promise.all([
     repos.questions.listPlayable(input.locale),

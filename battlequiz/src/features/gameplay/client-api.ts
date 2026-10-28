@@ -1,17 +1,11 @@
 import type { AnswerFeedback, CategorySelection, Locale, MatchResults, PublicQuestion, QuestionCategory } from "@/types/game";
+import { ApiError } from "./client-api-error";
 import type { MatchSnapshot } from "./service";
 
-/** Typed browser client for the gameplay API. */
-export class ApiError extends Error {
-  constructor(
-    public readonly code: string,
-    public readonly status: number,
-    message: string,
-  ) {
-    super(message);
-    this.name = "ApiError";
-  }
-}
+export { ApiError };
+
+/** True in the Android app build, where the game runs on-device without a server. */
+export const OFFLINE_MODE = process.env.NEXT_PUBLIC_BQ_OFFLINE === "1";
 
 async function request<T>(url: string, init?: RequestInit): Promise<T> {
   let res: Response;
@@ -41,7 +35,8 @@ async function withRetry<T>(fn: () => Promise<T>, attempts = 3): Promise<T> {
   }
 }
 
-export const gameApi = {
+/** Typed browser client for the gameplay HTTP API. */
+const httpGameApi = {
   categories: (locale: Locale) => request<{ categories: QuestionCategory[] }>(`/api/categories?locale=${locale}`),
   start: (locale: Locale, category: CategorySelection) =>
     request<{ matchId: string; question: PublicQuestion }>("/api/matches", {
@@ -58,3 +53,22 @@ export const gameApi = {
     ),
   results: (matchId: string) => withRetry(() => request<MatchResults>(`/api/matches/${matchId}/results`)),
 };
+
+type GameApi = typeof httpGameApi;
+
+/** Lazily loads the on-device engine only in the offline build. */
+const lazyLocal = <K extends keyof GameApi>(key: K): GameApi[K] =>
+  (async (...args: unknown[]) => {
+    const { localGameApi } = await import("./local-api");
+    return (localGameApi[key] as (...a: unknown[]) => unknown)(...args);
+  }) as GameApi[K];
+
+export const gameApi: GameApi = OFFLINE_MODE
+  ? {
+      categories: lazyLocal("categories"),
+      start: lazyLocal("start"),
+      current: lazyLocal("current"),
+      answer: lazyLocal("answer"),
+      results: lazyLocal("results"),
+    }
+  : httpGameApi;

@@ -19,3 +19,12 @@
 
 ## Release checklist (M7)
 Legal review of `/privacy`, `/terms`, `/cookies` · nonce CSP · shared rate limiter · backups & PITR on Supabase · error monitoring · human review of seed questions before ranked use.
+
+## Android app (APK)
+The Android app is the same UI as a static export wrapped with **Capacitor 8** (`android/`). It runs **offline**: the tested game engine and the bundled question bank execute on the device (`src/features/gameplay/local-api.ts`), so no server is needed. Offline scores are local and unranked by design; ranked modes will always use the server.
+
+- Build in CI: `.github/workflows/battlequiz-android.yml` runs `npm run build:android` + `./gradlew assembleDebug` and publishes the APK on the **`battlequiz-android-latest`** GitHub pre-release (also as a workflow artifact).
+- Build locally (needs JDK 21 + Android SDK 36): `npm run build:android && cd android && ./gradlew assembleDebug` → `android/app/build/outputs/apk/debug/app-debug.apk`.
+- Icons/splash: `npm run android:assets` regenerates them from the logo.
+- Install: on the phone open the release page, download the `.apk`, allow "Install unknown apps" for the browser, install.
+- The APK is **debug-signed** (sideloading/testing only). The Play Store needs a release keystore (store it as a GitHub secret) and an `.aab` — not set up yet.

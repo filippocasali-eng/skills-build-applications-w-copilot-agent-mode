@@ -6,7 +6,7 @@ import { getRepositories } from "@/lib/store";
 import { MatchIdSchema } from "@/lib/validation/api";
 
 /** Final results with answers and explanations. Only available once the match is completed. */
-export async function GET(req: NextRequest, ctx: RouteContext<"/api/matches/[id]/results">) {
+export async function GET(req: NextRequest, ctx: { params: Promise<{ id: string }> }) {
   const limited = checkRate(req, "match:read", RATE_LIMITS.read);
   if (limited) return limited;
   const { id } = await ctx.params;
